@@ -269,12 +269,12 @@ export const DayNightSky = ({
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-    ctx.font = "bold 200px 'Orbitron', sans-serif";
+    ctx.font = "bold 250px 'Orbitron', sans-serif";
 
     const lines = [
-      "★☆  B A D G E R  ★☆",
-      "★  S U R F A C E  ★",
-      "☆  S O L U T I O N S  ☆",
+      "B A D G E R",
+      "S U R F A C E",
+      "S O L U T I O N S",
     ];
     const lineHeight = 220;
     const startY = size * 0.003;
