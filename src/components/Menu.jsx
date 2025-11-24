@@ -59,7 +59,7 @@ export const Menu = (props) => {
       >
         {/* MENU ITEMS – centered text */}
 <div className="flex-1 flex flex-col items-center justify-center gap-12 mt-8">
-  <MenuButton label="Home" onClick={() => { onSectionChange(0);     setMenuOpened(false);         
+  <MenuButton label="Home" onClick={() => { onSectionChange(0);     setMenuOpened(false);        reset3D(); 
     // resetOverlays();          
       // resetCamera();   
    

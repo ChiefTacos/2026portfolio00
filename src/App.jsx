@@ -100,7 +100,7 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
          <a
         href="tel:+12622305182"
         aria-label="Call us"
-        className="fixed bottom-28 right-28 z-[10002]"
+        className="fixed bottom-24 right-28 lg:bottom-40 lg:right-48 z-[10002]"
       >
 
         {/* always there phone button */}
@@ -108,7 +108,8 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
 <button
   className="absolute 
              text-white 
-             w-20 h-16 
+             w-20 h-18 
+             lg:w-32 lg:h-28 
              rounded-2xl 
              flex justify-center items-center 
              shadow-lg 
@@ -134,7 +135,7 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
   </div> */}
 
   {/* Animated gradient call icon background */}
-  <div className="w-14 h-14 rounded-full flex items-center justify-center 
+  <div className="w-16 h-16 lg:w-24 lg:h-24 rounded-full flex items-center justify-center 
                   animate-[pulse_4s_ease-in-out_infinite] 
                   bg-gradient-to-br from-green-500 via-blue-500 to-white">
     <svg
