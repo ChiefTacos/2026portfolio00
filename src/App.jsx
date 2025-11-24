@@ -81,7 +81,11 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
         >
           <MobileFOV />
           <DayNightSky debugForceDay={isDay} />
-          <ScrollControls pages={4} damping={0.1}>
+          <ScrollControls 
+          pages={4} 
+          damping={0.1} 
+          enabled={!(window.innerWidth < 1024 && section === 0)}
+          >
             <ScrollManager section={section} onSectionChange={setSection} />
             <Experience section={section} menuOpened={menuOpened} isDay={isDay} setIsAnimating={setIsAnimating} 
              // This lets Experience give us the reset function
