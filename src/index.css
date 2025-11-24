@@ -82,3 +82,16 @@ canvas {
   -webkit-tap-highlight-color: transparent !important;
   outline: none !important;
 }
+#overlay-portals-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Important! */
+  z-index: 9999;
+}
+
+#overlay-portals-root > * {
+  pointer-events: auto;
+}

@@ -45,6 +45,7 @@ const overlayRef = useRef(null);
 
 const isActive = activeOverlay.includes(id);
 const isAnyOpen = activeOverlay.length > 0;
+const [isFullscreen, setIsFullscreen] = useState(false);
 
 
 const htmlOffset = useRef({ x: 0, y: 0 });
@@ -64,18 +65,6 @@ const portalRoot = useRef(null);
 
 
 
-useEffect(() => {
-  // Create a unique div for THIS overlay instance
-  const div = document.createElement("div");
-  div.id = `overlay-portal-${Math.random().toString(36).substr(2, 9)}`;
-  document.getElementById("overlay-portals-root").appendChild(div);
-  portalRoot.current = div;
-
-  return () => {
-    // Cleanup on unmount
-    document.getElementById("overlay-portals-root")?.removeChild(div);
-  };
-}, []);
 
 
 // This will store the TRUE original camera state (once, when the scene loads)
@@ -249,17 +238,20 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
      
      
         <Html
-portal={{ current: portalRoot.current }}  
             style={{
            
             width: "100%",
             height: "100%",
           pointerEvents: "none",   // ← Html never blocks anything
           }}
+          transform={false}
           center
           distanceFactor={distanceFactor}
           occlude={false}
+          portal={{ current: document.getElementById("overlay-portals-root") }}
         > 
+
+
         <div
         style={{
           
@@ -267,11 +259,12 @@ portal={{ current: portalRoot.current }}
           opacity: isVisible ? 1 : 0,
           transition: "opacity 0.6s ease",
           transitionDelay: isVisible ? "0s" : "0.2s",
-          width: "100vw",
-          height: "100vh",
+          // width: "100vw",
+          // height: "100vh",
           position: "fixed",
           top: 0,
           left: 0,
+          
         }}
       >
 
@@ -280,12 +273,12 @@ portal={{ current: portalRoot.current }}
                 <div
                 ref={overlayRef}
                 className="bg-white  rounded-lg shadow-2xl border border-gray-200 overflow-hidden
-                   min-h-[110vh]
-                   lg:min-h-[80vh]
+                  min-h[110vh] max-h-[110vh]
+                   lg:min-h[70vh]lg:max-h-[110vh]
 
-                  min-w-[450px]  max-w-[500px]   /* mobile first */
-                  md:min-w-[800px] md:max-w-[1000px]  /* tablet */
-                  lg:min-w-[1000px] lg:max-w-[1400px]  /* desktop */
+                    w-[100vw] max-w-[1000px]
+                    md:w-[90vw] md:max-w-[1200px]
+                    lg:w-[70vw] lg:max-w-[1400px]
 
                 "
 
@@ -296,6 +289,13 @@ portal={{ current: portalRoot.current }}
                     position: "absolute",
                     left: windowPos.x,
                     top: windowPos.y,
+                      
+  width: isFullscreen ? "130vw" : undefined,
+  height: isFullscreen ? "130vh" : undefined,
+  maxWidth: isFullscreen ? "140vw" : undefined,
+  maxHeight: isFullscreen ? "140vh" : undefined,
+  borderRadius: isFullscreen ? "8px" : "12px",
+                    
                     transition: isDragging.current ? "none" : "transform 0.2s ease",
                     cursor: "default",
                     pointerEvents: isVisible ? "auto" : "none",  
@@ -305,44 +305,59 @@ portal={{ current: portalRoot.current }}
             }}
           >
 
-        <div className="flex p-3 gap-2 bg-gray-100">
-          <button onClick={handleResetClick} style={{ pointerEvents: "auto" }}>
-            <span className="bg-red-500 inline-block w-6 h-6 rounded-full hover:bg-red-600 transition"></span>
+        <div className="flex p-4 lg:p-3 gap-2 bg-gray-100">
+          <button onClick={handleResetClick} style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
+            <span className="bg-red-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
           
           </button>
-          <button onClick={handleResetClick} style={{ pointerEvents: "auto" }}>
-            <span className="bg-yellow-500 inline-block w-6 h-6 rounded-full hover:bg-red-600 transition"></span>
+          <button onClick={handleResetClick} style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
+            <span className="bg-yellow-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
           
           </button>
-          {/* <div className="w-4 h-4 rounded-full bg-yellow-500"></div> */}
-          {/* <div className="w-4 h-4 rounded-full bg-green-500"></div> */}
+          <button
+            onClick={() => {
+              setIsFullscreen(prev => !prev);
+              setTimeout(() => snapBackIntoBounds(), 50); // keep inside screen
+            }}
+            style={{ pointerEvents: "auto" }}
+            alt="MAX WINDOW"
+            title="Adjust Window Size"
+          >
+            <span className="bg-green-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-green-600 transition"></span>
+          </button>
         </div>
 
         <div className="p-10 flex flex-col items-center justify-center gap-10 pt-1">
-          <button
-          onClick={() => alert("More details coming soon!")}
-          type="submit"
-          className="flex justify-center top-96 gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
-          style={{ pointerEvents: "auto" }}
-        >
-          Additional Info
-          <svg
-            className="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45"
-            viewBox="0 0 16 19"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-              className="fill-gray-800 group-hover:fill-gray-800"
-            ></path>
-          </svg>
-        </button>
+          
+
 
           <div className="card__content text-center">
-            <h1 className="text-5xl font-bold mb-4">{title}</h1>
-            <p className="text-2xl text-gray-700 mb-2">{description}</p>
-            {price && <p className="text-4xl font-bold text-emerald-600">${price}</p>}
-            <p className="mt-8 text-xl text-gray-500">placeholder text</p>
+            <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
+            <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
+            <img src="/textures/sexyCleaning.jpeg" alt=""             style={{ pointerEvents: "none" , touchAction: "none",}}
+/>
+            
+
+
+<button
+  class="group relative z[99909] mt-6 px-6 py-4 rounded-lg bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 text-black font-bold tracking-wider uppercase text-sm hover:from-yellow-500 hover:via-amber-600 hover:to-yellow-700 transform hover:rotate-1 transition-all duration-300 ease-out shadow-[0_0_20px_rgba(251,191,36,0.5)] hover:shadow-[0_0_30px_rgba(251,191,36,0.7)] active:scale-90 overflow-hidden before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-amber-400/50 before:transition-all before:duration-300 hover:before:border-amber-300 hover:before:scale-105"
+>
+  <span className="flex items-center gap-2 relative ">
+   
+    <h1 className="lg:text-3xl text-2xl">
+View <br />Additional <br />
+Information
+</h1>
+   
+  </span>
+  <div
+    className="absolute inset-0 rounded-lg opacity-50 group-hover:opacity-80 transition-opacity duration-300 bg-gradient-to-tl from-amber-200/40 via-transparent to-transparent"
+  ></div>
+  <div
+    className="absolute -left-full top-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:translate-x-[200%] transition-transform duration-700 ease-out"
+  ></div>
+</button>
+
           </div>
           
         </div>
@@ -514,19 +529,35 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
   const overlayConfig = {
     balcony: {
-      distanceFactor: { desktop: 15, tablet: 24, mobile: 28 },
+      distanceFactor: { desktop: 22, tablet: 24, mobile: 24 },
       position: {
-        desktop: [-3004.128, 508.8, 2],
+        desktop: [-204.128, 928.8, 292],
         tablet:  [-228.117, 406.956, 1.194],   // customize as needed
         mobile:  [-228.117, 406.956, 1.194],   // customize as needed
       },
     },
     driveway: {
-      distanceFactor: { desktop: 14, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 30, tablet: 24, mobile: 24 },
       position: {
-        desktop: [-1801.2, -600.1, 257.2],
+        desktop: [-561.2, -600.1, 257.2],
         tablet:  [-4.128, 0, 305.314],
         mobile:  [-4.128, 0, 305.314],
+      },
+    },
+    house: {
+      distanceFactor: { desktop: 24, tablet: 24, mobile: 24 },
+      position: {
+        desktop: [701.2, 20.1, 107.2],
+        tablet:  [204.128, 100, 205.314],
+        mobile:  [204.128, 100, 205.314],
+      },
+    },
+    car: {
+      distanceFactor: { desktop: 24, tablet: 24, mobile: 24 },
+      position: {
+        desktop: [-2001.2, 200.1, 7.2],
+        tablet:  [40.128, 100, -205.314],
+        mobile:  [640.128, 100, 205.314],
       },
     },
   };
@@ -552,6 +583,8 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
   const balcony = getOverlayProps("balcony");
   const driveway = getOverlayProps("driveway");
+  const house = getOverlayProps("house");
+  const car = getOverlayProps("car");
 
 
   //  /* -------------------------------------------------------------
@@ -879,8 +912,46 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
         <mesh geometry={nodes.Stone_pillar003_House_material_0.geometry} material={materials.House_material} position={[686.116, 46, 198.253]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
         <mesh geometry={nodes.Window_front_2nd_floor002_House_material_0.geometry} material={materials.House_material} position={[450, 477.255, -595.358]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
         <mesh geometry={nodes.Wood_panel_top_G_House_material_0.geometry} material={materials.House_material} position={[0, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+        <mesh position={house.position} visible={false}   name="house-overlay-anchor"
+>
+      <OverlayItem
+        section={section}
+        id="house"                    
+          key="house"
+    setActiveOverlay={setActiveOverlay}
+    activeOverlay={activeOverlay}
+ openOverlay={openOverlay}
+          closeOverlay={closeOverlay}
+          device={device}  
+          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+         position={[0, 0, 0]}
+         distanceFactor={house.distanceFactor}
+          title="House Cleaning"
+          description="Glass + frame scrub"
+          price="250-500"
+          bgColor="bg-yellow-500"
+        /></mesh>
+        <mesh position={car.position} visible={false}   name="car-overlay-anchor"
+>
+      <OverlayItem
+        section={section}
+        id="car"                    
+          key="car"
+    setActiveOverlay={setActiveOverlay}
+    activeOverlay={activeOverlay}
+ openOverlay={openOverlay}
+          closeOverlay={closeOverlay}
+          device={device}  
+          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+         position={[0, 0, 0]}
+         distanceFactor={car.distanceFactor}
+          title="Car Cleaning"
+          description="Glass + frame scrub"
+          price="150-300"
+          bgColor="bg-yellow-500"
+        /></mesh>
       </group>
-    // </group>
+    
   );
 }
 
