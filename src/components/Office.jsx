@@ -273,8 +273,8 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
                 <div
                 ref={overlayRef}
                 className="bg-white  rounded-lg shadow-2xl border border-gray-200 overflow-hidden
-                  min-h[110vh] max-h-[110vh]
-                   lg:min-h[70vh]lg:max-h-[110vh]
+                  min-h[130vh] max-h-[130vh]
+                   lg:min-h[80vh]lg:max-h-[110vh]
 
                     w-[100vw] max-w-[1000px]
                     md:w-[90vw] md:max-w-[1200px]
@@ -334,7 +334,8 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
           <div className="card__content text-center">
             <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
             <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
-            <img src="/textures/sexyCleaning.jpeg" alt=""             style={{ pointerEvents: "none" , touchAction: "none",}}
+            <img src="/textures/sexyCleaning.jpeg" alt=""    className="max-h-[250px] lg:max-h-[500px]"  // Or use max-h-[] if you meant max-height
+             style={{ pointerEvents: "none" , touchAction: "none", }}
 />
             
 
