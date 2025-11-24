@@ -339,26 +339,54 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
 />
             
 
+ {/* <button
+    class="text-[0.8em] relative text-[#6C3082] group-hover:text-[white] duration-500 pt-16"
 
-<button
-  class="group relative z[99909] mt-6 px-6 py-4 rounded-lg bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 text-black font-bold tracking-wider uppercase text-sm hover:from-yellow-500 hover:via-amber-600 hover:to-yellow-700 transform hover:rotate-1 transition-all duration-300 ease-out shadow-[0_0_20px_rgba(251,191,36,0.5)] hover:shadow-[0_0_30px_rgba(251,191,36,0.7)] active:scale-90 overflow-hidden before:absolute before:inset-0 before:rounded-lg before:border-2 before:border-amber-400/50 before:transition-all before:duration-300 hover:before:border-amber-300 hover:before:scale-105"
-  onClick={() => setSection(3)}
+  >
+<div
+  class="div h-[8em] w-[15em] bg-white m-auto rounded-[1em] overflow-hidden relative group p-3 z-0"
 >
-  <span className="flex items-center gap-2 relative ">
-   
-    <h1 className="lg:text-3xl text-2xl">
-View <br />Additional <br />
-Information
-</h1>
-   
-  </span>
   <div
-    className="absolute inset-0 rounded-lg opacity-50 group-hover:opacity-80 transition-opacity duration-300 bg-gradient-to-tl from-amber-200/40 via-transparent to-transparent"
+    class="circle absolute h-[5em] w-[5em] -top-[2.5em] -right-[2.5em] rounded-full bg-[#005757] group-hover:scale-[800%] duration-500 z-[-1] op"
   ></div>
+
+ 
+    <span
+      class="relative before:h-[0.16em] before:absolute before:w-full before:content-[''] before:bg-[#6C3082] group-hover:before:bg-[white] duration-300 before:bottom-0 before:left-0"
+      ></span>
+    
+
+  <h1
+    class="z-20 font-bold font-Poppin group-hover:text-white duration-500 text-[3.5em]  leading-[0.8]"
+  >
+    MORE INFO
+  </h1>
+</div>
+  </button> */}
+<section
+  class="relative group flex flex-col items-center justify-center w-full h-full pt-20   scale-[0.75] lg:scale-[1]  hover:scale-[0.76] hover:lg:scale-[1.01] origin-top"
+>
   <div
-    className="absolute -left-full top-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:translate-x-[200%] transition-transform duration-700 ease-out"
-  ></div>
-</button>
+    class="file relative w-60 h-40 cursor-pointer origin-bottom [perspective:1500px] z-50"
+  >
+    <div
+      class="work-5 bg-amber-600 w-full h-full origin-top rounded-2xl rounded-tl-none group-hover:shadow-[0_20px_40px_rgba(0,0,0,.2)] transition-all ease duration-300 relative after:absolute after:content-[''] after:bottom-[99%] after:left-0 after:w-20 after:h-4 after:bg-amber-600 after:rounded-t-2xl before:absolute before:content-[''] before:-top-[15px] before:left-[75.5px] before:w-4 before:h-4 before:bg-amber-600 before:[clip-path:polygon(0_35%,0%_100%,50%_100%);]"
+    ></div>
+    <div
+      class="work-4 absolute inset-1 bg-zinc-400 rounded-2xl transition-all ease duration-300 origin-bottom select-none group-hover:[transform:rotateX(-20deg)]"
+    ></div>
+    <div
+      class="work-3 absolute inset-1 bg-zinc-300 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-30deg)]"
+    ></div>
+    <div
+      class="work-2 absolute inset-1 bg-zinc-200 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-38deg)]"
+    ></div>
+    <div
+      class="work-1 absolute bottom-0 bg-gradient-to-t from-amber-500 to-amber-400 w-full h-[156px] rounded-2xl rounded-tr-none after:absolute after:content-[''] after:bottom-[99%] after:right-0 after:w-[146px] after:h-[16px] after:bg-amber-400 after:rounded-t-2xl before:absolute before:content-[''] before:-top-[10px] before:right-[142px] before:size-3 before:bg-amber-400 before:[clip-path:polygon(100%_14%,50%_100%,100%_100%);] transition-all ease duration-300 origin-bottom flex items-end group-hover:shadow-[inset_0_20px_40px_#fbbf24,_inset_0_-20px_40px_#d97706] group-hover:[transform:rotateX(-46deg)_translateY(1px)]"
+    ></div>
+  </div>
+  <p class="text-3xl pt-4 opacity-80">Learn More</p>
+</section>
 
           </div>
           
