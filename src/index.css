@@ -14,56 +14,7 @@ body {
   cursor: none !important;
   background-color: rgba(255, 0, 0, 0.1); /* just to see if style applies */
 }
-@keyframes rainbow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
-.animate-rainbow {
-  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
-  background-size: 1400% 1400%;
-  animation: rainbow 9s ease infinite;
-  z-index: 0;
-  border-radius: inherit;
-}
-@keyframes rainbowText {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 200% 50%;
-  }
-}
-
-.rainbowText {
-  background: linear-gradient(
-    270deg,
-    red,
-    orange,
-    yellow,
-    green,
-    blue,
-    indigo,
-    violet,
-    red
-  );
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-.animate-rainbowText {
-  animation: rainbowText 10s linear infinite;
-}
 
 #root, body, html {
   -webkit-user-select: none;
@@ -98,115 +49,6 @@ canvas {
 
 
 
-/* BRUTALIST MENU BUTTONS */
-
-.brutalist-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  width: 169px;
-  height: 60px;
-  background-color: #000;
-  color: #fff;
-  text-decoration: none;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  border: 3px solid #fff;
-  outline: 3px solid #000;
-  box-shadow: 6px 6px 0 #00a4ef;
-  transition: all 0.1s ease-out;
-  padding: 0 15px;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-}
-
-.brutalist-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.8),
-    transparent
-  );
-  z-index: 1;
-  transition: none;
-  /* Initially hide the pseudo-element */
-  opacity: 0;
-}
-
-@keyframes slide {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-.brutalist-button:hover::before {
-  /* Show the pseudo-element on hover */
-  opacity: 1;
-  animation: slide 2s infinite;
-}
-
-.brutalist-button:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 10px 10px 0 #000;
-  background-color: #000;
-  color: #fff;
-}
-
-@keyframes slide {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-.brutalist-button:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0px 0px 0 #00a4ef;
-  background-color: #fff;
-  color: #000;
-  border-color: #000;
-}
-
-.button-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-  transition: transform 0.2s ease-out;
-  position: relative;
-  z-index: 1;
-}
-
-.brutalist-button:hover .button-text {
-  transform: skew(-5deg);
-}
-
-.brutalist-button:active .button-text {
-  transform: skew(5deg);
-}
-
-.button-text span:first-child {
-  font-size: 11px;
-  text-transform: uppercase;
-}
-
-.button-text span:last-child {
-  font-size: 16px;
-  text-transform: uppercase;
-}
-
 
 .mario-coin {
   position: fixed;
@@ -238,5 +80,182 @@ canvas {
   100% {
     transform: translate(-50%, -120px) scale(0.8) rotate(420deg);
     opacity: 0;
+  }
+}
+
+/* From Uiverse.io by Na3ar-17 */ 
+.card {
+  width: 200px;
+  /* background-color: rgba(36, 40, 50, 1);
+background-image: linear-gradient(135deg, rgba(36, 40, 50, 1) 0%, rgba(36, 40, 50, 1) 40%, rgba(37, 28, 40, 1) 100%); */
+
+  background-color: rgba(36, 40, 50, 1);
+  background-image: linear-gradient(
+    139deg,
+    rgba(36, 40, 50, 1) 0%,
+    rgba(36, 40, 50, 1) 0%,
+    rgba(37, 28, 40, 1) 100%
+  );
+
+  border-radius: 10px;
+  padding: 15px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card .separator {
+  border-top: 1.5px solid #42434a;
+}
+
+.card .list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0px 10px;
+}
+
+.card .list .element {
+  display: flex;
+  align-items: center;
+  color: #7e8590;
+  gap: 10px;
+  transition: all 0.3s ease-out;
+  padding: 4px 7px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.card .list .element svg {
+  width: 19px;
+  height: 19px;
+  transition: all 0.3s ease-out;
+}
+
+.card .list .element .label {
+  font-weight: 600;
+}
+
+.card .list .element:hover {
+  background-color: #5353ff;
+  color: #ffffff;
+  transform: translate(1px, -1px);
+}
+.card .list .delete:hover {
+  background-color: #8e2a2a;
+}
+
+.card .list .element:active {
+  transform: scale(0.99);
+}
+
+.card .list:not(:last-child) .element:hover svg {
+  stroke: #ffffff;
+}
+
+.card .list:last-child svg {
+  stroke: #bd89ff;
+}
+.card .list:last-child .element {
+  color: #bd89ff;
+}
+
+.card .list:last-child .element:hover {
+  background-color: rgba(56, 45, 71, 0.836);
+}
+/* From Uiverse.io by Cksunandh */ 
+.m2 {
+  position: relative;
+  width: 20vmin; /* Reduced size */
+  height: 20vmin; /* Reduced size */
+  background: linear-gradient(135deg, #1e1e24 10%, #050505 60%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  animation: gradient-shift 5s ease-in-out infinite; /* Faster animation */
+  background-size: 200% 200%; /* Gradient shift */
+}
+
+.m2 .logo {
+  display: inline-block;
+  vertical-align: baseline;
+  user-select: none;
+  font-size: 5vmin; /* Smaller font size */
+  color: white;
+  background-image: linear-gradient(to right, #626262, #fff);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  font-weight: bold;
+}
+
+.m2 .logo svg {
+  margin-right: -1vmin;
+  width: 5vmin; /* Smaller SVG size */
+  height: 5vmin; /* Smaller SVG size */
+}
+
+.m2::before,
+.m2::after {
+  --size: 5px; /* Reduced glow size */
+  content: "";
+  position: absolute;
+  top: calc(var(--size) / -2);
+  left: calc(var(--size) / -2);
+  width: calc(100% + var(--size));
+  height: calc(100% + var(--size));
+  background: radial-gradient(circle at 0 0, hsl(27deg 93% 60%), transparent),
+    radial-gradient(circle at 100% 0, #00a6ff, transparent),
+    radial-gradient(circle at 0 100%, #ff0056, transparent),
+    radial-gradient(circle at 100% 100%, #6500ff, transparent);
+}
+
+.m2::after {
+  --size: 2px; /* Reduced inner glow size */
+  z-index: -1;
+}
+
+.m2::before {
+  --size: 10px; /* Reduced outer glow size */
+  z-index: -2;
+  filter: blur(2vmin); /* Reduced blur */
+  animation: blur-animation 3s ease-in-out alternate infinite; /* Faster blur animation */
+}
+
+/* Faster blur animation */
+@keyframes blur-animation {
+  to {
+    filter: blur(3vmin);
+    transform: scale(1.05);
+  }
+}
+
+/* Faster gradient animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.mobile-fade-in {
+  opacity: 0;
+  animation: fadeInMobile 0.7s ease forwards;
+  animation-delay: 6s; /* wait 6 seconds */
+}
+
+@keyframes fadeInMobile {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

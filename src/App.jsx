@@ -84,11 +84,10 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
           <ScrollControls 
           pages={4} 
           damping={0.1} 
-          enabled={!(window.innerWidth < 1024 && section === 0)}
+          // enabled={!(window.innerWidth < 1024 && section === 0)}
           >
             <ScrollManager section={section} onSectionChange={setSection} />
             <Experience section={section} menuOpened={menuOpened} isDay={isDay} setIsAnimating={setIsAnimating} 
-             // This lets Experience give us the reset function
               onResetCamera={(fn) => { resetCameraRef.current = fn }}
               onResetOverlays={(fn) => { resetOverlaysRef.current = fn }} 
               />
@@ -103,7 +102,7 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
 
 
                           
-                          <a
+                          {/* <a
                           href="tel:+12622305182"
                           aria-label="Call us"
                           className="fixed bottom-24 right-28 lg:bottom-40 lg:right-48 z-[10002]"
@@ -113,7 +112,6 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
 
 
 
-                        {/* always there phone button */}
 
                     <button
                       className="absolute 
@@ -131,7 +129,6 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
                     >
                     
 
-                      {/* Animated gradient call icon background */}
                       <div className="w-16 h-16 lg:w-24 lg:h-24 rounded-full flex items-center justify-center 
                                       animate-[pulse_4s_ease-in-out_infinite] 
                                       bg-gradient-to-br from-green-500 via-blue-500 to-white">
@@ -149,7 +146,6 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
                         </svg>
                       </div>
 
-                      {/* Tooltip */}
                       <div
                         className="absolute right-full mr-3 invisible opacity-0 
                                   group-hover:visible group-hover:opacity-100 
@@ -163,7 +159,7 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
                         ></div>
                       </div>
                     </button>
-                            </a>
+                            </a> */}
         <Menu
           onSectionChange={setSection}
           menuOpened={menuOpened}

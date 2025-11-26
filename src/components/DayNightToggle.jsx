@@ -1,72 +1,9 @@
 
-// old components/DayNightToggle.jsx
-// export const DayNightToggle = ({ isDay, setIsDay }) => {
-//   return (
-//     <label className="relative inline-flex items-center cursor-pointer select-none">
-//       {/* Hidden Checkbox (controls the toggle) */}
-//       <input
-//         type="checkbox"
-//         className="sr-only peer"
-//         checked={!isDay}              // night = checked
-//         onChange={() => setIsDay(!isDay)}
-//       />
 
-//       {/* Track */}
-//       <div
-//         className="
-//           w-[72px] h-[72px] rounded-full
-//           bg-gradient-to-r 
-//           from-yellow-300 to-orange-400
-//           peer-checked:from-blue-400 peer-checked:to-indigo-500
-//           transition-all duration-500
-//           relative
-//         "
-//       >
-//         {/* Thumb */}
-//         <div
-//           className="
-//             absolute top-2 left-2
-//             h-14 w-14 rounded-full bg-white shadow-md
-//             flex items-center justify-center text-lg
-//             transition-all duration-500
-//             peer-checked:translate-x-10
-//           "
-//         >
-//           {/* Sun & Moon icons handled by opacity */}
-//           <span
-//             className={`
-//               absolute transition-opacity duration-500 
-//               ${isDay ? "opacity-100" : "opacity-0"}
-//             `}
-//           >
-//             ☀️
-//           </span>
-
-//           <span
-//             className={`
-//               absolute transition-opacity duration-500 
-//               ${!isDay ? "opacity-100" : "opacity-0"}
-//             `}
-//           >
-//             🌙
-//           </span>
-//         </div>
-//       </div>
-
-//       {/* Optional text label */}
-//       {/* <span className="ml-3 text-sm font-medium text-gray-100">
-//         Change<hr />Theme/ <hr />
-//         Sky
-//       </span> */}
-//     </label>
-//   );
-// };
-
-// components/DayNightToggle.jsx
 export const DayNightToggle = ({ isDay, setIsDay }) => {
   return (
-    <label className="relative inline-block w-32 h-32 cursor-pointer select-none
-    hover:scale-105 transition-transform duration-300 transform-gpu">
+    <label className="absolute inline-block w-32 h-32 cursor-pointer select-none
+    hover:scale-105 transition-transform duration-300 transform-gpu left-[-16px] bottom-[-15px] ">
       <input
         type="checkbox"
         className="sr-only peer"
@@ -74,25 +11,22 @@ export const DayNightToggle = ({ isDay, setIsDay }) => {
         onChange={() => setIsDay(!isDay)}
       />
 
-      {/* Sky Background - Gradient Transition */}
       <div
         className={`
           absolute inset-0 rounded-full overflow-hidden shadow-2xl
-          transition-all duration-1000 ease-in-out
+          transition-all duration-1000 ease-in-out scale-50
           ${isDay 
             ? "bg-gradient-to-br from-sky-300 via-blue-400 to-pink-300" 
             : "bg-gradient-to-br from-indigo-900 via-purple-900 to-black"
           }
         `}
       >
-        {/* Rotating Sky Layer for Magic */}
         <div
           className={`
-            absolute inset-0 transition-transform duration-1000
+            absolute inset-0 transition-transform duration-1000 scale-50
             ${isDay ? "rotate-0" : "rotate-180"}
           `}
         >
-          {/* Subtle Clouds (Day) */}
           {isDay && (
             <>
               <div className="absolute top-8 left-4 w-16 h-8 bg-white/60 rounded-full blur-xl animate-pulse" />
@@ -101,7 +35,6 @@ export const DayNightToggle = ({ isDay, setIsDay }) => {
             </>
           )}
 
-          {/* Twinkling Stars (Night) */}
           {!isDay && (
             <>
               <div className="absolute top-8 left-10 w-1 h-1 bg-white rounded-full animate-ping" />
@@ -114,7 +47,6 @@ export const DayNightToggle = ({ isDay, setIsDay }) => {
         </div>
       </div>
 
-      {/* Celestial Body - Sun/Moon with Glow & Rays */}
       <div
         className={`
           absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
@@ -127,7 +59,6 @@ export const DayNightToggle = ({ isDay, setIsDay }) => {
           }
         `}
       >
-        {/* Sun Rays (Visible in Day) */}
         {isDay && (
           <>
             {[...Array(8)].map((_, i) => (
@@ -140,14 +71,11 @@ export const DayNightToggle = ({ isDay, setIsDay }) => {
           </>
         )}
 
-        {/* Cartoon Face */}
         <div className="relative z-10 flex flex-col items-center gap-1">
-          {/* Eyes */}
           <div className="flex gap-3">
             <div className={`w-2 h-3 rounded-full ${isDay ? "bg-orange-600" : "bg-indigo-900"}`} />
             <div className={`w-2 h-3 rounded-full ${isDay ? "bg-orange-600" : "bg-indigo-900"}`} />
           </div>
-          {/* Mouth */}
           <div
             className={`
               w-8 h-3 rounded-b-full
@@ -157,7 +85,6 @@ export const DayNightToggle = ({ isDay, setIsDay }) => {
           />
         </div>
 
-        {/* Moon Craters (Visible in Night) */}
         {!isDay && (
           <>
             <div className="absolute top-4 left-6 w-4 h-4 bg-gray-400/50 rounded-full" />
