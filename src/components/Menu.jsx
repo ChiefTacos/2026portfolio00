@@ -13,7 +13,6 @@ import { useEffect } from 'react';
 
 
 
-
 const StyledWrapper01 = styled.div`
   .keycap {
     position: relative;
@@ -94,7 +93,7 @@ const CyberWrapper = styled.div`
     padding: 8px 25px;
     font-family: "Rajdhani", sans-serif;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 26px;
     letter-spacing: 2px;
     text-transform: uppercase;
     cursor: pointer;
@@ -255,10 +254,19 @@ const MobileWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000000;
-    box-shadow: 0px 0px 15px #00000027;
-    padding: 15px 10px;
-    border-radius: 5em;
+    background: linear-gradient(180deg, #282828, #202020);
+   box-shadow:
+      inset -8px 0 8px rgba(0, 0, 0, 0.15),
+      inset 0 -8px 8px rgba(0, 0, 0, 0.25),
+      0 0 0 2px rgba(0, 0, 0, 0.75),
+      10px 20px 25px rgba(0, 0, 0, 0.4);
+          padding: 15px 10px;
+    border-radius: 3em;
+     transition:
+      transform 0.1s ease-in-out,
+      box-shadow 0.1s ease-in;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .social-button {
@@ -269,7 +277,7 @@ const MobileWrapper = styled.div`
     height: 70px;
     border-radius: 20%;
     margin: 0 10px;
-    background-color: #2f2f2f;
+    background-color: #f2f2f2;
     box-shadow: 0px 0px 4px #00000027;
     transition: 0.3s;
   }
@@ -285,11 +293,12 @@ const MobileWrapper = styled.div`
   }
 
   .facebook {
-    background-color: #3b5998;
+      background-color: #44AD49;
   }
 
   .facebook svg {
     fill: #f2f2f2;
+
   }
 
   .facebook:hover svg {
@@ -297,7 +306,7 @@ const MobileWrapper = styled.div`
   }
 
   .github {
-    background-color: #333;
+    background-color: #333333;
   }
 
   .github svg {
@@ -323,7 +332,7 @@ const MobileWrapper = styled.div`
   }
 
   .instagram {
-    background-color: #c13584;
+    background-color: #ab0b00;
   }
 
   .instagram svg {
@@ -345,6 +354,7 @@ export const Menu = (props) => {
     section,
     resetCamera,
     resetOverlays,
+    openOverlay,
   } = props;
 
   const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
@@ -417,15 +427,15 @@ export const Menu = (props) => {
 
      
                <div className="relative drop-shadow-xl w-56 h-96 overflow-hidden rounded-xl bg-[#3d3c3d]" >
-      <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132]">
+      <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132] pt-4">
 
 
 
          
-      <div className="w-full flex flex-col items-center justify-start gap-6 pb-12">
+      <div className="w-full flex flex-col items-center justify-start gap-6 pb-8">
         <CyberWrapper>
-      <div style={{position: 'relative'}}>
-        <button className="cyber-btn">Services</button>
+      <div style={{position: 'relative', paddingTop: '20px',}}>
+        <button className="cyber-btn">Free quote</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
@@ -437,7 +447,7 @@ Reset Website to Home Page        </div>
     </CyberWrapper>
 <CyberWrapper>
       <div style={{position: 'relative'}}>
-        <button className="cyber-btn">Free Quote</button>
+        <button className="cyber-btn">services</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
@@ -448,7 +458,7 @@ Reset Website to Home Page        </div>
       </div>
     </CyberWrapper>
     <CyberWrapper>
-      <div style={{position: 'relative'}}>
+      <div style={{position: 'relative', paddingBottom: '20px',}}>
         <button className="cyber-btn">Reviews</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
@@ -459,8 +469,11 @@ Reset Website to Home Page        </div>
           Check out our some of our personal and online reviews. 
         </div>
       </div>
+
     </CyberWrapper>
+    
               
+
           </div>
 
           
@@ -482,36 +495,24 @@ Reset Website to Home Page        </div>
         
               
       
-     <StyledWrapper01  onClick={(event) => {
-    spawnCoin(event);
+     <StyledWrapper01  onClick={() => {
+    setMenuOpened(false);
+    openOverlay("serviceWindow"); 
+        onSectionChange(0); 
+
   }}>
       <article className="keycap">
         <aside className="letter">
-          <svg class="w-[50px] h-[50px] fill-[#FFFFFF]" viewBox="0 0 482 552" xmlns="http://www.w3.org/2000/svg">
+          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
 
-  <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path>
+  <path d="M512 80c8.8 0 16 7.2 16 16V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V96c0-8.8 7.2-16 16-16H512zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM208 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm-32 32c-44.2 0-80 35.8-80 80c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16c0-44.2-35.8-80-80-80H176zM376 144c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376z"></path>
 
 </svg>
           </aside>
       </article>
     </StyledWrapper01>
           
-          <StyledWrapper01  onClick={(event) => {
-    spawnCoin(event);
-    setMenuOpened(false);
-    reset3D();
-  }}
-  className='zIndex[99980]'>
-      <article className="keycap">
-        <aside className="letter">
-          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
-
-  <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z"></path>
-
-</svg>
-          </aside>
-      </article>
-    </StyledWrapper01>
+          
           <StyledWrapper01  onClick={(event) => {
     spawnCoin(event);
         setIsDay((prev) => !prev);  
@@ -527,6 +528,44 @@ Reset Website to Home Page        </div>
           </aside>
       </article>
     </StyledWrapper01>
+    
+    <button
+  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-orange-500 to-red-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
+>
+  <span
+    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+  >
+    <StyledWrapper01  onClick={() => {
+    setMenuOpened(false);
+    // reset3D();
+            onSectionChange(0); 
+
+  }}
+  className='zIndex[99980]'>
+      <article className="keycap">
+        <aside className="letter">
+          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+
+  <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z"></path>
+
+</svg>
+          </aside>
+      </article>
+    </StyledWrapper01>
+  </span>
+  <div class="hidden group-hover:block">
+    <div
+      class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+    >
+      <div class="rounded-sm bg-black py-1 px-2">
+        <p class="whitespace-nowrap">Reset to Home Page.</p>
+      </div>
+      <div
+        class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
+      ></div>
+    </div>
+  </div>
+</button>
       </div>
       <div className="absolute w-16 h-24 bg-white blur-[50px] -left-1/2 -top-1/2" />
     </div>
@@ -556,7 +595,7 @@ Reset Website to Home Page        </div>
             <div className="flex flex-col">
       <MobileWrapper >
       <div className="social-buttons">
-        <a href="#" className="social-button instagram">
+        <a href="#" className="social-button facebook">
 <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path>
@@ -567,9 +606,9 @@ Reset Website to Home Page        </div>
     spawnCoin(event);
     setMenuOpened(true);
   }}>
-          <svg class=" fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
 
-  <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"></path>
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"></path>
 
 </svg>
         </a>

@@ -29,10 +29,11 @@ const OverlayItem = ({
   activeOverlay,
   setActiveOverlay,
   device,
+  src,
+  hideTriggerButton = false,   // ← NEW PROP hides view service button for contact page
   ...props
 }) => {
   const { camera, gl } = useThree();
-  // const htmlRef = useRef();
 const groupRef = useRef(); // Ref for the THREE.Group
 const initialCameraState = useRef({ position: null, quaternion: null });
 const [showContent, setShowContent] = useState(false); // State to control visibility
@@ -67,7 +68,6 @@ const portalRoot = useRef(null);
 
 
 
-// This will store the TRUE original camera state (once, when the scene loads)
   const originalCameraState = useRef({
     position: null,
     quaternion: null
@@ -216,18 +216,10 @@ useEffect(() => {
   return () => window.removeEventListener("resize", handleResize);
 }, [showContent]);
 
-  const handlePointerDown = (e) => {
-    e.stopPropagation();
-    console.log("Html Pointer Down:", e);
-  };
 
-  const handleTestClick = (e) => {
-    e.stopPropagation();
-    console.log("Test Button Clicked!");
-  };
-
-const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
-
+const showViewButton = hideTriggerButton 
+    ? false 
+    : (isMobileOrTablet ? !isAnyOpen : !isActive);
   return (
     <group
       ref={groupRef}
@@ -334,35 +326,12 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
           <div className="card__content text-center">
             <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
             <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
-            <img src="/textures/sexyCleaning.jpeg" alt=""    className="max-h-[250px] lg:max-h-[500px]"  // Or use max-h-[] if you meant max-height
+            <img src={src} alt=""    className="max-h-[250px] lg:max-h-[500px]"  
              style={{ pointerEvents: "none" , touchAction: "none", }}
 />
             
 
- {/* <button
-    class="text-[0.8em] relative text-[#6C3082] group-hover:text-[white] duration-500 pt-16"
-
-  >
-<div
-  class="div h-[8em] w-[15em] bg-white m-auto rounded-[1em] overflow-hidden relative group p-3 z-0"
->
-  <div
-    class="circle absolute h-[5em] w-[5em] -top-[2.5em] -right-[2.5em] rounded-full bg-[#005757] group-hover:scale-[800%] duration-500 z-[-1] op"
-  ></div>
-
- 
-    <span
-      class="relative before:h-[0.16em] before:absolute before:w-full before:content-[''] before:bg-[#6C3082] group-hover:before:bg-[white] duration-300 before:bottom-0 before:left-0"
-      ></span>
-    
-
-  <h1
-    class="z-20 font-bold font-Poppin group-hover:text-white duration-500 text-[3.5em]  leading-[0.8]"
-  >
-    MORE INFO
-  </h1>
-</div>
-  </button> */}
+{/*  
 <section
   class="relative group flex flex-col items-center justify-center w-full h-full pt-20   scale-[0.75] lg:scale-[1]  hover:scale-[0.76] hover:lg:scale-[1.01] origin-top"
 >
@@ -386,7 +355,7 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
     ></div>
   </div>
   <p class="text-3xl pt-4 opacity-80">Learn More</p>
-</section>
+</section> */}
 
           </div>
           
@@ -394,7 +363,7 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
       </div>
   )}
  
-     {showViewButton && (
+     {!hideTriggerButton && showViewButton && (
       <div className="flex items-center justify-center">
     <div 
       className="relative group"
@@ -412,7 +381,6 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
         style={{
           cursor: isClickable ? "pointer" : "not-allowed",
         }}
-        // Remove the inline transform hacks — we control everything from parent now
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
 
@@ -426,14 +394,7 @@ const showViewButton = isMobileOrTablet ? !isAnyOpen : !isActive;
                   </span>
                 </div>
 
-            {/* <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-9 transition-all duration-500 group-hover:translate-x-2 group-hover:text-emerald-300"
-            >
-              <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" />
-            </svg> */}
+         
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.1 12 6"></path><path d="m5.1 8-2.9-.8"></path><path d="m6 12-1.9 2"></path><path d="M7.2 2.2 8 5.1"></path><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"></path></svg>
 
           </div>
@@ -590,6 +551,14 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
         mobile:  [640.128, 100, 205.314],
       },
     },
+    contact: {
+      distanceFactor: { desktop: 24, tablet: 24, mobile: 24 },
+      position: {
+        desktop: [-201.2, -100.1, 7.2],
+        tablet:  [-140.128, 100, -25.314],
+        mobile:  [-140.128, 100, 25.314],
+      },
+    },
   };
 
 
@@ -615,11 +584,9 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
   const driveway = getOverlayProps("driveway");
   const house = getOverlayProps("house");
   const car = getOverlayProps("car");
+  const contact = getOverlayProps("contact");
 
 
-  //  /* -------------------------------------------------------------
-  //  * MULTI-OVERLAY LOGIC
-  //  * ------------------------------------------------------------- */
 
   const isMobileOrTablet = device === "mobile" || device === "tablet";
 
@@ -727,6 +694,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
           description="Glass + frame scrub"
           price="250-500"
           bgColor="bg-yellow-500"
+src="/textures/sexyCleaning.jpeg"
         /></mesh>
         <group position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
           <mesh geometry={nodes.Door_Front_House_material_0.geometry} material={materials.House_material} />
@@ -838,7 +806,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     description="Oil stains + power wash"
     price="300-600"
     bgColor="bg-blue-500"
-    
+src="/textures/sexyCleaning.jpeg"
   />
 </mesh>
       {/* <OverlayItem
@@ -960,6 +928,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
           description="Glass + frame scrub"
           price="250-500"
           bgColor="bg-yellow-500"
+src="/textures/sexyCleaning.jpeg"
         /></mesh>
         <mesh position={car.position} visible={false}   name="car-overlay-anchor"
 >
@@ -979,7 +948,32 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
           description="Glass + frame scrub"
           price="150-300"
           bgColor="bg-yellow-500"
+src="/textures/sexyCleaning.jpeg"
         /></mesh>
+        <mesh position={contact.position} visible={false}   name="contact-overlay-anchor"
+>
+      
+  <OverlayItem
+    section={section}
+    id="serviceWindow"                    
+    key="serviceWindow"
+    setActiveOverlay={setActiveOverlay}
+    activeOverlay={activeOverlay}
+    openOverlay={openOverlay}
+    closeOverlay={closeOverlay}
+    device={device}  
+    rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+    position={[0, 0, 0]}
+    distanceFactor={contact.distanceFactor}
+    title="I like big booties"
+    description="Michael Murray"
+    price="ssn 3938 2938 298"
+    bgColor="bg-yellow-500"
+    src="/textures/sirmur2025.png"
+hideTriggerButton={true}   
+  />
+
+        </mesh>
       </group>
     
   );

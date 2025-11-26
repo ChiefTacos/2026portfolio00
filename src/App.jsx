@@ -25,6 +25,12 @@ function App() {
 
 const resetCameraRef =  useRef(() => {});//home button camera reset
 const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
+const [activeOverlay, setActiveOverlay] = useState([]); // ← always array
+
+const openOverlay = (id) => {
+  setActiveOverlay([id]);  
+};
+
 
       useEffect(() => {
         setMenuOpened(false);
@@ -89,7 +95,8 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
             <ScrollManager section={section} onSectionChange={setSection} />
             <Experience section={section} menuOpened={menuOpened} isDay={isDay} setIsAnimating={setIsAnimating} 
               onResetCamera={(fn) => { resetCameraRef.current = fn }}
-              onResetOverlays={(fn) => { resetOverlaysRef.current = fn }} 
+              onResetOverlays={(fn) => { resetOverlaysRef.current = fn }} activeOverlay={activeOverlay}
+  setActiveOverlay={setActiveOverlay}
               />
             <Scroll html>
               <Interface setSection={setSection} />
@@ -170,6 +177,8 @@ const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
           section={section}
           resetCamera={resetCameraRef.current}   
           resetOverlays={resetOverlaysRef.current}   
+              openOverlay={openOverlay}  
+
         />
         <Cursor />
       </MotionConfig>

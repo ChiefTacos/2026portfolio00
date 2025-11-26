@@ -14,7 +14,7 @@ import { MuscleCar } from "./MuscleCar";
 // import { RVmodel } from "./Rv";
 
 export const Experience = (props) => {
-  const { menuOpened, isDay, isAnimating, setIsAnimating, onResetCamera, onResetOverlays} = props;
+  const { menuOpened, isDay, isAnimating, setIsAnimating, onResetCamera, onResetOverlays, activeOverlay, setActiveOverlay} = props;
   const { viewport, camera } = useThree();
   const data = useScroll();
 
@@ -24,7 +24,6 @@ export const Experience = (props) => {
 
   const cameraPositionX = useMotionValue(0); // Initialize with 0
   const cameraLookAtX = useMotionValue(0); // Initialize with 0
-const [activeOverlay, setActiveOverlay] = useState([]); // ← always array
 
 
 
