@@ -90,10 +90,9 @@ const CyberWrapper = styled.div`
     background: transparent;
     color: white;
     border: none;
-    padding: 8px 25px;
+    padding-x: 0px 25px 0px 25px;
     font-family: "Rajdhani", sans-serif;
     font-weight: 700;
-    font-size: 26px;
     letter-spacing: 2px;
     text-transform: uppercase;
     cursor: pointer;
@@ -140,7 +139,7 @@ const CyberWrapper = styled.div`
     background: rgba(15, 15, 35, 0.95);
     border: 1px solid rgba(0, 231, 255, 0.5);
     color: #00e7ff;
-    font-size: 14px;
+    font-size: 19px;
     line-height: 1.5;
     visibility: hidden;
     opacity: 0;
@@ -289,7 +288,7 @@ const MobileWrapper = styled.div`
 
   .social-buttons svg {
     transition: 0.3s;
-    height: 20px;
+    height: 45px;
   }
 
   .facebook {
@@ -426,16 +425,16 @@ export const Menu = (props) => {
    
 
      
-               <div className="relative drop-shadow-xl w-56 h-96 overflow-hidden rounded-xl bg-[#3d3c3d]" >
-      <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132] pt-4">
+               <div className="relative drop-shadow-xl lg:w-64 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] lg:text-[36px] text-[40px] " >
+      <div className="absolute  flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132] pt-4">
 
 
 
          
-      <div className="w-full flex flex-col items-center justify-start gap-6 pb-8">
+      <div className="w-full flex flex-col items-center justify-start gap-8 lg:pb-8 pb-8 px-1 ">
         <CyberWrapper>
-      <div style={{position: 'relative', paddingTop: '20px',}}>
-        <button className="cyber-btn">Free quote</button>
+      <div style={{position: 'relative', marginTop: '30px', }}>
+        <button className="cyber-btn py-0">Free quote</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
@@ -447,7 +446,7 @@ Reset Website to Home Page        </div>
     </CyberWrapper>
 <CyberWrapper>
       <div style={{position: 'relative'}}>
-        <button className="cyber-btn">services</button>
+        <button className="cyber-btn py-0">services</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
@@ -459,7 +458,7 @@ Reset Website to Home Page        </div>
     </CyberWrapper>
     <CyberWrapper>
       <div style={{position: 'relative', paddingBottom: '20px',}}>
-        <button className="cyber-btn">Reviews</button>
+        <button className="cyber-btn py-0">Reviews</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
@@ -480,12 +479,12 @@ Reset Website to Home Page        </div>
           
         
       </div>
-      <div className="absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2" />
+      <div className="absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2 " />
     </div>
 
 
 
-  <div className="relative drop-shadow-xl w-56 h-64 overflow-hidden rounded-xl bg-[#3d3c3d]" >
+  <div className="relative drop-shadow-xl w-64 h-64 overflow-hidden rounded-xl bg-[#3d3c3d] lg:mb-0 mb-[-10]" >
       <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132]">
 
 
@@ -494,13 +493,19 @@ Reset Website to Home Page        </div>
 <div className="w-full flex flex-wrap justify-center items-center gap-4 py-6">
         
               
-      
+       <button
+  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-black"
+>
+  <span
+    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+  >
      <StyledWrapper01  onClick={() => {
     setMenuOpened(false);
     openOverlay("serviceWindow"); 
         onSectionChange(0); 
 
   }}>
+    
       <article className="keycap">
         <aside className="letter">
           <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
@@ -511,8 +516,30 @@ Reset Website to Home Page        </div>
           </aside>
       </article>
     </StyledWrapper01>
-          
-          
+            </span>
+  <div class="hidden group-hover:block">
+    <div
+      class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+    >
+      <div class="rounded-sm bg-black py-1 px-2">
+        <p class="whitespace-nowrap">Reset to booy Page.</p>
+      </div>
+      <div
+        class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
+      ></div>
+    </div>
+  </div>
+</button>
+
+
+
+
+          <button
+  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-black"
+>
+  <span
+    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+  >
           <StyledWrapper01  onClick={(event) => {
     spawnCoin(event);
         setIsDay((prev) => !prev);  
@@ -527,19 +554,41 @@ Reset Website to Home Page        </div>
 </svg>
           </aside>
       </article>
+      
     </StyledWrapper01>
-    
+     </span>
+  <div class="hidden group-hover:block">
+    <div
+      class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+    >
+      <div class="rounded-sm bg-black py-1 px-2">
+        <p class="whitespace-nowrap">Reset to booy Page.</p>
+      </div>
+      <div
+        class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
+      ></div>
+    </div>
+  </div>
+</button>
+
+
+
     <button
-  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-orange-500 to-red-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
+  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-blue-500 to-purple-700  group-hover:from-black-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
 >
   <span
     class="relative  px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
   >
     <StyledWrapper01  onClick={() => {
     setMenuOpened(false);
-    // reset3D();
-            onSectionChange(0); 
 
+      if (section === 0 ) {
+      reset3D();
+    } 
+    
+    else {
+      onSectionChange(0);
+    }
   }}
   className='zIndex[99980]'>
       <article className="keycap">
@@ -558,7 +607,7 @@ Reset Website to Home Page        </div>
       class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
       <div class="rounded-sm bg-black py-1 px-2">
-        <p class="whitespace-nowrap">Reset to Home Page.</p>
+        <p class="whitespace-nowrap">Home Page</p>
       </div>
       <div
         class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
@@ -596,7 +645,7 @@ Reset Website to Home Page        </div>
       <MobileWrapper >
       <div className="social-buttons">
         <a href="#" className="social-button facebook">
-<svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<svg class="w-[80px] h-[80px] fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path>
 
@@ -606,7 +655,7 @@ Reset Website to Home Page        </div>
     spawnCoin(event);
     setMenuOpened(true);
   }}>
-          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+          <svg class="w-[80px] h-[80px] fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"></path>
 

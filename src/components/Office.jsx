@@ -552,11 +552,11 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     contact: {
-      distanceFactor: { desktop: 24, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 24, tablet: 26, mobile: 26 },
       position: {
-        desktop: [-201.2, -100.1, 7.2],
-        tablet:  [-140.128, 100, -25.314],
-        mobile:  [-140.128, 100, 25.314],
+        desktop: [-201.2, 1000.1, 7.2],
+        tablet:  [-140.128, 1000, -25.314],
+        mobile:  [-140.128, 1000, 25.314],
       },
     },
   };
