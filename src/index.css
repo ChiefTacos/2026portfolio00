@@ -248,7 +248,7 @@ background-image: linear-gradient(135deg, rgba(36, 40, 50, 1) 0%, rgba(36, 40, 5
 .mobile-fade-in {
   opacity: 0;
   animation: fadeInMobile 0.7s ease forwards;
-  animation-delay: 6s; /* wait 6 seconds */
+  animation-delay: 0.5s; /* wait 6 seconds */
 }
 
 @keyframes fadeInMobile {

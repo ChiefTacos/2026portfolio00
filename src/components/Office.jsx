@@ -523,8 +523,8 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       distanceFactor: { desktop: 22, tablet: 24, mobile: 24 },
       position: {
         desktop: [-204.128, 928.8, 292],
-        tablet:  [-228.117, 406.956, 1.194],   // customize as needed
-        mobile:  [-228.117, 406.956, 1.194],   // customize as needed
+        tablet:  [-228.117, 406.956, 1.194],   
+        mobile:  [-228.117, 406.956, 1.194],   
       },
     },
     driveway: {

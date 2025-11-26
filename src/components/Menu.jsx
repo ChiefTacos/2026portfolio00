@@ -590,7 +590,7 @@ Reset Website to Home Page        </div>
       </div> 
 
 
-                <div className="fixed bottom-7 left-1/2 -translate-x-1/2 w-full px-4 lg:hidden z-[9999] mobile-fade-in">
+               <div className={`fixed bottom-7 left-1/2 -translate-x-1/2 w-full px-4 lg:hidden z-[9999] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
 
             <div className="flex flex-col">
       <MobileWrapper >
