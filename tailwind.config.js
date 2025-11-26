@@ -2,6 +2,7 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    
     extend: {
       textStroke: {
         'dark-red': ['2px #4D041A'], // Define stroke color and width
@@ -10,6 +11,7 @@ export default {
       },
     },
   },
+   
   plugins: [
     function ({ addUtilities }) {
       const newUtilities = {

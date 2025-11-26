@@ -432,7 +432,11 @@ export const Menu = (props) => {
 
          
       <div className="w-full flex flex-col items-center justify-start gap-8 lg:pb-8 pb-8 px-1 ">
-        <CyberWrapper>
+        <CyberWrapper  onClick={() => {
+    setMenuOpened(false);
+        onSectionChange(1); 
+
+  }}>
       <div style={{position: 'relative', marginTop: '30px', }}>
         <button className="cyber-btn py-0">Free quote</button>
         <div className="cyber-tooltip">
