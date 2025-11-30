@@ -30,7 +30,7 @@ const StyledWrapper = styled.div`
 
   .title-button {
     padding: 1rem 0.2rem;
-    transform: scale(0.5);     
+    // transform: scale(0.5);    
   }
 
   .title-2 {
@@ -54,6 +54,10 @@ const StyledWrapper = styled.div`
     min-height: 90px;
   }
 
+  .title-button {
+   width:400px;
+    // transform: scale(0.85);
+  }
 
 }
 .form-container {
@@ -73,8 +77,7 @@ const StyledWrapper = styled.div`
     box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
     cursor: pointer;
     user-select: none;
-    transform: scale(0.85);      /* shrink whole component */
-
+    // transform: scale(0.85);
   }
 
   .title-2 {
@@ -142,8 +145,11 @@ const StyledWrapper = styled.div`
   border: 2px solid #ffffff;
   margin: 2px 0;
   font-family: monospace;
+      width: 250px;
+
 }
   .input-container input
+  
    {
     background-color: #fff;
     padding: 6px;
@@ -433,11 +439,13 @@ const Section = (props) => {
   );
 };
 
+
+
 export const Interface = (props) => {
   const { setSection } = props;
   return (
     <div className="flex flex-col items-center w-screen ">
-      <AboutSection setSection={setSection} />
+      <FirstSection setSection={setSection} />
       <SkillsSection />
       <ProjectsSection />
       <ContactSection />
@@ -445,32 +453,127 @@ export const Interface = (props) => {
   );
 };
 
-const AboutSection = (props) => {
-  const { setSection } = props;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const FirstSection = (props) => {
+ 
+  // ---- state to track which parts were clicked ----
+  const [clickedFree, setClickedFree] = useState(false);
+  const [clickedQuote, setClickedQuote] = useState(false);
+const [fullyOpen, setFullyOpen] = useState(false);
+
+   const revealed = clickedFree || clickedQuote;
+ 
+
+
   return (
     <Section>
-    
-      <motion.p
-        className="text-lg text-gray-600 mt-4"
-        initial={{
-          opacity: 0,
-          y: 25,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 1,
-          delay: 1.5,
-        }}
-      >
-        <br />
-      </motion.p>
-      
-    </Section>
+      <StyledWrapper>
+          <div className="form-container
+           lg:translate-x-[230px] md:translate-x-[230px]  translate-x-[-30px] 
+            lg:translate-y-[-250px] md:translate-y-[-350px]  translate-y-[-320px]
+            ">
+
+
+
+                   <div
+  className="title-button"
+  onClick={() => {
+    if (fullyOpen) {
+      setClickedFree(false);
+      setClickedQuote(false);
+      setFullyOpen(false);
+      return;
+    }
+
+    setClickedFree(true);
+    setClickedQuote(true);
+  }}
+>
+
+            {/* <motion.div
+              className={`title-2 ${clickedFree ? 'clicked' : ''}`}
+              whileTap={{ scale: 0.93 }}
+            >
+              FREE
+            </motion.div> */}
+            <motion.div
+              className={`title-2 ${clickedQuote ? 'clicked' : ''}`}
+              whileTap={{ scale: 0.93 }}
+            >
+              FREE QUOTE
+            </motion.div>
+          </div>
+                 
+       <motion.div
+  className="full-form"
+  initial={{ height: 0, opacity: 0 }}
+  animate={{ 
+    height: revealed ? 620 : 0, 
+    opacity: revealed ? 1 : 0 
+  }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+
+  onUpdate={(latest) => {
+    if (revealed && latest.height >= 600) {
+      setFullyOpen(true);
+    }
+  }}
+
+  onAnimationStart={() => {
+    if (!revealed) setFullyOpen(false);
+  }}
+
+  style={{ overflow: "hidden" }}
+>
+
+            <div className="form-title"><span>Send a Custom Inquiry</span></div>
+
+            <div className="input-container">
+              <input className="input-mail" type="email" placeholder="Enter email" />
+            </div>
+
+            <section className="bg-stars">
+              <span className="star" />
+              <span className="star" />
+              <span className="star" />
+              <span className="star" />
+            </section>
+
+            <div className="input-container">
+              <input className="input-pwd" type="password" placeholder="Enter password" />
+            </div>
+
+            <div className="input-container">
+              <textarea placeholder="Enter your message" name="message" />
+            </div>
+
+            <button type="submit" className="submit">
+              <span className="sign-text">Send Inquiry</span>
+            </button>
+
+            <p className="signup-link">I love cock</p>
+          </motion.div>
+
+          </div>
+    </StyledWrapper>
+          </Section>
   );
 };
+
 
 
 const languages = [
@@ -490,24 +593,22 @@ const languages = [
 
 const SkillsSection = () => {
 
-  // ---- state to track which parts were clicked ----
-  const [clickedFree, setClickedFree] = useState(false);
-  const [clickedQuote, setClickedQuote] = useState(false);
-const [fullyOpen, setFullyOpen] = useState(false);
+//   const [clickedFree, setClickedFree] = useState(false);
+//   const [clickedQuote, setClickedQuote] = useState(false);
+// const [fullyOpen, setFullyOpen] = useState(false);
 
-   const revealed = clickedFree || clickedQuote;
+//    const revealed = clickedFree || clickedQuote;
  
 
 
   return (
     <Section>
-      <StyledWrapper>
+      {/* <StyledWrapper>
           <div className="form-container
            lg:translate-x-[230px] md:translate-x-[230px]  translate-x-[90px] 
             lg:translate-y-[-250px] md:translate-y-[-350px]  translate-y-[-260px]
             ">
 
-                    {/* ========== Small "FREE QUOTE" button ========== */}
                    <div
   className="title-button"
   onClick={() => {
@@ -588,7 +689,8 @@ const [fullyOpen, setFullyOpen] = useState(false);
           </motion.div>
 
           </div>
-    </StyledWrapper>
+    </StyledWrapper> */}
+    
           </Section>
   );
 };
