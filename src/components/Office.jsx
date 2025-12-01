@@ -384,7 +384,7 @@ const showViewButton = hideTriggerButton
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
 
-        <span className="relative z-10  block px-1 lg:px-6  py-2 rounded-2xl bg-neutral-950">
+        <span className="relative z-10  block pr-4 lg:px-6  py-3 rounded-2xl bg-neutral-950">
           <div className="relative z-10 flex items-center space-x-3 ">
                 <div className="hidden lg:inline ">
 
@@ -395,8 +395,42 @@ const showViewButton = hideTriggerButton
                 </div>
 
          
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4.1 12 6"></path><path d="m5.1 8-2.9-.8"></path><path d="m6 12-1.9 2"></path><path d="M7.2 2.2 8 5.1"></path><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"></path></svg>
+{/* <svg className="w-16 h-16 fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"    >
 
+  <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+   fill="white"
+      stroke="white"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  ></path>
+
+</svg> */}
+<svg
+  className="w-16 h-16 transition-all duration-300
+             stroke-white fill-white
+             group-hover:fill-emerald-300
+             group-hover:stroke-emerald-300"
+  viewBox="0 0 448 512"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {/* Vertical bar */}
+   <rect
+    x="236"      // centered
+    y="48"
+    width="40"   // halfway thickness
+    height="416" // halfway length
+    
+  />
+
+  {/* Horizontal bar */}
+  <rect
+    x="48"
+    y="236"
+    width="416"  // halfway length
+    height="40"  // halfway thickness
+  />
+</svg>
           </div>
         </span>
       </button>
@@ -552,7 +586,15 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     contact: {
-      distanceFactor: { desktop: 24, tablet: 26, mobile: 26 },
+      distanceFactor: { desktop: 20, tablet: 22, mobile: 22 },
+      position: {
+        desktop: [-201.2, 1000.1, 7.2],
+        tablet:  [-140.128, 1000, -25.314],
+        mobile:  [-140.128, 1000, 25.314],
+      },
+    },
+    freeQ: {
+      distanceFactor: { desktop: 20, tablet: 22, mobile: 22 },
       position: {
         desktop: [-201.2, 1000.1, 7.2],
         tablet:  [-140.128, 1000, -25.314],
@@ -585,6 +627,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
   const house = getOverlayProps("house");
   const car = getOverlayProps("car");
   const contact = getOverlayProps("contact");
+  const freeQ = getOverlayProps("freeQ");
 
 
 
@@ -983,6 +1026,26 @@ hideTriggerButton={true}
   />
 
         </mesh>
+        <mesh position={freeQ.position} visible={false}   name="freeQ-overlay-anchor"
+>
+      <OverlayItem
+        section={section}
+        id="freeQ"                    
+          key="freeQ"
+    setActiveOverlay={setActiveOverlay}
+    activeOverlay={activeOverlay}
+ openOverlay={openOverlay}
+          closeOverlay={closeOverlay}
+          device={device}  
+          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+         position={[0, 0, 0]}
+         distanceFactor={freeQ.distanceFactor}
+          title="freeQ Cleaning"
+          description="Glass + frame scrub"
+          price="150-300"
+          bgColor="bg-yellow-500"
+src="/textures/sexyCleaning.jpeg"
+        /></mesh>
       </group>
     
   );
