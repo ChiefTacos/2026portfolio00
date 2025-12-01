@@ -520,7 +520,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
   const overlayConfig = {
     balcony: {
-      distanceFactor: { desktop: 22, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 15, tablet: 24, mobile: 24 },
       position: {
         desktop: [-204.128, 928.8, 292],
         tablet:  [-228.117, 406.956, 1.194],   
@@ -528,7 +528,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     driveway: {
-      distanceFactor: { desktop: 30, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 22, tablet: 22, mobile: 22 },
       position: {
         desktop: [-561.2, -600.1, 257.2],
         tablet:  [-4.128, 0, 305.314],
@@ -544,9 +544,9 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     car: {
-      distanceFactor: { desktop: 24, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 18, tablet: 24, mobile: 24 },
       position: {
-        desktop: [-2001.2, 200.1, 7.2],
+        desktop: [-201.2, 200.1, 7.2],
         tablet:  [40.128, 100, -205.314],
         mobile:  [640.128, 100, 205.314],
       },
@@ -590,6 +590,13 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
   const isMobileOrTablet = device === "mobile" || device === "tablet";
 
+
+  const modelPosition =
+  device === "mobile" || device === "tablet"
+    ? [-11, -4, -1]   // mobile + tablet
+    : [-10, -3, 0];    // desktop
+
+
   const openOverlay = (id) => {
     if (isMobileOrTablet) {
       setActiveOverlay([id]);
@@ -613,7 +620,9 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
   };
 
   return (
-    <group ref={group} {...props} dispose={null} position={[-11, -4, -2]} rotation={[0, 0, 0]} scale={0.01}>
+    <group ref={group} {...props} dispose={null}     position={modelPosition}
+ rotation={[0, 0.45, 0]} scale={0.01}>
+
       {/* <group scale={0.01}> */}
         <SquareComponent
           position={[420, 14, -260]}

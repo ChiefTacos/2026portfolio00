@@ -11,7 +11,7 @@ import { Avatar } from "./Avatar";
 import { Office } from "./Office";
 import { Projects } from "./Projects";
 import { MuscleCar } from "./MuscleCar";
-// import { RVmodel } from "./Rv";
+import { RVmodel } from "./Rv";
 
 export const Experience = (props) => {
   const { menuOpened, isDay, isAnimating, setIsAnimating, onResetCamera, onResetOverlays, activeOverlay, setActiveOverlay} = props;
@@ -21,9 +21,19 @@ export const Experience = (props) => {
   const [section, setSection] = useState(0);
   const [cameraTarget, setCameraTarget] = useState(null); // Store OverlayItem camera target
 
+// Detect mobile ONCE on mount (you can also listen to resize if needed)
+  const [isMobile, setIsMobile] = useState(false);
 
-  const cameraPositionX = useMotionValue(0); // Initialize with 0
-  const cameraLookAtX = useMotionValue(0); // Initialize with 0
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    checkMobile(); // Run on mount
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
 
 
@@ -127,9 +137,9 @@ export const Experience = (props) => {
           activeOverlay={activeOverlay}
   setActiveOverlay={setActiveOverlay}
    />
-        <MuscleCar />
+        {/* <MuscleCar /> */}
          {/* <RVmodel />  */}
-         
+         {isMobile ? <MuscleCar /> : <RVmodel />}
         {/* <group
           ref={characterContainerAboutRef}
           name="CharacterSpot"

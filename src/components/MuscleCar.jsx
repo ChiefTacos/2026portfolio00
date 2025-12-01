@@ -95,7 +95,13 @@ export function MuscleCar(props) {
  };
   return (
     // <group {...props} dispose={null}>
-        <group {...props} dispose={null} position={[-10.8, -3.47, 6.8]}  rotation={[0.02, 0, 0]} scale={0.46}>
+        <group {...props} dispose={null}
+        //  position={[-7.5, -3.97, 8.8]} 
+         position={[-6.8, -3.49, 7.4]} 
+
+
+        // position={[-10.8, -3.47, 6.8]} 
+         rotation={[0.05, 0.45, 0]} scale={0.43}>
 
 
       
