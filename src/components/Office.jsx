@@ -384,7 +384,7 @@ const showViewButton = hideTriggerButton
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
 
-        <span className="relative z-10  block px-4 lg:px-6  py-4 rounded-2xl bg-neutral-950">
+        <span className="relative z-10  block px-1 lg:px-6  py-2 rounded-2xl bg-neutral-950">
           <div className="relative z-10 flex items-center space-x-3 ">
                 <div className="hidden lg:inline ">
 
