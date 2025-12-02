@@ -448,7 +448,11 @@ export const Menu = (props) => {
 Reset Website to Home Page        </div>
       </div>
     </CyberWrapper>
-<CyberWrapper>
+<CyberWrapper onClick={() => {
+    setMenuOpened(false);
+        onSectionChange(2); 
+
+  }}>
       <div style={{position: 'relative'}}>
         <button className="cyber-btn py-0">services</button>
         <div className="cyber-tooltip">
@@ -460,7 +464,11 @@ Reset Website to Home Page        </div>
         </div>
       </div>
     </CyberWrapper>
-    <CyberWrapper>
+    <CyberWrapper onClick={() => {
+    setMenuOpened(false);
+        onSectionChange(3); 
+
+  }}>
       <div style={{position: 'relative', paddingBottom: '20px',}}>
         <button className="cyber-btn py-0">Reviews</button>
         <div className="cyber-tooltip">

@@ -3,7 +3,8 @@ import { useAtom } from "jotai";
 import { currentProjectAtom, projects } from "./Projects";
 
 import styled from 'styled-components';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import GoogleReviewsBox from "./GoogleReviewsBox";
 
 
 
@@ -446,13 +447,12 @@ export const Interface = (props) => {
   return (
     <div className="flex flex-col items-center w-screen ">
       <FirstSection setSection={setSection} />
-      <SkillsSection />
       <ProjectsSection />
+      <SkillsSection />
       <ContactSection />
     </div>
   );
 };
-
 
 
 
@@ -599,6 +599,8 @@ const SkillsSection = () => {
 
 //    const revealed = clickedFree || clickedQuote;
  
+  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
 
 
   return (
@@ -690,7 +692,8 @@ const SkillsSection = () => {
 
           </div>
     </StyledWrapper> */}
-    
+    <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />
+
           </Section>
   );
 };
