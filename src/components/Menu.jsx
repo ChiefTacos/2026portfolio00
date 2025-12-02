@@ -434,7 +434,7 @@ export const Menu = (props) => {
       <div className="w-full flex flex-col items-center justify-start gap-8 lg:pb-8 pb-8 px-1 ">
         <CyberWrapper  onClick={() => {
     setMenuOpened(false);
-        onSectionChange(1); 
+        onSectionChange(0); 
 
   }}>
       <div style={{position: 'relative', marginTop: '30px', }}>
@@ -450,7 +450,7 @@ Reset Website to Home Page        </div>
     </CyberWrapper>
 <CyberWrapper onClick={() => {
     setMenuOpened(false);
-        onSectionChange(2); 
+        onSectionChange(1); 
 
   }}>
       <div style={{position: 'relative'}}>
@@ -466,7 +466,7 @@ Reset Website to Home Page        </div>
     </CyberWrapper>
     <CyberWrapper onClick={() => {
     setMenuOpened(false);
-        onSectionChange(3); 
+        onSectionChange(2); 
 
   }}>
       <div style={{position: 'relative', paddingBottom: '20px',}}>
@@ -651,7 +651,7 @@ Reset Website to Home Page        </div>
       </div> 
 
 
-               <div className={`fixed bottom-7 left-1/2 -translate-x-1/2 w-full px-4 lg:hidden z-[9999] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
+               <div className={`fixed bottom-2 left-1/2 -translate-x-1/2 w-full px-4 lg:hidden z-[9999] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
 
             <div className="flex flex-col">
       <MobileWrapper >
