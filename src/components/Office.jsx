@@ -586,7 +586,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
   const overlayConfig = {
     balcony: {
-      distanceFactor: { desktop: 15, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 15, tablet: 22, mobile: 22 },
       position: {
         desktop: [-204.128, 928.8, 292],
         tablet:  [-228.117, 406.956, 1.194],   
@@ -594,7 +594,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     driveway: {
-      distanceFactor: { desktop: 22, tablet: 22, mobile: 22 },
+      distanceFactor: { desktop: 22, tablet: 20, mobile: 20 },
       position: {
         desktop: [-561.2, -600.1, 257.2],
         tablet:  [-4.128, 0, 305.314],
@@ -602,7 +602,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     house: {
-      distanceFactor: { desktop: 24, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 24, tablet: 24, mobile: 22 },
       position: {
         desktop: [701.2, 20.1, 107.2],
         tablet:  [204.128, 100, 205.314],
