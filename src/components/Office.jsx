@@ -373,18 +373,76 @@ const showViewButton = hideTriggerButton
           
 
 
-          <div className="card__content text-center">
-            <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
-            <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
-            <img src={src} alt=""    className="max-h-[250px] lg:max-h-[500px]"  
-             style={{ pointerEvents: "none" , touchAction: "none", }}
-/>
-            
+          <div className="card__content w-full">
+          {id === "freeQ" ? (
+            /* ----------- FREE QUOTE FORM ----------- */
+            <form className="w-full max-w-3xl mx-auto p-8 flex flex-col gap-6 text-left">
 
- 
+              <h1 className="text-5xl lg:text-6xl font-bold text-center">Free Quote</h1>
 
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-          </div>
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="p-4 border border-gray-300 rounded-lg text-xl w-full"
+                />
+
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className="p-4 border border-gray-300 rounded-lg text-xl w-full"
+                />
+
+                <input
+                  type="tel"
+                  placeholder="Phone Number"
+                  className="p-4 border border-gray-300 rounded-lg text-xl w-full"
+                />
+
+                <select
+                  className="p-4 border border-gray-300 rounded-lg text-xl w-full"
+                >
+                  <option value="">Select Service</option>
+                  <option>Soft Washing</option>
+                  <option>Pressure Washing</option>
+                  <option>Roof Cleaning</option>
+                  <option>Gutter Cleaning</option>
+                  <option>Window Cleaning</option>
+                </select>
+
+              </div>
+
+              <textarea
+                rows="5"
+                placeholder="Custom Message"
+                className="p-4 border border-gray-300 rounded-lg text-xl w-full"
+              />
+
+              <button
+                type="submit"
+                className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white text-2xl rounded-lg font-bold"
+              >
+                Submit Request
+              </button>
+
+            </form>
+
+          ) : (
+            /* ----------- ORIGINAL OVERLAY HTML ----------- */
+            <div className="text-center">
+              <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
+              <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
+              <img
+                src={src}
+                alt=""
+                className="max-h-[250px] lg:max-h-[500px]"
+                style={{ pointerEvents: "none", touchAction: "none" }}
+              />
+            </div>
+          )}
+        </div>
+
           
         </div>
       </div>
