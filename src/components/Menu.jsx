@@ -434,8 +434,7 @@ export const Menu = (props) => {
       <div className="w-full flex flex-col items-center justify-start gap-8 lg:pb-8 pb-8 px-1 ">
         <CyberWrapper  onClick={() => {
     setMenuOpened(false);
-        onSectionChange(0); 
-
+props.triggerFreeQuote();  // ← This does everything!
   }}>
       <div style={{position: 'relative', marginTop: '30px', }}>
         <button className="cyber-btn py-0">Free quote</button>
@@ -619,7 +618,8 @@ Reset Website to Home Page        </div>
       class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
       <div class="rounded-sm bg-black py-1 px-2">
-        <p class="whitespace-nowrap">Home Page</p>
+        <p class="whitespace-nowrap">
+          {section === 0 ? "Reset Page" : "Home Page"}</p>
       </div>
       <div
         class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"

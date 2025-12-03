@@ -27,6 +27,13 @@ const resetCameraRef =  useRef(() => {});//home button camera reset
 const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
 const [activeOverlay, setActiveOverlay] = useState([]); // ← always array
 
+
+const triggerFreeQuote = () => {
+    setSection(0); // Go to home
+    setActiveOverlay(["freeQ"]); // Force open freeQ overlay
+  };
+
+
 const openOverlay = (id) => {
   setActiveOverlay([id]);  
 };
@@ -67,7 +74,9 @@ const openOverlay = (id) => {
     pointerEvents: "none",
     
   }}
-></div>    <MotionConfig transition={{ ...framerMotionConfig }}>
+></div>  
+<div id="freeq-portal-root"></div>
+  <MotionConfig transition={{ ...framerMotionConfig }}>
         <Canvas
           key={canvasKey}
           shadows
@@ -178,6 +187,7 @@ const openOverlay = (id) => {
           resetCamera={resetCameraRef.current}   
           resetOverlays={resetOverlaysRef.current}   
               openOverlay={openOverlay}  
+              triggerFreeQuote={triggerFreeQuote}   
 
         />
         <Cursor />

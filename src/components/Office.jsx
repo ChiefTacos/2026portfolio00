@@ -1,7 +1,7 @@
 import { useGLTF, useTexture, useVideoTexture, useAnimations, MeshTransmissionMaterial, Html  } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, } from "react";
 import * as THREE from "three";
 
 
@@ -283,7 +283,12 @@ const showViewButton = hideTriggerButton
           occlude={false}
             className={className}   // ← now works!
 
-          portal={{ current: document.getElementById("overlay-portals-root") }}
+          // portal={{ current: document.getElementById("overlay-portals-root") }}
+          portal={{ 
+  current: id === "freeQ" 
+    ? document.getElementById("freeq-portal-root") 
+    : document.getElementById("overlay-portals-root") 
+}}
         > 
 
 
@@ -339,7 +344,6 @@ const showViewButton = hideTriggerButton
                     pointerEvents: isVisible ? "auto" : "none",  
                      userSelect: "none",
                      WebkitUserSelect: "none",
-                    zIndex: 1000 + activeOverlay.indexOf(id), 
             }}
           >
 
@@ -394,6 +398,8 @@ const showViewButton = hideTriggerButton
         pointerEvents: isVisible && isClickable ? "auto" : "none",  
         opacity: isClickable ? 1 : 0.4,
         transition: "opacity 0.4s ease",
+        position: "relative",
+        zIndex: id === "freeQ" ? 999999 : "auto"  ,
       }}
     >
 
@@ -529,6 +535,9 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
   const textureVSCode = useVideoTexture("textures/vscode.mp4");
   const { actions, mixer } = useAnimations(animations, group);
 
+  const freeQOverlayRef = useRef(null);
+
+
   texture.flipY = false;
   texture.encoding = THREE.sRGBEncoding;
 
@@ -617,7 +626,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 20, tablet: 22, mobile: 22 },
+      distanceFactor: { desktop: 18, tablet: 22, mobile: 22 },
       position: {
         desktop: [-201.2, 1000.1, 7.2],
         tablet:  [-140.128, 1000, -25.314],
@@ -1078,6 +1087,7 @@ hideTriggerButton={true}
 >
       <OverlayItem
         section={section}
+        ref={freeQOverlayRef}  // ← For menu button linkinkg
         id="freeQ"                    
           key="freeQ"
   className="freeQ-overlay"
