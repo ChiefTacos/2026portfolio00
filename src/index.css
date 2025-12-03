@@ -201,3 +201,25 @@ background-image: linear-gradient(135deg, rgba(36, 40, 50, 1) 0%, rgba(36, 40, 5
     opacity: 1;
   }
 }
+
+
+@layer utilities {
+  .freeQ-overlay .overlay-window {
+    background: linear-gradient(135deg, #e0f7ff, #ffffff);
+    border: 3px solid #00c8ff;
+    box-shadow: 0 0 35px rgba(0, 200, 255, 0.4);
+  }
+
+  .freeQ-overlay h1 {
+    color: #0094b2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  .freeQ-overlay p {
+    color: #006f85;
+  }
+
+  .freeQ-overlay img {
+    filter: drop-shadow(0 6px 12px rgba(0, 180, 220, 0.3));
+  }
+}

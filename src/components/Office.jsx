@@ -220,6 +220,47 @@ useEffect(() => {
 const showViewButton = hideTriggerButton 
     ? false 
     : (isMobileOrTablet ? !isAnyOpen : !isActive);
+
+
+    const FreeQuoteButton = ({ onClick, isClickable }) => {
+  return (
+    <div className="relative group" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
+      <button
+        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 z-[50]
+                   bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
+                   hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
+                   shadow-amber-700 hover:shadow-amber-500"
+        onClick={onClick}
+        onPointerDown={(e) => e.stopPropagation()}
+        style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
+      >
+        {/* Animated glowing border */}
+        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
+
+        <span className="relative z-10 block px-8 py-4 rounded-2xl bg-neutral-950">
+          <div className="flex items-center justify-center space-x-4">
+            {/* New SVG: Sparkle + Quote Icon */}
+            <svg className="w-12 h-12" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
+                    fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
+                    className="transition-all duration-500 group-hover:fill-yellow-400 group-hover:scale-110"/>
+              <path d="M20 44C22 40, 26 40, 28 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
+            </svg>
+
+            <span className="text-2xl lg:text-3xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
+                            group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500">
+              Free Quote
+            </span>
+          </div>
+        </span>
+      </button>
+    </div>
+  );
+};
+
+
+
   return (
     <group
       ref={groupRef}
@@ -240,6 +281,8 @@ const showViewButton = hideTriggerButton
           center
           distanceFactor={distanceFactor}
           occlude={false}
+            className={className}   // ← now works!
+
           portal={{ current: document.getElementById("overlay-portals-root") }}
         > 
 
@@ -264,15 +307,18 @@ const showViewButton = hideTriggerButton
               {isActive && (
                 <div
                 ref={overlayRef}
-                className="bg-white  rounded-lg shadow-2xl border border-gray-200 overflow-hidden
-                  min-h[130vh] max-h-[130vh]
-                   lg:min-h[80vh]lg:max-h-[110vh]
+                // className="bg-white  rounded-lg shadow-2xl border border-gray-200 overflow-hidden
+                //   min-h[130vh] max-h-[130vh]
+                //    lg:min-h[80vh]lg:max-h-[110vh]
 
-                    w-[100vw] max-w-[1000px]
-                    md:w-[90vw] md:max-w-[1200px]
-                    lg:w-[70vw] lg:max-w-[1400px]
+                //     w-[100vw] max-w-[1000px]
+                //     md:w-[90vw] md:max-w-[1200px]
+                //     lg:w-[70vw] lg:max-w-[1400px]
 
-                "
+                // "
+                className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden 
+  min-h-[130vh] max-h-[130vh] lg:min-h-[80vh] lg:max-h-[110vh]
+  w-[100vw] max-w-[1000px] md:w-[90vw] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1400px]`}
 
                   onPointerDown={isVisible ? handleDragStart : undefined}
 
@@ -331,31 +377,8 @@ const showViewButton = hideTriggerButton
 />
             
 
-{/*  
-<section
-  class="relative group flex flex-col items-center justify-center w-full h-full pt-20   scale-[0.75] lg:scale-[1]  hover:scale-[0.76] hover:lg:scale-[1.01] origin-top"
->
-  <div
-    class="file relative w-60 h-40 cursor-pointer origin-bottom [perspective:1500px] z-50"
-  >
-    <div
-      class="work-5 bg-amber-600 w-full h-full origin-top rounded-2xl rounded-tl-none group-hover:shadow-[0_20px_40px_rgba(0,0,0,.2)] transition-all ease duration-300 relative after:absolute after:content-[''] after:bottom-[99%] after:left-0 after:w-20 after:h-4 after:bg-amber-600 after:rounded-t-2xl before:absolute before:content-[''] before:-top-[15px] before:left-[75.5px] before:w-4 before:h-4 before:bg-amber-600 before:[clip-path:polygon(0_35%,0%_100%,50%_100%);]"
-    ></div>
-    <div
-      class="work-4 absolute inset-1 bg-zinc-400 rounded-2xl transition-all ease duration-300 origin-bottom select-none group-hover:[transform:rotateX(-20deg)]"
-    ></div>
-    <div
-      class="work-3 absolute inset-1 bg-zinc-300 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-30deg)]"
-    ></div>
-    <div
-      class="work-2 absolute inset-1 bg-zinc-200 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-38deg)]"
-    ></div>
-    <div
-      class="work-1 absolute bottom-0 bg-gradient-to-t from-amber-500 to-amber-400 w-full h-[156px] rounded-2xl rounded-tr-none after:absolute after:content-[''] after:bottom-[99%] after:right-0 after:w-[146px] after:h-[16px] after:bg-amber-400 after:rounded-t-2xl before:absolute before:content-[''] before:-top-[10px] before:right-[142px] before:size-3 before:bg-amber-400 before:[clip-path:polygon(100%_14%,50%_100%,100%_100%);] transition-all ease duration-300 origin-bottom flex items-end group-hover:shadow-[inset_0_20px_40px_#fbbf24,_inset_0_-20px_40px_#d97706] group-hover:[transform:rotateX(-46deg)_translateY(1px)]"
-    ></div>
-  </div>
-  <p class="text-3xl pt-4 opacity-80">Learn More</p>
-</section> */}
+ 
+
 
           </div>
           
@@ -368,11 +391,20 @@ const showViewButton = hideTriggerButton
     <div 
       className="relative group"
       style={{
-        pointerEvents: isVisible && isClickable ? "auto" : "none",  // ← Add isVisible for extra safety
+        pointerEvents: isVisible && isClickable ? "auto" : "none",  
         opacity: isClickable ? 1 : 0.4,
         transition: "opacity 0.4s ease",
       }}
     >
+
+      {/* Special Free Quote Button */}
+      {id === "freeQ" ? (
+        <FreeQuoteButton 
+          onClick={handleButtonClick} 
+          isClickable={isClickable} 
+        />
+      ) : (
+
       <button
         className="relative inline-block p-px font-semibold leading-6 text-white bg-neutral-200 shadow-2xl cursor-pointer rounded-2xl shadow-emerald-900 transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-emerald-600 z-[50]"
         type="button"
@@ -395,17 +427,7 @@ const showViewButton = hideTriggerButton
                 </div>
 
          
-{/* <svg className="w-16 h-16 fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"    >
 
-  <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-   fill="white"
-      stroke="white"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  ></path>
-
-</svg> */}
 <svg
   className="w-16 h-16 transition-all duration-300
              stroke-white fill-white
@@ -434,6 +456,7 @@ const showViewButton = hideTriggerButton
           </div>
         </span>
       </button>
+      )}
     </div>
   </div>
 )}
@@ -661,6 +684,20 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       });
     }
   };
+
+
+
+
+
+    const [clickedFree, setClickedFree] = useState(false);
+  const [clickedQuote, setClickedQuote] = useState(false);
+const [fullyOpen, setFullyOpen] = useState(false);
+
+   const revealed = clickedFree || clickedQuote;
+ 
+
+
+
 
   return (
     <group ref={group} {...props} dispose={null}     position={modelPosition}
@@ -1027,11 +1064,23 @@ hideTriggerButton={true}
 
         </mesh>
         <mesh position={freeQ.position} visible={false}   name="freeQ-overlay-anchor"
+  onClick={() => {
+    if (fullyOpen) {
+      setClickedFree(false);
+      setClickedQuote(false);
+      setFullyOpen(false);
+      return;
+    }
+
+    setClickedFree(true);
+    setClickedQuote(true);
+  }}
 >
       <OverlayItem
         section={section}
         id="freeQ"                    
           key="freeQ"
+  className="freeQ-overlay"
     setActiveOverlay={setActiveOverlay}
     activeOverlay={activeOverlay}
  openOverlay={openOverlay}

@@ -489,7 +489,7 @@ const [fullyOpen, setFullyOpen] = useState(false);
 
 
 
-                   <div
+                   {/* <div
   className="title-button"
   onClick={() => {
     if (fullyOpen) {
@@ -504,19 +504,14 @@ const [fullyOpen, setFullyOpen] = useState(false);
   }}
 >
 
-            {/* <motion.div
-              className={`title-2 ${clickedFree ? 'clicked' : ''}`}
-              whileTap={{ scale: 0.93 }}
-            >
-              FREE
-            </motion.div> */}
+           
             <motion.div
               className={`title-2 ${clickedQuote ? 'clicked' : ''}`}
               whileTap={{ scale: 0.93 }}
             >
               FREE QUOTE
             </motion.div>
-          </div>
+          </div> */}
                  
        <motion.div
   className="full-form"
