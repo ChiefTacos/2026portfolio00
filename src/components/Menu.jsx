@@ -401,7 +401,7 @@ export const Menu = (props) => {
 
       <div
         className={`
-           z-[10001] fixed inset-y-0 right-0 transition-all overflow-y-auto
+           z-[2147483646] fixed inset-y-0 right-0 transition-all overflow-y-auto
           flex flex-col bg-blue
         `}
         
