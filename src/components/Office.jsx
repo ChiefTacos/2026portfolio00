@@ -790,51 +790,61 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
   const overlayConfig = {
     balcony: {
-      distanceFactor: { desktop: 15, tablet: 22, mobile: 22 },
+      distanceFactor: { desktop: 18, tablet: 21, mobile: 22 },
       position: {
-        desktop: [-204.128, 928.8, 292],
-        tablet:  [-228.117, 406.956, 1.194],   
-        mobile:  [-228.117, 406.956, 1.194],   
+        desktop: [-574.128, 628.8, -72],
+        tablet: [-514.128, 628.8, -72],
+        mobile: [-284.128, 288.8, 90],
+
+        // mobile:  [-228.117, 406.956, 1.194],   
+      },
+    },
+     house: {
+      distanceFactor: { desktop: 14, tablet: 19, mobile: 21 },
+      position: {
+        desktop: [-574.128, 178.8, 322],
+        tablet: [-514.128, 178.8, 322],
+        mobile: [-310.128, 98.8, 232],
+
+        // mobile:  [204.128, 100, 205.314],
       },
     },
     driveway: {
-      distanceFactor: { desktop: 22, tablet: 20, mobile: 20 },
+      distanceFactor: { desktop: 15, tablet: 20, mobile: 19 },
       position: {
-        desktop: [-561.2, -600.1, 257.2],
-        tablet:  [-4.128, 0, 305.314],
-        mobile:  [-4.128, 0, 305.314],
-      },
-    },
-    house: {
-      distanceFactor: { desktop: 24, tablet: 24, mobile: 22 },
-      position: {
-        desktop: [701.2, 20.1, 107.2],
-        tablet:  [204.128, 100, 205.314],
-        mobile:  [204.128, 100, 205.314],
+        desktop: [-594.128, 368.8, 172],
+        tablet: [-534.128, 368.8, 172],
+        mobile: [-350.128, -103.8, 582],
+
+        // mobile:  [-4.128, 0, 305.314],
       },
     },
     car: {
-      distanceFactor: { desktop: 18, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 13, tablet: 18, mobile: 19 },
       position: {
-        desktop: [-201.2, 200.1, 7.2],
-        tablet:  [40.128, 100, -205.314],
-        mobile:  [640.128, 100, 205.314],
+        desktop: [-384.128, -18.8, 462],
+        tablet: [-324.128, -18.8, 462],
+        mobile: [-332.128, -7, 442],
+
+        // mobile:  [640.128, 100, 205.314],
       },
     },
     contact: {
       distanceFactor: { desktop: 20, tablet: 22, mobile: 22 },
       position: {
         desktop: [-201.2, 1000.1, 7.2],
+        
         tablet:  [-140.128, 1000, -25.314],
         mobile:  [-140.128, 1000, 25.314],
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 18, tablet: 24, mobile: 24 },
+      distanceFactor: { desktop: 18, tablet: 24, mobile: 20 },
       position: {
-        desktop: [-201.2, 1000.1, 7.2],
+        desktop: [-201.2, 900.1, 7.2],
         tablet:  [-140.128, 1000, -25.314],
-        mobile:  [-140.128, 1000, 25.314],
+        // top right above house DF=18  mobile:  [240.128, 900, 405.314],
+        mobile:  [340.128, 100, 405.314],
       },
     },
   };
@@ -992,9 +1002,9 @@ const [fullyOpen, setFullyOpen] = useState(false);
           rotation={[Math.PI / 2, -Math.PI / 2, 0]}
          position={[0, 0, 0]}
          distanceFactor={balcony.distanceFactor}
-          title="Balcony Rail Cleaning"
-          description="Glass + frame scrub"
-          price="250-500"
+          title="Gutter Cleaning"
+          description="Big Fat Ass scrub"
+          price="75-200"
           bgColor="bg-yellow-500"
 src="/textures/sexyCleaning.jpeg"
         /></mesh>
@@ -1246,9 +1256,9 @@ src="/textures/sexyCleaning.jpeg"
           rotation={[Math.PI / 2, -Math.PI / 2, 0]}
          position={[0, 0, 0]}
          distanceFactor={car.distanceFactor}
-          title="Car Cleaning"
-          description="Glass + frame scrub"
-          price="150-300"
+          title="Auto Detailing"
+          description="We clean the exteriors of cars, trucks, and RVs"
+          price="50-300"
           bgColor="bg-yellow-500"
 src="/textures/sexyCleaning.jpeg"
         /></mesh>
