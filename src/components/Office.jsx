@@ -265,10 +265,10 @@ const showViewButton = hideTriggerButton
         {/* Animated glowing border */}
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
-        <span className="relative z-10 block px-8 py-4 rounded-2xl bg-neutral-950">
+        <span className="relative z-10 block px-4 lg:px-6 py-3 pb-5 lg:py-6 lg:pb-9 rounded-2xl bg-neutral-950">
           <div className="flex items-center justify-center space-x-4">
             {/* New SVG: Sparkle + Quote Icon */}
-            <svg className="w-12 h-12" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-16 h-16 lg:w-24 lg:h-24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
                     className="transition-all duration-500 group-hover:fill-yellow-400 group-hover:scale-110"/>
@@ -276,7 +276,7 @@ const showViewButton = hideTriggerButton
               <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
             </svg>
 
-            <span className="text-2xl lg:text-3xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
+            <span className="text-4xl lg:text-6xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
                             group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500">
               Free Quote
             </span>
@@ -443,9 +443,9 @@ const showViewButton = hideTriggerButton
                         setConfirmNewForm(true);
                       }}
                     >
-                      <h1 className="text-4xl lg:text-7xl font-bold text-center">Send Custom Quote</h1>
+                      <h1 className="text-5xl lg:text-7xl font-bold text-center">Custom Quote</h1>
 
-                      <div className="grid grid-cols-2 lg:grid-cols-1 gap-0 lg:gap-6">
+                      <div className="grid grid-cols-2 lg:grid-cols-2 gap-0 lg:gap-6">
                         <input type="text" placeholder="Full Name"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60  ${errors.fullName ? "border-red-500 bg-red-50" : ""}`}
 
                           value={fullName}
@@ -522,71 +522,7 @@ const showViewButton = hideTriggerButton
                   </div>
                 )}
 
-          {/* {id === "freeQ" ? (
-            <form className="w-full max-w-3xl mx-auto p-8 flex flex-col gap-6 text-left">
-
-              <h1 className="text-5xl lg:text-6xl font-bold text-center">Free Quote</h1>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="p-4 border border-gray-300 rounded-lg text-xl w-full"
-                />
-
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="p-4 border border-gray-300 rounded-lg text-xl w-full"
-                />
-
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  className="p-4 border border-gray-300 rounded-lg text-xl w-full"
-                />
-
-                <select
-                  className="p-4 border border-gray-300 rounded-lg text-xl w-full"
-                >
-                  <option value="">Select Service</option>
-                  <option>Soft Washing</option>
-                  <option>Pressure Washing</option>
-                  <option>Roof Cleaning</option>
-                  <option>Gutter Cleaning</option>
-                  <option>Window Cleaning</option>
-                </select>
-
-              </div>
-
-              <textarea
-                rows="5"
-                placeholder="Custom Message"
-                className="p-4 border border-gray-300 rounded-lg text-xl w-full"
-              />
-
-              <button
-                type="submit"
-                className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white text-2xl rounded-lg font-bold"
-              >
-                Submit Request
-              </button>
-
-            </form>
-
-          ) : (
-            <div className="text-center">
-              <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
-              <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
-              <img
-                src={src}
-                alt=""
-                className="max-h-[250px] lg:max-h-[500px]"
-                style={{ pointerEvents: "none", touchAction: "none" }}
-              />
-            </div>
-          )} */}
+         
         </div>
 
           
@@ -630,7 +566,7 @@ const showViewButton = hideTriggerButton
           <div className="relative z-10 flex items-center space-x-3 ">
                 <div className="hidden lg:inline ">
 
-                  <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 lg:text-2xl text-xl font-medium pointer-events-none">
+                  <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 text-3xl font-medium pointer-events-none">
                     View 
                     <br /> Service
                   </span>
@@ -789,8 +725,10 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
 
   const overlayConfig = {
+    
+    //gutter
     balcony: {
-      distanceFactor: { desktop: 18, tablet: 21, mobile: 22 },
+      distanceFactor: { desktop: 19, tablet: 23, mobile: 22 },
       position: {
         desktop: [-574.128, 628.8, -72],
         tablet: [-514.128, 628.8, -72],

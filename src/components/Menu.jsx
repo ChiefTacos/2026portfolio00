@@ -437,7 +437,7 @@ export const Menu = (props) => {
 props.triggerFreeQuote();  // ← This does everything!
   }}>
       <div style={{position: 'relative', marginTop: '30px', }}>
-        <button className="cyber-btn py-0">Free quote</button>
+        <button className="cyber-btn py-0">Customize quote</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
@@ -459,7 +459,7 @@ Reset Website to Home Page        </div>
           <div className="corner-tr" />
           <div className="corner-bl" />
           <div className="corner-br" />
-          Customizable quote with file upload and date scheduling.
+          In-depth look at our premier services.
         </div>
       </div>
     </CyberWrapper>
