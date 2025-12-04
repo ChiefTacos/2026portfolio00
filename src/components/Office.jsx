@@ -405,16 +405,11 @@ const showViewButton = hideTriggerButton
           <div className="card__content w-full">
             {id === "freeQ" ? (
                   !formSubmitted ? (
-                    /* ---------------- FORM IS OPEN ---------------- */
                     <form
                       className="w-full max-w-3xl mx-auto p-1 lg:p-8 flex flex-col gap-3 lg:gap-6 text-left"
                       onSubmit={(e) => {
-                        e.preventDefault();
-
-
-                       // VALIDATION — block submit if any required field is empty
-
-                          const newErrors = {};
+                        e.preventDefault();                          
+                        const newErrors = {};
 
                             if (!fullName.trim()) newErrors.fullName = true;
                             if (!contactMethod.trim()) newErrors.contactMethod = true;
@@ -424,7 +419,6 @@ const showViewButton = hideTriggerButton
                               newErrors.cityState = true;
                               newErrors.zipCode = true;
                             }
-                            // EMAIL OR PHONE — at least one must be filled
                             if (!email.trim() && !phone.trim()) {
                               newErrors.email = true;
                               newErrors.phone = true;
@@ -632,9 +626,10 @@ const showViewButton = hideTriggerButton
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
 
-        <span className="relative z-10  block pr-4 lg:px-6  py-3 rounded-2xl bg-neutral-950">
+        <span className="relative z-10  block pr-4  lg:px-2 pt-3 lg:pt-1 py-3 lg:py-2  rounded-2xl bg-neutral-950">
           <div className="relative z-10 flex items-center space-x-3 ">
                 <div className="hidden lg:inline ">
+                {/* <div className="inline "> */}
 
                   <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 text-3xl font-medium pointer-events-none">
                   {title}
@@ -797,21 +792,23 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     
     //gutter
     balcony: {
-      distanceFactor: { desktop: 19, tablet: 23, mobile: 22 },
+      distanceFactor: { desktop: 19, tablet: 23, mobile: 19 },
       position: {
         desktop: [-574.128, 628.8, -72],
         tablet: [-514.128, 628.8, -72],
-        mobile: [-284.128, 288.8, 90],
+        
+         mobile:  [-270.128, 850, 305.314],
 
         // mobile:  [-228.117, 406.956, 1.194],   
       },
     },
      house: {
-      distanceFactor: { desktop: 14, tablet: 19, mobile: 21 },
+      distanceFactor: { desktop: 14, tablet: 19, mobile: 20 },
       position: {
         desktop: [-574.128, 178.8, 322],
         tablet: [-514.128, 178.8, 322],
-        mobile: [-310.128, 98.8, 232],
+        // mobile: [-170.128, 98.8, 232],
+         mobile:  [540.128, 100, 405.314],
 
         // mobile:  [204.128, 100, 205.314],
       },
@@ -821,7 +818,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       position: {
         desktop: [-594.128, 368.8, 172],
         tablet: [-534.128, 368.8, 172],
-        mobile: [-350.128, -103.8, 582],
+        mobile: [-240.128, -103.8, 582],
 
         // mobile:  [-4.128, 0, 305.314],
       },
@@ -831,8 +828,8 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       position: {
         desktop: [-384.128, -18.8, 462],
         tablet: [-324.128, -18.8, 462],
-        mobile: [-332.128, -7, 442],
-
+        // mobile: [-212.128, -7, 442],
+         mobile:  [240.128, 900, 405.314],
         // mobile:  [640.128, 100, 205.314],
       },
     },
@@ -846,12 +843,14 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 18, tablet: 24, mobile: 20 },
+      distanceFactor: { desktop: 18, tablet: 24, mobile: 18 },
       position: {
         desktop: [-201.2, 900.1, 7.2],
         tablet:  [-140.128, 1000, -25.314],
-        // top right above house DF=18  mobile:  [240.128, 900, 405.314],
-        mobile:  [340.128, 100, 405.314],
+        // left middle topish mobile: [-4.128, 628.8, 0],
+
+         mobile:  [-70.128, 1060, 405.314],
+      //right middle  mobile:  [540.128, 100, 405.314],
       },
     },
   };
