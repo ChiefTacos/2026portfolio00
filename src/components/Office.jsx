@@ -350,7 +350,7 @@ const showViewButton = hideTriggerButton
 
                 // "
                 className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden 
-  min-h-[130vh] max-h-[130vh] lg:min-h-[80vh] lg:max-h-[110vh]
+  min-h-[110vh] max-h-[130vh] lg:min-h-[80vh] lg:max-h-[110vh]
   w-[100vw] max-w-[1000px] md:w-[90vw] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1400px]`}
 
                   onPointerDown={isVisible ? handleDragStart : undefined}
@@ -406,7 +406,7 @@ const showViewButton = hideTriggerButton
                   !formSubmitted ? (
                     /* ---------------- FORM IS OPEN ---------------- */
                     <form
-                      className="w-full max-w-3xl mx-auto p-3 lg:p-8 flex flex-col gap-6 text-left"
+                      className="w-full max-w-3xl mx-auto p-1 lg:p-8 flex flex-col gap-3 lg:gap-6 text-left"
                       onSubmit={(e) => {
                         e.preventDefault();
 
@@ -445,20 +445,20 @@ const showViewButton = hideTriggerButton
                     >
                       <h1 className="text-4xl lg:text-7xl font-bold text-center">Send Custom Quote</h1>
 
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-6">
-                        <input type="text" placeholder="Full Name"   className={`p-4 border rounded-lg text-xl ${errors.fullName ? "border-red-500 bg-red-50" : ""}`}
+                      <div className="grid grid-cols-2 lg:grid-cols-1 gap-0 lg:gap-6">
+                        <input type="text" placeholder="Full Name"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60  ${errors.fullName ? "border-red-500 bg-red-50" : ""}`}
 
                           value={fullName}
                          onChange={(e) => setFullName(e.target.value)} />
-                        <input type="text" placeholder="Company Name" className="p-4 border rounded-lg text-xl" />
+                        <input type="text" placeholder="Company Name" className="p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60" />
 
-                        <select className={`p-4 border rounded-lg text-lg ${errors.contactMethod ? "border-red-500 bg-red-50" : ""}`}   value={contactMethod} onChange={(e) => setContactMethod(e.target.value)}
+                        <select className={`p-4 border rounded-lg text-lg lg:text-2xl placeholder-black placeholder-opacity-60 ${errors.contactMethod ? "border-red-500 bg-red-50" : ""}`}   value={contactMethod} onChange={(e) => setContactMethod(e.target.value)}
 >
                           <option value="">Preffered Contact Method</option>
                           <option>Phone Number</option>
                           <option>Email</option>
                         </select>
-                        <select   className={`p-4 border rounded-lg text-xl ${errors.serviceType ? "border-red-500 bg-red-50" : ""}`}  value={serviceType}  onChange={(e) => setServiceType(e.target.value)}>
+                        <select   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.serviceType ? "border-red-500 bg-red-50" : ""}`}  value={serviceType}  onChange={(e) => setServiceType(e.target.value)}>
                           <option value="">Select Service</option>
                           <option>Soft Washing</option>
                           <option>Pressure Washing</option>
@@ -468,19 +468,19 @@ const showViewButton = hideTriggerButton
                           <option>Other (Custom Message)</option>
                         </select>
 
-                        <input type="text" placeholder="Address/City"   className={`p-4 border rounded-lg text-xl ${errors.cityState ? "border-red-500 bg-red-50" : ""}`}  value={cityState} onChange={(e) => setCityState(e.target.value)} />
-                        <input type="text" placeholder="Zip Code"   className={`p-4 border rounded-lg text-xl ${errors.zipCode ? "border-red-500 bg-red-50" : ""}`}  value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+                        <input type="text" placeholder="Address/City"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.cityState ? "border-red-500 bg-red-50" : ""}`}  value={cityState} onChange={(e) => setCityState(e.target.value)} />
+                        <input type="text" placeholder="Zip Code"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.zipCode ? "border-red-500 bg-red-50" : ""}`}  value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
 
-                        <input type="email" placeholder="Email Address" className={`p-4 border rounded-lg text-xl ${errors.email ? "border-red-500 bg-red-50" : ""}`}   value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <input type="tel" placeholder="Phone Number"   className={`p-4 border rounded-lg text-xl ${errors.phone ? "border-red-500 bg-red-50" : ""}`}  value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                        <input type="email" placeholder="Email Address" className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.email ? "border-red-500 bg-red-50" : ""}`}   value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="tel" placeholder="Phone Number"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.phone ? "border-red-500 bg-red-50" : ""}`}  value={phone} onChange={(e) => setPhone(e.target.value)}/>
                         
                       </div>
 
-                      <textarea rows="3" placeholder="Explain What You Need in a Custom Message" className="p-4 border rounded-lg text-xl" />
+                      <textarea rows="2" lg:rows="3" placeholder="Explain What You Need in a Custom Message" className="p-4  border rounded-lg text-xl lg:text-2xl placeholder-black placeholder-opacity-60" />
 
                       <button
                         type="submit"
-                        className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white text-2xl rounded-lg font-bold"
+                        className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white text-2xl rounded-lg font-bold gap-0"
                       >
                         Submit Request
                       </button>
