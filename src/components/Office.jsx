@@ -61,8 +61,31 @@ const minVelocity = 0.1; // stop threshold
 
 const portalRoot = useRef(null);
 
+const [formSubmitted, setFormSubmitted] = useState(false); //for freeQ different states of overlay html showing option to submit new form if already submitted
+const [confirmNewForm, setConfirmNewForm] = useState(false);
+// FREE QUOTE FORM FIELDS
+const [errors, setErrors] = useState({});
+
+const [fullName, setFullName] = useState("");
+const [contactMethod, setContactMethod] = useState("");
+const [serviceType, setServiceType] = useState("");
+const [cityState, setCityState] = useState("");
+const [zipCode, setZipCode] = useState("");
+
+const [email, setEmail] = useState("");
+const [phone, setPhone] = useState("");
 
 
+const resetFormFields = () => {
+  setFullName("");
+  setContactMethod("");
+  setServiceType("");
+  setCityState("");
+  setZipCode("");
+  setEmail("");
+  setPhone("");
+  setErrors({});
+};
 
 
 
@@ -111,7 +134,12 @@ const handleButtonClick = (e) => {
       return [...prev, id];
     });
   }
-
+// If they submitted before, show confirmation instead of form
+  if (id === "freeQ" && formSubmitted) {
+    setConfirmNewForm(true);
+  } else {
+    setConfirmNewForm(false);
+  }
   setShowContent(true);
   setIsClickable(false);
 };
@@ -374,8 +402,127 @@ const showViewButton = hideTriggerButton
 
 
           <div className="card__content w-full">
-          {id === "freeQ" ? (
-            /* ----------- FREE QUOTE FORM ----------- */
+            {id === "freeQ" ? (
+                  !formSubmitted ? (
+                    /* ---------------- FORM IS OPEN ---------------- */
+                    <form
+                      className="w-full max-w-3xl mx-auto p-3 lg:p-8 flex flex-col gap-6 text-left"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+
+
+                       // VALIDATION — block submit if any required field is empty
+
+                          const newErrors = {};
+
+                            if (!fullName.trim()) newErrors.fullName = true;
+                            if (!contactMethod.trim()) newErrors.contactMethod = true;
+                            if (!serviceType.trim()) newErrors.serviceType = true;
+
+                            if (!cityState.trim() && !zipCode.trim()) {
+                              newErrors.cityState = true;
+                              newErrors.zipCode = true;
+                            }
+                            // EMAIL OR PHONE — at least one must be filled
+                            if (!email.trim() && !phone.trim()) {
+                              newErrors.email = true;
+                              newErrors.phone = true;
+                            }
+                            setErrors(newErrors);
+
+                            if (Object.keys(newErrors).length > 0) {
+                              return; // <-- block submit
+                            }
+                        // CLOSE OVERLAY
+                        handleResetClick(e);
+
+                        // mark form as submitted
+                        setFormSubmitted(true);
+
+                        // next time they click Free Quote → show confirmation box
+                        setConfirmNewForm(true);
+                      }}
+                    >
+                      <h1 className="text-4xl lg:text-7xl font-bold text-center">Send Custom Quote</h1>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-6">
+                        <input type="text" placeholder="Full Name"   className={`p-4 border rounded-lg text-xl ${errors.fullName ? "border-red-500 bg-red-50" : ""}`}
+
+                          value={fullName}
+                         onChange={(e) => setFullName(e.target.value)} />
+                        <input type="text" placeholder="Company Name" className="p-4 border rounded-lg text-xl" />
+
+                        <select className={`p-4 border rounded-lg text-lg ${errors.contactMethod ? "border-red-500 bg-red-50" : ""}`}   value={contactMethod} onChange={(e) => setContactMethod(e.target.value)}
+>
+                          <option value="">Preffered Contact Method</option>
+                          <option>Phone Number</option>
+                          <option>Email</option>
+                        </select>
+                        <select   className={`p-4 border rounded-lg text-xl ${errors.serviceType ? "border-red-500 bg-red-50" : ""}`}  value={serviceType}  onChange={(e) => setServiceType(e.target.value)}>
+                          <option value="">Select Service</option>
+                          <option>Soft Washing</option>
+                          <option>Pressure Washing</option>
+                          <option>Roof Cleaning</option>
+                          <option>Gutter Cleaning</option>
+                          <option>Window Cleaning</option>
+                          <option>Other (Custom Message)</option>
+                        </select>
+
+                        <input type="text" placeholder="Address/City"   className={`p-4 border rounded-lg text-xl ${errors.cityState ? "border-red-500 bg-red-50" : ""}`}  value={cityState} onChange={(e) => setCityState(e.target.value)} />
+                        <input type="text" placeholder="Zip Code"   className={`p-4 border rounded-lg text-xl ${errors.zipCode ? "border-red-500 bg-red-50" : ""}`}  value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+
+                        <input type="email" placeholder="Email Address" className={`p-4 border rounded-lg text-xl ${errors.email ? "border-red-500 bg-red-50" : ""}`}   value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="tel" placeholder="Phone Number"   className={`p-4 border rounded-lg text-xl ${errors.phone ? "border-red-500 bg-red-50" : ""}`}  value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                        
+                      </div>
+
+                      <textarea rows="3" placeholder="Explain What You Need in a Custom Message" className="p-4 border rounded-lg text-xl" />
+
+                      <button
+                        type="submit"
+                        className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white text-2xl rounded-lg font-bold"
+                      >
+                        Submit Request
+                      </button>
+                    </form>
+
+                  ) : confirmNewForm ? (
+                    /* -------------- ASK IF THEY WANT A NEW FORM -------------- */
+                    <div className="flex flex-col items-center gap-6 p-10 text-center">
+                      <h1 className="text-5xl font-bold">Submit Another Quote?</h1>
+
+                      <button
+                        className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-lg font-bold"
+                        onClick={() => {
+                          resetFormFields();       // ← clears all
+                          setFormSubmitted(false);      
+                          setConfirmNewForm(false);
+                          setShowContent(true);
+                          setActiveOverlay([id]);
+                        }}
+                      >
+                        Yes — Start New Form
+                      </button>
+
+                      <button
+                        className="px-8 py-4 bg-gray-400 hover:bg-gray-500 text-black text-2xl rounded-lg font-bold"
+                        onClick={handleResetClick}
+                      >
+                        No — Close
+                      </button>
+                    </div>
+
+                  ) : null
+                ) : (
+                  /* ORIGINAL OVERLAY CONTENT */
+                  <div className="text-center">
+                    <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
+                    <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
+                    <img src={src} alt="" className="max-h-[250px] lg:max-h-[500px]" style={{ pointerEvents: "none" }} />
+                  </div>
+                )}
+
+          {/* {id === "freeQ" ? (
             <form className="w-full max-w-3xl mx-auto p-8 flex flex-col gap-6 text-left">
 
               <h1 className="text-5xl lg:text-6xl font-bold text-center">Free Quote</h1>
@@ -429,7 +576,6 @@ const showViewButton = hideTriggerButton
             </form>
 
           ) : (
-            /* ----------- ORIGINAL OVERLAY HTML ----------- */
             <div className="text-center">
               <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
               <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
@@ -440,7 +586,7 @@ const showViewButton = hideTriggerButton
                 style={{ pointerEvents: "none", touchAction: "none" }}
               />
             </div>
-          )}
+          )} */}
         </div>
 
           
@@ -684,7 +830,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 18, tablet: 22, mobile: 22 },
+      distanceFactor: { desktop: 18, tablet: 24, mobile: 24 },
       position: {
         desktop: [-201.2, 1000.1, 7.2],
         tablet:  [-140.128, 1000, -25.314],
