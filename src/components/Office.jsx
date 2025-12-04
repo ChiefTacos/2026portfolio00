@@ -444,7 +444,7 @@ const showViewButton = hideTriggerButton
                         setConfirmNewForm(true);
                       }}
                     >
-                      <h1 className="text-5xl lg:text-7xl font-bold text-center">Custom Quote</h1>
+                      {/* <h1 className="text-5xl lg:text-7xl font-bold text-center">Custom Quote</h1> */}
 
                       <div className="grid grid-cols-2 lg:grid-cols-2 gap-0 lg:gap-6">
                         <input type="text" placeholder="Full Name"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60  ${errors.fullName ? "border-red-500 bg-red-50" : ""}`}
