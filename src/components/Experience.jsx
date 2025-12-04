@@ -3,18 +3,16 @@ import {
   useScroll,
 } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { animate, useMotionValue } from "framer-motion";
 import { motion } from "framer-motion-3d";
 import { useEffect, useRef, useState } from "react";
 import { framerMotionConfig } from "../config";
-import { Avatar } from "./Avatar";
 import { Office } from "./Office";
 import { Projects } from "./Projects";
 import { MuscleCar } from "./MuscleCar";
 import { RVmodel } from "./Rv";
 
 export const Experience = (props) => {
-  const { menuOpened, isDay, isAnimating, setIsAnimating, onResetCamera, onResetOverlays, activeOverlay, setActiveOverlay} = props;
+  const { menuOpened, isDay,  setIsAnimating,  activeOverlay, setActiveOverlay} = props;
   const { viewport, camera } = useThree();
   const data = useScroll();
 
@@ -45,15 +43,7 @@ export const Experience = (props) => {
 
 
   
-  const characterContainerAboutRef = useRef();
-
-  const [characterAnimation, setCharacterAnimation] = useState("Typing");
-  useEffect(() => {
-    setCharacterAnimation("Falling");
-    setTimeout(() => {
-      setCharacterAnimation(section === 2 ? "Typing" : "Standing");
-    }, 600);
-  }, [section]);
+  
 
   useFrame((state) => {
     let curSection = Math.floor(data.scroll.current * data.pages);
@@ -73,62 +63,41 @@ export const Experience = (props) => {
     <>
       <ambientLight intensity={isDay ? 1.1: 1.8} />
 
-      <motion.group
-        position={[1.9072935059634513, 0.14400000000000002, 2.681801948466054]}
+      {/* <motion.group
+        position={[5.9072935059634513, -1.14400000000000002, -4.681801948466054]}
         rotation={[-3.141592653589793, 1.2053981633974482, 3.141592653589793]}
         animate={"" + section}
         transition={{
           duration: 0.6,
         }}
         variants={{
-          0: {
-            scaleX: 0.99,
-            scaleZ: 0.99,
-            scaleY: 0.99,
-            y: 0.65,
-            x: -4,
-            z:-10
-          },
-          1: {
-           scaleX: 1,
-            scaleZ: 1,
-            scaleY: 1,
-            y: 0.65,
-            x: -4,
-            z:-10
-          },
-          2: {
-            x: -2,
-            y: -viewport.height * 2 + 0.5,
-            z: 0,
-            rotateX: 0,
-            rotateY: Math.PI / 2,
-            rotateZ: 0,
-          },
-          3: {
-            y: -viewport.height * 3 + 1,
-            x: 0.3,
-            z: 8.5,
-            rotateX: 0,
-            rotateY: -Math.PI / 4,
-            rotateZ: 0,
-          },
-        }}
+  0: { x: 1.907, y: -1.144, z: -4.682 },
+  1: { x: 1.907, y: -1.144, z: -4.682 },
+  2: { x: 2.907, y: -1.144, z: -4.682 },
+  3: { x: 2.907, y: -1.144, z: -4.682 },   // ← just copy section 2 or wherever you want her
+}}
       >
         <Avatar animation={characterAnimation} />
-      </motion.group>
+      </motion.group> */}
       <motion.group
         position={[8, 1, -2]}
         scale={[1, 1, 1]}
         
         
          animate={{
-            // rotateY: section === 3 ? Math.PI / 5 : 0,
-            // rotateX: section === 3 ? Math.PI / -9 : 0,
-            rotateY: section === 3 ? 0 : 0,
-            rotateX: section === 3 ? 0 : 0,
+            x: section === 1 || section === 2 ? 2 : 8,   
+            y: section === 1 || section === 2 ? 0 : 1,   
+
+            z: section === 1 || section === 2 ? 0 : -2,   
+              rotateY: section === 1 || section === 2 ? Math.PI / 1.7 : 0,
+              rotateX: section === 1 || section === 2 ? Math.PI / -10 : 0,
+            // rotateY: section === 3 ? 0 : 0,
+            // rotateX: section === 3 ? 0 : 0,
 
          }}
+          transition={{
+          duration: 1.1,
+        }}
 
 
       >
@@ -143,7 +112,7 @@ export const Experience = (props) => {
         {/* <group
           ref={characterContainerAboutRef}
           name="CharacterSpot"
-          position={[0.07, 0.16, -0.57]}
+          position={[10.07, 0.16, -0.57]}
           rotation={[-Math.PI, 0.42, -Math.PI]}
         ></group> */}
         

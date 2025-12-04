@@ -316,9 +316,12 @@ export const DayNightSky = ({
 
   const nightUniforms = useMemo(
     () => ({
-      topColor: { value: new THREE.Color("#1a1446") },
-      midColor: { value: new THREE.Color("#3d2391") },
-      bottomColor: { value: new THREE.Color("#000000") },
+      topColor: { value: new THREE.Color("#37306B") },
+      midColor: { value: new THREE.Color("#495C83") },
+      bottomColor: { value: new THREE.Color("#5459AC") },
+      // topColor: { value: new THREE.Color("#522258") },
+      // midColor: { value: new THREE.Color("#5459AC") },
+      // bottomColor: { value: new THREE.Color("#2E236C") },
       textMask: { value: textTexture },
       time: { value: 0 },
     }),
