@@ -685,7 +685,7 @@ alert('i love cock');
         <div className="mb-2 pb-0 text-center flex flex-col items-center">
                
 
-          <h3 className="pb-1 pt-1 text-base text-center">Badger Surface Solutions LLC © 2025</h3>
+          <h3 className="pb-1 pt-1 text-base text-center">SURMUR LLC © 2025</h3>
         </div>
       </div> 
 

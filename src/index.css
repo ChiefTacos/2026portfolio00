@@ -181,8 +181,8 @@ canvas {
 
 .card {
     position: relative;
-    width: 600px;
-    height: 400px;
+    width: 500px;
+    height: 300px;
     background-color: #f2f2f2;
     border-radius: 10px;
      align-items: center;

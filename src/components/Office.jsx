@@ -393,6 +393,9 @@ const showViewButton = hideTriggerButton
           >
             <span className="bg-green-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-green-600 transition"></span>
           </button>
+                    <h1 className="lg:text-5xl text-4xl font-bold ml-20 mb-2">{title}</h1>
+                    <p className="lg:text-2xl text-xl text-gray-700 mt-4 ml-12">{description}</p>
+          
         </div>
 
         <div className="p-10 flex flex-col items-center justify-center gap-10 pt-1">
@@ -514,12 +517,13 @@ const showViewButton = hideTriggerButton
                 ) : (
                   // Normal Overlay CONTENT for mini services page
                   <div className="text-center">
-                    <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
-                    <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
+                    {/* MORE INFO BUTTON GOLDEN */}
+                                    
+                    {/* <p className="lg:text-2xl text-xl text-gray-700 mb-4">{description}</p> */}
                     {/* <img src={src} alt="" className="max-h-[250px] lg:max-h-[500px]" style={{ pointerEvents: "none" }} /> */}
 
                   
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center">
 
 
                             <div className="card flex" >
@@ -539,12 +543,9 @@ const showViewButton = hideTriggerButton
                               <p className="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
                             </div>
                           </div>
-                     </div>
-
-                     {/* MORE INFO BUTTON GOLDEN */}
-                                    <div className="relative group pt-8" style={{ pointerEvents:"auto" , opacity:  1, }}>
+<div className="relative group " style={{ pointerEvents:"auto" , opacity:  1, }}>
                                           <button
-                                            className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 z-[50]
+                                            className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-90 active:scale-75 scale-75 z-[50]
                                                       bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
                                                       hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
                                                       shadow-amber-700 hover:shadow-amber-500"
@@ -562,7 +563,7 @@ const showViewButton = hideTriggerButton
 
                                                   <path d="M512 416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H192c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8H448c35.3 0 64 28.7 64 64V416zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24V312h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H280V200c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H168c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"></path>
 
-</svg>
+                                                  </svg>
 
                                                 <span className="text-4xl lg:text-6xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
                                                                 group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500">
@@ -572,6 +573,16 @@ const showViewButton = hideTriggerButton
                                             </span>
                                           </button>
                                         </div>
+                          <div className="card hidden lg:flex" >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z" /></svg>
+                            <div className="card__content">
+                              <p className="card__title">Eating Ass</p>
+                              <p className="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                            </div>
+                          </div>
+                     </div>
+
+                     
                   </div>
                   
                 )}
@@ -585,7 +596,12 @@ const showViewButton = hideTriggerButton
   )}
  
      {!hideTriggerButton && showViewButton && (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center" style={{
+      position: "absolute",
+      inset: 0,
+      pointerEvents: "none", // container doesn't block
+      zIndex:1,
+      }}>
     <div 
       className="relative group"
       style={{
@@ -621,8 +637,7 @@ const showViewButton = hideTriggerButton
                 <div className="hidden lg:inline ">
 
                   <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 text-3xl font-medium pointer-events-none">
-                    View 
-                    <br /> Service
+                  {title}
                   </span>
                 </div>
 
