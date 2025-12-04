@@ -40,7 +40,6 @@ canvas {
   width: 100vw;
   height: 100vh;
   pointer-events: none; /* Important! */
-  z-index: 9999;
 }
 
 #overlay-portals-root > * {
@@ -53,13 +52,21 @@ canvas {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 2147483645;   /* max possible z-index */
+  /* z-index: 9998; */
+
 }
+
 
 #freeq-portal-root > * {
   pointer-events: auto;
 }
+#overlay-portals-root button{
+    z-index: 9999 !important;
 
+}
+.freeq-button-wrapper {
+  z-index: 9999 !important;
+}
 
 
 .mario-coin {
@@ -135,12 +142,14 @@ canvas {
 @layer utilities {
   .freeQ-overlay .overlay-window {
     background: linear-gradient(135deg, #e0f7ff, #ffffff);
-   z-index: 999999 !important;
   border: 4px solid #00eeff !important;
   box-shadow: 
     0 0 50px rgba(0, 255, 255, 0.6),
     0 0 100px rgba(255, 215, 0, 0.4) !important;
   animation: freeQpulse 3s infinite;
+  
+
+  
   }
 
   @keyframes freeQpulse {
@@ -161,7 +170,13 @@ canvas {
   .freeQ-overlay img {
     filter: drop-shadow(0 6px 12px rgba(0, 180, 220, 0.3));
   }
+ 
 }
+
+
+
+
+
 
 
 .card {
@@ -170,13 +185,13 @@ canvas {
     height: 400px;
     background-color: #f2f2f2;
     border-radius: 10px;
-    display: flex;
-    align-items: center;
+     align-items: center;
     justify-content: center;
     overflow: hidden;
     perspective: 1000px;
     box-shadow: 0 0 0 5px #ffffff80;
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    margin: 20px;
   }
 
   .card svg {
@@ -225,3 +240,15 @@ canvas {
     color: #777;
     line-height: 1.4;
   }
+@media (max-width: 1024px) {
+  .card {
+    width: 90%;       /* make it fit the screen */
+    height: 350px;    /* optional, adjust for better proportion */
+    margin: 5px;
+  }
+}
+
+
+
+
+

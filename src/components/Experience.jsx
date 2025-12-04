@@ -86,7 +86,7 @@ export const Experience = (props) => {
         
          animate={{
             x: section === 1 || section === 2 ? 2 : 8,   
-            y: section === 1 || section === 2 ? 0 : 1,   
+            y: section === 1 || section === 2 ? 1 : 1,   
 
             z: section === 1 || section === 2 ? 0 : -2,   
               rotateY: section === 1 || section === 2 ? Math.PI / 1.7 : 0,

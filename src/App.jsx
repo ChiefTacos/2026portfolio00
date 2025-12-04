@@ -70,12 +70,18 @@ const openOverlay = (id) => {
   style={{ 
     position: "fixed",
     inset: 0,
-    zIndex: 9999,
+     zIndex: "2147483640",
     pointerEvents: "none",
     
   }}
 ></div>  
-<div id="freeq-portal-root"></div>
+<div id="freeq-portal-root" style={{ 
+    position: "fixed",
+    inset: 0,
+     zIndex: "2147483639",
+    pointerEvents: "none",
+    
+  }}></div>
   <MotionConfig transition={{ ...framerMotionConfig }}>
         <Canvas
           key={canvasKey}

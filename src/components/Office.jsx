@@ -252,9 +252,9 @@ const showViewButton = hideTriggerButton
 
     const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
-    <div className="relative group" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
+    <div className="relative group lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
       <button
-        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 z-[50]
+        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-100 
                    bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
                    hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
                    shadow-amber-700 hover:shadow-amber-500"
@@ -262,12 +262,10 @@ const showViewButton = hideTriggerButton
         onPointerDown={(e) => e.stopPropagation()}
         style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
       >
-        {/* Animated glowing border */}
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
-        <span className="relative z-10 block px-4 lg:px-6 py-3 pb-5 lg:py-6 lg:pb-9 rounded-2xl bg-neutral-950">
+        <span className="relative  block px-3 lg:px-3 py-3 pb-5 lg:py-3 lg:pb-5 rounded-2xl bg-neutral-950">
           <div className="flex items-center justify-center space-x-4">
-            {/* New SVG: Sparkle + Quote Icon */}
             <svg className="w-16 h-16 lg:w-24 lg:h-24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
@@ -514,18 +512,66 @@ const showViewButton = hideTriggerButton
 
                   ) : null
                 ) : (
-                  /* ORIGINAL OVERLAY CONTENT */
+                  // Normal Overlay CONTENT for mini services page
                   <div className="text-center">
                     <h1 className="lg:text-7xl text-6xl font-bold m-6">{title}</h1>
                     <p className="lg:text-4xl text-3xl text-gray-700 mb-4">{description}</p>
-                    <img src={src} alt="" className="max-h-[250px] lg:max-h-[500px]" style={{ pointerEvents: "none" }} />
-                    <div className="card">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z" /></svg>
-        <div className="card__content">
-          <p className="card__title">Eating Ass</p>
-          <p className="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-        </div>
-      </div>
+                    {/* <img src={src} alt="" className="max-h-[250px] lg:max-h-[500px]" style={{ pointerEvents: "none" }} /> */}
+
+                  
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center">
+
+
+                            <div className="card flex" >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z" /></svg>
+                            <div className="card__content">
+                              <p className="card__title">Eating Ass</p>
+                              <p className="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                            </div>
+                          </div>
+
+
+                          
+                          <div className="card hidden lg:flex" >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z" /></svg>
+                            <div className="card__content">
+                              <p className="card__title">Eating Ass</p>
+                              <p className="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                            </div>
+                          </div>
+                     </div>
+
+                     {/* MORE INFO BUTTON GOLDEN */}
+                                    <div className="relative group pt-8" style={{ pointerEvents:"auto" , opacity:  1, }}>
+                                          <button
+                                            className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 z-[50]
+                                                      bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
+                                                      hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
+                                                      shadow-amber-700 hover:shadow-amber-500"
+                                                      onClick={null}
+                                            onPointerDown={(e) => e.stopPropagation()}
+                                            
+                                          >
+                                            <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
+
+                                            <span className="relative z-10 block px-4 lg:px-6 py-3 pb-5 lg:py-4 lg:pb-6 rounded-2xl bg-neutral-950 ">
+                                              <div className="flex items-center justify-center space-x-4 ">
+                                                  <svg className="w-16 h-16 lg:w-24 lg:h-24 bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
+                                                      hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
+                                                      shadow-amber-700 hover:shadow-amber-500 " viewBox="0 -25 510 580" xmlns="http://www.w3.org/2000/svg">
+
+                                                  <path d="M512 416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H192c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8H448c35.3 0 64 28.7 64 64V416zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24V312h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H280V200c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H168c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"></path>
+
+</svg>
+
+                                                <span className="text-4xl lg:text-6xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
+                                                                group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500">
+                                                  More Info
+                                                </span>
+                                              </div>
+                                            </span>
+                                          </button>
+                                        </div>
                   </div>
                   
                 )}
@@ -547,7 +593,7 @@ const showViewButton = hideTriggerButton
         opacity: isClickable ? 1 : 0.4,
         transition: "opacity 0.4s ease",
         position: "relative",
-        zIndex: id === "freeQ" ? 999999 : "auto"  ,
+        zIndex: "auto"  ,
       }}
     >
 
@@ -560,7 +606,7 @@ const showViewButton = hideTriggerButton
       ) : (
 
       <button
-        className="relative inline-block p-px font-semibold leading-6 text-white bg-neutral-200 shadow-2xl cursor-pointer rounded-2xl shadow-emerald-900 transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 hover:shadow-emerald-600 z-[50]"
+        className="relative inline-block p-px font-semibold leading-6 text-white bg-neutral-200 shadow-2xl cursor-pointer rounded-2xl shadow-emerald-900 transition-all duration-300 ease-in-out hover:scale-100 active:scale-95 lg:scale-90 hover:shadow-emerald-600 z-[50]"
         type="button"
         onClick={handleButtonClick}
         onPointerDown={(e) => e.stopPropagation()}
