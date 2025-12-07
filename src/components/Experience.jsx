@@ -84,17 +84,25 @@ export const Experience = (props) => {
         scale={[1, 1, 1]}
         
         
-         animate={{
-            x: section === 1 || section === 2 ? 2 : 8,   
-            y: section === 1 || section === 2 ? 1 : 1,   
+        //  animate={{
+        //     x: section === 1 || section === 2 ? 2 : 8,   
+        //     y: section === 1 || section === 2 ? 1 : 1,   
 
-            z: section === 1 || section === 2 ? 0 : -2,   
-              rotateY: section === 1 || section === 2 ? Math.PI / 1.7 : 0,
-              rotateX: section === 1 || section === 2 ? Math.PI / -10 : 0,
-            // rotateY: section === 3 ? 0 : 0,
-            // rotateX: section === 3 ? 0 : 0,
+        //     z: section === 1 || section === 2 ? 0 : -2,   
+        //       rotateY: section === 1 || section === 2 ? Math.PI / 1.7 : 0,
+        //       rotateX: section === 1 || section === 2 ? Math.PI / -10 : 0,
+        //     // rotateY: section === 3 ? 0 : 0,
+        //     // rotateX: section === 3 ? 0 : 0,
 
-         }}
+        //  }}
+        animate={{
+  x: section === 3 ? 2 : (section === 1 || section === 2 ? 2 : 8),
+  y: section === 3 ? -1.8 : (section === 1 || section === 2 ? 1 : 1),
+  z: section === 3 ? -6 : (section === 1 || section === 2 ? 0 : -2),
+
+  rotateY: section === 3 ? Math.PI / 3.75 : (section === 1 || section === 2 ? Math.PI / 1.7 : 0),
+  rotateX: section === 3 ? Math.PI / -10 : (section === 1 || section === 2 ? Math.PI / -10 : 0),
+}}
           transition={{
           duration: 1.1,
         }}
