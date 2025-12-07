@@ -432,19 +432,21 @@ export const Menu = (props) => {
 
          
       <div className="w-full flex flex-col items-center justify-start gap-8 lg:pb-8 pb-8 px-1 ">
-        <CyberWrapper  onClick={() => {
+        <CyberWrapper onClick={() => {
     setMenuOpened(false);
-props.triggerFreeQuote();  // ← This does everything!
+        onSectionChange(2); 
+
   }}>
       <div style={{position: 'relative', marginTop: '30px', }}>
-        <button className="cyber-btn py-0">Customize quote</button>
+        <button className="cyber-btn py-0">Reviews</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
           <div className="corner-bl" />
           <div className="corner-br" />
           {/* <strong> </strong><br /> */}
-Reset Website to Home Page        </div>
+          Check out our some of our personal and online reviews. 
+       </div>
       </div>
     </CyberWrapper>
 <CyberWrapper onClick={() => {
@@ -463,20 +465,20 @@ Reset Website to Home Page        </div>
         </div>
       </div>
     </CyberWrapper>
-    <CyberWrapper onClick={() => {
+   
+    <CyberWrapper  onClick={() => {
     setMenuOpened(false);
-        onSectionChange(2); 
-
+props.triggerFreeQuote();  // ← This does everything!
   }}>
       <div style={{position: 'relative', paddingBottom: '20px',}}>
-        <button className="cyber-btn py-0">Reviews</button>
+        <button className="cyber-btn py-0">Customize quote</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
           <div className="corner-bl" />
           <div className="corner-br" />
           {/* <strong> </strong><br /> */}
-          Check out our some of our personal and online reviews. 
+          Clear all other tabs on home page and customize your quote. 
         </div>
       </div>
 

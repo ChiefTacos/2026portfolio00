@@ -266,7 +266,7 @@ const showViewButton = hideTriggerButton
 
         <span className="relative  block px-3 lg:px-3 py-3 pb-5 lg:py-3 lg:pb-5 rounded-2xl bg-neutral-950">
           <div className="flex items-center justify-center space-x-4">
-            <svg className="w-16 h-16 lg:w-24 lg:h-24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
                     className="transition-all duration-500 group-hover:fill-yellow-400 group-hover:scale-110"/>
@@ -274,7 +274,7 @@ const showViewButton = hideTriggerButton
               <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
             </svg>
 
-            <span className="text-4xl lg:text-6xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
+            <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-1  px-1 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
                             group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500">
               Free Quote
             </span>
@@ -390,11 +390,12 @@ const showViewButton = hideTriggerButton
             style={{ pointerEvents: "auto" }}
             alt="MAX WINDOW"
             title="Adjust Window Size"
+            
           >
             <span className="bg-green-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-green-600 transition"></span>
           </button>
-                    <h1 className="lg:text-5xl text-4xl font-bold ml-20 mb-2">{title}</h1>
-                    <p className="lg:text-2xl text-xl text-gray-700 mt-4 ml-12">{description}</p>
+                    <h1 className="lg:text-5xl md:text-3xl text-xl font-bold lg:ml-20 lg:mb-2 md:ml-10 md:mb-1 mt-1 ml-5 ">{title}</h1>
+                    <p className="lg:text-2xl text-lg text-gray-700 lg:mt-4 lg:ml-12 md:ml-4 md:mt-3 mt-1 line-clamp-3">{description}</p>
           
         </div>
 
@@ -792,45 +793,50 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     
     //gutter
     balcony: {
-      distanceFactor: { desktop: 19, tablet: 23, mobile: 19 },
+      distanceFactor: { desktop: 19, tablet: 24, mobile: 18 },
       position: {
-        desktop: [-574.128, 628.8, -72],
-        tablet: [-514.128, 628.8, -72],
+        desktop: [-1094.128, 628.8, -72],
+        tablet: [-478.128, 610.8, -72],
         
-         mobile:  [-270.128, 850, 305.314],
+         mobile:  [-210.128, 822.6, 305.314],
 
         // mobile:  [-228.117, 406.956, 1.194],   
       },
     },
      house: {
-      distanceFactor: { desktop: 14, tablet: 19, mobile: 20 },
+      distanceFactor: { desktop: 19, tablet: 19, mobile: 19 },
       position: {
-        desktop: [-574.128, 178.8, 322],
-        tablet: [-514.128, 178.8, 322],
+        
+        desktop: [-1056.128, 757.0, -72],
+        tablet: [-484.128, 178.8, 322],
         // mobile: [-170.128, 98.8, 232],
-         mobile:  [540.128, 100, 405.314],
+         mobile:  [240.128, 850, 405.314],
 
         // mobile:  [204.128, 100, 205.314],
       },
     },
     driveway: {
-      distanceFactor: { desktop: 15, tablet: 20, mobile: 19 },
+      distanceFactor: { desktop: 19, tablet: 20, mobile: 18 },
       position: {
-        desktop: [-594.128, 368.8, 172],
-        tablet: [-534.128, 368.8, 172],
-        mobile: [-240.128, -103.8, 582],
+        desktop: [-1134.128, 492.8, -72],
+        tablet: [-480.128, 368.8, 172],
+        mobile: [-310.128, -103.8, 582],
 
         // mobile:  [-4.128, 0, 305.314],
       },
     },
     car: {
-      distanceFactor: { desktop: 13, tablet: 18, mobile: 19 },
+      distanceFactor: { desktop: 19, tablet: 18, mobile: 22 },
       position: {
-        desktop: [-384.128, -18.8, 462],
+        // desktop: [-684.128, -18.8, 462],
+        desktop: [-1019.128, 878.8, -72],
+        
         tablet: [-324.128, -18.8, 462],
         // mobile: [-212.128, -7, 442],
-         mobile:  [240.128, 900, 405.314],
+         mobile:  [240.128, 850, 405.314],
         // mobile:  [640.128, 100, 205.314],
+         mobile:  [540.128, 100, 405.314],
+
       },
     },
     contact: {
@@ -845,11 +851,11 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     freeQ: {
       distanceFactor: { desktop: 18, tablet: 24, mobile: 18 },
       position: {
-        desktop: [-201.2, 900.1, 7.2],
+        desktop: [-411.2, 882, 7.2],
         tablet:  [-140.128, 1000, -25.314],
         // left middle topish mobile: [-4.128, 628.8, 0],
 
-         mobile:  [-70.128, 1060, 405.314],
+         mobile:  [-10.128, 1060, 405.314],
       //right middle  mobile:  [540.128, 100, 405.314],
       },
     },
