@@ -252,7 +252,7 @@ const showViewButton = hideTriggerButton
 
     const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
-    <div className="relative group lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
+    <div className="relative group scale-100 lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-100 
                    bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
@@ -274,7 +274,7 @@ const showViewButton = hideTriggerButton
               <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
             </svg>
 
-            <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-1  px-1 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
+            <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-4 pt-2  px-1 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
                             group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500">
               Free Quote
             </span>
@@ -629,10 +629,10 @@ const showViewButton = hideTriggerButton
 
         <span className="relative z-10  block pr-4  lg:px-2 pt-3 lg:pt-1 py-3 lg:py-2  rounded-2xl bg-neutral-950">
           <div className="relative z-10 flex items-center space-x-3 ">
-                <div className="hidden lg:inline ">
-                {/* <div className="inline "> */}
+                {/* <div className="hidden lg:inline "> */}
+                <div className="inline ">
 
-                  <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 text-3xl font-medium pointer-events-none">
+                  <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 text-2xl md:text-3xl lg:text-4xl font-medium pointer-events-none">
                   {title}
                   </span>
                 </div>
@@ -795,7 +795,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     balcony: {
       distanceFactor: { desktop: 19, tablet: 24, mobile: 18 },
       position: {
-        desktop: [-1094.128, 628.8, -72],
+        desktop: [-987.128, 628.8, -72],
         tablet: [-478.128, 610.8, -72],
         
          mobile:  [-210.128, 822.6, 305.314],
@@ -807,7 +807,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       distanceFactor: { desktop: 19, tablet: 19, mobile: 19 },
       position: {
         
-        desktop: [-1056.128, 757.0, -72],
+        desktop: [-952.128, 757.0, -72],
         tablet: [-484.128, 178.8, 322],
         // mobile: [-170.128, 98.8, 232],
          mobile:  [240.128, 850, 405.314],
@@ -818,7 +818,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     driveway: {
       distanceFactor: { desktop: 19, tablet: 20, mobile: 18 },
       position: {
-        desktop: [-1134.128, 492.8, -72],
+        desktop: [-1024.128, 492.8, -72],
         tablet: [-480.128, 368.8, 172],
         mobile: [-310.128, -103.8, 582],
 
@@ -828,8 +828,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     car: {
       distanceFactor: { desktop: 19, tablet: 18, mobile: 22 },
       position: {
-        // desktop: [-684.128, -18.8, 462],
-        desktop: [-1019.128, 878.8, -72],
+        desktop: [-916.828, 878.8, -72],
         
         tablet: [-324.128, -18.8, 462],
         // mobile: [-212.128, -7, 442],
@@ -840,7 +839,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     contact: {
-      distanceFactor: { desktop: 20, tablet: 22, mobile: 22 },
+      distanceFactor: { desktop: 20, tablet: 20, mobile: 22 },
       position: {
         desktop: [-201.2, 1000.1, 7.2],
         

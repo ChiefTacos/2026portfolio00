@@ -20,7 +20,7 @@ const StyledWrapper01 = styled.div`
     width: 80px;
     height: 80px;
     border-radius: 10px;
-    background: linear-gradient(180deg, #282828, #202020);
+    background: linear-gradient(180deg, #131313, #202020);
     box-shadow:
       inset -8px 0 8px rgba(0, 0, 0, 0.15),
       inset 0 -8px 8px rgba(0, 0, 0, 0.25),
@@ -401,7 +401,7 @@ export const Menu = (props) => {
 
       <div
         className={`
-           z-[2147483646] fixed inset-y-0 right-0 transition-all overflow-y-auto
+           z-[2147483646] fixed inset-y-0 md:right-[-50px] lg:right-[-40px] transition-all overflow-y-auto
           flex flex-col bg-blue
         `}
         
@@ -426,7 +426,7 @@ export const Menu = (props) => {
 
      
                <div className="relative drop-shadow-xl lg:w-64 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] lg:text-[36px] text-[40px] " >
-      <div className="absolute  flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132] pt-4">
+      <div className="absolute  flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 pt-4">
 
 
 
@@ -498,7 +498,7 @@ props.triggerFreeQuote();  // ← This does everything!
 
 
   <div className="relative drop-shadow-xl w-64 h-64 overflow-hidden rounded-xl bg-[#3d3c3d] lg:mb-0 mb-[-10]" >
-      <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132]">
+      <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950">
 
 
 
@@ -507,10 +507,10 @@ props.triggerFreeQuote();  // ← This does everything!
         
               
        <button
-  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-white"
+  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
 >
   <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950  rounded-md group-hover:bg-opacity-0"
   >
      <StyledWrapper01  onClick={() => {
     setMenuOpened(false);
@@ -548,10 +548,10 @@ props.triggerFreeQuote();  // ← This does everything!
 
 
           <button
-  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-white"
+  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
 >
   <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950 rounded-md group-hover:bg-opacity-0"
   >
           <StyledWrapper01  onClick={(event) => {
     spawnCoin(event);
@@ -590,7 +590,7 @@ props.triggerFreeQuote();  // ← This does everything!
   class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-blue-500 to-purple-700  group-hover:from-black-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
 >
   <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+    class="relative  px-4 py-2 transition-all ease-in duration-75  rounded-md bg-opacity-0"
   >
     <StyledWrapper01  onClick={() => {
     setMenuOpened(false);
@@ -634,7 +634,7 @@ props.triggerFreeQuote();  // ← This does everything!
   class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-500 to-green-700  group-hover:from-black-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-800 dark:focus:ring-green-800"
 >
   <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+    class="relative  px-4 py-2 transition-all ease-in duration-75rounded-md group-hover:bg-opacity-0"
   >
     <StyledWrapper01  onClick={() => {
 alert('i love cock');
