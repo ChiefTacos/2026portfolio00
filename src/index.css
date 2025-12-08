@@ -14,6 +14,14 @@ body {
   cursor: none !important;
   background-color: rgba(255, 0, 0, 0.1); /* just to see if style applies */
 }
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+}
 
 
 #root, body, html {
@@ -24,8 +32,23 @@ body {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   overscroll-behavior: none;
+          -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        overflow: hidden;              /* Most important! Prevents scroll entirely */
 }
 
+/* Extra safety: target any possible scrolling container */
+div, canvas, [class*="scroll"] {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+div::-webkit-scrollbar,
+canvas::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+}
 canvas {
   touch-action: none !important;
   -webkit-user-select: none !important;
