@@ -116,7 +116,10 @@ export const Projects = () => {
             z: currentProject === index ? -2 : -1,
             rotateX: currentProject === index ? 0 : -Math.PI / 6,
             rotateZ: currentProject === index ? 0 : 0.01 * Math.PI,
+                scale: currentProject === index ? 2 : 1,
+
           }}
+          
         >
           <Project project={project} highlighted={index === currentProject} />
         </motion.group>
