@@ -706,16 +706,16 @@ const ProjectsSection = () => {
 
   return (
     <Section>
-      <div className="flex w-full h-full gap-8 items-center justify-center">
+      <div className="fixed left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
         <button
-          className="hover:text-indigo-600 transition-colors"
+          className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
           onClick={previousProject}
         >
           ← Previous
         </button>
-        <h2 className="text-5xl font-bold">my work...</h2>
+        <h2 className="text-4xl lg:text-5xl font-bold text-center text-white">Badger Services</h2>
         <button
-          className="hover:text-indigo-600 transition-colors"
+          className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
           onClick={nextProject}
         >
           Next →

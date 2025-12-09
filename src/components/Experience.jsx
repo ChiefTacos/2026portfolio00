@@ -63,34 +63,28 @@ export const Experience = (props) => {
     <>
       <ambientLight intensity={isDay ? 1.1: 1.8} />
 
-      {/* <motion.group
-        position={[5.9072935059634513, -1.14400000000000002, -4.681801948466054]}
-        rotation={[-3.141592653589793, 1.2053981633974482, 3.141592653589793]}
-        animate={"" + section}
-        transition={{
-          duration: 0.6,
-        }}
-        variants={{
-  0: { x: 1.907, y: -1.144, z: -4.682 },
-  1: { x: 1.907, y: -1.144, z: -4.682 },
-  2: { x: 2.907, y: -1.144, z: -4.682 },
-  3: { x: 2.907, y: -1.144, z: -4.682 },   // ← just copy section 2 or wherever you want her
-}}
-      >
-        <Avatar animation={characterAnimation} />
-      </motion.group> */}
+
       <motion.group
         position={[8, 1, -2]}
         scale={[1, 1, 1]}
         
 
         animate={{
-  x: section === 3 ? 2 : (section === 1 || section === 2 ? 2 : 8),
-  y: section === 3 ? -1.8 : (section === 1 || section === 2 ? 1 : 1),
-  z: section === 3 ? -6 : (section === 1 || section === 2 ? 0 : -2),
+  x: section === 3 ? 2 : (section === 1 || section === 2 ? -4.59 : 8),
+  y: section === 3 ? -1.8 : (section === 1 || section === 2 ? 2.85 : 1),
+  // y: section === 3 ? -1.8 : (section === 1 || section === 2 ? -.08 : 1),
+  
+  z:
+    section === 3
+      ? -6
+      : (section === 1 || section === 2
+          // ? (isMobile ? 0.4 : 0.2)   
+          ? (isMobile ? 5.4 : 6.9)   
 
-  rotateY: section === 3 ? Math.PI / 3.75 : (section === 1 || section === 2 ? Math.PI / 1.7 : 0),
-  rotateX: section === 3 ? Math.PI / -10 : (section === 1 || section === 2 ? Math.PI / -10 : 0),
+          : -2),
+          
+  rotateY: section === 3 ? Math.PI / 3.75 : (section === 1 || section === 2 ? Math.PI / 1.17  : 0),
+  rotateX: section === 3 ? Math.PI / -10 : (section === 1 || section === 2 ? Math.PI / -6.29 : 0),
 }}
           transition={{
           duration: 1.1,
@@ -121,11 +115,10 @@ export const Experience = (props) => {
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{
-      duration: 2,     // fade-in speed
-      delay: 0.25       // <-- Wait before showing
+      duration: 1,     // fade-in speed
     }}
   >
-    <Projects />
+    <Projects isMobile={isMobile} />
   </motion.group>
 )}
 
