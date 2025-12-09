@@ -83,6 +83,21 @@ const [phone, setPhone] = useState("");
 
 const setCurrentProject = useSetAtom(currentProjectAtom);
 
+ function spawnCoin(e) {
+  const coin = document.createElement("div");
+  coin.className = "mario-coin";
+
+  // Position coin above the button
+  const rect = e.currentTarget.getBoundingClientRect();
+  coin.style.left = rect.left + rect.width / 2 + "px";
+  coin.style.top = rect.top + "px";
+
+  document.body.appendChild(coin);
+
+  // Remove after animation
+  setTimeout(() => coin.remove(), 800);
+}
+
 
 const resetFormFields = () => {
   setFullName("");
@@ -134,12 +149,19 @@ const handleButtonClick = (e) => {
 
   if (isMobileOrTablet) {
     // Mobile: only one at a time
+            spawnCoin(e);
+
     setActiveOverlay([id]);
+
   } else {
     // Desktop: allow multiple
+      
+        spawnCoin(e);
+
     setActiveOverlay(prev => {
       if (prev.includes(id)) return prev;
       return [...prev, id];
+
     });
   }
 // If they submitted before, show confirmation instead of form
@@ -267,7 +289,8 @@ const showViewButton = hideTriggerButton
                    hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
                    shadow-amber-700 hover:shadow-amber-500"
         onClick={onClick}
-        onPointerDown={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation() }
+        
         style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
@@ -315,7 +338,7 @@ const showViewButton = hideTriggerButton
           center
           distanceFactor={distanceFactor}
           occlude={false}
-            className={className}   // ← now works!
+            className={className}   
 
           // portal={{ current: document.getElementById("overlay-portals-root") }}
           portal={{ 
@@ -355,7 +378,7 @@ const showViewButton = hideTriggerButton
                 //     lg:w-[70vw] lg:max-w-[1400px]
 
                 // "
-                className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden 
+                className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-700 overflow-hidden 
   min-h-[110vh] max-h-[130vh] lg:min-h-[80vh] lg:max-h-[110vh]
   w-[100vw] max-w-[1000px] md:w-[90vw] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1400px]`}
 
@@ -372,7 +395,7 @@ const showViewButton = hideTriggerButton
   maxWidth: isFullscreen ? "140vw" : undefined,
   maxHeight: isFullscreen ? "140vh" : undefined,
   borderRadius: isFullscreen ? "8px" : "12px",
-                    
+
                     transition: isDragging.current ? "none" : "transform 0.2s ease",
                     cursor: "default",
                     pointerEvents: isVisible ? "auto" : "none",  
@@ -381,7 +404,7 @@ const showViewButton = hideTriggerButton
             }}
           >
 
-        <div className="flex p-4 lg:p-3 gap-2 bg-gray-100">
+        <div className="flex p-4 lg:p-3 gap-2 bg-[#2a2a2a]">
           <button onClick={handleResetClick} style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
             <span className="bg-red-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
           
@@ -484,7 +507,11 @@ const showViewButton = hideTriggerButton
 
                       <button
                         type="submit"
-                        className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white text-2xl rounded-lg font-bold gap-0"
+                         onClick={(e) => {
+                        spawnCoin(e);
+
+  }}
+                        className="px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white text-2xl rounded-lg font-bold gap-0"
                       >
                         Submit Request
                       </button>
@@ -493,10 +520,10 @@ const showViewButton = hideTriggerButton
                   ) : confirmNewForm ? (
                     /* -------------- ASK IF THEY WANT A NEW FORM -------------- */
                     <div className="flex flex-col items-center gap-6 p-10 text-center">
-                      <h1 className="text-5xl font-bold">Submit Another Quote?</h1>
-
+                      <h2 className="text-5xl font-bold">Quote Submitted! <br /><br />We will contact you as soon as possible</h2>
+<br />
                       <button
-                        className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-2xl rounded-lg font-bold"
+                        className="px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white text-2xl rounded-lg font-bold"
                         onClick={() => {
                           resetFormFields();       // ← clears all
                           setFormSubmitted(false);      
