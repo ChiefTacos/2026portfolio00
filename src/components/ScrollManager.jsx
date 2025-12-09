@@ -9,81 +9,85 @@ export const ScrollManager = (props) => {
   const data = useScroll();
   const lastScroll = useRef(0);
   const isAnimating = useRef(false);
+const ignoreScrollRef = useRef(false);
 
-  data.fill.classList.add("top-0");
-  data.fill.classList.add("absolute");
-gsap.to(data.el, {
-  duration: 10,
-  ease: "power2.inOut",
-  onStart: () => { isAnimating.current = true },
-  onComplete: () => { isAnimating.current = false },
-});
+  // Initial classes
+  data.fill.classList.add("top-0", "absolute");
+
+  // Entrance animation (yours)
+  gsap.to(data.el, {
+    duration: 10,
+    ease: "power2.inOut",
+    onStart: () => { isAnimating.current = true },
+    onComplete: () => { isAnimating.current = false },
+  });
+
+  // ------------------------------------------------------------------
+  // 🔥 PROGRAMMATIC SECTION CHANGE — THIS IS THE FIX
+  // ------------------------------------------------------------------
   useEffect(() => {
-    gsap.to(data.el, {
-      duration: 1,
-      scrollTop: section * data.el.clientHeight,
-      onStart: () => {
-        isAnimating.current = true;
+    ignoreScrollRef.current = true;
+
+    const targetY = section / data.pages;
+
+    gsap.to(data.scroll, {
+      current: targetY,
+      duration: 1.0,
+      ease: "power3.out",
+      onUpdate: () => {
+        data.el.scrollTop = data.scroll.current * data.el.scrollHeight;
       },
       onComplete: () => {
-        isAnimating.current = false;
-      },
+        setTimeout(() => {
+          ignoreScrollRef.current = false;
+        }, 200);
+      }
     });
   }, [section]);
-
-  // useFrame(() => {
-  //   if (isAnimating.current) {
-  //     lastScroll.current = data.scroll.current;
-  //     return;
-  //   }
-
-  //   const curSection = Math.floor(data.scroll.current * data.pages);
-  //   if (data.scroll.current > lastScroll.current && curSection === 0) {
-  //     onSectionChange(1);
-  //   }
-  //   if (
-  //     data.scroll.current < lastScroll.current &&
-  //     data.scroll.current < 1 / (data.pages - 1)
-  //   ) {
-  //     onSectionChange(0);
-  //   }
-  //   lastScroll.current = data.scroll.current;
-  // });
+  // ------------------------------------------------------------------
 
 
-
+  // ------------------------------------------------------------------
+  // 🔥 SCROLL-DRIVEN SECTION CHANGES (your logic + ignore flag)
+  // ------------------------------------------------------------------
   useFrame(() => {
-  if (isAnimating.current) {
-    lastScroll.current = data.scroll.current;
-    return;
-  }
+    
+    // If user clicked button → ignore ALL scroll until animation finishes
 
-  let cur = data.scroll.current;
+if (ignoreScrollRef.current) return;
 
-  // --- HARD LIMITS: Clamp scroll range ---
-  if (cur <= 0) cur = 0;
-  if (cur >= 0.999) cur = 0.999;
+// If ScrollControls is performing a tween, ignore wheel
+if (isAnimating.current) {
+  lastScroll.current = data.scroll.current;
+  return;
+}
 
-  const curSection = Math.floor(cur * 4); // FOR 4 pages = sections 0,1,2,3
+    let cur = data.scroll.current;
 
-  // --- SCROLL DOWN ---
-  if (cur > lastScroll.current) {
-    // If scrolling down from 0 → 1, 1 → 2, 2 → 3
-    if (curSection !== section && curSection <= 3) {
-      onSectionChange(curSection);
+    // Clamp scroll range
+    if (cur <= 0) cur = 0;
+    if (cur >= 0.999) cur = 0.999;
+
+    // 4 pages → sections 0,1,2,3
+    const curSection = Math.floor(cur * 4);
+
+    // Scroll down
+    if (cur > lastScroll.current) {
+      if (curSection !== section && curSection <= 3) {
+        onSectionChange(curSection);
+      }
     }
-  }
 
-  // --- SCROLL UP ---
-  if (cur < lastScroll.current) {
-    // prevent wrap-around: do NOT allow scroll above section 0
-    if (curSection !== section && curSection >= 0) {
-      onSectionChange(curSection);
+    // Scroll up
+    if (cur < lastScroll.current) {
+      if (curSection !== section && curSection >= 0) {
+        onSectionChange(curSection);
+      }
     }
-  }
 
-  lastScroll.current = cur;
-});
+    lastScroll.current = cur;
+  });
+  // ------------------------------------------------------------------
 
   return null;
 };

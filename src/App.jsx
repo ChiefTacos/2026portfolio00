@@ -62,6 +62,20 @@ const openOverlay = (id) => {
         };
       }, [section]);
 
+const jumpToSection = (index) => {
+  setSection(index);
+
+  // Reset scroll instantly inside ScrollControls virtual scroll
+  requestAnimationFrame(() => {
+    const scroller = document.querySelector(".scroll"); // Drei creates this div
+
+    if (scroller) {
+      scroller.scrollTop = scroller.clientHeight * index;
+    }
+  });
+};
+
+
   return (
     <>
       <LoadingScreen started={started} setStarted={setStarted} />
@@ -108,7 +122,7 @@ const openOverlay = (id) => {
           // enabled={!(window.innerWidth < 1024 && section === 0)}
           >
             <ScrollManager section={section} onSectionChange={setSection} />
-            <Experience section={section} menuOpened={menuOpened} isDay={isDay} setIsAnimating={setIsAnimating} 
+            <Experience section={section} jumpToSection={jumpToSection} menuOpened={menuOpened} isDay={isDay} setIsAnimating={setIsAnimating} 
               onResetCamera={(fn) => { resetCameraRef.current = fn }}
               onResetOverlays={(fn) => { resetOverlaysRef.current = fn }} activeOverlay={activeOverlay}
   setActiveOverlay={setActiveOverlay}

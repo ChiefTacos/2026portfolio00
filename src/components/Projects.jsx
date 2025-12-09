@@ -4,47 +4,30 @@ import { animate, useMotionValue } from "framer-motion";
 import * as THREE from "three";
 import { motion } from "framer-motion-3d";
 import { atom, useAtom } from "jotai";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const projects = [
-    {
-    title: "First 3d Website",
-    url: "https://portfolio-six-pi-54.vercel.app/",
-    image: "projects/isoRoom.webp",
-    description: "All started here, with a simple dream...",
-  },
-    {
-    title: "Recipe Site",
-    url: "https://recipe-app-chieftacos.vercel.app/",
-    image: "projects/recipe.png",
-    description: "Used to be fully functional where anyone can login and add recipes, now its just a simple site showing my basic HTML skills.",
-  },
+
   {
-    title: "MurBURGER",
-    url: "https://murburger-proto.vercel.app/",
-    image: "projects/murburger.png",
-    description: "Prototype website for any restaurant or business that needs to show their products in a 3D space",
-  },
-  {
-    title: "3d Renders",
+    title: "Auto/RV Cleaning",
     url: "#",
     image: "projects/transfer00.jpg",
     description: "Spent some time in blender creating virtual spaces",
   },
   {
-    title: "Charcuterie",
+    title: "House Soft Wash",
     url: "#",
     image: "projects/charcutie.jpg",
     description: "Made high quality charcuterie boards for a summer",
   },
   {
-    title: "Illustration",
+    title: "Seasonal Cleaning",
     url: "#",
     image: "projects/IMG_2889.jpg",
-    description: "I like to be creative and draw sometimes",
+    description: "Gutter cleaning, snow removal, fall cleaning",
   },
   {
-    title: "Chef Murray",
+    title: "Driveway Restoration",
     url: "#",
     image: "projects/fancyGreenPlate.jpg",
     description: "Worked in numerous restaurants and gained experience on the line",
@@ -52,44 +35,9 @@ export const projects = [
 ];
 
 
-const OverlayObject = ({ url = "projects/illustration.png" }) => {
-  const ref = useRef();
-  const { mouse, viewport } = useThree();
-
-  // Use refs to persist target values across frames
-  const targetPos = useRef(new THREE.Vector3());
-  const targetRot = useRef(new THREE.Euler());
-
-  useFrame(() => {
-    const x = mouse.x * (viewport.width / 2);
-    const y = mouse.y * (viewport.height / 2);
-
-  // Position slightly reacts to mouse
-    targetPos.current.set(x, y, 0.3); // Deeper in front for clear parallax layering
-    ref.current.position.lerp(targetPos.current, 0.1);
-
-    // Rotation adds extra subtle depth
-    targetRot.current.set(-mouse.y * 0.05, mouse.x * 0.05, 0);
-    ref.current.rotation.x += (targetRot.current.x - ref.current.rotation.x) * 0.1;
-    ref.current.rotation.y += (targetRot.current.y - ref.current.rotation.y) * 0.1;
-  });
-
-  return (
-    <Image
-      ref={ref}
-      url={url}
-        onError={() => console.warn(`Could not load ${project.image}`)}
-
-      scale={[1.2, 1.2, 1]} 
-      transparent
-  depthWrite={false} // Avoid blocking other objects in Z-buffer
-  toneMapped={false}
-    />
-  );
-};
 
 const Project = (props) => {
-  const { project, highlighted } = props;
+  const { project, highlighted} = props;
 
   const background = useRef();
   const bgOpacity = useMotionValue(0.4);
@@ -102,8 +50,15 @@ const Project = (props) => {
     background.current.material.opacity = bgOpacity.get();
   });
 
+
+
+
+
+
+
   return (
-    <group {...props}>
+    <group {...props} 
+      >
 
       <mesh
         position-z={-0.001}
@@ -149,19 +104,18 @@ export const Projects = () => {
 
   return (
     
-    <group position-y={-viewport.height * 2 + 1}>
-      <OverlayObject url="projects/illustration.png" />
+  <group position={[0, 1, 7]} >
 
       {projects.map((project, index) => (
         <motion.group
           key={"project_" + index}
           position={[index * 2.5, 0, -3]}
           animate={{
-            x: 0 + (index - currentProject) * 2.5,
-            y: currentProject === index ? 0 : -0.1,
-            z: currentProject === index ? -2 : -3,
-            rotateX: currentProject === index ? 0 : -Math.PI / 3,
-            rotateZ: currentProject === index ? 0 : -0.1 * Math.PI,
+            x: 0 + (index - currentProject) * 3.5,
+            y: currentProject === index ? 0 : 1.1,
+            z: currentProject === index ? -2 : -1,
+            rotateX: currentProject === index ? 0 : -Math.PI / 6,
+            rotateZ: currentProject === index ? 0 : 0.01 * Math.PI,
           }}
         >
           <Project project={project} highlighted={index === currentProject} />

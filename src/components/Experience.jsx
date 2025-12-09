@@ -12,7 +12,7 @@ import { MuscleCar } from "./MuscleCar";
 import { RVmodel } from "./Rv";
 
 export const Experience = (props) => {
-  const { menuOpened, isDay,  setIsAnimating,  activeOverlay, setActiveOverlay} = props;
+  const { menuOpened, isDay,  setIsAnimating,  activeOverlay, setActiveOverlay, jumpToSection} = props;
   const { viewport, camera } = useThree();
   const data = useScroll();
 
@@ -83,18 +83,7 @@ export const Experience = (props) => {
         position={[8, 1, -2]}
         scale={[1, 1, 1]}
         
-        
-        //  animate={{
-        //     x: section === 1 || section === 2 ? 2 : 8,   
-        //     y: section === 1 || section === 2 ? 1 : 1,   
 
-        //     z: section === 1 || section === 2 ? 0 : -2,   
-        //       rotateY: section === 1 || section === 2 ? Math.PI / 1.7 : 0,
-        //       rotateX: section === 1 || section === 2 ? Math.PI / -10 : 0,
-        //     // rotateY: section === 3 ? 0 : 0,
-        //     // rotateX: section === 3 ? 0 : 0,
-
-        //  }}
         animate={{
   x: section === 3 ? 2 : (section === 1 || section === 2 ? 2 : 8),
   y: section === 3 ? -1.8 : (section === 1 || section === 2 ? 1 : 1),
@@ -109,7 +98,7 @@ export const Experience = (props) => {
 
 
       >
-        <Office section={section} menuOpened={menuOpened} isDay={isDay} setIsAnimating={setIsAnimating} setCameraTarget={setCameraTarget}
+        <Office setSection={setSection} section={section}  jumpToSection={jumpToSection} menuOpened={menuOpened} isDay={isDay} setIsAnimating={setIsAnimating} setCameraTarget={setCameraTarget}
           registerOverlayReset={registerOverlayReset}
           activeOverlay={activeOverlay}
   setActiveOverlay={setActiveOverlay}
@@ -127,8 +116,19 @@ export const Experience = (props) => {
       </motion.group>
 
 
-      <Projects />
-      
+       {section === 1 && (
+  <motion.group
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{
+      duration: 2,     // fade-in speed
+      delay: 0.25       // <-- Wait before showing
+    }}
+  >
+    <Projects />
+  </motion.group>
+)}
+
     </>
   );
 };

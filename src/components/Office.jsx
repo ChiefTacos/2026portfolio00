@@ -3,7 +3,8 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
 import { useEffect, useRef, useState, } from "react";
 import * as THREE from "three";
-
+import { useSetAtom } from "jotai";
+import { currentProjectAtom } from "./Projects";
 
 
 
@@ -28,6 +29,10 @@ const OverlayItem = ({
   id,                    
   activeOverlay,
   setActiveOverlay,
+  setSection,
+   jumpToSection,
+     projectIndex = null,
+
   device,
   src,
   hideTriggerButton = false,   // ← NEW PROP hides view service button for contact page
@@ -74,6 +79,8 @@ const [zipCode, setZipCode] = useState("");
 
 const [email, setEmail] = useState("");
 const [phone, setPhone] = useState("");
+
+const setCurrentProject = useSetAtom(currentProjectAtom);
 
 
 const resetFormFields = () => {
@@ -301,7 +308,7 @@ const showViewButton = hideTriggerButton
            
             width: "100%",
             height: "100%",
-          pointerEvents: "none",   // ← Html never blocks anything
+    pointerEvents: "auto",   
           }}
           transform={false}
           center
@@ -544,8 +551,14 @@ const showViewButton = hideTriggerButton
                                                       bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
                                                       hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
                                                       shadow-amber-700 hover:shadow-amber-500"
-                                                      onClick={null}
-                                            onPointerDown={(e) => e.stopPropagation()}
+     onClick={() => {
+  jumpToSection(1);
+  if (projectIndex !== null) {
+    setCurrentProject(projectIndex);
+  }
+}}
+// onClick={() => jumpToSection(1) 
+// }
                                             
                                           >
                                             <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
@@ -730,7 +743,7 @@ function SquareComponent({ position, rotation, scale }) {
     </mesh>
   );
 }
-export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTarget, activeOverlay, setActiveOverlay, ...props }) {
+export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTarget, activeOverlay, setActiveOverlay, jumpToSection, ...props }) {
   const group = useRef();
   const balconyRailGroupRef = useRef();
   const deckFloorGroupRef = useRef();
@@ -832,14 +845,14 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
         
         tablet: [-324.128, -18.8, 462],
         // mobile: [-212.128, -7, 442],
-         mobile:  [240.128, 850, 405.314],
+        //  mobile:  [240.128, 850, 405.314],
         // mobile:  [640.128, 100, 205.314],
          mobile:  [540.128, 100, 405.314],
 
       },
     },
     contact: {
-      distanceFactor: { desktop: 20, tablet: 20, mobile: 22 },
+      distanceFactor: { desktop: 18, tablet: 20, mobile: 22 },
       position: {
         desktop: [-201.2, 1000.1, 7.2],
         
@@ -1003,6 +1016,9 @@ const [fullyOpen, setFullyOpen] = useState(false);
   {/* [1.2, -900.1, 257.2] */}
       <OverlayItem
         section={section}
+         jumpToSection={jumpToSection}
+           projectIndex={2}
+
         id="balcony"                    
           key="balcony"
     setActiveOverlay={setActiveOverlay}
@@ -1115,6 +1131,9 @@ src="/textures/sexyCleaning.jpeg"
 >
   <OverlayItem
     section={section}
+         jumpToSection={jumpToSection}
+           projectIndex={3}
+
     id="driveway"
     key="driveway"
     position={[0, 0, 0]}       
@@ -1237,6 +1256,8 @@ src="/textures/sexyCleaning.jpeg"
 >
       <OverlayItem
         section={section}
+         jumpToSection={jumpToSection}
+           projectIndex={1}
         id="house"                    
           key="house"
     setActiveOverlay={setActiveOverlay}
@@ -1257,6 +1278,8 @@ src="/textures/sexyCleaning.jpeg"
 >
       <OverlayItem
         section={section}
+         jumpToSection={jumpToSection}
+           projectIndex={0}
         id="car"                    
           key="car"
     setActiveOverlay={setActiveOverlay}
@@ -1278,6 +1301,7 @@ src="/textures/sexyCleaning.jpeg"
       
   <OverlayItem
     section={section}
+    
     id="serviceWindow"                    
     key="serviceWindow"
     setActiveOverlay={setActiveOverlay}
