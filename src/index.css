@@ -192,14 +192,14 @@ canvas {
 }
 
   .overlay-window h1 {
-  color: #00aacc;
+  color: #ffffff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   
   
 }
 
   .overlay-window p {
-  color: #0088a3;
+  color: #bef5ff;
 }
 
   .overlay-window img {
@@ -213,7 +213,7 @@ canvas {
   }
 
   .freeQ-overlay p {
-    color: #746800;
+    color: lab(95.19% -9.44 47.94);
   }
 
   .freeQ-overlay img {

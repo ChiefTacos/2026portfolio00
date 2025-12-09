@@ -587,7 +587,7 @@ props.triggerFreeQuote();  // ← This does everything!
 
 
     <button
-  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-blue-500 to-purple-700  group-hover:from-black-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
+  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-[rgb(0,200,255)] via-[#00aacc] to-[rgb(0,170,255)] group-hover:from-black-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
 >
   <span
     class="relative  px-4 py-2 transition-all ease-in duration-75  rounded-md bg-opacity-0"
