@@ -30,8 +30,9 @@ const OverlayItem = ({
   activeOverlay,
   setActiveOverlay,
   setSection,
-   jumpToSection,
-     projectIndex = null,
+  jumpToSection,
+  projectIndex = null,
+  goToSection = 1,    // <— DEFAULT: go to section 1
 
   device,
   src,
@@ -551,15 +552,14 @@ const showViewButton = hideTriggerButton
                                                       bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
                                                       hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
                                                       shadow-amber-700 hover:shadow-amber-500"
-     onClick={() => {
-  jumpToSection(1);
+    onClick={() => {
+  jumpToSection(goToSection);
+
   if (projectIndex !== null) {
     setCurrentProject(projectIndex);
   }
 }}
-// onClick={() => jumpToSection(1) 
-// }
-                                            
+                              
                                           >
                                             <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
@@ -743,6 +743,18 @@ function SquareComponent({ position, rotation, scale }) {
     </mesh>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
 export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTarget, activeOverlay, setActiveOverlay, jumpToSection, ...props }) {
   const group = useRef();
   const balconyRailGroupRef = useRef();
@@ -1018,6 +1030,7 @@ const [fullyOpen, setFullyOpen] = useState(false);
         section={section}
          jumpToSection={jumpToSection}
            projectIndex={2}
+         goToSection={1}
 
         id="balcony"                    
           key="balcony"
@@ -1133,6 +1146,7 @@ src="/textures/sexyCleaning.jpeg"
     section={section}
          jumpToSection={jumpToSection}
            projectIndex={3}
+         goToSection={1}
 
     id="driveway"
     key="driveway"
@@ -1258,6 +1272,8 @@ src="/textures/sexyCleaning.jpeg"
         section={section}
          jumpToSection={jumpToSection}
            projectIndex={1}
+           goToSection={1}
+
         id="house"                    
           key="house"
     setActiveOverlay={setActiveOverlay}
@@ -1280,6 +1296,8 @@ src="/textures/sexyCleaning.jpeg"
         section={section}
          jumpToSection={jumpToSection}
            projectIndex={0}
+          goToSection={1}
+
         id="car"                    
           key="car"
     setActiveOverlay={setActiveOverlay}
@@ -1301,7 +1319,9 @@ src="/textures/sexyCleaning.jpeg"
       
   <OverlayItem
     section={section}
-    
+                 jumpToSection={jumpToSection}
+projectIndex={null}
+    goToSection={4}    
     id="serviceWindow"                    
     key="serviceWindow"
     setActiveOverlay={setActiveOverlay}
@@ -1318,6 +1338,7 @@ src="/textures/sexyCleaning.jpeg"
     bgColor="bg-yellow-500"
     src="/textures/sirmur2025.png"
 hideTriggerButton={true}   
+  
   />
 
         </mesh>
