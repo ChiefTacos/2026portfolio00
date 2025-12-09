@@ -8,419 +8,19 @@ import GoogleReviewsBox from "./GoogleReviewsBox";
 
 
 
-const StyledWrapper = styled.div`
-
-
-@media (max-height: 788px) {
- .full-form {
-    width: 320px !important;     
-    padding: 1.2rem;
-    height: 420px !important;     
-  }
-  .input-container textarea {
-    min-height: 80px;
-  }
-}
-
-
-@media (max-width: 768px) {
-  .form-container {
-    
-    transform-origin: top left;  /* keep position stable */
-  }
-
-  .title-button {
-    padding: 1rem 0.2rem;
-    // transform: scale(0.5);    
-  }
-
-  .title-2 {
-    font-size: 1.6rem;
-    -webkit-text-stroke: 0.07rem #fff;
-  }
-
-  .full-form {
-    width: 320px !important;     /* instead of 500px */
-    padding: 1.2rem;
-        height: 420px !important;     
-
-  }
-
-  .input-container input {
-    width: 200px;
-    font-size: 0.75rem;
-  }
-
-  .input-container textarea {
-    min-height: 90px;
-  }
-
-  .title-button {
-   width:400px;
-    // transform: scale(0.85);
-  }
-
-}
-.form-container {
-    position: relative;
-    display: inline-block;          
-  }
-
-  /* The small button that shows at first */
-  .title-button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem 2rem;
-    background: linear-gradient(14deg, rgba(2,0,36,0.9), rgba(24,24,65,0.8), rgb(20,76,99));
-    border: 2px solid #fff;
-    box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
-    cursor: pointer;
-    user-select: none;
-    // transform: scale(0.85);
-  }
-
-  .title-2 {
-    margin: 0;
-    font-size: 2.4rem;
-    font-weight: 800;
-    font-family: Arial, Helvetica, sans-serif;
-    -webkit-text-stroke: 0.1rem #fff;
-    letter-spacing: 0.25rem;
-    color: transparent;
-    text-shadow: 0px 0px 16px #CECECE;
-    transition: all 0.4s ease;
-  }
-
-  .title-2 span::before,
-  .title-2 span::after { content: '—'; }
-
-  .title-2.clicked {
-    color: #fff !important;
-    text-shadow: 0 0 20px #fff, 0 0 40px #00ffff;
-  }
-
-  /* Full form that expands */
-  .full-form {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 500px;
-    padding: 2.2rem;
-    background: linear-gradient(14deg, rgba(2,0,36,0.8), rgba(24,24,65,0.7), rgb(20,76,99)),
-                radial-gradient(circle, rgba(2,0,36,0.5), rgba(32,15,53,0.2), rgba(14,29,28,0.9));
-    border: 2px solid #fff;
-    box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
-    z-index: 10;
-  }
-
-
-
-
-  .form {
-    position: relative;
-    display: block;
-    padding: 2.2rem;
-    max-width: 500px;
-    background: linear-gradient(14deg, rgba(2,0,36, 0.8) 0%, rgba(24, 24, 65, 0.7) 66%, 
-   rgb(20, 76, 99) 100%), radial-gradient(circle, rgba(2,0,36, 0.5) 0%, 
-   rgba(32, 15, 53, 0.2) 65%, rgba(14, 29, 28, 0.9) 100%);
-    border: 2px solid #fff;
-    -webkit-box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
-    box-shadow: rgba(0,212,255) 0px 0px 50px -15px;
-    overflow: hidden;
-    z-index: +1;
-  }
-
-  /*------input and submit section-------*/
-
-  .input-container {
-  position: relative;
-  }
-
- .input-container input, 
-.input-container textarea, 
-.form button {
-  outline: none;
-  border: 2px solid #ffffff;
-  margin: 2px 0;
-  font-family: monospace;
-      width: 250px;
-
-}
-  .input-container input
-  
-   {
-    background-color: #fff;
-    padding: 6px;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    width: 250px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  }
-
-.input-container textarea {
-  resize: vertical;           
-  min-height: 120px;
-  height: auto;
-}
-
-.input-container input:focus::placeholder,
-.input-container textarea:focus::placeholder {
-  opacity: 0;
-  transition: opacity .9s;
-}
-  .submit {
-    position: relative;
-    display: block;
-    padding: 8px;
-    background-color: #c0c0c0;
-    color: #ffffff;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    width: 100%;
-    text-transform: uppercase;
-    overflow: hidden;
-  }
-
-  .submit:hover {
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
-    border-radius: 3.9px;
-    box-shadow: 4px 5px 17px -4px #ffffff;
-    cursor: pointer;
-  }
-
-  .submit:hover::before {
-    -webkit-animation: sh02 0.5s 0s linear;
-    -moz-animation: sh02 0.5s 0s linear;
-    animation: sh02 .5s 0s linear;
-  }
-
-  .submit::before {
-    content: '';
-    display: block;
-    width: 0px;
-    height: 85%;
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    opacity: 0;
-    background: #fff;
-    box-shadow: 0 0 50px 30px #fff;
-    -webkit-transform: skewX(-20deg);
-    -moz-transform: skewX(-20deg);
-    -ms-transform: skewX(-20deg);
-    -o-transform: skewX(-20deg);
-    transform: skewX(-20deg);
-  }
-
-  @keyframes sh02 {
-    from {
-      opacity: 0;
-      left: 0%;
-    }
-
-    50% {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-      left: 100%;
-    }
-  }
-
-  /*--------signup section---------*/
-
-  .signup-link {
-    color: #c0c0c0;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    text-align: center;
-    font-family: monospace;
-  }
-
-  .signup-link a {
-    color: #fff;
-    text-decoration: none;
-  }
-
-  .up:hover {
-    text-decoration: underline;
-  }
-
-
-  /*--------header section-----------*/
-
-  .form-title {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-family: monospace;
-    font-weight: 600;
-    text-align: center;
-    color: #fff;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
-    animation-duration: 1.5s;
-    overflow: hidden;
-    transition: .12s;
-  }
-
-  .form-title span {
-    animation: flickering 2s linear infinite both;
-  }
-
-  @keyframes flickering {
-    0%,
-    100% {
-      opacity: 1;
-    }
-
-    41.99% {
-      opacity: 1;
-    }
-
-    42% {
-      opacity: 0;
-    }
-
-    43% {
-      opacity: 0;
-    }
-
-    43.01% {
-      opacity: 1;
-    }
-
-    47.99% {
-      opacity: 1;
-    }
-
-    48% {
-      opacity: 0;
-    }
-
-    49% {
-      opacity: 0;
-    }
-
-    49.01% {
-      opacity: 1;
-    }
-  }
-
-  /*---------shooting stars-----------*/
-
-
-  .bg-stars {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    background-size: cover;
-    animation: animateBg 50s linear infinite;
-  }
-
-  @keyframes animateBg {
-    0%,100% {
-      transform: scale(1);
-    }
-
-    50% {
-      transform: scale(1.2);
-    }
-  }
-
-  .star {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 4px;
-    height: 4px;
-    background: #fff;
-    border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(255,255,255,0.1),0 0 0 8px rgba(255,255,255,0.1),0 0 20px rgba(255,255,255,0.1);
-    animation: animate 3s linear infinite;
-  }
-
-  .star::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 300px;
-    height: 1px;
-    background: linear-gradient(90deg,#fff,transparent);
-  }
-
-  @keyframes animate {
-    0% {
-      transform: rotate(315deg) translateX(0);
-      opacity: 1;
-    }
-
-    70% {
-      opacity: 1;
-    }
-
-    100% {
-      transform: rotate(315deg) translateX(-1000px);
-      opacity: 0;
-    }
-  }
-
-  .star:nth-child(1) {
-    top: 0;
-    right: 0;
-    left: initial;
-    animation-delay: 0s;
-    animation-duration: 1s;
-  }
-
-  .star:nth-child(2) {
-    top: 0;
-    right: 100px;
-    left: initial;
-    animation-delay: 0.2s;
-    animation-duration: 3s;
-  }
-
-  .star:nth-child(3) {
-    top: 0;
-    right: 220px;
-    left: initial;
-    animation-delay: 2.75s;
-    animation-duration: 2.75s;
-  }
-
-  .star:nth-child(4) {
-    top: 0;
-    right: -220px;
-    left: initial;
-    animation-delay: 1.6s;
-    animation-duration: 1.6s;
-
-  }
-
-
-
-  `;
-
 
 const Section = (props) => {
   const { children } = props;
 
   return (
     <motion.section
-      className={`
+  //     className={`
+  // h-screen w-screen p-8 max-w-screen-2xl mx-auto
+  // flex flex-col items-start justify-center
+  // `}
+     className={`
   h-screen w-screen p-8 max-w-screen-2xl mx-auto
-  flex flex-col items-start justify-center
+flex flex-col items-center justify-center
   `}
       initial={{
         opacity: 0,
@@ -434,6 +34,7 @@ const Section = (props) => {
           delay: 0.6,
         },
       }}
+
     >
       {children}
     </motion.section>
@@ -471,17 +72,17 @@ export const Interface = (props) => {
 const FirstSection = (props) => {
  
   // ---- state to track which parts were clicked ----
-  const [clickedFree, setClickedFree] = useState(false);
-  const [clickedQuote, setClickedQuote] = useState(false);
-const [fullyOpen, setFullyOpen] = useState(false);
+//   const [clickedFree, setClickedFree] = useState(false);
+//   const [clickedQuote, setClickedQuote] = useState(false);
+// const [fullyOpen, setFullyOpen] = useState(false);
 
-   const revealed = clickedFree || clickedQuote;
+//    const revealed = clickedFree || clickedQuote;
  
 
 
   return (
     <Section>
-      <StyledWrapper>
+      {/* <StyledWrapper>
           <div className="form-container
            lg:translate-x-[230px] md:translate-x-[230px]  translate-x-[-30px] 
             lg:translate-y-[-250px] md:translate-y-[-350px]  translate-y-[-320px]
@@ -489,7 +90,7 @@ const [fullyOpen, setFullyOpen] = useState(false);
 
 
 
-                   {/* <div
+                   <div
   className="title-button"
   onClick={() => {
     if (fullyOpen) {
@@ -510,128 +111,6 @@ const [fullyOpen, setFullyOpen] = useState(false);
               whileTap={{ scale: 0.93 }}
             >
               FREE QUOTE
-            </motion.div>
-          </div> */}
-                 
-       <motion.div
-  className="full-form"
-  initial={{ height: 0, opacity: 0 }}
-  animate={{ 
-    height: revealed ? 620 : 0, 
-    opacity: revealed ? 1 : 0 
-  }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
-
-  onUpdate={(latest) => {
-    if (revealed && latest.height >= 600) {
-      setFullyOpen(true);
-    }
-  }}
-
-  onAnimationStart={() => {
-    if (!revealed) setFullyOpen(false);
-  }}
-
-  style={{ overflow: "hidden" }}
->
-
-            <div className="form-title"><span>Send a Custom Inquiry</span></div>
-
-            <div className="input-container">
-              <input className="input-mail" type="email" placeholder="Enter email" />
-            </div>
-
-            <section className="bg-stars">
-              <span className="star" />
-              <span className="star" />
-              <span className="star" />
-              <span className="star" />
-            </section>
-
-            <div className="input-container">
-              <input className="input-pwd" type="password" placeholder="Enter password" />
-            </div>
-
-            <div className="input-container">
-              <textarea placeholder="Enter your message" name="message" />
-            </div>
-
-            <button type="submit" className="submit">
-              <span className="sign-text">Send Inquiry</span>
-            </button>
-
-            <p className="signup-link">I love cock</p>
-          </motion.div>
-
-          </div>
-    </StyledWrapper>
-          </Section>
-  );
-};
-
-
-
-const languages = [
-  {
-    title: "🇺🇸 English",
-    level: 100,
-  },
-  {
-    title: "es Espanol",
-    level: 50,
-  },
-  {
-    title: "de Deutch",
-    level: 20,
-  },
-];
-
-const SkillsSection = () => {
-
-//   const [clickedFree, setClickedFree] = useState(false);
-//   const [clickedQuote, setClickedQuote] = useState(false);
-// const [fullyOpen, setFullyOpen] = useState(false);
-
-//    const revealed = clickedFree || clickedQuote;
- 
-  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
-  const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
-
-
-  return (
-    <Section>
-      {/* <StyledWrapper>
-          <div className="form-container
-           lg:translate-x-[230px] md:translate-x-[230px]  translate-x-[90px] 
-            lg:translate-y-[-250px] md:translate-y-[-350px]  translate-y-[-260px]
-            ">
-
-                   <div
-  className="title-button"
-  onClick={() => {
-    if (fullyOpen) {
-      setClickedFree(false);
-      setClickedQuote(false);
-      setFullyOpen(false);
-      return;
-    }
-
-    setClickedFree(true);
-    setClickedQuote(true);
-  }}
->
-
-            <motion.div
-              className={`title-2 ${clickedFree ? 'clicked' : ''}`}
-              whileTap={{ scale: 0.93 }}
-            >
-              FREE
-            </motion.div>
-            <motion.div
-              className={`title-2 ${clickedQuote ? 'clicked' : ''}`}
-              whileTap={{ scale: 0.93 }}
-            >
-              QUOTE
             </motion.div>
           </div>
                  
@@ -687,7 +166,42 @@ const SkillsSection = () => {
 
           </div>
     </StyledWrapper> */}
-    <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />
+          </Section>
+  );
+};
+
+
+
+const languages = [
+  {
+    title: "🇺🇸 English",
+    level: 100,
+  },
+  {
+    title: "es Espanol",
+    level: 50,
+  },
+  {
+    title: "de Deutch",
+    level: 20,
+  },
+];
+
+const SkillsSection = () => {
+
+
+  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
+
+
+  return (
+    <Section>
+
+  <div className="pb-72 mb-48 w-full h-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
+            <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />
+
+      </div>
+
 
           </Section>
   );
