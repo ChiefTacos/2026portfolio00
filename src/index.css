@@ -302,3 +302,116 @@ canvas {
 
 
 
+.start-menu-button {
+  position: relative;
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  border: 0;
+  /* background: linear-gradient(#ffffff, #94e4ff); */
+}
+
+.start-menu-inner {
+  cursor: pointer;
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+   /* background: linear-gradient(#ffffff, #94e4ff); */
+
+}
+
+.top-white {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(#fffe, #fff0 60%),
+    radial-gradient(circle at 50% 2%, #fff5, #fff5 7%, #fff0 50%);
+  clip-path: url(#top-clip);
+}
+
+.colors {
+  position: absolute;
+  inset: 0;
+  filter: blur(4px);
+}
+
+.red {
+  position: absolute;
+  bottom: 50%;
+  right: 50%;
+  width: 4.25em;
+  height: 4em;
+  background: linear-gradient(190deg, rgb(67, 108, 203) 15%, rgba(177, 81, 255, 0.267) 40%, #0000),
+    linear-gradient(80deg, rgb(51, 49, 195) 15%, rgba(35, 33, 160, 0.267) 40%, #0000),
+    linear-gradient(#0f0, #0f0);
+  filter: url(#blue-filter);
+  rotate: 1deg;
+  transform-origin: 100% 100%;
+}
+
+.green {
+  position: absolute;
+  bottom: 50%;
+  right: 50%;
+  width: 4em;
+  height: 4em;
+  background: linear-gradient(200deg, rgb(0, 255, 115) 15%, #f004 40%, #0000),
+    linear-gradient(70deg, #f00 15%, #f004 40%, #0000),
+    linear-gradient(#0f0, #0f0);
+  filter: url(#green-filter);
+  rotate: 93deg;
+  transform-origin: 100% 100%;
+}
+
+.blue {
+  position: absolute;
+  bottom: 50%;
+  right: 50%;
+  width: 4em;
+  height: 4.26em;
+  background: linear-gradient(190deg, #f00 15%, #f004 40%, #0000),
+    linear-gradient(65deg, #f00 20%, #f004 45%, #0000),
+    linear-gradient(#0f0, #0f0);
+  filter: url(#blue-filter);
+  rotate: 273deg;
+  transform-origin: 100% 100%;
+}
+
+.yellow {
+  position: absolute;
+  bottom: 50%;
+  right: 50%;
+  width: 4.25em;
+  height: 4em;
+  background: linear-gradient(190deg, #f00 15%, #f004 40%, #0000),
+    linear-gradient(80deg, #f00 15%, #f004 40%, #0000),
+    linear-gradient(#0f0, #0f0);
+  filter: url(#green-filter);
+  rotate: 183deg;
+  transform-origin: 100% 100%;
+}
+
+.colors {
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+
+.start-menu-button:hover .colors {
+  opacity: 1;
+}
+
+.start-menu-button:active .colors {
+  opacity: 0.65;
+}
+.start-menu-button .colors {
+  opacity: 0.45;
+}
+.win7 {
+  position: absolute;
+  inset: 0.7em;
+  /* Please uiverse gods, there's no other way to include the windows 7 icon here. That's the only image here, everything else is original content :) */
+
+
+  background-size: 100% 100%;
+  z-index: 1;
+}

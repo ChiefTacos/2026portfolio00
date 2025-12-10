@@ -295,7 +295,7 @@ const showViewButton = hideTriggerButton
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
-        <span className="relative  block px-3 lg:px-3 py-3 pb-5 lg:py-3 lg:pb-5 rounded-2xl bg-neutral-950">
+        <span className="relative  block px-3 lg:px-3 py-3 pb-5 lg:py-3 lg:pb-5 rounded-2xl bg-neutral-950 dark:bg-neutral-950">
           <div className="flex items-center justify-center space-x-4">
             <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
@@ -667,7 +667,7 @@ const showViewButton = hideTriggerButton
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
 
-        <span className="relative z-10  block pr-4  lg:px-2 pt-3 lg:pt-1 py-3 lg:py-2  rounded-2xl bg-neutral-950">
+        <span className="relative z-10  block pr-4  lg:px-2 pt-3 lg:pt-1 py-3 lg:py-2  rounded-2xl dark:bg-neutral-950 bg-neutral-950">
           <div className="relative z-10 flex items-center space-x-3 ">
                 {/* <div className="hidden lg:inline "> */}
                 <div className="inline ">

@@ -253,7 +253,7 @@ const MobileWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(180deg, #282828, #202020);
+    background-color: #000000;
    box-shadow:
       inset -8px 0 8px rgba(0, 0, 0, 0.15),
       inset 0 -8px 8px rgba(0, 0, 0, 0.25),
@@ -261,6 +261,7 @@ const MobileWrapper = styled.div`
       10px 20px 25px rgba(0, 0, 0, 0.4);
           padding: 15px 10px;
     border-radius: 2em;
+    border:none;
      transition:
       transform 0.1s ease-in-out,
       box-shadow 0.1s ease-in;
@@ -273,8 +274,9 @@ const MobileWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 90px;
-    height: 70px;
+    height: 90px;
     border-radius: 20%;
+    
     margin: 0 10px;
     background-color: #f2f2f2;
     box-shadow: 0px 0px 4px #00000027;
@@ -288,7 +290,9 @@ const MobileWrapper = styled.div`
 
   .social-buttons svg {
     transition: 0.3s;
-    height: 45px;
+    margin: 0px 0px;
+    
+    height: 0px;
   }
 
   .facebook {
@@ -425,8 +429,8 @@ export const Menu = (props) => {
    
 
      
-               <div className="relative drop-shadow-xl lg:w-64 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] lg:text-[36px] text-[40px] " >
-      <div className="absolute  flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 pt-4">
+               <div className="relative drop-shadow-xl lg:w-64 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[36px] text-[40px] " >
+      <div className="absolute  flex items-center justify-center text-white dark:text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 pt-4">
 
 
 
@@ -497,8 +501,8 @@ props.triggerFreeQuote();  // ← This does everything!
 
 
 
-  <div className="relative drop-shadow-xl w-64 h-64 overflow-hidden rounded-xl bg-[#3d3c3d] lg:mb-0 mb-[-10]" >
-      <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950">
+  <div className="relative drop-shadow-xl w-64 h-64 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[-10]" >
+      <div className="absolute flex items-center justify-center dark:text-white text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 ">
 
 
 
@@ -696,7 +700,7 @@ alert('i love cock');
 
             <div className="flex flex-col">
       <MobileWrapper >
-      <div className="social-buttons">
+      <div className="social-buttons ">
         {/* <a href="#" className="social-button facebook" onClick={(event) => {
     spawnCoin(event);
   }}>
@@ -706,15 +710,90 @@ alert('i love cock');
 
 </svg>        
 </a> */}
-        <a href="#" className="social-button github" onClick={(event) => {
+        {/* <a href="#" className="social-button github" onClick={(event) => { */}
+        <a href="#" className="h-[80px] " onClick={(event) => {
+event.preventDefault();
     spawnCoin(event);
     setMenuOpened(true);
-  }}>
-          <svg class="w-[80px] h-[80px] fill-[#000000]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+  }}
+  onTouchStart={(e) => e.currentTarget.classList.add('tapped')}
+  onTouchEnd={(e) => {
+    e.currentTarget.classList.remove('tapped');
+    // Optional: trigger click programmatically if you want the onClick to fire on touch too
+    e.currentTarget.click();
+  }}
+  >
+          {/* <svg class="w-[80px] h-[80px] fill-[#000000]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"></path>
 
+</svg> */}
+<svg xmlns="http://www.w3.org/2000/svg" width="80px"  className='' >
+  <clipPath id="top-clip" clipPathUnits="objectBoundingBox">
+    {/* <path
+      d="m 0,0 v 0.04496528 0.35210937 a 0.16917447,0.23564182 0 0 0 0.11164713,0.0599002 0.16917447,0.23564182 0 0 0 0.12351562,-0.0751997 h 9.3967e-4 A 0.32874868,0.28074741 0 0 1 0.507398,0.25882161 0.32874868,0.28074741 0 0 1 0.8074935,0.42504775 0.13619505,0.18305407 0 0 0 0.91526908,0.49652342 0.13619505,0.18305407 0 0 0 1,0.45674263 V 0.17021485 0 H 0.16957248 0.05458116 Z"
+    ></path>
+     */}
+       <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"></path>
+
+  </clipPath>
+
+  <filter id="red-filter">
+    <feColorMatrix
+      values="0 0 0 0 1
+                0 0 0 0 0.05
+                0 0 0 0 0
+                0 2 0 0 0"
+      type="matrix"
+      in="SourceGraphic"
+    ></feColorMatrix>
+  </filter>
+  <filter id="green-filter">
+    <feColorMatrix
+      values="0 0 0 0 0
+                0 0 0 0 1
+                0 0 0 0 0
+                0 2.5 0 0 0"
+      type="matrix"
+      in="SourceGraphic"
+    ></feColorMatrix>
+  </filter>
+  <filter id="blue-filter">
+    <feColorMatrix
+      values="0 0 0 0 0
+                0 0 0 0 0.7
+                0 0 0 0 1
+                0 2 0 0 0"
+      type="matrix"
+      in="SourceGraphic"
+    ></feColorMatrix>
+  </filter>
+  <filter id="yellow-filter">
+    <feColorMatrix
+      values="0 0 0 0 1
+                0 0 0 0 1
+                0 0 0 0 0
+                0 2.5 0 0 0"
+      type="matrix"
+      in="SourceGraphic"
+    ></feColorMatrix>
+  </filter>
 </svg>
+
+<button className="start-menu-button">
+  <div className="start-menu-inner">
+    <div className="top-white"></div>
+    <div className="win7"></div>
+    <div className="colors">
+      <div className="red"></div>
+      <div className="green"></div>
+      <div className="blue"></div>
+      <div className="yellow"></div>
+    </div>
+  </div>
+</button>
+
+
         </a>
         
         {/* <a href="#" className="social-button instagram" onClick={(e) => {
