@@ -275,7 +275,9 @@ export const DayNightSky = ({
       // "B A D G E R",
       // "S U R F A C E",
       // "S O L U T I O N S",
-       "SIRMUR",
+      //  "SIRMUR",
+       "BADGER",
+       
 
     ];
     const lineHeight = 220;

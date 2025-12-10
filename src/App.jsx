@@ -84,7 +84,7 @@ const jumpToSection = (index) => {
   style={{ 
     position: "fixed",
     inset: 0,
-     zIndex: "2147483640",
+     zIndex: "2147483638",
     pointerEvents: "none",
     
   }}

@@ -845,47 +845,45 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     
     //gutter
     balcony: {
-      distanceFactor: { desktop: 19, tablet: 24, mobile: 18 },
+      distanceFactor: { desktop: 19, tablet: 25, mobile: 18 },
       position: {
-        desktop: [-987.128, 628.8, -72],
-        tablet: [-478.128, 610.8, -72],
+        
+        // desktop: [-478.128, 610.8, -72],
+        desktop: [-486.128, 554.8, -72],
+        tablet: [-413.128, 610.8, -72],
         
          mobile:  [-210.128, 822.6, 305.314],
 
-        // mobile:  [-228.117, 406.956, 1.194],   
       },
     },
      house: {
-      distanceFactor: { desktop: 19, tablet: 19, mobile: 19 },
+      distanceFactor: { desktop: 14, tablet: 20, mobile: 19 },
       position: {
         
-        desktop: [-952.128, 757.0, -72],
-        tablet: [-484.128, 178.8, 322],
-        // mobile: [-170.128, 98.8, 232],
+        // desktop: [-494.128, 178.8, 322],
+        desktop: [-499.128, 143.8, 322],
+        tablet: [-444.128, 178.8, 322],
          mobile:  [240.128, 850, 405.314],
 
-        // mobile:  [204.128, 100, 205.314],
       },
     },
     driveway: {
-      distanceFactor: { desktop: 19, tablet: 20, mobile: 18 },
+      distanceFactor: { desktop: 15, tablet: 21, mobile: 18 },
       position: {
-        desktop: [-1024.128, 492.8, -72],
-        tablet: [-480.128, 368.8, 172],
+        // desktop: [-485.128, 368.8, 172],
+        desktop: [-490.128, 328.8, 172],
+        tablet: [-430.128, 368.8, 172],
         mobile: [-310.128, -103.8, 582],
 
-        // mobile:  [-4.128, 0, 305.314],
       },
     },
     car: {
-      distanceFactor: { desktop: 19, tablet: 18, mobile: 22 },
+      distanceFactor: { desktop: 13, tablet: 19, mobile: 22 }, 
       position: {
-        desktop: [-916.828, 878.8, -72],
+        desktop: [-498.128, 20.8, 482],
         
         tablet: [-324.128, -18.8, 462],
-        // mobile: [-212.128, -7, 442],
-        //  mobile:  [240.128, 850, 405.314],
-        // mobile:  [640.128, 100, 205.314],
+   
          mobile:  [540.128, 100, 405.314],
 
       },
@@ -903,11 +901,9 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       distanceFactor: { desktop: 18, tablet: 24, mobile: 18 },
       position: {
         desktop: [-411.2, 882, 7.2],
-        tablet:  [-140.128, 1000, -25.314],
-        // left middle topish mobile: [-4.128, 628.8, 0],
 
+        tablet:  [-140.128, 1000, -25.314],
          mobile:  [-10.128, 1060, 405.314],
-      //right middle  mobile:  [540.128, 100, 405.314],
       },
     },
   };

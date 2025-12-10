@@ -165,7 +165,7 @@ if (viewport.width > 1024) {
 }
 
   // Positioning / scale logic overridden by isMobile
-  const activeScale = isMobile ? 2.1 : 2.4;   
+  let activeScale = isMobile ? 2.1 : 2.4;   
 
   return (
     
