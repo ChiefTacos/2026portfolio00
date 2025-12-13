@@ -307,7 +307,7 @@ const showViewButton = hideTriggerButton
 
             <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-4 pt-2  px-1 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
                             group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500 dark:text-yellow-400">
-              Free Quote
+              Custom Quote
             </span>
           </div>
         </span>
