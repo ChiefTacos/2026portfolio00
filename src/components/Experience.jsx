@@ -10,6 +10,8 @@ import { Office } from "./Office";
 import { Projects } from "./Projects";
 import { MuscleCar } from "./MuscleCar";
 import { RVmodel } from "./Rv";
+import { GoogleReviewsPage } from "./GoogleReviewsPage";
+// import { GoogleReviewsBox } from "./GoogleReviewsBox";
 
 export const Experience = (props) => {
   const { menuOpened, isDay,  setIsAnimating,  activeOverlay, setActiveOverlay, jumpToSection} = props;
@@ -120,8 +122,23 @@ export const Experience = (props) => {
   >
     <Projects isMobile={isMobile} />
   </motion.group>
+
+  
 )}
 
+       {section === 2 && (
+  <motion.group
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{
+      duration: 1,     // fade-in speed
+    }}
+  >
+    <GoogleReviewsPage isMobile={isMobile} />
+  </motion.group>
+
+  
+)}
 
     </>
   );

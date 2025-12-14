@@ -590,11 +590,9 @@ const showViewButton = hideTriggerButton
                                           >
                                             <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
-                                            <span className="relative z-10 block px-4 lg:px-6 py-3 pb-5 lg:py-4 lg:pb-6 rounded-2xl bg-neutral-950 ">
+                                            <span className="relative z-10 block px-4 lg:px-6 py-3 pb-5 lg:py-4 lg:pb-6 rounded-2xl bg-neutral-250 ">
                                               <div className="flex items-center justify-center space-x-4 ">
-                                                  <svg className="w-16 h-16 lg:w-24 lg:h-24 bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
-                                                      hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
-                                                      shadow-amber-700 hover:shadow-amber-500 " viewBox="0 -25 510 580" xmlns="http://www.w3.org/2000/svg">
+                                                  <svg className="w-16 h-16 lg:w-24 lg:h-24 bg-none" viewBox="0 -25 510 580" xmlns="http://www.w3.org/2000/svg">
 
                                                   <path d="M512 416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H192c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8H448c35.3 0 64 28.7 64 64V416zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24V312h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H280V200c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H168c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"></path>
 

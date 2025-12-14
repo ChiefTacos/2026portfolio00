@@ -276,7 +276,7 @@ canvas {
   .card__title {
     margin: 0;
     font-size: 24px;
-    color: #333;
+    color: #000000 !important;
     font-weight: 700;
   }
 
@@ -287,7 +287,7 @@ canvas {
   .card__description {
     margin: 10px 0 0;
     font-size: 14px;
-    color: #777;
+    color: #040407 !important;
     line-height: 1.4;
   }
 @media (max-width: 1024px) {

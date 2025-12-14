@@ -5,6 +5,7 @@ import { currentProjectAtom, projects } from "./Projects";
 import styled from 'styled-components';
 import { useState, useEffect } from "react";
 import GoogleReviewsBox from "./GoogleReviewsBox";
+import { currentProjectAtom01 } from "./GoogleReviewsPage";
 
 
 
@@ -187,25 +188,68 @@ const languages = [
   },
 ];
 
+
+
+
+
+
+
+
+
+
+//////////
+// REVIEWS
+//////////
+
 const SkillsSection = () => {
 
 
-  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
-  const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
+  // const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  // const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
 
+  const [currentProject, setCurrentProject] = useAtom(currentProjectAtom01);
+
+  const nextProject = () => {
+    setCurrentProject((currentProject + 1) % projects.length);
+  };
+
+  const previousProject = () => {
+    setCurrentProject((currentProject - 1 + projects.length) % projects.length);
+  };
 
   return (
     <Section>
-
-  <div className="pb-72 mb-48 w-full h-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
-            <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />
-
+      <div className="fixed left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
+        <button
+          className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
+          onClick={previousProject}
+        >
+          ← Previous
+        </button>
+        <h2 className="text-4xl lg:text-5xl font-bold text-center text-white">Reviews by Real Customers!</h2>
+        <button
+          className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
+          onClick={nextProject}
+        >
+          Next →
+        </button>
       </div>
-
-
-          </Section>
+    </Section>
   );
 };
+
+//   return (
+//     <Section>
+
+//   <div className="pb-72 mb-48 w-full h-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
+//             <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />
+
+//       </div>
+
+
+//           </Section>
+//   );
+// };
 
 const ProjectsSection = () => {
   const [currentProject, setCurrentProject] = useAtom(currentProjectAtom);
