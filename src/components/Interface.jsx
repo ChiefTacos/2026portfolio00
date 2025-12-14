@@ -4,8 +4,8 @@ import { currentProjectAtom, projects } from "./Projects";
 
 import styled from 'styled-components';
 import { useState, useEffect } from "react";
-import GoogleReviewsBox from "./GoogleReviewsBox";
 import { currentProjectAtom01 } from "./GoogleReviewsPage";
+import GoogleReviewsBox from "./GoogleReviewsBox";
 
 
 
@@ -204,8 +204,8 @@ const languages = [
 const SkillsSection = () => {
 
 
-  // const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
-  // const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
+  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
 
   const [currentProject, setCurrentProject] = useAtom(currentProjectAtom01);
 
@@ -219,14 +219,25 @@ const SkillsSection = () => {
 
   return (
     <Section>
-      <div className="fixed left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
+
+<div className="relative inset-x-0 top-1 left-1/2 lg:left-24 -translate-x-1/2 w-full max-w-xs lg:max-w-xs z-[99999]">
+  <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+
+    
+    <div className="p-6 max-h-[80vh] overflow-y-auto">
+      <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />
+    </div>
+  </div>
+</div>
+
+      <div className="relative top-24 pb-48 mb-24 left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
         <button
           className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
           onClick={previousProject}
         >
           ← Previous
         </button>
-        <h2 className="text-4xl lg:text-5xl font-bold text-center text-white">Reviews by Real Customers!</h2>
+        <h2 className="text-4xl lg:text-5xl font-bold text-center text-white">Badger Reviews</h2>
         <button
           className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
           onClick={nextProject}

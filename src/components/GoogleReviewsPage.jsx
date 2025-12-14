@@ -1,12 +1,12 @@
 
-import { Image, Text } from "@react-three/drei";
+import { Image, Text, Html } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
 import * as THREE from "three";
 import { motion } from "framer-motion-3d";
 import { useEffect, useRef, useState } from "react";
-import { Html } from "@react-three/drei";
 import { atom, useAtom } from "jotai";
+import GoogleReviewsBox from "./GoogleReviewsBox";
 
 
 
@@ -134,6 +134,8 @@ export const currentProjectAtom01 = atom(Math.floor(projects.length / 2));
 export const GoogleReviewsPage = ({ isMobile }) => {
   const { viewport } = useThree();
   const [currentProject] = useAtom(currentProjectAtom01);
+  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
 
 
 
@@ -175,6 +177,8 @@ if (viewport.width > 1024) {
           <Project project={project} highlighted={index === currentProject} isMobile={isMobile} />
         </motion.group>
       ))}
+
     </group>
+
   );
 };
