@@ -162,7 +162,7 @@ export const ScrollManager = (props) => {
     cur = Math.max(0, Math.min(cur, 0.999));
 
     // Convert scroll to CLEAN integer section
-    const exactSection = Math.round(cur * (4 - 1)); // 4 sections → index 0–3
+    const exactSection = Math.round(cur * (4.9 - 1)); // 4 sections → index 0–3
 
     // Don't allow updating to same section
     if (exactSection !== section) {

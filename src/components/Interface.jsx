@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from "react";
 import { currentProjectAtom01 } from "./GoogleReviewsPage";
 import GoogleReviewsBox from "./GoogleReviewsBox";
+import GoogleMapsInterface from "./GoogleMapsInterface";
 
 
 
@@ -173,25 +174,6 @@ const FirstSection = (props) => {
 
 
 
-const languages = [
-  {
-    title: "🇺🇸 English",
-    level: 100,
-  },
-  {
-    title: "es Espanol",
-    level: 50,
-  },
-  {
-    title: "de Deutch",
-    level: 20,
-  },
-];
-
-
-
-
-
 
 
 
@@ -220,7 +202,7 @@ const SkillsSection = () => {
   return (
     <Section>
 
-<div className="relative inset-x-0 top-1 left-1/2 lg:left-24 -translate-x-1/2 w-full max-w-xs lg:max-w-xs z-[99999]">
+{/* <div className="relative inset-x-0 top-1 left-1/2 lg:left-24 -translate-x-1/2 w-full max-w-xs lg:max-w-xs z-[99999]">
   <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
 
     
@@ -228,7 +210,7 @@ const SkillsSection = () => {
       <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />
     </div>
   </div>
-</div>
+</div> */}
 
       <div className="relative top-24 pb-48 mb-24 left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
         <button
@@ -296,110 +278,117 @@ const ProjectsSection = () => {
 
 const ContactSection = () => {
   return (
-    <Section>
-      <h2 className="text-7xl text-slate-50 font-bold bg-slate-950">Let's get crackin'</h2>
-      <div className="mt-8 p-2 rounded-md  w-96 md:text-left max-w-full text-center">
-        {/* <form>
-          <label for="name" className="font-medium text-gray-900 block mb-1">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-          />
-          <label
-            for="email"
-            className="font-medium text-gray-900 block mb-1 mt-8"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-          />
-          <label
-            for="email"
-            className="font-medium text-gray-900 block mb-1 mt-8"
-          >
-            Message
-          </label>
-          <textarea
-            name="message"
-            id="message"
-            className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-          />
-          <button className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 ">
-            Submit
-          </button>
-        </form> */}
-        <form>
-<motion.label
-  htmlFor="name"
-  className="font-medium text-3xl text-white drop-shadow-2xl block mb-1 cursor-none"
-  whileHover={{ scale: 1.15 }}
-  transition={{ type: "spring", stiffness: 300, damping: 20 }}
->            Michael Murray <br></br><br></br> Age 23
-          </motion.label>
-          <br></br>
+    <Section
+    >
+      <div className=" form-container
+  w-full
+  max-w-[500px]
+  md:max-w-[800px]
 
+  lg:max-w-[900px]
+  xl:max-w-[1200px]
+  h-full
+  max-h-[700px]
+   xl:mr-48
+">
+        <div className="form">
+          <span className="heading">Global Expertise Rooted in Wisconsin</span>
+          <div className="flex md:flex-row flex-col items-center gap-4 text-left">
+          <span className="c1 w-1/3 lg:text-xl">Badger Surface Solutions provides exemplary professional services with great consideration always putting the customer first. </span>
+          <div className="flex flex-col w-1/3">
+            <span className="c2 text-2xl">We Proudly Serve These Counties!</span>
+            <span className="c2 text-xl">Kenosha, Racine, Walworth, Waukesha, Rock & Dane.</span>
+          </div>
 
-<label for="name" className="font-medium text-lg text-slate-50 drop-shadow-xl   mb-1 cursor-text ">
-Born in Chicago IL. Interested in carpentry and electrical apprenticeship programs or construction work. I'm a dual citizen of the USA and Germany.          </label>
+              <div className="section-banner w-1/3">
+          {/* <img className="w-72 h-72" src="/projects/review00.jpg" alt="" /> */}
 
-<a
-href="mailto:amurraymichael@gmail.com?subject=Hello&body=I%20wanted%20to%20reach%20out..."
-  target="_blank"
-  rel="noopener noreferrer"
->
-<section
-  class="relative group flex flex-col items-center justify-center w-full h-full"
->
-  <div
-    class="file relative w-60 h-40 cursor-pointer origin-bottom [perspective:1500px] z-50"
-  >
-    <div
-      class="work-5 bg-amber-600 w-full h-full origin-top rounded-2xl rounded-tl-none group-hover:shadow-[0_20px_40px_rgba(0,0,0,.2)] transition-all ease duration-300 relative after:absolute after:content-[''] after:bottom-[99%] after:left-0 after:w-20 after:h-4 after:bg-amber-600 after:rounded-t-2xl before:absolute before:content-[''] before:-top-[15px] before:left-[75.5px] before:w-4 before:h-4 before:bg-amber-600 before:[clip-path:polygon(0_35%,0%_100%,50%_100%);]"
-    ></div>
-    <div
-      class="work-4 absolute inset-1 bg-zinc-400 rounded-2xl transition-all ease duration-300 origin-bottom select-none group-hover:[transform:rotateX(-20deg)]"
-    ></div>
-    <div
-      class="work-3 absolute inset-1 bg-zinc-300 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-30deg)]"
-    ></div>
-    <div
-      class="work-2 absolute inset-1 bg-zinc-200 rounded-2xl transition-all ease duration-300 origin-bottom group-hover:[transform:rotateX(-38deg)]"
-    ></div>
-    <div
-      class="work-1 absolute bottom-0 bg-gradient-to-t from-amber-500 to-amber-400 w-full h-[156px] rounded-2xl rounded-tr-none after:absolute after:content-[''] after:bottom-[99%] after:right-0 after:w-[146px] after:h-[16px] after:bg-amber-400 after:rounded-t-2xl before:absolute before:content-[''] before:-top-[10px] before:right-[142px] before:size-3 before:bg-amber-400 before:[clip-path:polygon(100%_14%,50%_100%,100%_100%);] transition-all ease duration-300 origin-bottom flex items-end group-hover:shadow-[inset_0_20px_40px_#fbbf24,_inset_0_-20px_40px_#d97706] group-hover:[transform:rotateX(-46deg)_translateY(1px)]"
-    ></div>
-  </div>
-  <p class="text-3xl pt-4 opacity-20">Hover over</p>
-</section>
-
-          <motion.label
-            htmlFor="email"
-            className="font-medium text-xl  text-slate-50 drop-shadow-lg  block mb-1 mt-8 cursor-pointer"
-             whileHover={{ scale: 1.1 }}
-  transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          >
-            Email Me
-          </motion.label>
-          </a>
-
-          <motion.label
-            for="email"
-            className="font-medium text-gray-900 block mb-1 mt-8 "
-           
-          >
-            
-          </motion.label>
+        <GoogleMapsInterface />
+             </div>
+           </div>
          
-        </form>
+       {/* <div className="section-banner w-1/3">
+        <div id="star-1">
+          <div className="curved-corner-star">
+            <div id="curved-corner-bottomright" />
+            <div id="curved-corner-bottomleft" />
+          </div>
+          <div className="curved-corner-star">
+            <div id="curved-corner-topright" />
+            <div id="curved-corner-topleft" />
+          </div>
+        </div>
+        <div id="star-2">
+          <div className="curved-corner-star">
+            <div id="curved-corner-bottomright" />
+            <div id="curved-corner-bottomleft" />
+          </div>
+          <div className="curved-corner-star">
+            <div id="curved-corner-topright" />
+            <div id="curved-corner-topleft" />
+          </div>
+        </div>
+        <div id="star-3">
+          <div className="curved-corner-star">
+            <div id="curved-corner-bottomright" />
+            <div id="curved-corner-bottomleft" />
+          </div>
+          <div className="curved-corner-star">
+            <div id="curved-corner-topright" />
+            <div id="curved-corner-topleft" />
+          </div>
+        </div>
+        <div id="star-4">
+          <div className="curved-corner-star">
+            <div id="curved-corner-bottomright" />
+            <div id="curved-corner-bottomleft" />
+          </div>
+          <div className="curved-corner-star">
+            <div id="curved-corner-topright" />
+            <div id="curved-corner-topleft" />
+          </div>
+        </div>
+        <div id="star-5">
+          <div className="curved-corner-star">
+            <div id="curved-corner-bottomright" />
+            <div id="curved-corner-bottomleft" />
+          </div>
+          <div className="curved-corner-star">
+            <div id="curved-corner-topright" />
+            <div id="curved-corner-topleft" />
+          </div>
+        </div>
+        <div id="star-6">
+          <div className="curved-corner-star">
+            <div id="curved-corner-bottomright" />
+            <div id="curved-corner-bottomleft" />
+          </div>
+          <div className="curved-corner-star">
+            <div id="curved-corner-topright" />
+            <div id="curved-corner-topleft" />
+          </div>
+        </div>
+        <div id="star-7">
+          <div className="curved-corner-star">
+            <div id="curved-corner-bottomright" />
+            <div id="curved-corner-bottomleft" />
+          </div>
+          <div className="curved-corner-star">
+            <div id="curved-corner-topright" />
+            <div id="curved-corner-topleft" />
+          </div>
+        </div>
+        </div> */}
+
+          <div className="button-container">
+            <div className="send-button">Customize a Quote</div>
+            <div className="reset-button-container">
+              <div className="reset-button" id="reset-btn">Contact Us</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </Section>
+      
+         </Section>
   );
 };
