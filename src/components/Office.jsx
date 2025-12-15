@@ -279,8 +279,7 @@ const showViewButton = hideTriggerButton
     ? false 
     : (isMobileOrTablet ? !isAnyOpen : !isActive);
 
-
-    const FreeQuoteButton = ({ onClick, isClickable }) => {
+const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
     <div className="relative group scale-100 lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
       <button
@@ -315,9 +314,50 @@ const showViewButton = hideTriggerButton
     </div>
   );
 };
+const ServiceWindowButton = ({ onClick, isClickable }) => {
+  return (
+    <div
+      className="relative group scale-100 lg:scale-90"
+      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
+    >
+      <button
+        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-100
+                   bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600
+                   hover:from-blue-500 hover:via-cyan-400 hover:to-teal-500
+                   shadow-cyan-700 hover:shadow-cyan-500"
+        onClick={onClick}
+        onPointerDown={(e) => e.stopPropagation()}
+        style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
+      >
+        {/* Glow effect (kept exactly the same) */}
+        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
+        {/* Inner button content container */}
+        <span className="relative block px-3 lg:px-3 py-3 pb-3 lg:py-3 lg:pb-3 rounded-2xl bg-neutral-950 overflow-hidden">
+          <div className="relative lg:w-[400px] lg:h-[400px] w-72 h-72  flex items-center justify-center">
+            {/* Full-cover video */}
+            <video
+              className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+              autoPlay
+              loop
+              muted
+              playsInline
+              // Replace this with your actual video path
+              src="/videos/eatingAss.mp4"
+              // Optional fallback poster image while loading
+              poster="/textures/sirmur2025.png"
+            >
+              Your browser does not support the video tag.
+            </video>
 
-
+            {/* Optional subtle dark overlay to improve contrast if needed */}
+            <div className="absolute inset-0 bg-black opacity-20 rounded-2xl pointer-events-none"></div>
+          </div>
+        </span>
+      </button>
+    </div>
+  );
+};
   return (
     <group
       ref={groupRef}
@@ -632,7 +672,7 @@ const showViewButton = hideTriggerButton
       <div className="flex items-center justify-center" style={{
       position: "absolute",
       inset: 0,
-      pointerEvents: "none", // container doesn't block
+      pointerEvents: "none", 
       zIndex:1,
       }}>
     <div 
@@ -646,12 +686,10 @@ const showViewButton = hideTriggerButton
       }}
     >
 
-      {/* Special Free Quote Button */}
-      {id === "freeQ" ? (
-        <FreeQuoteButton 
-          onClick={handleButtonClick} 
-          isClickable={isClickable} 
-        />
+     {id === "freeQ" ? (
+        <FreeQuoteButton onClick={handleButtonClick} isClickable={isClickable} />
+      ) : id === "serviceWindow" ? (
+        <ServiceWindowButton onClick={handleButtonClick} isClickable={isClickable} />
       ) : (
 
       <button
@@ -677,31 +715,29 @@ const showViewButton = hideTriggerButton
 
          
 
-<svg
-  className="w-16 h-16 transition-all duration-300
-             stroke-white fill-white
-             group-hover:fill-emerald-300
-             group-hover:stroke-emerald-300"
-  viewBox="0 0 448 512"
-  xmlns="http://www.w3.org/2000/svg"
->
-  {/* Vertical bar */}
-   <rect
-    x="236"      // centered
-    y="48"
-    width="40"   // halfway thickness
-    height="416" // halfway length
-    
-  />
+                <svg
+                  className="w-16 h-16 transition-all duration-300
+                            stroke-white fill-white
+                            group-hover:fill-emerald-300
+                            group-hover:stroke-emerald-300"
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    x="236"      // centered
+                    y="48"
+                    width="40"   // halfway thickness
+                    height="416" // halfway length
+                    
+                  />
 
-  {/* Horizontal bar */}
-  <rect
-    x="48"
-    y="236"
-    width="416"  // halfway length
-    height="40"  // halfway thickness
-  />
-</svg>
+                  <rect
+                    x="48"
+                    y="236"
+                    width="416"  // halfway length
+                    height="40"  // halfway thickness
+                  />
+                </svg>
           </div>
         </span>
       </button>
@@ -887,12 +923,13 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     contact: {
-      distanceFactor: { desktop: 18, tablet: 20, mobile: 22 },
+      distanceFactor: { desktop: 11, tablet: 11, mobile: 22 },
       position: {
-        desktop: [-201.2, 1000.1, 7.2],
+        desktop: [201.2, 600.1, 807.2],
+        tablet: [461.2, 880.1, 707.2],
         
-        tablet:  [-140.128, 1000, -25.314],
-        mobile:  [-140.128, 1000, 25.314],
+        // tablet:  [-140.128, 1000, -25.314],
+        mobile:  [-140.128, 100, 25.314],
       },
     },
     freeQ: {
@@ -1340,8 +1377,7 @@ src="/textures/sexyCleaning.jpeg"
       
   <OverlayItem
     section={section}
-                 jumpToSection={jumpToSection}
-projectIndex={null}
+    jumpToSection={jumpToSection}
     goToSection={3.9}    
     id="serviceWindow"                    
     key="serviceWindow"
@@ -1358,8 +1394,6 @@ projectIndex={null}
     price="ssn 3938 2938 298"
     bgColor="bg-yellow-500"
     src="/textures/sirmur2025.png"
-hideTriggerButton={true}   
-  
   />
 
         </mesh>

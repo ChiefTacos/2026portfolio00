@@ -513,7 +513,7 @@ props.triggerFreeQuote();  // ← This does everything!
        <button
   class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
 >
-  <span
+  {/* <span
     class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950  rounded-md group-hover:bg-opacity-0"
   >
      <StyledWrapper01  onClick={() => {
@@ -521,8 +521,15 @@ props.triggerFreeQuote();  // ← This does everything!
     openOverlay("serviceWindow"); 
         onSectionChange(0); 
 
+  }}> */}
+       <span
+    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950  rounded-md group-hover:bg-opacity-0"
+  >
+     <StyledWrapper01  onClick={(event) => {
+    spawnCoin(event);
+        onSectionChange(4); 
+
   }}>
-    
       <article className="keycap">
         <aside className="letter">
           <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
