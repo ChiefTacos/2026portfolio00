@@ -8,7 +8,7 @@ import { DayNightToggle } from "./DayNightToggle";
 
 
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 
@@ -365,8 +365,8 @@ export const Menu = (props) => {
   console.log('API Key:', apiKey);
   console.log('Place ID:', placeId);
 
-
-
+const [isVisible, setIsVisible] = useState(false);
+const [hasFadedIn, setHasFadedIn] = useState(false);
   useEffect(() => {
   function handleResize() {
     if (window.innerWidth >= 1024) {
@@ -394,6 +394,20 @@ export const Menu = (props) => {
   // Remove after animation
   setTimeout(() => coin.remove(), 800);
 }
+
+useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);        // Start the fade-in
+      // Mark fade-in complete after the transition ends (1 second)
+      const fadeTimer = setTimeout(() => {
+        setHasFadedIn(true);
+      }, 1000);
+
+      return () => clearTimeout(fadeTimer);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
 
 
@@ -554,7 +568,7 @@ props.triggerFreeQuote();  // ← This does everything!
         <p class="whitespace-nowrap">Contact Page</p>
       </div>
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
+        class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
       ></div>
     </div>
   </div>
@@ -594,7 +608,7 @@ props.triggerFreeQuote();  // ← This does everything!
         <p class="whitespace-nowrap">Change Background</p>
       </div>
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
+        class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
       ></div>
     </div>
   </div>
@@ -631,6 +645,23 @@ props.triggerFreeQuote();  // ← This does everything!
       </article>
     </StyledWrapper01>
   </span>
+  <div className="block ">
+    <div 
+      className="group absolute -top-[33px] left-[62px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+    >
+      <div className="rounded-sm bg-black py-1 px-2">
+        <p className="whitespace-nowrap">
+                
+                <span className='text-base'>
+                8am-5pm Mon-Fri
+                </span>
+                </p>
+      </div>
+      <div
+        class="h-0 w-fit border-l-8 border-r-8 border-b-0 border-transparent border-t-black"
+      ></div>
+    </div>
+  </div>
   <div class="block">
     <div
       class="group absolute top-[88px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
@@ -668,18 +699,18 @@ window.location.href = 'tel:+12622305182';
   </span>
   <div className="block ">
     <div 
-      className="group absolute top-[86px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      className="group absolute -top-[35px] left-[59px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
       <div className="rounded-sm bg-black py-1 px-2">
         <p className="whitespace-nowrap">
                 
-                <span className='text-xl'>
+                <span className='text-lg'>
                 262-230-5182 
                 </span>
                 </p>
       </div>
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-b-2 border-transparent border-t-black"
+        class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
       ></div>
     </div>
   </div>
@@ -712,10 +743,23 @@ window.location.href = 'tel:+12622305182';
 
 
                <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-36  px-4 lg:hidden z-[2147483642] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
-
+<div
+      className={`
+        flex flex-col items-center
+        ${isVisible ? 'opacity-100' : 'opacity-0'}
+        ${hasFadedIn ? 'animate-blink' : ''}
+        transition-opacity duration-1000 ease-in-out
+      `}
+    >
+              <div className="rounded-sm bg-black py-0.5 px-2 text-md">
+                <p className="whitespace-nowrap text-white">Tap Here to Navigate our App</p>
+              </div>
+              <div className="h-0 w-fit border-l-8 border-r-8 border-t-8 border-t-black border-transparent" />
+            </div>
             <div className="flex flex-col">
       <MobileWrapper >
       <div className="social-buttons ">
+        
         {/* <a href="#" className="social-button facebook" onClick={(event) => {
     spawnCoin(event);
   }}>
@@ -828,6 +872,10 @@ event.preventDefault();
         </a> */}
       </div>
     </MobileWrapper>
+         
+
+
+
           </div>
                 </div>
 

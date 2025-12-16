@@ -686,3 +686,17 @@ overflow: hidden;
   top: 60px;
   animation: twinkling 2s infinite;
 }
+
+/* menu button that is like the home button  */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 4s ease-in-out infinite;
+}
