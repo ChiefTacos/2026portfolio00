@@ -886,7 +886,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       position: {
         
         
-        desktop: [-486.128, 554.8, -72],
+        desktop: [-626.128, 554.8, -72],
         tablet: [-413.128, 610.8, -72],
         
          mobile:  [-118.128, 827.5, 285.314],
@@ -895,11 +895,11 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     },
     //seasonal
      house: {
-      distanceFactor: { desktop: 14, tablet: 20, mobile: 18 },
+      distanceFactor: { desktop: 15, tablet: 20, mobile: 18 },
       position: {
         
         
-        desktop: [-499.128, 143.8, 322],
+        desktop: [-608.128, 143.8, 322],
         tablet: [-444.128, 178.8, 322],
          mobile:  [400.128, 836, 505.314],
 
@@ -909,7 +909,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       distanceFactor: { desktop: 15, tablet: 21, mobile: 18 },
       position: {
         
-        desktop: [-490.128, 328.8, 172],
+        desktop: [-610.128, 328.8, 172],
         tablet: [-430.128, 368.8, 172],
         mobile: [-190.128, 173.8, 322],
 
@@ -918,7 +918,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     car: {
       distanceFactor: { desktop: 13, tablet: 19, mobile: 22 }, 
       position: {
-        desktop: [-498.128, 20.8, 482],
+        desktop: [-592.128, 20.8, 482],
         
         tablet: [-324.128, -18.8, 462],
    
