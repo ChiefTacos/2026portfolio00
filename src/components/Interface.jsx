@@ -210,7 +210,7 @@ const SkillsSection = () => {
   </div>
 </div> */}
 
-      <div className="relative top-24 pb-48 mb-24 left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
+      <div className="relative -top-24 pb-48 mb-24 left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
         <button
           className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
           onClick={previousProject}
