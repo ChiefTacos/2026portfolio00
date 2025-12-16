@@ -568,7 +568,7 @@ props.triggerFreeQuote();  // ← This does everything!
         ${hasFadedIn ? 'animate-blink' : ''}
         transition-opacity duration-1000 ease-in-out
 
-        absolute -top-[13px] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
+        absolute -top-[13px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
     >
       <div class="rounded-sm text-md bg-black py-1 px-2">
         <p class="whitespace-nowrap">Contact Page</p>
