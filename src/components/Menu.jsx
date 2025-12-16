@@ -541,12 +541,12 @@ props.triggerFreeQuote();  // ← This does everything!
       </article>
     </StyledWrapper01>
             </span>
-  <div class="hidden group-hover:block">
+  <div class="block">
     <div
-      class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+      class="group absolute -top-[17px] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
-      <div class="rounded-sm bg-black py-1 px-2">
-        <p class="whitespace-nowrap">Contact Page.</p>
+      <div class="rounded-sm text-lg bg-black py-1 px-2">
+        <p class="whitespace-nowrap">Contact Page</p>
       </div>
       <div
         class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
@@ -581,12 +581,12 @@ props.triggerFreeQuote();  // ← This does everything!
       
     </StyledWrapper01>
      </span>
-  <div class="hidden group-hover:block">
+  <div class="block">
     <div
-      class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+      class="group absolute -top-[13px] left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
       <div class="rounded-sm bg-black py-1 px-2">
-        <p class="whitespace-nowrap">Change Background Day/Night</p>
+        <p class="whitespace-nowrap">Change Background</p>
       </div>
       <div
         class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
@@ -626,57 +626,60 @@ props.triggerFreeQuote();  // ← This does everything!
       </article>
     </StyledWrapper01>
   </span>
-  <div class="hidden group-hover:block">
+  <div class="block">
     <div
-      class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+      class="group absolute top-[86px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
-      <div class="rounded-sm bg-black py-1 px-2">
+      <div class="rounded-sm text-lg bg-black py-1 px-2">
         <p class="whitespace-nowrap">
           {section === 0 ? "Reset Page" : "Home Page"}</p>
       </div>
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
+        class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
       ></div>
     </div>
   </div>
 </button>
-
+  <StyledWrapper01  onClick={() => {
+window.location.href = 'tel:+12622305182';     
+  }} 
+  className='zIndex[99980]'>
        <button
   class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-500 to-green-700  group-hover:from-black-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-800 dark:focus:ring-green-800"
 >
   <span
     class="relative  px-4 py-2 transition-all ease-in duration-75rounded-md group-hover:bg-opacity-0"
   >
-    <StyledWrapper01  onClick={() => {
-alert('i love cock');
-     
-  }}
-  className='zIndex[99980]'>
+  
       <article className="keycap">
         <aside className="letter">
-         <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+         <svg className="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M347.1 24.6c7.7-18.6 28-28.5 47.4-23.2l88 24C499.9 30.2 512 46 512 64c0 247.4-200.6 448-448 448c-18 0-33.8-12.1-38.6-29.5l-24-88c-5.3-19.4 4.6-39.7 23.2-47.4l96-40c16.3-6.8 35.2-2.1 46.3 11.6L207.3 368c70.4-33.3 127.4-90.3 160.7-160.7L318.7 167c-13.7-11.2-18.4-30-11.6-46.3l40-96z"></path>
 
 </svg>
           </aside>
       </article>
-    </StyledWrapper01>
   </span>
-  <div class="hidden group-hover:block">
+  <div className="block">
     <div
-      class="group absolute -top-12 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+      className="group absolute top-[86px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
-      <div class="rounded-sm bg-black py-1 px-2">
-        <p class="whitespace-nowrap">
-                Call our Phone</p>
+      <div className="rounded-sm bg-black py-1 px-2">
+        <p className="whitespace-nowrap">
+                
+                <span className='text-lg'>
+                262-230-5182 
+                </span>
+                </p>
       </div>
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
+        class="h-0 w-fit border-l-8 border-r-8 border-b-2 border-transparent border-t-black"
       ></div>
     </div>
   </div>
 </button>
+    </StyledWrapper01>
 
 
       </div>

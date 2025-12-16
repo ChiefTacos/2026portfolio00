@@ -877,7 +877,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
   const overlayConfig = {
     
-    //gutter
+    //roof
     balcony: {
       distanceFactor: { desktop: 19, tablet: 25, mobile: 18 },
       position: {
@@ -890,6 +890,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
       },
     },
+    //seasonal
      house: {
       distanceFactor: { desktop: 14, tablet: 20, mobile: 19 },
       position: {
@@ -1342,8 +1343,8 @@ src="/textures/sexyCleaning.jpeg"
           rotation={[Math.PI / 2, -Math.PI / 2, 0]}
          position={[0, 0, 0]}
          distanceFactor={house.distanceFactor}
-          title="House Cleaning"
-          description="Glass + frame scrub"
+          title="Seasonal Cleaning"
+          description="Raking Leaves, picking cotton"
           price="250-500"
           bgColor="bg-yellow-500"
 src="/textures/sexyCleaning.jpeg"
