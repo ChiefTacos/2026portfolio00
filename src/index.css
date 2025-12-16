@@ -442,7 +442,6 @@ canvas {
 .heading {
   display: block;
   color: white;
-  font-size: 1.5rem;
   font-weight: 800;
   margin-bottom: 20px;
 }
@@ -482,9 +481,9 @@ overflow: hidden;
 .form-container img {
   border: 2px solid #00eeff;
 }
-.form-container img:hover {
+/* .form-container img:hover {
   border: 0px solid #00eeff;
-}
+} */
 .form-container .form .textarea {
   width: 100%;
   padding: 10px;
