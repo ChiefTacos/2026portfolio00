@@ -531,6 +531,8 @@ props.triggerFreeQuote();  // ← This does everything!
      <StyledWrapper01  onClick={(event) => {
     spawnCoin(event);
         onSectionChange(4); 
+            setMenuOpened(false);
+
 
   }}>
       <article className="keycap">
