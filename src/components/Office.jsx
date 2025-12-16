@@ -317,7 +317,11 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 const ServiceWindowButton = ({ onClick, isClickable }) => {
   return (
     <div
-      className="lg:mt-[60px] lg:mr-6  relative group scale-100 lg:scale-90  z-[1]"
+      className="lg:mt-[100px] 
+              2xl:mt-[60px] 
+             2xl:mr-[150px]    
+             lg:mr-[700px]
+              relative group scale-100 lg:scale-90  z-[1]"
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
     >
       <button
@@ -333,8 +337,8 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
         {/* Inner button content container */}
-        <span className="relative block px-3 lg:px-3 py-3 pb-3 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
-          <div className="relative lg:w-[700px] lg:h-[370px] w-72 h-48  flex items-center justify-center">
+        <span className="relative block px-1 lg:px-3 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
+          <div className="relative lg:w-[700px] lg:h-[370px] w-[430px] h-[230px]  flex items-center justify-center">
             {/* Full-cover video */}
             <video
               className="absolute inset-0 w-full h-full object-cover rounded-2xl"
@@ -885,19 +889,19 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
         desktop: [-486.128, 554.8, -72],
         tablet: [-413.128, 610.8, -72],
         
-         mobile:  [-210.128, 822.6, 305.314],
+         mobile:  [-118.128, 827.5, 285.314],
 
       },
     },
     //seasonal
      house: {
-      distanceFactor: { desktop: 14, tablet: 20, mobile: 19 },
+      distanceFactor: { desktop: 14, tablet: 20, mobile: 18 },
       position: {
         
         
         desktop: [-499.128, 143.8, 322],
         tablet: [-444.128, 178.8, 322],
-         mobile:  [240.128, 850, 405.314],
+         mobile:  [400.128, 836, 505.314],
 
       },
     },
@@ -907,7 +911,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
         
         desktop: [-490.128, 328.8, 172],
         tablet: [-430.128, 368.8, 172],
-        mobile: [-310.128, -103.8, 582],
+        mobile: [-190.128, 173.8, 322],
 
       },
     },
@@ -923,22 +927,23 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     contact: {
-      distanceFactor: { desktop: 7, tablet: 16, mobile: 22 },
+      distanceFactor: { desktop: 7, tablet: 16, mobile: 15 },
       position: {
         desktop: [103.2, 600.1, 1077.2],
-        tablet: [461.2, 880.1, 707.2],
+        tablet: [321.2, 820.1, 717.2],
+        // tablet: [461.2, 880.1, 707.2],
         
-        // tablet:  [-140.128, 1000, -25.314],
-        mobile:  [-100.128, 100, 25.314],
+         mobile:  [-40.128, 0, 805.314],
+        // mobile:  [-100.128, 100, 25.314],
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 15, tablet: 16, mobile: 18 },
+      distanceFactor: { desktop: 15, tablet: 22, mobile: 18 },
       position: {
         desktop: [-511.2, 782, 207.2],
 
         tablet:  [-140.128, 1000, -25.314],
-         mobile:  [-10.128, 1060, 405.314],
+         mobile:  [115.128, 1070, 445.314],
       },
     },
   };

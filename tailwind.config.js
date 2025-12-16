@@ -9,6 +9,10 @@ export default {
         'black': ['2px #000000'], // Define stroke color and width
 
       },
+      screens: {
+        '1500px': '1500px', // min-width: 1500px
+        'max1500px': { 'max': '1499px' }, // optional max-width variant
+      },
     },
   },
    

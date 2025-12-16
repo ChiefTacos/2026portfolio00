@@ -709,7 +709,7 @@ window.location.href = 'tel:+12622305182';
       </div> 
 
 
-               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-36  px-4 lg:hidden z-[9999] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
+               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-36  px-4 lg:hidden z-[2147483642] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
 
             <div className="flex flex-col">
       <MobileWrapper >
