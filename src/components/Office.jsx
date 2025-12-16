@@ -281,9 +281,10 @@ const showViewButton = hideTriggerButton
 
 const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
-    <div className="relative group scale-90 lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
+    <div className="relative group scale-100 lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
       <button
-        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-100 
+        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out lg:hover:scale-105 lg:active:scale-100
+        hover:scale-110 active:scale-105 
                    bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
                    hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
                    shadow-amber-700 hover:shadow-amber-500"

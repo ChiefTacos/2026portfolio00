@@ -649,11 +649,11 @@ props.triggerFreeQuote();  // ← This does everything!
     <div 
       className="group absolute -top-[33px] left-[62px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
-      <div className="rounded-sm bg-black py-1 px-2">
+      <div className="rounded-sm bg-transparent py-1 px-2">
         <p className="whitespace-nowrap">
                 
                 <span className='text-base'>
-                8am-5pm Mon-Fri
+                9am-5pm Mon-Fri
                 </span>
                 </p>
       </div>
@@ -662,19 +662,19 @@ props.triggerFreeQuote();  // ← This does everything!
       ></div>
     </div>
   </div>
-  <div class="block">
-    <div
-      class="group absolute top-[88px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
-    >
-      <div class="rounded-sm text-md bg-black py-1 px-2">
-        <p class="whitespace-nowrap">
-          {section === 0 ? "Reset Page" : "Home Page"}</p>
-      </div>
-      <div
-        class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
-      ></div>
+  <div className="block">
+  <div className="group absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center">
+    {/* Upward-pointing triangle (on top) */}
+    <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
+
+    {/* The text box */}
+    <div className="rounded-sm bg-black py-1 px-2 text-md">
+      <p className="whitespace-nowrap text-white">
+        {section === 0 ? "Reset Page" : "Home Page"}
+      </p>
     </div>
   </div>
+</div>
 </button>
   <StyledWrapper01  onClick={() => {
 window.location.href = 'tel:+12622305182';     
@@ -699,19 +699,31 @@ window.location.href = 'tel:+12622305182';
   </span>
   <div className="block ">
     <div 
-      className="group absolute -top-[35px] left-[59px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      className="group absolute -top-[31px] left-[60px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
-      <div className="rounded-sm bg-black py-1 px-2">
+      <div className="rounded-sm bg-transparent py-1 px-2">
         <p className="whitespace-nowrap">
                 
-                <span className='text-lg'>
+                <span className='text-[18px]'>
                 262-230-5182 
                 </span>
                 </p>
       </div>
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
+        class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
       ></div>
+    </div>
+  </div>
+   <div className="block">
+  <div className="group absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center">
+    {/* Upward-pointing triangle (on top) */}
+    <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
+
+    {/* The text box */}
+    <div className="rounded-sm bg-black py-1 px-2 text-md">
+      <p className="whitespace-nowrap text-white">
+Call Us      </p>
+    </div>
     </div>
   </div>
 </button>
