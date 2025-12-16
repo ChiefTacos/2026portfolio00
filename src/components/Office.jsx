@@ -317,8 +317,8 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 const ServiceWindowButton = ({ onClick, isClickable }) => {
   return (
     <div
-      className="lg:mt-[20px] 
-              2xl:-mt-[40px] 
+      className="lg:mt-[100px] 
+              2xl:mt-[50px] 
              2xl:mr-[150px]    
              lg:mr-[700px]
               relative group scale-100 lg:scale-90  z-[1]"
@@ -516,19 +516,19 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                       {/* <h1 className="text-5xl lg:text-7xl font-bold text-center">Custom Quote</h1> */}
 
                       <div className="grid grid-cols-2 lg:grid-cols-2 gap-0 lg:gap-6">
-                        <input type="text" placeholder="Full Name"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60  ${errors.fullName ? "border-red-500 bg-red-50" : ""}`}
+                        <input type="text" placeholder="Full Name"   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60  ${errors.fullName ? "border-red-500 bg-red-50" : ""}`}
 
                           value={fullName}
                          onChange={(e) => setFullName(e.target.value)} />
-                        <input type="text" placeholder="Company Name" className="p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60" />
+                        <input type="text" placeholder="Company Name" className="p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60" />
 
-                        <select className={`p-4 border rounded-lg text-lg lg:text-2xl placeholder-black placeholder-opacity-60 ${errors.contactMethod ? "border-red-500 bg-red-50" : ""}`}   value={contactMethod} onChange={(e) => setContactMethod(e.target.value)}
+                        <select className={`p-4 border rounded-lg text-xl lg:text-2xl placeholder-black placeholder-opacity-60 ${errors.contactMethod ? "border-red-500 bg-red-50" : ""}`}   value={contactMethod} onChange={(e) => setContactMethod(e.target.value)}
 >
                           <option value="">Preffered Contact Method</option>
                           <option>Phone Number</option>
                           <option>Email</option>
                         </select>
-                        <select   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.serviceType ? "border-red-500 bg-red-50" : ""}`}  value={serviceType}  onChange={(e) => setServiceType(e.target.value)}>
+                        <select   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.serviceType ? "border-red-500 bg-red-50" : ""}`}  value={serviceType}  onChange={(e) => setServiceType(e.target.value)}>
                           <option value="">Select Service</option>
                           <option>Soft Washing</option>
                           <option>Pressure Washing</option>
@@ -538,11 +538,11 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                           <option>Other (Custom Message)</option>
                         </select>
 
-                        <input type="text" placeholder="Address/City"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.cityState ? "border-red-500 bg-red-50" : ""}`}  value={cityState} onChange={(e) => setCityState(e.target.value)} />
-                        <input type="text" placeholder="Zip Code"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.zipCode ? "border-red-500 bg-red-50" : ""}`}  value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+                        <input type="text" placeholder="Address/City"   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.cityState ? "border-red-500 bg-red-50" : ""}`}  value={cityState} onChange={(e) => setCityState(e.target.value)} />
+                        <input type="text" placeholder="Zip Code"   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.zipCode ? "border-red-500 bg-red-50" : ""}`}  value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
 
-                        <input type="email" placeholder="Email Address" className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.email ? "border-red-500 bg-red-50" : ""}`}   value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <input type="tel" placeholder="Phone Number"   className={`p-4 border rounded-lg text-xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.phone ? "border-red-500 bg-red-50" : ""}`}  value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                        <input type="email" placeholder="Email Address" className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.email ? "border-red-500 bg-red-50" : ""}`}   value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="tel" placeholder="Phone Number"   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.phone ? "border-red-500 bg-red-50" : ""}`}  value={phone} onChange={(e) => setPhone(e.target.value)}/>
                         
                       </div>
 
