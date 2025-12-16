@@ -562,7 +562,10 @@ props.triggerFreeQuote();  // ← This does everything!
             </span>
   <div class="block">
     <div
-      class="group absolute -top-[13px] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+      class={`group
+         ${isVisible ? 'opacity-100' : 'opacity-0'}
+        ${hasFadedIn ? 'animate-blink' : ''}
+        absolute -top-[13px] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
     >
       <div class="rounded-sm text-md bg-black py-1 px-2">
         <p class="whitespace-nowrap">Contact Page</p>
@@ -602,8 +605,12 @@ props.triggerFreeQuote();  // ← This does everything!
      </span>
   <div class="block">
     <div
-      class="group absolute -top-[13px] left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+      class={`group 
+         ${isVisible ? 'opacity-100' : 'opacity-0'}
+        ${hasFadedIn ? 'animate-blink' : ''}
+        absolute -top-[13px] left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
     >
+      
       <div class="rounded-sm text-md bg-black py-1 px-2">
         <p class="whitespace-nowrap">Change Background</p>
       </div>
@@ -663,7 +670,10 @@ props.triggerFreeQuote();  // ← This does everything!
     </div>
   </div>
   <div className="block">
-  <div className="group absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center">
+  <div className={`group 
+     ${isVisible ? 'opacity-100' : 'opacity-0'}
+        ${hasFadedIn ? 'animate-blink' : ''}
+    absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center`}>
     {/* Upward-pointing triangle (on top) */}
     <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
 
@@ -697,9 +707,9 @@ window.location.href = 'tel:+12622305182';
           </aside>
       </article>
   </span>
-  <div className="block ">
+  <div className="block  ">
     <div 
-      className="group absolute -top-[31px] left-[60px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      className="group absolute  -top-[31px] left-[60px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
       <div className="rounded-sm bg-transparent py-1 px-2">
         <p className="whitespace-nowrap">
@@ -715,7 +725,10 @@ window.location.href = 'tel:+12622305182';
     </div>
   </div>
    <div className="block">
-  <div className="group absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center">
+  <div className={`group
+     ${isVisible ? 'opacity-100' : 'opacity-0'}
+        ${hasFadedIn ? 'animate-blink' : ''}
+    absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center`}>
     {/* Upward-pointing triangle (on top) */}
     <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
 
