@@ -317,7 +317,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 const ServiceWindowButton = ({ onClick, isClickable }) => {
   return (
     <div
-      className="relative group scale-100 lg:scale-90"
+      className="lg:mt-[60px] lg:mr-6  relative group scale-100 lg:scale-90  z-[1]"
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
     >
       <button
@@ -333,8 +333,8 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
         {/* Inner button content container */}
-        <span className="relative block px-3 lg:px-3 py-3 pb-3 lg:py-3 lg:pb-3 rounded-2xl bg-neutral-950 overflow-hidden">
-          <div className="relative lg:w-[400px] lg:h-[400px] w-72 h-72  flex items-center justify-center">
+        <span className="relative block px-3 lg:px-3 py-3 pb-3 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
+          <div className="relative lg:w-[700px] lg:h-[370px] w-72 h-48  flex items-center justify-center">
             {/* Full-cover video */}
             <video
               className="absolute inset-0 w-full h-full object-cover rounded-2xl"
@@ -435,7 +435,6 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
   maxWidth: isFullscreen ? "140vw" : undefined,
   maxHeight: isFullscreen ? "140vh" : undefined,
   borderRadius: isFullscreen ? "8px" : "12px",
-
                     transition: isDragging.current ? "none" : "transform 0.2s ease",
                     cursor: "default",
                     pointerEvents: isVisible ? "auto" : "none",  
@@ -882,7 +881,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       distanceFactor: { desktop: 19, tablet: 25, mobile: 18 },
       position: {
         
-        // desktop: [-478.128, 610.8, -72],
+        
         desktop: [-486.128, 554.8, -72],
         tablet: [-413.128, 610.8, -72],
         
@@ -895,7 +894,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       distanceFactor: { desktop: 14, tablet: 20, mobile: 19 },
       position: {
         
-        // desktop: [-494.128, 178.8, 322],
+        
         desktop: [-499.128, 143.8, 322],
         tablet: [-444.128, 178.8, 322],
          mobile:  [240.128, 850, 405.314],
@@ -905,7 +904,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
     driveway: {
       distanceFactor: { desktop: 15, tablet: 21, mobile: 18 },
       position: {
-        // desktop: [-485.128, 368.8, 172],
+        
         desktop: [-490.128, 328.8, 172],
         tablet: [-430.128, 368.8, 172],
         mobile: [-310.128, -103.8, 582],
@@ -924,19 +923,19 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     contact: {
-      distanceFactor: { desktop: 11, tablet: 11, mobile: 22 },
+      distanceFactor: { desktop: 7, tablet: 16, mobile: 22 },
       position: {
-        desktop: [201.2, 600.1, 807.2],
+        desktop: [103.2, 600.1, 1077.2],
         tablet: [461.2, 880.1, 707.2],
         
         // tablet:  [-140.128, 1000, -25.314],
-        mobile:  [-140.128, 100, 25.314],
+        mobile:  [-100.128, 100, 25.314],
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 18, tablet: 24, mobile: 18 },
+      distanceFactor: { desktop: 15, tablet: 16, mobile: 18 },
       position: {
-        desktop: [-411.2, 882, 7.2],
+        desktop: [-511.2, 782, 207.2],
 
         tablet:  [-140.128, 1000, -25.314],
          mobile:  [-10.128, 1060, 405.314],
@@ -1101,7 +1100,7 @@ const [fullyOpen, setFullyOpen] = useState(false);
           rotation={[Math.PI / 2, -Math.PI / 2, 0]}
          position={[0, 0, 0]}
          distanceFactor={balcony.distanceFactor}
-          title="Gutter Cleaning"
+          title="Roof Cleaning"
           description="Big Fat Ass scrub"
           price="75-200"
           bgColor="bg-yellow-500"

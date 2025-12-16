@@ -405,20 +405,23 @@ export const Menu = (props) => {
 
       <div
         className={`
-           z-[2147483646] fixed inset-y-0 md:right-[-80px] lg:right-[-80px] transition-all overflow-y-auto
+            z-[2147483642]
+            lg:z-[2147483635]
+
+            fixed inset-y-0 md:right-[-80px] lg:right-[-80px] transition-all overflow-y-auto
           flex flex-col bg-blue
         `}
         
         style={{
   width:
     window.innerWidth >= 1024
-      ? "500px"          // Desktop: always open
+      ? "570px"          // Desktop: always open
       : menuOpened
         ? "100%"         // Mobile/tablet: open
         : "0px",         // Mobile/tablet: closed
 }}
       >
-<div className="flex-1 flex flex-col items-center justify-center gap-12 mt-4">
+<div className="flex-1 flex flex-col items-center justify-center gap-6 lg:gap-4 mt-4 lg:mt-64  ">
 
 
 
@@ -429,7 +432,7 @@ export const Menu = (props) => {
    
 
      
-               <div className="relative drop-shadow-xl lg:w-64 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[36px] text-[40px] " >
+               <div className="relative drop-shadow-xl lg:w-64 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[36px] text-[40px]" >
       <div className="absolute  flex items-center justify-center text-white dark:text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 pt-4">
 
 
@@ -465,7 +468,7 @@ export const Menu = (props) => {
           <div className="corner-tr" />
           <div className="corner-bl" />
           <div className="corner-br" />
-          In-depth look at our premier services.
+          Detailed look at our services.
         </div>
       </div>
     </CyberWrapper>
@@ -482,7 +485,7 @@ props.triggerFreeQuote();  // ← This does everything!
           <div className="corner-bl" />
           <div className="corner-br" />
           {/* <strong> </strong><br /> */}
-          Clear all other tabs on home page and customize your quote. 
+          Jump to your custom quote. 
         </div>
       </div>
 
@@ -543,13 +546,13 @@ props.triggerFreeQuote();  // ← This does everything!
             </span>
   <div class="block">
     <div
-      class="group absolute -top-[17px] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+      class="group absolute -top-[13px] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
-      <div class="rounded-sm text-lg bg-black py-1 px-2">
+      <div class="rounded-sm text-md bg-black py-1 px-2">
         <p class="whitespace-nowrap">Contact Page</p>
       </div>
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
+        class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
       ></div>
     </div>
   </div>
@@ -585,11 +588,11 @@ props.triggerFreeQuote();  // ← This does everything!
     <div
       class="group absolute -top-[13px] left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
-      <div class="rounded-sm bg-black py-1 px-2">
+      <div class="rounded-sm text-md bg-black py-1 px-2">
         <p class="whitespace-nowrap">Change Background</p>
       </div>
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-t-8 border-transparent border-t-black"
+        class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
       ></div>
     </div>
   </div>
@@ -628,9 +631,9 @@ props.triggerFreeQuote();  // ← This does everything!
   </span>
   <div class="block">
     <div
-      class="group absolute top-[86px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+      class="group absolute top-[88px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
     >
-      <div class="rounded-sm text-lg bg-black py-1 px-2">
+      <div class="rounded-sm text-md bg-black py-1 px-2">
         <p class="whitespace-nowrap">
           {section === 0 ? "Reset Page" : "Home Page"}</p>
       </div>
@@ -661,14 +664,14 @@ window.location.href = 'tel:+12622305182';
           </aside>
       </article>
   </span>
-  <div className="block">
-    <div
-      className="group absolute top-[86px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2"
+  <div className="block ">
+    <div 
+      className="group absolute top-[86px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
       <div className="rounded-sm bg-black py-1 px-2">
         <p className="whitespace-nowrap">
                 
-                <span className='text-lg'>
+                <span className='text-xl'>
                 262-230-5182 
                 </span>
                 </p>
@@ -725,13 +728,15 @@ window.location.href = 'tel:+12622305182';
 event.preventDefault();
     spawnCoin(event);
     setMenuOpened(true);
+    
+    
   }}
-  onTouchStart={(e) => e.currentTarget.classList.add('tapped')}
-  onTouchEnd={(e) => {
-    e.currentTarget.classList.remove('tapped');
-    // Optional: trigger click programmatically if you want the onClick to fire on touch too
-    e.currentTarget.click();
-  }}
+  // onTouchStart={(e) => e.currentTarget.classList.add('tapped')}
+  // onTouchEnd={(e) => {
+  //   e.currentTarget.classList.remove('tapped');
+  //   // Optional: trigger click programmatically if you want the onClick to fire on touch too
+  //   e.currentTarget.click();
+  // }}
   >
           {/* <svg class="w-[80px] h-[80px] fill-[#000000]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
 

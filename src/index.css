@@ -521,9 +521,9 @@ overflow: hidden;
 }
 
 .form-container .form .button-container .send-button:hover {
-  background: transparent;
-  border: 1px solid #ff7a01;
-  color: #00eeff;
+  background: #f4f8ff;
+  border: 1px solid #00eeff;
+  color: #001925;
 }
 
 .form-container .form .button-container .reset-button-container {
