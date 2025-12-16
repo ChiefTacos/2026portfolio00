@@ -281,7 +281,7 @@ const showViewButton = hideTriggerButton
 
 const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
-    <div className="relative group scale-100 lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
+    <div className="relative group scale-90 lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-100 
                    bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
@@ -317,15 +317,15 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 const ServiceWindowButton = ({ onClick, isClickable }) => {
   return (
     <div
-      className="lg:mt-[100px] 
-              2xl:mt-[60px] 
+      className="lg:mt-[20px] 
+              2xl:-mt-[40px] 
              2xl:mr-[150px]    
              lg:mr-[700px]
               relative group scale-100 lg:scale-90  z-[1]"
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
     >
       <button
-        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 active:scale-100
+        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90
                    bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600
                    hover:from-blue-500 hover:via-cyan-400 hover:to-teal-500
                    shadow-cyan-700 hover:shadow-cyan-500"
@@ -922,7 +922,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
         
         tablet: [-324.128, -18.8, 462],
    
-         mobile:  [540.128, 100, 405.314],
+         mobile:  [540.128, 81, 445.314],
 
       },
     },
