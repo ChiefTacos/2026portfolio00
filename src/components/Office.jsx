@@ -321,11 +321,9 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 const ServiceWindowButton = ({ onClick, isClickable }) => {
   return (
     <div
-      className="lg:mt-[100px] 
-              2xl:mt-[50px] 
-             2xl:mr-[150px]    
-             lg:mr-[700px]
-              relative group scale-100 lg:scale-90  z-[1]"
+      className="
+             
+              relative group scale-100 lg:scale-90  "
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
     >
       <button
@@ -392,7 +390,9 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
           portal={{ 
   current: id === "freeQ" 
     ? document.getElementById("freeq-portal-root") 
-    : document.getElementById("overlay-portals-root") 
+    : id === "contactWindow" 
+      ? document.getElementById("contact-portals-root") 
+      : document.getElementById("overlay-portals-root") 
 }}
         > 
 
@@ -695,7 +695,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
      {id === "freeQ" ? (
         <FreeQuoteButton onClick={handleButtonClick} isClickable={isClickable} />
-      ) : id === "serviceWindow" ? (
+      ) : id === "contactWindow" ? (
         <ServiceWindowButton onClick={handleButtonClick} isClickable={isClickable} />
       ) : (
 
@@ -932,11 +932,13 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     contact: {
-      distanceFactor: { desktop: 7, tablet: 16, mobile: 15 },
+      distanceFactor: { desktop: 12, tablet: 18, mobile: 15 },
       position: {
-        desktop: [103.2, 600.1, 1077.2],
-        tablet: [321.2, 820.1, 717.2],
-        // tablet: [461.2, 880.1, 707.2],
+        // desktop: [103.2, 600.1, 1077.2],
+        desktop: [61.2,-10.1, 607.2],
+
+        // tablet: [321.2, 820.1, 717.2],
+        tablet: [461.2, 200.1, 507.2],
         
          mobile:  [-40.128, 0, 805.314],
         // mobile:  [-100.128, 100, 25.314],
@@ -946,6 +948,7 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       distanceFactor: { desktop: 15, tablet: 22, mobile: 18 },
       position: {
         desktop: [-511.2, 782, 207.2],
+        // tablet: [461.2, 880.1, 707.2],
 
         tablet:  [-140.128, 1000, -25.314],
          mobile:  [115.128, 1070, 445.314],
@@ -1389,8 +1392,8 @@ src="/textures/sexyCleaning.jpeg"
     section={section}
     jumpToSection={jumpToSection}
     goToSection={3.9}    
-    id="serviceWindow"                    
-    key="serviceWindow"
+    id="contactWindow"                    
+    key="contactWindow"
     setActiveOverlay={setActiveOverlay}
     activeOverlay={activeOverlay}
     openOverlay={openOverlay}
@@ -1399,7 +1402,7 @@ src="/textures/sexyCleaning.jpeg"
     rotation={[Math.PI / 2, -Math.PI / 2, 0]}
     position={[0, 0, 0]}
     distanceFactor={contact.distanceFactor}
-    title="I like big booties"
+    title="Introseduction"
     description="Michael Murray"
     price="ssn 3938 2938 298"
     bgColor="bg-yellow-500"
@@ -1434,7 +1437,7 @@ src="/textures/sexyCleaning.jpeg"
           rotation={[Math.PI / 2, -Math.PI / 2, 0]}
          position={[0, 0, 0]}
          distanceFactor={freeQ.distanceFactor}
-          title="Free Estimate"
+          title="Free Quote"
           description="Customize your quote and recieve a call or email from us!"
           price="150-300"
           bgColor="bg-yellow-500"

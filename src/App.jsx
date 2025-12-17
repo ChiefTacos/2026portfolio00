@@ -88,7 +88,18 @@ const jumpToSection = (index) => {
     pointerEvents: "none",
     
   }}
-></div>  
+>
+  </div>  
+  <div 
+  id="contact-portals-root" 
+  style={{ 
+    position: "fixed",
+    inset: 0,
+     zIndex: "2147483637",
+    pointerEvents: "none",
+    
+  }}
+></div>
 <div id="freeq-portal-root" style={{ 
     position: "fixed",
     inset: 0,

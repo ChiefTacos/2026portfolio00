@@ -370,7 +370,7 @@ const [hasFadedIn, setHasFadedIn] = useState(false);
 
   useEffect(() => {
   function handleResize() {
-    if (window.innerWidth >= 1024) {
+    if (window.innerWidth >= 1280) {
       setMenuOpened(true);     // Always open on LG+
     }
   }
@@ -397,7 +397,7 @@ const [hasFadedIn, setHasFadedIn] = useState(false);
 }
 
 useEffect(() => {
-  const isDesktop = window.innerWidth >= 1024;
+  const isDesktop = window.innerWidth >= 1280;
   const delay = isDesktop ? 300 : 3000; // Quick on desktop, delayed on mobile
 
   const timer = setTimeout(() => {
@@ -421,17 +421,17 @@ useEffect(() => {
 
       <div
         className={`
-            z-[2147483642]
-            lg:z-[2147483635]
+            z-[2147483641]
+            xl:z-[2147483635]
 
-            fixed inset-y-0 md:right-[0px] lg:right-[-80px] transition-all overflow-y-auto
+            fixed inset-y-0 md:right-[0px] xl:right-[-80px] transition-all overflow-y-auto
           flex flex-col bg-blue
         `}
         
         style={{
   width:
-    window.innerWidth >= 1024
-      ? "570px"          // Desktop: always open
+    window.innerWidth >= 1280
+      ? "505px"          // Desktop: always open
       : menuOpened
         ? "100%"         // Mobile/tablet: open
         : "0px",         // Mobile/tablet: closed
@@ -457,15 +457,19 @@ useEffect(() => {
                 object-contain' src="textures/logo.png" alt="" />
           )}
         </div> */}
-
-        {/* Dynamic Container Styling */}
+        
         <div 
+          className="flex-1 flex flex-col items-center justify-center lg:gap-4 mt-4 gap-1 lg:mt-[0px]"
+            
+        >
+        {/* Dynamic Container Styling */}
+        {/* <div 
           className={`flex-1 flex flex-col items-center justify-center lg:gap-4 mt-4 ${
             section === 0 
               ? "gap-6 mt-12 lg:mt-64" // Exact styling requested for Section 0
               : "gap-1 lg:mt-[0px]"  // Styling for when NOT Section 0
           }`}
-        >
+        > */}
 
 
 
@@ -476,7 +480,7 @@ useEffect(() => {
    
 
      
-               <div className="relative drop-shadow-xl lg:w-72 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[36px] text-[40px]" >
+               <div className="relative drop-shadow-xl lg:w-72 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[40px] text-[40px]" >
       <div className="absolute  flex items-center justify-center text-white dark:text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 pt-4">
 
 
@@ -821,7 +825,7 @@ Call Us      </p>
       </div> 
 
 
-               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4 lg:hidden z-[2147483642] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
+               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4 xl:hidden z-[2147483643] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
             
             
                {(section === 0 && !menuOpened) && (
