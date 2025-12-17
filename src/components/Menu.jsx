@@ -476,7 +476,7 @@ useEffect(() => {
    
 
      
-               <div className="relative drop-shadow-xl lg:w-64 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[36px] text-[40px]" >
+               <div className="relative drop-shadow-xl lg:w-72 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[36px] text-[40px]" >
       <div className="absolute  flex items-center justify-center text-white dark:text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 pt-4">
 
 
@@ -564,13 +564,13 @@ props.triggerFreeQuote();  // ← This does everything!
 
 
 
-  <div className="relative drop-shadow-xl w-64 h-64 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[-10]" >
+  <div className="relative drop-shadow-xl w-72 h-64 lg:w-80 lg:h-72 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[-10]" >
       <div className="absolute flex items-center justify-center dark:text-white text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 ">
 
 
 
          
-<div className="w-full flex flex-wrap justify-center items-center gap-4 py-6">
+<div className="w-full flex flex-wrap justify-center items-center gap-4 lg:gap-10 py-6">
         
               
        <button
@@ -704,12 +704,12 @@ props.triggerFreeQuote();  // ← This does everything!
   </span>
   <div className="block ">
     <div 
-      className="group absolute -top-[33px] left-[62px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      className="group absolute -top-[40px] left-[54px] lg:-top-[50px] lg:left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
       <div className="rounded-sm bg-transparent py-1 px-2">
         <p className="whitespace-nowrap">
                 
-                <span className='text-base'>
+                <span className='text-[14px] lg:text-[16px]'>
                 9am-5pm Mon-Fri
                 </span>
                 </p>
@@ -761,13 +761,13 @@ window.location.href = 'tel:+12622305182';
   </span>
   <div className="block  ">
     <div 
-      className="group absolute  -top-[31px] left-[60px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      className="group absolute  -top-[40px] left-[60px] lg:-top-[50px] lg:left-[57px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
       <div className="rounded-sm bg-transparent py-1 px-2">
         <p className="whitespace-nowrap">
                 
-                <span className='text-[18px]'>
-                262-230-5182 
+                <span className='text-[18px] lg:text-[21px]'>
+                1+262-230-5182 
                 </span>
                 </p>
       </div>
