@@ -487,22 +487,7 @@ useEffect(() => {
 
          
       <div className="w-full flex flex-col items-center justify-start gap-8 lg:pb-8 pb-8 px-1 ">
-        {/* <CyberWrapper onClick={() => {
-    setMenuOpened(false);
-        onSectionChange(2); 
-
-  }}>
-      <div style={{position: 'relative', marginTop: '30px', }}>
-        <button className="cyber-btn py-0">Reviews</button>
-        <div className="cyber-tooltip">
-          <div className="corner-tl" />
-          <div className="corner-tr" />
-          <div className="corner-bl" />
-          <div className="corner-br" />
-          Check out our some of our personal and online reviews. 
-       </div>
-      </div>
-    </CyberWrapper> */}
+      
     <CyberWrapper  onClick={() => {
     setMenuOpened(false);
 props.triggerFreeQuote();  // ← This does everything!
@@ -522,7 +507,7 @@ props.triggerFreeQuote();  // ← This does everything!
     </CyberWrapper>
 <CyberWrapper onClick={() => {
     setMenuOpened(false);
-        onSectionChange(1); 
+        onSectionChange(1.2); 
 
   }}>
       <div style={{position: 'relative'}}>
@@ -540,7 +525,7 @@ props.triggerFreeQuote();  // ← This does everything!
     
      <CyberWrapper onClick={() => {
     setMenuOpened(false);
-        onSectionChange(2); 
+        onSectionChange(2.6); 
 
   }}>
       <div style={{position: 'relative', marginTop: '0px', }}>

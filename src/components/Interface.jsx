@@ -178,52 +178,196 @@ const FirstSection = (props) => {
 
 
 //////////
-// REVIEWS
+// og REVIEWS
 //////////
+// const SkillsSection = () => {
+
+
+//   const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+//   const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
+
+//   const [currentProject, setCurrentProject] = useAtom(currentProjectAtom01);
+
+//   const nextProject = () => {
+//     setCurrentProject((currentProject + 1) % projects.length);
+//   };
+
+//   const previousProject = () => {
+//     setCurrentProject((currentProject - 1 + projects.length) % projects.length);
+//   };
+
+//   return (
+//     <Section>
+
+
+
+//       <div className="relative -top-24 pb-48 mb-24 left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
+//         <button
+//           className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
+//           onClick={previousProject}
+//         >
+//           ← Previous
+//         </button>
+//         <h2 className="text-4xl lg:text-5xl font-bold text-center text-white">Badger Reviews</h2>
+//         <button
+//           className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
+//           onClick={nextProject}
+//         >
+//           Next →
+//         </button>
+//       </div>
+//     </Section>
+//   );
+// };
 
 const SkillsSection = () => {
+  const [showArrow, setShowArrow] = useState(true);
+  const [showText, setShowText] = useState(false); // New state for the text
+  const scrollRef = useRef(null);
 
-
-  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
-  const placeId = import.meta.env.VITE_GOOGLE_PLACE_ID;
-
-  const [currentProject, setCurrentProject] = useAtom(currentProjectAtom01);
-
-  const nextProject = () => {
-    setCurrentProject((currentProject + 1) % projects.length);
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      const hasMoreToScroll = scrollHeight > clientHeight + scrollTop + 10;
+      setShowArrow(hasMoreToScroll);
+      
+      // If the user starts scrolling, we can also hide the text hint immediately
+      if (scrollTop > 10) setShowText(false);
+    }
   };
 
-  const previousProject = () => {
-    setCurrentProject((currentProject - 1 + projects.length) % projects.length);
-  };
+  useEffect(() => {
+    // Check initial scroll state
+    const scrollTimer = setTimeout(() => {
+      checkScroll();
+    }, 1000);
 
-  return (
+    // Show "Scroll Down" text after 5 seconds
+    const textTimer = setTimeout(() => {
+      setShowText(true);
+    }, 4000);
+
+    return () => {
+      clearTimeout(scrollTimer);
+      clearTimeout(textTimer);
+    };
+  }, []);
+return (
     <Section>
+      <div
+        className="form-container
+          relative
+          lg:w-[950px] 
+          lg:h-[1050px]
+           xl:w-[1100px]
+          xl:h-[800px]
+          2xl:w-[1300px]
+          2xl:h-[800px]
+          xl:-ml-[300px]
+          2xl:-ml-[255px]
+          overflow-hidden
+          
 
-{/* <div className="relative inset-x-0 top-1 left-1/2 lg:left-24 -translate-x-1/2 w-full max-w-xs lg:max-w-xs z-[99999]">
-  <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
-
-    
-    <div className="p-6 max-h-[80vh] overflow-y-auto">
-      <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />
-    </div>
-  </div>
-</div> */}
-
-      <div className="relative -top-24 pb-48 mb-24 left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
-        <button
-          className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
-          onClick={previousProject}
+          w-full 
+          max-h-[85vh]
+        "
+      >
+        <div 
+          ref={scrollRef}
+          onScroll={checkScroll}
+          className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth "
         >
-          ← Previous
-        </button>
-        <h2 className="text-4xl lg:text-5xl font-bold text-center text-white">Badger Reviews</h2>
-        <button
-          className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
-          onClick={nextProject}
+          <div className="form h-full">
+            <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
+              Emphasis on <span className="text-[#00eeff]">Quality</span> and <br /><span className="text-[#00eeff]">100% Customer Satisfaction</span> 
+            </span>
+
+            {/* Grid is often cleaner for "locked" column counts.
+               - default: 1 col
+               - lg (1024px+): 2 cols
+               - 2xl (or your widest breakpoint): 3 cols
+            */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 md:gap-4 items-start text-center">
+              
+              {/* COLUMN 1 */}
+              <div className="flex flex-col text-white">
+                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-t-4">
+                  Hours of Operation to Call and Schedule an Appointment are
+                </span>
+                <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-950 border-t-2 border-b-2">
+                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-
+                  <span className="text-[#00eeff]"> 5</span>:<span className="text-[#00eeff]">00</span>pm CST
+                  <br />
+                  <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
+                </span>
+                <span className="c2 pt-3 md:pb-3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4">
+                  Our Number to <span className="text-[#00eeff]">Call</span> is <br />
+                  <span className="text-3xl md:text-3xl lg:text-4xl font-bold">
+                    +1-<span className="text-[#00eeff]">262</span>-
+                    <span className="text-[#00eeff]">230</span>-
+                    <span className="text-[#00eeff]">5182</span>
+                  </span>
+                </span>
+              </div>
+
+              {/* COLUMN 2 */}
+              <div className="flex flex-col text-white">
+                <span className="pb-2.5 pt-2 c3 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-4">
+                  <span className="text-[#00eeff] font-semibold">Badger Surface Solutions </span>
+                  provides Quality Service and Customer Satisfaction from people rooted in the <span className="text-[#C5050C] font-semibold">Badger</span> State.
+                </span>
+                <span className="pt-2.5 py-3.5 c2 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-2 border-b-2">
+                  We Proudly Serve These Counties!
+                </span>
+                <span className="c2 pb-6 text-base md:text-lg lg:text-xl border-slate-950 border-b-4">
+                  Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.
+                </span>
+              </div>
+
+              {/* COLUMN 3 
+                  - lg:col-span-2 makes it take full width of the 2-col layout 
+                  - 2xl:col-span-1 puts it back into its own slot in 3-col layout
+              */}
+              <div className="lg:col-span-2 2xl:col-span-1 flex justify-center">
+                <img className="w-full max-w-[400px] 2xl:max-w-full h-auto object-contain" src="/textures/counties.png" alt="Counties Map" />
+              </div>
+            </div>
+
+            <div className="button-container mt-8">
+              <div className="send-button">Customize a Quote</div>
+              <div className="reset-button-container">
+                <div className="reset-button" id="reset-btn">
+                  Contact Us
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div 
+          className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-4 
+            bg-gradient-to-t from-black/80 to-transparent 
+            pointer-events-none 
+            transition-opacity duration-500 
+            ${showArrow ? 'opacity-100' : 'opacity-0'}
+          `}
         >
-          Next →
-        </button>
+          {/* Fading Text Hint */}
+          <span 
+            className={`text-[#ffffff] text-sm uppercase tracking-widest mb-2 transition-opacity duration-1000
+              ${showText ? 'opacity-100' : 'opacity-0'}
+            `}
+          >
+            Scroll Down
+          </span>
+
+          {/* Bobbing Arrow */}
+          <div className="animate-bounce text-[#00eeff]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-10 h-10">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+        </div>
       </div>
     </Section>
   );
@@ -244,189 +388,188 @@ const SkillsSection = () => {
 
 
 // og projects
-const ProjectsSection = () => {
-  const [currentProject, setCurrentProject] = useAtom(currentProjectAtom);
-
-  const nextProject = () => {
-    setCurrentProject((currentProject + 1) % projects.length);
-  };
-
-  const previousProject = () => {
-    setCurrentProject((currentProject - 1 + projects.length) % projects.length);
-  };
-
-  return (
-    <Section>
-      <div className="fixed left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
-        <button
-          className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
-          onClick={previousProject}
-        >
-          ← Previous
-        </button>
-        <h2 className="text-4xl lg:text-5xl font-bold text-center text-white">Badger Services</h2>
-        <button
-          className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
-          onClick={nextProject}
-        >
-          Next →
-        </button>
-      </div>
-    </Section>
-  );
-};
 // const ProjectsSection = () => {
-//   const [showArrow, setShowArrow] = useState(true);
-//   const [showText, setShowText] = useState(false); // New state for the text
-//   const scrollRef = useRef(null);
+//   const [currentProject, setCurrentProject] = useAtom(currentProjectAtom);
 
-//   const checkScroll = () => {
-//     if (scrollRef.current) {
-//       const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-//       const hasMoreToScroll = scrollHeight > clientHeight + scrollTop + 10;
-//       setShowArrow(hasMoreToScroll);
-      
-//       // If the user starts scrolling, we can also hide the text hint immediately
-//       if (scrollTop > 10) setShowText(false);
-//     }
+//   const nextProject = () => {
+//     setCurrentProject((currentProject + 1) % projects.length);
 //   };
 
-//   useEffect(() => {
-//     // Check initial scroll state
-//     const scrollTimer = setTimeout(() => {
-//       checkScroll();
-//     }, 1000);
+//   const previousProject = () => {
+//     setCurrentProject((currentProject - 1 + projects.length) % projects.length);
+//   };
 
-//     // Show "Scroll Down" text after 5 seconds
-//     const textTimer = setTimeout(() => {
-//       setShowText(true);
-//     }, 4000);
-
-//     return () => {
-//       clearTimeout(scrollTimer);
-//       clearTimeout(textTimer);
-//     };
-//   }, []);
-// return (
+//   return (
 //     <Section>
-//       <div
-//         className="form-container
-//           relative
-//           lg:w-[950px] 
-//           lg:h-[1050px]
-//            xl:w-[1100px]
-//           xl:h-[800px]
-//           2xl:w-[1300px]
-//           2xl:h-[800px]
-//           xl:-ml-[300px]
-//           2xl:-ml-[255px]
-//           overflow-hidden
-//           xl:overflow-visible
-
-//           w-full 
-//           max-h-[85vh]
-//         "
-//       >
-//         <div 
-//           ref={scrollRef}
-//           onScroll={checkScroll}
-//           className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth"
+//       <div className="fixed left-0 w-full  flex gap-2 lg:gap-12 items-center justify-center pr-4">
+//         <button
+//           className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
+//           onClick={previousProject}
 //         >
-//           <div className="form h-full">
-//             <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
-//               Emphasis on <span className="text-[#00eeff]">Quality</span> and <br /><span className="text-[#00eeff]">100% Customer Satisfaction</span> 
-//             </span>
-
-//             {/* Grid is often cleaner for "locked" column counts.
-//                - default: 1 col
-//                - lg (1024px+): 2 cols
-//                - 2xl (or your widest breakpoint): 3 cols
-//             */}
-//             <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 md:gap-4 items-start text-center">
-              
-//               {/* COLUMN 1 */}
-//               <div className="flex flex-col text-white">
-//                 <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-t-4">
-//                   Hours of Operation to Call and Schedule an Appointment are
-//                 </span>
-//                 <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-950 border-t-2 border-b-2">
-//                   <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-
-//                   <span className="text-[#00eeff]"> 5</span>:<span className="text-[#00eeff]">00</span>pm CST
-//                   <br />
-//                   <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
-//                 </span>
-//                 <span className="c2 pt-3 md:pb-3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4">
-//                   Our Number to <span className="text-[#00eeff]">Call</span> is <br />
-//                   <span className="text-3xl md:text-3xl lg:text-4xl font-bold">
-//                     +1-<span className="text-[#00eeff]">262</span>-
-//                     <span className="text-[#00eeff]">230</span>-
-//                     <span className="text-[#00eeff]">5182</span>
-//                   </span>
-//                 </span>
-//               </div>
-
-//               {/* COLUMN 2 */}
-//               <div className="flex flex-col text-white">
-//                 <span className="pb-2.5 pt-2 c3 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-4">
-//                   <span className="text-[#00eeff] font-semibold">Badger Surface Solutions </span>
-//                   provides Quality Service and Customer Satisfaction from people rooted in the <span className="text-[#C5050C] font-semibold">Badger</span> State.
-//                 </span>
-//                 <span className="pt-2.5 py-3.5 c2 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-2 border-b-2">
-//                   We Proudly Serve These Counties!
-//                 </span>
-//                 <span className="c2 pb-6 text-base md:text-lg lg:text-xl border-slate-950 border-b-4">
-//                   Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.
-//                 </span>
-//               </div>
-
-//               {/* COLUMN 3 
-//                   - lg:col-span-2 makes it take full width of the 2-col layout 
-//                   - 2xl:col-span-1 puts it back into its own slot in 3-col layout
-//               */}
-//               <div className="lg:col-span-2 2xl:col-span-1 flex justify-center">
-//                 <img className="w-full max-w-[400px] 2xl:max-w-full h-auto object-contain" src="/textures/counties.png" alt="Counties Map" />
-//               </div>
-//             </div>
-
-//             <div className="button-container mt-8">
-//               <div className="send-button">Customize a Quote</div>
-//               <div className="reset-button-container">
-//                 <div className="reset-button" id="reset-btn">
-//                   Contact Us
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div 
-//           className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-4 
-//             bg-gradient-to-t from-black/80 to-transparent 
-//             pointer-events-none 
-//             transition-opacity duration-500 
-//             ${showArrow ? 'opacity-100' : 'opacity-0'}
-//           `}
+//           ← Previous
+//         </button>
+//         <h2 className="text-4xl lg:text-5xl font-bold text-center text-white">Badger Services</h2>
+//         <button
+//           className="hover:text-green-600 transition-colors text-white text-2xl lg:text-3xl"
+//           onClick={nextProject}
 //         >
-//           {/* Fading Text Hint */}
-//           <span 
-//             className={`text-[#ffffff] text-sm uppercase tracking-widest mb-2 transition-opacity duration-1000
-//               ${showText ? 'opacity-100' : 'opacity-0'}
-//             `}
-//           >
-//             Scroll Down
-//           </span>
-
-//           {/* Bobbing Arrow */}
-//           <div className="animate-bounce text-[#00eeff]">
-//             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-10 h-10">
-//               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-//             </svg>
-//           </div>
-//         </div>
+//           Next →
+//         </button>
 //       </div>
 //     </Section>
 //   );
 // };
+const ProjectsSection = () => {
+  const [showArrow, setShowArrow] = useState(true);
+  const [showText, setShowText] = useState(false); // New state for the text
+  const scrollRef = useRef(null);
+
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      const hasMoreToScroll = scrollHeight > clientHeight + scrollTop + 10;
+      setShowArrow(hasMoreToScroll);
+      
+      // If the user starts scrolling, we can also hide the text hint immediately
+      if (scrollTop > 10) setShowText(false);
+    }
+  };
+
+  useEffect(() => {
+    // Check initial scroll state
+    const scrollTimer = setTimeout(() => {
+      checkScroll();
+    }, 1000);
+
+    // Show "Scroll Down" text after 5 seconds
+    const textTimer = setTimeout(() => {
+      setShowText(true);
+    }, 4000);
+
+    return () => {
+      clearTimeout(scrollTimer);
+      clearTimeout(textTimer);
+    };
+  }, []);
+return (
+    <Section>
+      <div
+        className="form-container
+          relative
+          lg:w-[950px] 
+          lg:h-[1050px]
+           xl:w-[1100px]
+          xl:h-[800px]
+          2xl:w-[1300px]
+          2xl:h-[800px]
+          xl:-ml-[300px]
+          2xl:-ml-[255px]
+          overflow-hidden
+
+          w-full 
+          max-h-[85vh]
+        "
+      >
+        <div 
+          ref={scrollRef}
+          onScroll={checkScroll}
+          className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth"
+        >
+          <div className="form h-full">
+            <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
+              Emphasis on <span className="text-[#00eeff]">Quality</span> and <br /><span className="text-[#00eeff]">100% Customer Satisfaction</span> 
+            </span>
+
+            {/* Grid is often cleaner for "locked" column counts.
+               - default: 1 col
+               - lg (1024px+): 2 cols
+               - 2xl (or your widest breakpoint): 3 cols
+            */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 md:gap-4 items-start text-center">
+              
+              {/* COLUMN 1 */}
+              <div className="flex flex-col text-white">
+                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-t-4">
+                  Hours of Operation to Call and Schedule an Appointment are
+                </span>
+                <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-950 border-t-2 border-b-2">
+                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-
+                  <span className="text-[#00eeff]"> 5</span>:<span className="text-[#00eeff]">00</span>pm CST
+                  <br />
+                  <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
+                </span>
+                <span className="c2 pt-3 md:pb-3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4">
+                  Our Number to <span className="text-[#00eeff]">Call</span> is <br />
+                  <span className="text-3xl md:text-3xl lg:text-4xl font-bold">
+                    +1-<span className="text-[#00eeff]">262</span>-
+                    <span className="text-[#00eeff]">230</span>-
+                    <span className="text-[#00eeff]">5182</span>
+                  </span>
+                </span>
+              </div>
+
+              {/* COLUMN 2 */}
+              <div className="flex flex-col text-white">
+                <span className="pb-2.5 pt-2 c3 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-4">
+                  <span className="text-[#00eeff] font-semibold">Badger Surface Solutions </span>
+                  provides Quality Service and Customer Satisfaction from people rooted in the <span className="text-[#C5050C] font-semibold">Badger</span> State.
+                </span>
+                <span className="pt-2.5 py-3.5 c2 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-2 border-b-2">
+                  We Proudly Serve These Counties!
+                </span>
+                <span className="c2 pb-6 text-base md:text-lg lg:text-xl border-slate-950 border-b-4">
+                  Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.
+                </span>
+              </div>
+
+              {/* COLUMN 3 
+                  - lg:col-span-2 makes it take full width of the 2-col layout 
+                  - 2xl:col-span-1 puts it back into its own slot in 3-col layout
+              */}
+              <div className="lg:col-span-2 2xl:col-span-1 flex justify-center">
+                <img className="w-full max-w-[400px] 2xl:max-w-full h-auto object-contain" src="/textures/counties.png" alt="Counties Map" />
+              </div>
+            </div>
+
+            <div className="button-container mt-8">
+              <div className="send-button">Customize a Quote</div>
+              <div className="reset-button-container">
+                <div className="reset-button" id="reset-btn">
+                  Contact Us
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div 
+          className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-4 
+            bg-gradient-to-t from-black/80 to-transparent 
+            pointer-events-none 
+            transition-opacity duration-500 
+            ${showArrow ? 'opacity-100' : 'opacity-0'}
+          `}
+        >
+          {/* Fading Text Hint */}
+          <span 
+            className={`text-[#ffffff] text-sm uppercase tracking-widest mb-2 transition-opacity duration-1000
+              ${showText ? 'opacity-100' : 'opacity-0'}
+            `}
+          >
+            Scroll Down
+          </span>
+
+          {/* Bobbing Arrow */}
+          <div className="animate-bounce text-[#00eeff]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-10 h-10">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+};
 
 // og contact
 
@@ -606,7 +749,7 @@ return (
           xl:-ml-[300px]
           2xl:-ml-[255px]
           overflow-hidden
-          xl:overflow-visible
+         
 
           w-full 
           max-h-[85vh]

@@ -44,7 +44,7 @@ const openOverlay = (id) => {
       }, [section]);
       
       useEffect(() => {
-        const isMobile = window.innerWidth < 1024;
+        const isMobile = window.innerWidth < 1280;
 
         if (isMobile && section === 0) {
           // Lock all scroll + touchmove
@@ -130,7 +130,7 @@ const jumpToSection = (index) => {
           <ScrollControls 
           pages={4} 
           damping={0.1} 
-          // enabled={!(window.innerWidth < 1024 && section === 0)}
+          enabled={!(window.innerWidth < 1280 && section === 0)}
           >
             <ScrollManager section={section} onSectionChange={setSection} />
             <Experience section={section} jumpToSection={jumpToSection} menuOpened={menuOpened} isDay={isDay} setIsAnimating={setIsAnimating} 

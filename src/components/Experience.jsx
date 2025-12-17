@@ -26,7 +26,7 @@ export const Experience = (props) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 1280);
     };
 
     checkMobile(); // Run on mount
@@ -112,33 +112,33 @@ export const Experience = (props) => {
       </motion.group>
 
 
-       {section === 1 && (
-  <motion.group
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{
-      duration: 1,     // fade-in speed
-    }}
-  >
-    <Projects isMobile={isMobile} />
-  </motion.group>
+       {/* {section === 1 && (
+        <motion.group
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 1,     // fade-in speed
+          }}
+        >
+          <Projects isMobile={isMobile} />
+        </motion.group>
 
-  
-)}
+        
+      )}
 
-       {section === 2 && (
-  <motion.group
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{
-      duration: 1,     // fade-in speed
-    }}
-  >
-    <GoogleReviewsPage isMobile={isMobile} />
-  </motion.group>
+            {section === 2 && (
+        <motion.group
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 1,     // fade-in speed
+          }}
+        >
+          <GoogleReviewsPage isMobile={isMobile} />
+        </motion.group>
 
-  
-)}
+        
+      )} */}
 
     </>
   );
