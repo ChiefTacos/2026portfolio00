@@ -10,18 +10,20 @@ import { currentProjectAtom01 } from "./GoogleReviewsPage";
 
 
 const Section = (props) => {
-  const { children } = props;
+  const { children, className = "" } = props;
 
   return (
     <motion.section
-  //     className={`
-  // h-screen w-screen p-8 max-w-screen-2xl mx-auto
-  // flex flex-col items-start justify-center
-  // `}
-     className={`
-  h-screen w-screen p-8 max-w-screen-2xl mx-auto
-flex flex-col items-center justify-center
-  `}
+
+//      className={`
+//   h-screen w-screen p-8 max-w-screen-2xl mx-auto
+// flex flex-col items-center justify-center
+//   `}
+className={`
+        h-screen w-screen p-8 max-w-screen-2xl mx-auto
+        flex flex-col items-center justify-center
+        ${className} 
+      `}
       initial={{
         opacity: 0,
         y: 50,
@@ -253,7 +255,8 @@ const SkillsSection = () => {
     };
   }, []);
 return (
-    <Section>
+    <Section className="mt-10">
+    
       <div
         className="form-container
           relative
@@ -452,7 +455,7 @@ const ProjectsSection = () => {
     };
   }, []);
 return (
-    <Section>
+    <Section className="-mt-20">
       <div
         className="form-container
           relative
@@ -465,7 +468,6 @@ return (
           xl:-ml-[300px]
           2xl:-ml-[255px]
           overflow-hidden
-
           w-full 
           max-h-[85vh]
         "
@@ -473,7 +475,7 @@ return (
         <div 
           ref={scrollRef}
           onScroll={checkScroll}
-          className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth"
+          className="h-full w-full overflow-y-auto p-4 xl:p-6 pb-2 scroll-smooth"
         >
           <div className="form h-full">
             <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
@@ -736,7 +738,7 @@ const ContactSection = () => {
     };
   }, []);
 return (
-    <Section>
+    <Section className="mt-30">
       <div
         className="form-container
           relative
