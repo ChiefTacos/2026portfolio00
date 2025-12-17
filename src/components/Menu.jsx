@@ -822,19 +822,26 @@ Call Us      </p>
 
 
                <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4 lg:hidden z-[2147483642] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
-<div
-      className={`
-        flex flex-col items-center
-        ${isVisible ? 'opacity-100' : 'opacity-0'}
-        ${hasFadedIn ? 'animate-blink' : ''}
-        transition-opacity duration-1000 ease-in-out
-      `}
-    >
+            
+            
+               {(section === 0 && !menuOpened) && (
+              <div
+                className={`
+                  flex flex-col items-center
+                  ${isVisible ? 'opacity-100' : 'opacity-0'}
+                  ${hasFadedIn ? 'animate-blink' : ''}
+                  transition-opacity duration-1000 ease-in-out
+                `}
+              >
               <div className="rounded-sm bg-black py-0.5 px-2 text-md">
                 <p className="whitespace-nowrap text-white">Tap Down Here to Navigate our App</p>
               </div>
               <div className="h-0 w-fit border-l-8 border-r-8 border-t-8 border-t-black border-transparent" />
             </div>
+            )}
+
+
+
             <div className="flex flex-col">
       <MobileWrapper >
       <div className="social-buttons ">

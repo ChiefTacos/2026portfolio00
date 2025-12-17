@@ -710,7 +710,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
       >
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
 
-        <span className="relative z-10  block pr-4  lg:px-2 pt-3 lg:pt-1 py-3 lg:py-2  rounded-2xl dark:bg-neutral-950 bg-neutral-950">
+        <span className="relative z-10  block pr-4  lg:pr-4 pt-3 lg:pt-1 py-3 lg:py-2  rounded-2xl dark:bg-neutral-950 bg-neutral-950">
           <div className="relative z-10 flex items-center space-x-3 ">
                 {/* <div className="hidden lg:inline "> */}
                 <div className="inline ">
@@ -723,10 +723,11 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
          
 
                 <svg
-                  className="w-16 h-16 transition-all duration-300
+                  className={`w-16 h-16 transition-all duration-300
                             stroke-white fill-white
                             group-hover:fill-emerald-300
-                            group-hover:stroke-emerald-300"
+                            group-hover:stroke-emerald-300
+                            ${section === 0 ? "animate-slow-scale" : ""} `}
                   viewBox="0 0 448 512"
                   xmlns="http://www.w3.org/2000/svg"
                 >

@@ -46,7 +46,13 @@ export const LoadingScreen = ({ started, setStarted }) => {
         "
       >
         <span className="pr-6">Hours of Operation = 8am - 6pm</span>
-        <a href="tel:1-262-230-5182">Reach us @ +1 262-230-5182</a>
+                <a 
+            href="tel:1-262-230-5182"
+            className={started ? "pointer-events-none" : "pointer-events-auto"}
+            onClick={(e) => started && e.preventDefault()}
+          >
+            Reach us @ +1 262-230-5182
+          </a>
       </div>
     </StyledWrapper>
   );

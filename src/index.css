@@ -340,7 +340,7 @@ canvas {
   bottom: 50%;
   right: 50%;
   width: 3.5em;
-  height: 3.2em;
+  height: 3.9em;
   background: linear-gradient(190deg, rgb(67, 108, 203) 15%, rgba(177, 81, 255, 0.267) 40%, #0000),
     linear-gradient(80deg, rgb(51, 49, 195) 15%, rgba(35, 33, 160, 0.267) 40%, #0000),
     linear-gradient(#0f0, #0f0);
@@ -353,8 +353,8 @@ canvas {
   position: absolute;
   bottom: 50%;
   right: 50%;
-  width: 4em;
-  height: 3.1em;
+  width: 4.7em;
+  height: 2.7em;
   background: linear-gradient(200deg, rgb(0, 255, 115) 15%, #f004 40%, #0000),
     linear-gradient(70deg, #f00 15%, #f004 40%, #0000),
     linear-gradient(#0f0, #0f0);
@@ -382,7 +382,7 @@ canvas {
   bottom: 50%;
   right: 50%;
   width: 4.25em;
-  height: 4em;
+  height: 3.5em;
   background: linear-gradient(190deg, #f00 15%, #f004 40%, #0000),
     linear-gradient(80deg, #f00 15%, #f004 40%, #0000),
     linear-gradient(#0f0, #0f0);
@@ -696,4 +696,15 @@ overflow: hidden;
 
 .animate-blink {
   animation: blink 4s ease-in-out infinite;
+}
+
+/* animation for service buttons section 0 */
+@keyframes slow-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+.animate-slow-scale {
+  animation: slow-scale 2s ease-in-out infinite;
+  transform-origin: center; /* Ensures it scales from the middle */
 }
