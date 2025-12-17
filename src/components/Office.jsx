@@ -1101,7 +1101,7 @@ const [fullyOpen, setFullyOpen] = useState(false);
         section={section}
          jumpToSection={jumpToSection}
            projectIndex={2}
-         goToSection={1}
+         goToSection={1.3}
 
         id="balcony"                    
           key="balcony"
@@ -1217,7 +1217,7 @@ src="/textures/sexyCleaning.jpeg"
     section={section}
          jumpToSection={jumpToSection}
            projectIndex={3}
-         goToSection={1}
+         goToSection={1.3}
 
     id="driveway"
     key="driveway"
@@ -1343,7 +1343,7 @@ src="/textures/sexyCleaning.jpeg"
         section={section}
          jumpToSection={jumpToSection}
            projectIndex={1}
-           goToSection={1}
+           goToSection={1.3}
 
         id="house"                    
           key="house"
@@ -1367,7 +1367,7 @@ src="/textures/sexyCleaning.jpeg"
         section={section}
          jumpToSection={jumpToSection}
            projectIndex={0}
-          goToSection={1}
+          goToSection={1.3}
 
         id="car"                    
           key="car"

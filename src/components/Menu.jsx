@@ -507,7 +507,7 @@ props.triggerFreeQuote();  // ← This does everything!
     </CyberWrapper>
 <CyberWrapper onClick={() => {
     setMenuOpened(false);
-        onSectionChange(1.2); 
+        onSectionChange(1.3); 
 
   }}>
       <div style={{position: 'relative'}}>
