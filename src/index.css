@@ -701,10 +701,10 @@ overflow: hidden;
 /* animation for service buttons section 0 */
 @keyframes slow-scale {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.25); }
+  50% { transform: scale(1.35); }
 }
 
 .animate-slow-scale {
-  animation: slow-scale 2s ease-in-out infinite;
+  animation: slow-scale 2.4s ease-in-out infinite;
   transform-origin: center; /* Ensures it scales from the middle */
 }

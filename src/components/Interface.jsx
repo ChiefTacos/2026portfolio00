@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { currentProjectAtom, projects } from "./Projects";
 
 import styled from 'styled-components';
-import {  useEffect } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { currentProjectAtom01 } from "./GoogleReviewsPage";
 
 
@@ -274,134 +274,308 @@ const ProjectsSection = () => {
   );
 };
 
-const ContactSection = () => {
-  return (
-    <Section
-    >
-      <div className=" form-container
-  w-full
-  max-w-[500px]
-  md:max-w-[800px]
 
-  lg:max-w-[900px]
-  xl:max-w-[1200px]
-  h-full
-  max-h-[700px]
-   xl:mr-48
-">
-        <div className="form">
-          <span className="heading text-5xl">Emphasis on Quality and Customer Satisfaction</span>
-          <div className="flex md:flex-row flex-col items-center gap-4 text-center">
-                    <div className="flex flex-col w-1/3 text-2xl text-white">
-                  <span  className="pb-2.5 pt-2 c3 text-2xl  border-slate-950 border-t-2 ">
-                  <span className="text-[#00eeff]">Badger Surface Solutions </span> provides Quality Service and Customer Satisfaction from people rooted in the Badger State. 
-                  </span>
-            <span className="pt-2.5 py-3.5 c2 text-2xl  border-slate-700 border-t-2 border-b-2">We Proudly Serve These Counties!</span>
-            <span className="c2 pb-6 text-xl border-slate-950 border-b-2">Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.</span>
-          </div>
+// og contact
+// const ContactSection = () => {
+//   return (
+//     <Section
+//     >
+//       <div className=" form-container
+//   w-full
+//   max-w-[500px]
+//   md:max-w-[800px]
+
+//   lg:max-w-[900px]
+//   xl:max-w-[1200px]
+//   h-full
+//   max-h-[700px]
+//    xl:mr-48
+// ">
+//         <div className="form">
+//           <span className="heading text-5xl">Emphasis on Quality and Customer Satisfaction</span>
+//           <div className="flex md:flex-row flex-col items-center gap-4 text-center">
+//                     <div className="flex flex-col w-1/3 text-2xl text-white">
+//                   <span  className="pb-2.5 pt-2 c3 text-2xl  border-slate-950 border-t-2 ">
+//                   <span className="text-[#00eeff]">Badger Surface Solutions </span> provides Quality Service and Customer Satisfaction from people rooted in the Badger State. 
+//                   </span>
+//             <span className="pt-2.5 py-3.5 c2 text-2xl  border-slate-700 border-t-2 border-b-2">We Proudly Serve These Counties!</span>
+//             <span className="c2 pb-6 text-xl border-slate-950 border-b-2">Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.</span>
+//           </div>
 
           
-              <div className="flex flex-col w-1/3 text-4xl text-white">
-                        <span  className="pb-3 pt-2 c3 text-3xl  border-slate-950  border-t-2">
-                        Hours of Operation to Call and Schedule an Appointment are
-                                                </span>
-                  <span className="pt-3 py-5 c2 text-4xl  border-slate-700 border-t-2 border-b-2"><span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am- 
-                  <span className="text-[#00eeff]">5</span>:<span className="text-[#00eeff]">00</span>pm CST <br  /><span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span></span>
-                  <span className="c2 pb-6 text-3xl border-slate-950 border-b-2">Our Number to  <span className="text-[#00eeff]">Call</span> is <br /> <span className="text-4xl font-bold">+1-
-                    <span className="text-[#00eeff]">262</span>
-                    -<span className="text-[#00eeff]">230</span>-
-                    <span className="text-[#00eeff]">5182</span>
-                  </span></span>
-                </div>
+//               <div className="flex flex-col w-1/3 text-4xl text-white">
+//                         <span  className="pb-3 pt-2 c3 text-3xl  border-slate-950  border-t-2">
+//                         Hours of Operation to Call and Schedule an Appointment are
+//                                                 </span>
+//                   <span className="pt-3 py-5 c2 text-4xl  border-slate-700 border-t-2 border-b-2"><span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am- 
+//                   <span className="text-[#00eeff]">5</span>:<span className="text-[#00eeff]">00</span>pm CST <br  /><span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span></span>
+//                   <span className="c2 pb-6 text-3xl border-slate-950 border-b-2">Our Number to  <span className="text-[#00eeff]">Call</span> is <br /> <span className="text-4xl font-bold">+1-
+//                     <span className="text-[#00eeff]">262</span>
+//                     -<span className="text-[#00eeff]">230</span>-
+//                     <span className="text-[#00eeff]">5182</span>
+//                   </span></span>
+//                 </div>
 
-              <div className="w-1/3">
-          <img className="w-full h-full" src="/textures/counties.png" alt="" />
+//               <div className="w-1/3">
+//           <img className="w-full h-full" src="/textures/counties.png" alt="" />
 
-             </div>
-           </div>
+//              </div>
+//            </div>
          
-       {/* <div className="section-banner w-1/3">
-        <div id="star-1">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-2">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-3">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-4">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-5">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-6">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-7">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        </div> */}
+//        {/* <div className="section-banner w-1/3">
+//         <div id="star-1">
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-bottomright" />
+//             <div id="curved-corner-bottomleft" />
+//           </div>
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-topright" />
+//             <div id="curved-corner-topleft" />
+//           </div>
+//         </div>
+//         <div id="star-2">
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-bottomright" />
+//             <div id="curved-corner-bottomleft" />
+//           </div>
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-topright" />
+//             <div id="curved-corner-topleft" />
+//           </div>
+//         </div>
+//         <div id="star-3">
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-bottomright" />
+//             <div id="curved-corner-bottomleft" />
+//           </div>
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-topright" />
+//             <div id="curved-corner-topleft" />
+//           </div>
+//         </div>
+//         <div id="star-4">
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-bottomright" />
+//             <div id="curved-corner-bottomleft" />
+//           </div>
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-topright" />
+//             <div id="curved-corner-topleft" />
+//           </div>
+//         </div>
+//         <div id="star-5">
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-bottomright" />
+//             <div id="curved-corner-bottomleft" />
+//           </div>
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-topright" />
+//             <div id="curved-corner-topleft" />
+//           </div>
+//         </div>
+//         <div id="star-6">
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-bottomright" />
+//             <div id="curved-corner-bottomleft" />
+//           </div>
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-topright" />
+//             <div id="curved-corner-topleft" />
+//           </div>
+//         </div>
+//         <div id="star-7">
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-bottomright" />
+//             <div id="curved-corner-bottomleft" />
+//           </div>
+//           <div className="curved-corner-star">
+//             <div id="curved-corner-topright" />
+//             <div id="curved-corner-topleft" />
+//           </div>
+//         </div>
+//         </div> */}
 
-          <div className="button-container mt-4">
-            <div className="send-button">Customize a Quote</div>
-            <div className="reset-button-container">
-              <div className="reset-button" id="reset-btn">Contact Us</div>
+//           <div className="button-container mt-4">
+//             <div className="send-button">Customize a Quote</div>
+//             <div className="reset-button-container">
+//               <div className="reset-button" id="reset-btn">Contact Us</div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+      
+//          </Section>
+//   );
+// };
+
+const ContactSection = () => {
+  const [showArrow, setShowArrow] = useState(true);
+  const scrollRef = useRef(null);
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      // If we are within 10px of the bottom, hide the arrow
+      if (scrollTop + clientHeight >= scrollHeight - 10) {
+        setShowArrow(false);
+      } else {
+        setShowArrow(true);
+      }
+    }
+  };
+  // Optional: Check on load. If the content fits without scrolling, hide arrow immediately.
+  useEffect(() => {
+    if (scrollRef.current) {
+      const { scrollHeight, clientHeight } = scrollRef.current;
+      if (scrollHeight <= clientHeight) {
+        setShowArrow(false);
+      }
+    }
+  }, []);
+
+  return (
+    <Section>
+      <div
+        className="form-container
+          relative
+          w-full
+          max-w-full
+          md:max-w-[800px]
+          lg:max-w-[900px]
+          xl:max-w-[1200px]
+          h-full
+          max-h-[85vh]
+          md:max-h-[700px]
+          xl:mr-48
+          overflow-hidden
+        "
+      >
+        {/* SCROLLABLE WRAPPER 
+           - Added ref={scrollRef} to track height
+           - Added onScroll={handleScroll} to detect movement
+        */}
+        <div 
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="h-full w-full overflow-y-auto md:overflow-visible p-4 pb-24 md:p-0 scroll-smooth"
+        >
+          <div className="form h-full">
+            <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6">
+              Emphasis on <span className="text-[#00eeff]">Quality</span> and <span className="text-[#00eeff]">Customer Satisfaction</span> 
+
+            </span>
+
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-4 text-center">
+              
+              {/* COLUMN 1 */}
+              {/* <div className="flex flex-col w-full md:w-1/3 text-white">
+                <span className="pb-2.5 pt-2 c3 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-2">
+                  <span className="text-[#00eeff] font-semibold">Badger Surface Solutions </span>
+                  provides Quality Service and Customer Satisfaction from people rooted in the <span className="text-[#C5050C] font-semibold">Badger</span> State.
+                </span>
+                <span className="pt-2.5 py-3.5 c2 text-lg md:text-xl lg:text-2xl border-slate-700 border-t-2 border-b-2">
+                  We Proudly Serve These Counties!
+                </span>
+                <span className="c2 pb-6 text-base md:text-lg lg:text-xl border-slate-950 border-b-2">
+                  Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.
+                </span>
+              </div> */}
+                <div className="flex flex-col w-full md:w-1/3 text-white">
+                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-t-4">
+                  Hours of Operation to Call and Schedule an Appointment are
+                </span>
+                <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-950 border-t-2 border-b-2">
+                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-
+                  <span className="text-[#00eeff]"> 5</span>:<span className="text-[#00eeff]">00</span>pm CST
+                  <br />
+                  <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
+                </span>
+                <span className="c2 pt-3 md:pb-3 text-xl md:text-2xl lg:text-3xl md:border-slate-950 md:border-b-4">
+                  Our Number to <span className="text-[#00eeff]">Call</span> is <br />
+                  <span className="text-3xl md:text-3xl lg:text-4xl font-bold">
+                    +1-<span className="text-[#00eeff]">262</span>-
+                    <span className="text-[#00eeff]">230</span>-
+                    <span className="text-[#00eeff]">5182</span>
+                  </span>
+                </span>
+              </div>
+              {/* COLUMN 2 */}
+              <div className="flex flex-col w-full md:w-1/3 text-white">
+                <span className="pb-2.5 pt-2 c3 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-4">
+                  <span className="text-[#00eeff] font-semibold">Badger Surface Solutions </span>
+                  provides Quality Service and Customer Satisfaction from people rooted in the <span className="text-[#C5050C] font-semibold">Badger</span> State.
+                </span>
+                <span className="pt-2.5 py-3.5 c2 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-2 border-b-2">
+                  We Proudly Serve These Counties!
+                </span>
+                <span className="c2 pb-6 text-base md:text-lg lg:text-xl border-slate-950 border-b-4">
+                  Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.
+                </span>
+              </div>
+              {/* <div className="flex flex-col w-full md:w-1/3 text-white">
+                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-t-2">
+                  Hours of Operation to Call and Schedule an Appointment are
+                </span>
+                <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-700 border-t-2 border-b-2">
+                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-
+                  <span className="text-[#00eeff]"> 5</span>:<span className="text-[#00eeff]">00</span>pm CST
+                  <br />
+                  <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
+                </span>
+                <span className="c2 pb-6 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-2">
+                  Our Number to <span className="text-[#00eeff]">Call</span> is <br />
+                  <span className="text-2xl md:text-3xl lg:text-4xl font-bold">
+                    +1-<span className="text-[#00eeff]">262</span>-
+                    <span className="text-[#00eeff]">230</span>-
+                    <span className="text-[#00eeff]">5182</span>
+                  </span>
+                </span>
+              </div> */}
+
+              {/* COLUMN 3 */}
+              <div className="w-full md:w-1/3">
+                <img className="w-full h-auto object-contain" src="/textures/counties.png" alt="Counties Map" />
+              </div>
+            </div>
+
+            <div className="button-container mt-8">
+              <div className="send-button">Customize a Quote</div>
+              <div className="reset-button-container">
+                <div className="reset-button" id="reset-btn">
+                  Contact Us
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* SCROLL INDICATOR ARROW 
+           - Logic: opacity is controlled by showArrow state
+           - Added transition-opacity duration-300 for smooth fade
+        */}
+        <div 
+          className={`absolute bottom-0 left-0 w-full h-24 flex items-end justify-center pb-4 
+            bg-gradient-to-t from-black/80 to-transparent 
+            md:hidden pointer-events-none 
+            transition-opacity duration-300 
+            ${showArrow ? 'opacity-100' : 'opacity-0'}
+          `}
+        >
+          <div className="animate-bounce text-[#00eeff]">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              strokeWidth={2} 
+              stroke="currentColor" 
+              className="w-10 h-10"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+        </div>
+
       </div>
-      
-         </Section>
+    </Section>
   );
 };
