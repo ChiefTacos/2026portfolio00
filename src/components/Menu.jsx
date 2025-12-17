@@ -504,7 +504,7 @@ useEffect(() => {
 props.triggerFreeQuote();  // ← This does everything!
   }}>
       <div style={{position: 'relative', paddingBottom: '0px',}}>
-        <button className="cyber-btn py-0">Customize quote</button>
+        <button className="cyber-btn py-0">Free quote</button>
         <div className="cyber-tooltip">
           <div className="corner-tl" />
           <div className="corner-tr" />
@@ -821,7 +821,7 @@ Call Us      </p>
       </div> 
 
 
-               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-36  px-4 lg:hidden z-[2147483642] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
+               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4 lg:hidden z-[2147483642] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
 <div
       className={`
         flex flex-col items-center
@@ -831,7 +831,7 @@ Call Us      </p>
       `}
     >
               <div className="rounded-sm bg-black py-0.5 px-2 text-md">
-                <p className="whitespace-nowrap text-white">Tap Here to Navigate our App</p>
+                <p className="whitespace-nowrap text-white">Tap Down Here to Navigate our App</p>
               </div>
               <div className="h-0 w-fit border-l-8 border-r-8 border-t-8 border-t-black border-transparent" />
             </div>
@@ -849,7 +849,7 @@ Call Us      </p>
 </svg>        
 </a> */}
         {/* <a href="#" className="social-button github" onClick={(event) => { */}
-        <a href="#" className="h-[80px] " onClick={(event) => {
+        <a href="#" className="h-[60px] " onClick={(event) => {
 event.preventDefault();
     spawnCoin(event);
     setMenuOpened(true);
@@ -920,7 +920,7 @@ event.preventDefault();
   </filter>
 </svg>
 
-<button className="start-menu-button">
+<button className="start-menu-button ">
   <div className="start-menu-inner">
     <div className="top-white"></div>
     <div className="win7"></div>

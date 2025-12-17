@@ -304,8 +304,8 @@ canvas {
 
 .start-menu-button {
   position: relative;
-  width: 5em;
-  height: 5em;
+  width: 3em;
+  height: 2em;
   border-radius: 50%;
   border: 0;
   /* background: linear-gradient(#ffffff, #94e4ff); */
@@ -314,7 +314,7 @@ canvas {
 .start-menu-inner {
   cursor: pointer;
   position: absolute;
-  inset: 10px;
+  inset: 38px;
   border-radius: 50%;
    /* background: linear-gradient(#ffffff, #94e4ff); */
 
@@ -339,8 +339,8 @@ canvas {
   position: absolute;
   bottom: 50%;
   right: 50%;
-  width: 4.25em;
-  height: 4em;
+  width: 3.5em;
+  height: 3.2em;
   background: linear-gradient(190deg, rgb(67, 108, 203) 15%, rgba(177, 81, 255, 0.267) 40%, #0000),
     linear-gradient(80deg, rgb(51, 49, 195) 15%, rgba(35, 33, 160, 0.267) 40%, #0000),
     linear-gradient(#0f0, #0f0);
@@ -354,7 +354,7 @@ canvas {
   bottom: 50%;
   right: 50%;
   width: 4em;
-  height: 4em;
+  height: 3.1em;
   background: linear-gradient(200deg, rgb(0, 255, 115) 15%, #f004 40%, #0000),
     linear-gradient(70deg, #f00 15%, #f004 40%, #0000),
     linear-gradient(#0f0, #0f0);
@@ -367,8 +367,8 @@ canvas {
   position: absolute;
   bottom: 50%;
   right: 50%;
-  width: 4em;
-  height: 4.26em;
+  width: 4.5em;
+  height: 4em;
   background: linear-gradient(190deg, #f00 15%, #f004 40%, #0000),
     linear-gradient(65deg, #f00 20%, #f004 45%, #0000),
     linear-gradient(#0f0, #0f0);

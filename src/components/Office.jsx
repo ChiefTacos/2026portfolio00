@@ -285,29 +285,32 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out lg:hover:scale-105 lg:active:scale-100
         hover:scale-110 active:scale-105 
-                   bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
-                   hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
-                   shadow-amber-700 hover:shadow-amber-500"
+                   bg-gradient-to-r  from-cyan-400 via-blue-500 to-teal-600
+                   hover:from-cyan-500 hover:via-blue-400 hover:to-teal-500
+                   shadow-blue-700 hover:shadow-teal-500"
         onClick={onClick}
         onPointerDown={(e) => e.stopPropagation() }
         
         style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
       >
-        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
+        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r  from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
-        <span className="relative  block px-3 lg:px-3 py-3 pb-5 lg:py-3 lg:pb-5 rounded-2xl bg-neutral-950 dark:bg-neutral-950">
+        <span className="relative  block px-3 lg:px-3 py-3 pb-5 lg:py-3 lg:pb-5 rounded-2xlbg-gradient-to-r from-orange-600 via-neutral-500 to-neutral-600
+                   hover:from-neutral-500 hover:via-neutral-400 hover:to-neutral-500
+                   shadow-neutral-700 hover:shadow-neutral-500">
           <div className="flex items-center justify-center space-x-4">
             <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
-                    className="transition-all duration-500 group-hover:fill-yellow-400 group-hover:scale-110"/>
+                    className="transition-all duration-500 group-hover:fill-nuetral- group-hover:scale-110"/>
               <path d="M20 44C22 40, 26 40, 28 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
               <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
             </svg>
 
-            <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-4 pt-2  px-1 tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
-                            group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500 dark:text-yellow-400">
-              Custom Quote
+            <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-2 pt-1  px-1 tracking-wider text-white
+           
+                            ">
+             Free Quote
             </span>
           </div>
         </span>
