@@ -478,12 +478,10 @@ overflow: hidden;
 .form-container .form .input:focus {
   border-left: 5px solid #00eeff;
 }
-.form-container img {
-  border: 2px solid #00eeff;
-}
-/* .form-container img:hover {
+/* .form-container img {
   border: 0px solid #00eeff;
 } */
+
 .form-container .form .textarea {
   width: 100%;
   padding: 10px;

@@ -367,6 +367,7 @@ export const Menu = (props) => {
 
 const [isVisible, setIsVisible] = useState(false);
 const [hasFadedIn, setHasFadedIn] = useState(false);
+
   useEffect(() => {
   function handleResize() {
     if (window.innerWidth >= 1024) {
@@ -423,7 +424,7 @@ useEffect(() => {
             z-[2147483642]
             lg:z-[2147483635]
 
-            fixed inset-y-0 md:right-[-80px] lg:right-[-80px] transition-all overflow-y-auto
+            fixed inset-y-0 md:right-[0px] lg:right-[-80px] transition-all overflow-y-auto
           flex flex-col bg-blue
         `}
         
@@ -438,10 +439,33 @@ useEffect(() => {
       >
 
         {/* logo above menu */}
-                    {/* <div>
-              <img className='w-48 h-48' src="textures/counties.png" alt="" />
-            </div> */}
-<div className="flex-1 flex flex-col items-center justify-center gap-6 lg:gap-4 mt-4 lg:mt-64  ">
+        {/* {section !== 0 && (
+          <div>
+            <img className=' lg:w-64 lg:h-64 w-32 h-32 right-12' src="textures/counties.png" alt="" />
+          </div>
+        )} */}
+                 
+{/* <div className="flex-1 flex flex-col items-center justify-center gap-6 lg:gap-4 mt-4 lg:mt-64  "> */}
+
+
+{/* <div className="flex-1 flex flex-col items-center justify-center gap-1 lg:gap-4 mt-4 lg:mt-1  "> */}
+        {/* logo above menu */}
+        <div>
+          {/* Only show image if NOT section 0 */}
+          {section !== 0 && (
+            <img className=' lg:w-64 lg:h-64 w-32 h-32 transform translate-x-[145px] 
+                object-contain' src="textures/logo.png" alt="" />
+          )}
+        </div>
+
+        {/* Dynamic Container Styling */}
+        <div 
+          className={`flex-1 flex flex-col items-center justify-center lg:gap-4 mt-4 ${
+            section === 0 
+              ? "gap-6 mt-12 lg:mt-64" // Exact styling requested for Section 0
+              : "gap-1 lg:mt-[0px]"  // Styling for when NOT Section 0
+          }`}
+        >
 
 
 

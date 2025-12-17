@@ -303,9 +303,10 @@ const ContactSection = () => {
           
               <div className="flex flex-col w-1/3 text-4xl text-white">
                         <span  className="pb-3 pt-2 c3 text-3xl  border-slate-950  border-t-2">
-                        Our Hours of Operation to Call and Schedule an Appointment are
+                        Hours of Operation to Call and Schedule an Appointment are
                                                 </span>
-                  <span className="pt-3 py-5 c2 text-4xl  border-slate-700 border-t-2 border-b-2">9:00am- 5:00pm CST <br  />Monday thru Friday</span>
+                  <span className="pt-3 py-5 c2 text-4xl  border-slate-700 border-t-2 border-b-2"><span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am- 
+                  <span className="text-[#00eeff]">5</span>:<span className="text-[#00eeff]">00</span>pm CST <br  /><span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span></span>
                   <span className="c2 pb-6 text-3xl border-slate-950 border-b-2">Our Number to  <span className="text-[#00eeff]">Call</span> is <br /> <span className="text-4xl font-bold">+1-
                     <span className="text-[#00eeff]">262</span>
                     -<span className="text-[#00eeff]">230</span>-
@@ -392,7 +393,7 @@ const ContactSection = () => {
         </div>
         </div> */}
 
-          <div className="button-container">
+          <div className="button-container mt-4">
             <div className="send-button">Customize a Quote</div>
             <div className="reset-button-container">
               <div className="reset-button" id="reset-btn">Contact Us</div>
