@@ -704,7 +704,7 @@ props.triggerFreeQuote();  // ← This does everything!
   </span>
   <div className="block ">
     <div 
-      className="group absolute -top-[40px] left-[54px] lg:-top-[50px] lg:left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      className="group absolute -top-[33px] left-[54px] lg:-top-[50px] lg:left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
       <div className="rounded-sm bg-transparent py-1 px-2">
         <p className="whitespace-nowrap">
@@ -761,7 +761,7 @@ window.location.href = 'tel:+12622305182';
   </span>
   <div className="block  ">
     <div 
-      className="group absolute  -top-[40px] left-[60px] lg:-top-[50px] lg:left-[57px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      className="group absolute  -top-[32px] left-[60px] lg:-top-[50px] lg:left-[57px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
     >
       <div className="rounded-sm bg-transparent py-1 px-2">
         <p className="whitespace-nowrap">
