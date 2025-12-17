@@ -436,6 +436,11 @@ useEffect(() => {
         : "0px",         // Mobile/tablet: closed
 }}
       >
+
+        {/* logo above menu */}
+                    {/* <div>
+              <img className='w-48 h-48' src="textures/counties.png" alt="" />
+            </div> */}
 <div className="flex-1 flex flex-col items-center justify-center gap-6 lg:gap-4 mt-4 lg:mt-64  ">
 
 

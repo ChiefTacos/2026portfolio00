@@ -293,10 +293,10 @@ const ContactSection = () => {
           <span className="heading text-5xl">Emphasis on Quality and Customer Satisfaction</span>
           <div className="flex md:flex-row flex-col items-center gap-4 text-center">
                     <div className="flex flex-col w-1/3 text-2xl text-white">
-                  <span  className="pb-2.5 pt-1.5 c3 text-2xl  border-slate-950 border-b-2 border-t-2">
-                  Badger Surface Solutions provides Quality Service and Customer Satisfaction from people rooted in the Badger State. 
+                  <span  className="pb-2.5 pt-2 c3 text-2xl  border-slate-950 border-t-2 ">
+                  <span className="text-[#00eeff]">Badger Surface Solutions </span> provides Quality Service and Customer Satisfaction from people rooted in the Badger State. 
                   </span>
-            <span className="py-3 c2 text-2xl  border-slate-700 border-b-2">We Proudly Serve These Counties!</span>
+            <span className="pt-2.5 py-3.5 c2 text-2xl  border-slate-700 border-t-2 border-b-2">We Proudly Serve These Counties!</span>
             <span className="c2 pb-6 text-xl border-slate-950 border-b-2">Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.</span>
           </div>
 
@@ -306,8 +306,11 @@ const ContactSection = () => {
                         Our Hours of Operation to Call and Schedule an Appointment are
                                                 </span>
                   <span className="pt-3 py-5 c2 text-4xl  border-slate-700 border-t-2 border-b-2">9:00am- 5:00pm CST <br  />Monday thru Friday</span>
-                  <span className="c2 pb-6 text-3xl border-slate-950 border-b-2">Our Number to Call is <br /> <span className="text-4xl font-bold">+1-262-230-5182</span>
-                  </span>
+                  <span className="c2 pb-6 text-3xl border-slate-950 border-b-2">Our Number to  <span className="text-[#00eeff]">Call</span> is <br /> <span className="text-4xl font-bold">+1-
+                    <span className="text-[#00eeff]">262</span>
+                    -<span className="text-[#00eeff]">230</span>-
+                    <span className="text-[#00eeff]">5182</span>
+                  </span></span>
                 </div>
 
               <div className="w-1/3">
