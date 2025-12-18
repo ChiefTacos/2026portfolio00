@@ -495,10 +495,11 @@ Clears buildup before it forces water under shingles.                      </p>
                           {/* Item 5 */}
                           <div className="flex items-baseline gap-4">
                             <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                            <p className="text-lg leading-relaxed">
-                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Gutter & Roofline Visual Checks:</span> 
-                              Identify damage early so repairs stay manageable.
-                            </p>
+                            <p className="leading-relaxed font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Warning
+!</span> 
+Anyone on the roof during the winter or performing work on the roof from below risks injury and may cause damage to the roof and house. <br />         It is important to contact professionals.
+                   </p>
                           </div>
                         </div>
                     </div>
@@ -647,68 +648,9 @@ return (
         >
           <div className="form h-full">
             <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
-              Emphasis on <span className="text-[#00eeff]">Quality</span> and <br /><span className="text-[#00eeff]">100% Customer Satisfaction</span> 
+             <span className="text-[#00eeff]">services page work in progress</span> 
             </span>
 
-            {/* Grid is often cleaner for "locked" column counts.
-               - default: 1 col
-               - lg (1024px+): 2 cols
-               - 2xl (or your widest breakpoint): 3 cols
-            */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 md:gap-4 items-start text-center">
-              
-              {/* COLUMN 1 */}
-              <div className="flex flex-col text-white">
-                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-t-4">
-                  Hours of Operation to Call and Schedule an Appointment are
-                </span>
-                <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-950 border-t-2 border-b-2">
-                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-
-                  <span className="text-[#00eeff]"> 5</span>:<span className="text-[#00eeff]">00</span>pm CST
-                  <br />
-                  <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
-                </span>
-                <span className="c2 pt-3 md:pb-3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4">
-                  Our Number to <span className="text-[#00eeff]">Call</span> is <br />
-                  <span className="text-3xl md:text-3xl lg:text-4xl font-bold">
-                    +1-<span className="text-[#00eeff]">262</span>-
-                    <span className="text-[#00eeff]">230</span>-
-                    <span className="text-[#00eeff]">5182</span>
-                  </span>
-                </span>
-              </div>
-
-              {/* COLUMN 2 */}
-              <div className="flex flex-col text-white">
-                <span className="pb-2.5 pt-2 c3 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-4">
-                  <span className="text-[#00eeff] font-semibold">Badger Surface Solutions </span>
-                  provides Quality Service and Customer Satisfaction from people rooted in the <span className="text-[#C5050C] font-semibold">Badger</span> State.
-                </span>
-                <span className="pt-2.5 py-3.5 c2 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-2 border-b-2">
-                  We Proudly Serve These Counties!
-                </span>
-                <span className="c2 pb-6 text-base md:text-lg lg:text-xl border-slate-950 border-b-4">
-                  Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.
-                </span>
-              </div>
-
-              {/* COLUMN 3 
-                  - lg:col-span-2 makes it take full width of the 2-col layout 
-                  - 2xl:col-span-1 puts it back into its own slot in 3-col layout
-              */}
-              <div className="lg:col-span-2 2xl:col-span-1 flex justify-center">
-                <img className="w-full max-w-[400px] 2xl:max-w-full h-auto object-contain" src="/textures/counties.png" alt="Counties Map" />
-              </div>
-            </div>
-
-            <div className="button-container mt-8">
-              <div className="send-button">Customize a Quote</div>
-              <div className="reset-button-container">
-                <div className="reset-button" id="reset-btn">
-                  Contact Us
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
