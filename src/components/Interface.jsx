@@ -12,6 +12,7 @@ import { currentProjectAtom01 } from "./GoogleReviewsPage";
 const Section = (props) => {
   const { children, className = "" } = props;
 
+
   return (
     <motion.section
 
@@ -255,7 +256,7 @@ const SkillsSection = () => {
     };
   }, []);
 return (
-    <Section className="mt-10">
+    <Section className="xl:mt-10 ">
     
       <div
         className="form-container
@@ -268,6 +269,7 @@ return (
           2xl:h-[800px]
           xl:-ml-[300px]
           2xl:-ml-[255px]
+          
           overflow-hidden
           
 
@@ -281,60 +283,226 @@ return (
           className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth "
         >
           <div className="form h-full">
-            <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
-              Emphasis on <span className="text-[#00eeff]">Quality</span> and <br /><span className="text-[#00eeff]">100% Customer Satisfaction</span> 
-            </span>
+            {/* <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
+              <span className="text-teal-300">100% non-toxic</span> kid and pet friendly <span className="text-[#00eeff]">Surface Solutions </span> 
+            </span> */}
 
             {/* Grid is often cleaner for "locked" column counts.
                - default: 1 col
                - lg (1024px+): 2 cols
                - 2xl (or your widest breakpoint): 3 cols
             */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 md:gap-4 items-start text-center">
+            <div className="grid  grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 md:gap-2 items-start text-center">
               
               {/* COLUMN 1 */}
               <div className="flex flex-col text-white">
-                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-t-4">
-                  Hours of Operation to Call and Schedule an Appointment are
+                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
+                 What Badger Surface Solutions Does in Winter
                 </span>
-                <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-950 border-t-2 border-b-2">
-                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-
-                  <span className="text-[#00eeff]"> 5</span>:<span className="text-[#00eeff]">00</span>pm CST
-                  <br />
-                  <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
-                </span>
-                <span className="c2 pt-3 md:pb-3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4">
-                  Our Number to <span className="text-[#00eeff]">Call</span> is <br />
-                  <span className="text-3xl md:text-3xl lg:text-4xl font-bold">
-                    +1-<span className="text-[#00eeff]">262</span>-
-                    <span className="text-[#00eeff]">230</span>-
-                    <span className="text-[#00eeff]">5182</span>
-                  </span>
-                </span>
+                <div className="flex flex-col gap-2 mt-6">
+                   {/* Item 1 */}
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                      <p className="text-lg leading-relaxed font-semibold">
+                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Roof Snow Raking:</span> 
+                        Removes heavy snow loads before they turn into ice dams without damaging your shingles. 
+                      </p>
+                    </div>
+
+                    {/* Item 2 */}
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-blue-400 font-black text-2xl italic opacity-50 "></span>
+                      <p className="text-lg leading-relaxed font-semibold">
+                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-200">Ice Dam Prevention & Mitigation:</span> 
+Clears buildup before it forces water under shingles.                      </p>
+                    </div>
+
+                    {/* Item 3 */}
+                    <div className="flex items-baseline gap-4">
+                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                      <p className="text-lg leading-relaxed font-semibold">
+                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Walkway & Driveway Snow Shoveling:</span> 
+ Keeps your property safe and accessible by shoveling and salting.                      </p>
+                    </div>
+                    {/* Item 4 */}
+                    <div className="flex  items-baseline gap-4">
+                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                      <p className="text-lg leading-relaxed font-semibold">
+                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-200  ">24/7 Response:</span> 
+                        Providing rapid mobilization for emergency surface solutions treatment during extreme cold.
+                      </p>
+                    </div>
+                    {/* Item 5 */}
+                    <div className="flex items-baseline gap-4 border-slate-950 border-b-4 pb-4">
+                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                      <p className="text-lg leading-relaxed font-semibold">
+                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Gutter & Roofline Visual Checks:</span> 
+                        Identify damage early so repairs stay manageable.
+                      </p>
+                    </div>
+
+
+                    {/* Item 6 */}
+
+                    <div className="flex items-baseline gap-4">
+                            <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                            <p className="text-lg leading-relaxed">
+                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-400">The Cost of Not Taking Action in the Winter
+</span> 
+                                        <div className="flex items-baseline gap-4">
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
+                                        <p className="text-lg leading-relaxed">
+                                          
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                $1,000–$5,000+ in roof repairs
+                             </span> 
+                                        </p>
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                              Mold remediation costs
+
+                             </span> 
+                             
+                                        </p>
+                                                   <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                Gutter replacement
+
+
+                             </span> 
+                                        </p>
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                             Water-damaged drywall and insulation
+
+
+
+                             </span> 
+                             
+                                        </p>
+                                          <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
+                                          <p className="text-lg leading-relaxed">
+                                            <span className="font-bold text-lg md:text-xl mr-2 block pt-4 text-teal-100">
+                                              A simple winter maintenance visit can prevent almost all of these problems.
+
+
+
+                                        </span> 
+                              
+                                          </p>
+                                        </p>
+                                      </div>
+                                    
+                            </p>
+                          </div>
+                  </div>
               </div>
 
               {/* COLUMN 2 */}
-              <div className="flex flex-col text-white">
-                <span className="pb-2.5 pt-2 c3 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-4">
-                  <span className="text-[#00eeff] font-semibold">Badger Surface Solutions </span>
-                  provides Quality Service and Customer Satisfaction from people rooted in the <span className="text-[#C5050C] font-semibold">Badger</span> State.
-                </span>
-                <span className="pt-2.5 py-3.5 c2 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-2 border-b-2">
-                  We Proudly Serve These Counties!
-                </span>
-                <span className="c2 pb-6 text-base md:text-lg lg:text-xl border-slate-950 border-b-4">
-                  Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.
-                </span>
-              </div>
+            {/* <div className="lg:col-span-2 2xl:col-span-1 flex justify-center">
+                <img className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" src="/about/ice-dam-diagram.png" alt="Counties Map" />
 
-              {/* COLUMN 3 
-                  - lg:col-span-2 makes it take full width of the 2-col layout 
-                  - 2xl:col-span-1 puts it back into its own slot in 3-col layout
-              */}
-              <div className="lg:col-span-2 2xl:col-span-1 flex justify-center">
-                <img className="w-full max-w-[400px] 2xl:max-w-full h-auto object-contain" src="/textures/counties.png" alt="Counties Map" />
-              </div>
-            </div>
+              </div> */}
+                    <div className="lg:col-span-2 2xl:col-span-1 flex flex-col items-center justify-start gap-4">
+                        <img 
+                          className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
+                          src="/about/ice-dam-diagram.png" 
+                          alt="Ice Dam Diagram" 
+                        />
+                        <img 
+                          className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
+                          src="/about/damBuildup.jpg" 
+                          alt="Ice Dam Buildup" 
+                        />
+                    </div>
+
+              {/* COLUMN 3 */}
+              
+                  <div className="flex flex-col text-white">
+                      <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
+                  Dealing with and preventing Ice Dams
+                      </span>
+                      <div className="flex flex-col gap-2 mt-6">
+                        {/* Item 1 */}
+                          <div className="flex items-baseline gap-4">
+                            <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                            <p className="text-lg leading-relaxed">
+                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">How to Take Immediate Action</span> 
+                                        <div className="flex items-baseline gap-4">
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">Remove snow from the roof. This eliminates one of the ingredients necessary for the formation of an ice dam.
+                             </span> 
+                                        </p>
+                                      </div>
+                                      <div className="flex items-baseline gap-4">
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">2.</span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">A "roof rake" and push broom can be used to remove snow, but may damage the roofing materials.
+                             </span> 
+                                        </p>
+                                      </div>
+                                       <div className="flex items-baseline gap-4">
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">3.</span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">In an emergency situation where water is flowing into the house structure, making channels through the ice dam allows the water behind the dam to drain off the roof.
+
+                             </span> 
+                                        </p>
+                                      </div>
+                            </p>
+                          </div>
+
+                          {/* Item 2 */}
+                          <div className="flex items-baseline gap-4">
+                            <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                            <p className="text-lg leading-relaxed">
+                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">How to Take Long-Term Action</span> 
+                                        <div className="flex items-baseline gap-4">
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">First, make the ceiling air tight so no warm, moist air can flow from the house into the attic space.
+                             </span> 
+                                        </p>
+                                      </div>
+                                      <div className="flex items-baseline gap-4">
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">2.</span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">After sealing air leakage paths between the house and attic space, consider increasing the ceiling or roof insulation to cut down on heat loss by conduction.
+                             </span> 
+                                        </p>
+                                      </div>
+                                       <div className="flex items-baseline gap-4">
+                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">3.</span>
+                                        <p className="text-lg leading-relaxed">
+                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">In an emergency situation where water is flowing into the house structure, making channels through the ice dam allows the water behind the dam to drain off the roof.
+
+                             </span> 
+                                        </p>
+                                      </div>
+                            </p>
+                          </div>
+
+                          {/* Item 3 */}
+                          
+                          {/* Item 4 */}
+                          
+                          {/* Item 5 */}
+                          <div className="flex items-baseline gap-4">
+                            <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                            <p className="text-lg leading-relaxed">
+                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Gutter & Roofline Visual Checks:</span> 
+                              Identify damage early so repairs stay manageable.
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
 
             <div className="button-container mt-8">
               <div className="send-button">Customize a Quote</div>
@@ -455,7 +623,7 @@ const ProjectsSection = () => {
     };
   }, []);
 return (
-    <Section className="-mt-20">
+    <Section className="xl:-mt-20">
       <div
         className="form-container
           relative
@@ -738,7 +906,7 @@ const ContactSection = () => {
     };
   }, []);
 return (
-    <Section className="mt-30">
+    <Section className="xl:mt-30">
       <div
         className="form-container
           relative
@@ -751,8 +919,6 @@ return (
           xl:-ml-[300px]
           2xl:-ml-[255px]
           overflow-hidden
-         
-
           w-full 
           max-h-[85vh]
         "

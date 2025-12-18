@@ -8,8 +8,7 @@ import { DayNightToggle } from "./DayNightToggle";
 
 
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 
 
 
@@ -85,6 +84,7 @@ const StyledWrapper01 = styled.div`
   }`;
 
 const CyberWrapper = styled.div`
+
   .cyber-btn {
     position: relative;
     background: transparent;
@@ -368,6 +368,42 @@ export const Menu = (props) => {
 const [isVisible, setIsVisible] = useState(false);
 const [hasFadedIn, setHasFadedIn] = useState(false);
 
+
+  // desktop cyber tooltip and wrapper animation
+const [activeIndex, setActiveIndex] = useState(-1);
+const [rounds, setRounds] = useState(0);
+
+useEffect(() => {
+  if (window.innerWidth <= 1280) return;
+
+  const startTimer = setTimeout(() => {
+    setActiveIndex(0);
+    setRounds(1); // Start first round
+  }, 4000);
+
+  return () => clearTimeout(startTimer);
+}, []);
+
+useEffect(() => {
+  if (activeIndex >= 0 && rounds <= 2) {
+    const nextTimer = setTimeout(() => {
+      if (activeIndex < 2) {
+        setActiveIndex(prev => prev + 1);
+      } else {
+        // End of a round
+        if (rounds < 2) {
+          setActiveIndex(0); // Reset to first button
+          setRounds(prev => prev + 1);
+        } else {
+          setActiveIndex(-1); // Finished 2 rounds, hide highlights
+        }
+      }
+    }, 3000);
+    
+    return () => clearTimeout(nextTimer);
+  }
+}, [activeIndex, rounds]);
+
   useEffect(() => {
   function handleResize() {
     if (window.innerWidth >= 1280) {
@@ -480,7 +516,7 @@ useEffect(() => {
    
 
      
-               <div className="relative drop-shadow-xl lg:w-72 lg:h-80 w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[40px] text-[40px]" >
+               <div className="relative drop-shadow-xl lg:w-72 lg:h-[440px] w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[40px] text-[40px]" >
       <div className="absolute  flex items-center justify-center text-white dark:text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 pt-4">
 
 
@@ -488,59 +524,50 @@ useEffect(() => {
          
       <div className="w-full flex flex-col items-center justify-start gap-8 lg:pb-8 pb-8 px-1 ">
       
-    <CyberWrapper  onClick={() => {
-    setMenuOpened(false);
-props.triggerFreeQuote();  // ← This does everything!
-  }}>
-      <div style={{position: 'relative', paddingBottom: '0px',}}>
-        <button className="cyber-btn py-0">Free quote</button>
-        <div className="cyber-tooltip">
-          <div className="corner-tl" />
-          <div className="corner-tr" />
-          <div className="corner-bl" />
-          <div className="corner-br" />
-          {/* <strong> </strong><br /> */}
-          Jump to your custom quote. 
-        </div>
-      </div>
+{/* Wrapper 1 */}
+<CyberWrapper 
+  className={activeIndex === 0 ? "manual-highlight" : ""}
+  onClick={() => { setMenuOpened(false); props.triggerFreeQuote(); }}
+>
+  <div className="relative flex flex-col items-center">
+    <button className="cyber-btn py-0">Free quote</button>
+    <div className="cyber-tooltip">
+       <div className="corner-tl" /><div className="corner-tr" />
+       <div className="corner-bl" /><div className="corner-br" />
+       Jump to your custom quote.
+    </div>
+  </div>
+</CyberWrapper>
 
-    </CyberWrapper>
-<CyberWrapper onClick={() => {
-    setMenuOpened(false);
-        onSectionChange(1.3); 
+{/* Wrapper 2 */}
+<CyberWrapper 
+  className={activeIndex === 1 ? "manual-highlight" : ""}
+  onClick={() => { setMenuOpened(false); onSectionChange(1.3); }}
+>
+  <div className="relative flex flex-col items-center">
+    <button className="cyber-btn py-0">services <br /><span className='text-[37px] lg:block hidden'>page</span> </button>
+    <div className="cyber-tooltip">
+       <div className="corner-tl" /><div className="corner-tr" />
+       <div className="corner-bl" /><div className="corner-br" />
+       Detailed look at our services.
+    </div>
+  </div>
+</CyberWrapper>
 
-  }}>
-      <div style={{position: 'relative'}}>
-        <button className="cyber-btn py-0">services</button>
-        <div className="cyber-tooltip">
-          <div className="corner-tl" />
-          <div className="corner-tr" />
-          <div className="corner-bl" />
-          <div className="corner-br" />
-          Detailed look at our services.
-        </div>
-      </div>
-    </CyberWrapper>
-   
-    
-     <CyberWrapper onClick={() => {
-    setMenuOpened(false);
-        onSectionChange(2.6); 
-
-  }}>
-      <div style={{position: 'relative', marginTop: '0px', }}>
-        <button className="cyber-btn py-0">Reviews</button>
-        <div className="cyber-tooltip">
-          <div className="corner-tl" />
-          <div className="corner-tr" />
-          <div className="corner-bl" />
-          <div className="corner-br" />
-          {/* <strong> </strong><br /> */}
-          Check out our some of our personal and online reviews. 
-       </div>
-      </div>
-    </CyberWrapper>
-              
+{/* Wrapper 3 */}
+<CyberWrapper 
+  className={activeIndex === 2 ? "manual-highlight" : ""}
+  onClick={() => { setMenuOpened(false); onSectionChange(2.6); }}
+>
+  <div className="relative flex flex-col items-center">
+    <button className="cyber-btn py-0">About<br /><span className='text-[37px] lg:block hidden'>page</span></button>
+    <div className="cyber-tooltip">
+       <div className="corner-tl" /><div className="corner-tr" />
+       <div className="corner-bl" /><div className="corner-br" />
+       Check out our personal and online reviews.
+    </div>
+  </div>
+</CyberWrapper>       
 
           </div>
 

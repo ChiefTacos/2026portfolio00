@@ -708,3 +708,71 @@ overflow: hidden;
   animation: slow-scale 2.4s ease-in-out infinite;
   transform-origin: center; /* Ensures it scales from the middle */
 }
+
+
+
+
+
+/* cyberwrapper and tooltip menu desktop animation */
+/* @media (min-width: 1281px) {
+  .manual-highlight .cyber-tooltip {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(-10px); 
+    border-color: #00f3ff; 
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .manual-highlight .cyber-btn {
+    background-color: rgba(0, 243, 255, 0.2) !important;
+    box-shadow: 0 0 20px #00f3ff !important;
+    border: 1px solid #00f3ff !important;
+    color: #fff !important;
+  }
+} */
+/* Only apply these logic-driven styles on Desktop */
+@media (min-width: 1281px) {
+  
+  /* 1. Prevent the wrapper itself from showing a background color */
+  .manual-highlight {
+    background: transparent !important;
+    display: inline-block; /* Forces wrapper to only be as wide as the button */
+    width: fit-content;
+    margin: 0 auto; /* Keeps it centered if parent is flex-col items-center */
+  }
+
+  /* 2. Target the button specifically for the glow */
+  .manual-highlight .cyber-btn {
+    background-color: rgba(0, 243, 255, 0.2) !important;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.8) !important;
+    border: 2px solid #00f3ff !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+  }
+
+  /* 3. Force the tooltip to become visible */
+  .manual-highlight .cyber-tooltip {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(-8px); /* Gives it a slight "lift" while active */
+    border: 1px solid #00f3ff;
+    background: rgba(0, 0, 0, 0.95); /* High contrast */
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+    z-index: 100;
+  }
+
+  /* 4. Make the tooltip corners glow cyan */
+  .manual-highlight .cyber-tooltip [class^="corner-"] {
+    background-color: #00f3ff !important;
+    box-shadow: 0 0 8px #00f3ff;
+  }
+}@keyframes cyber-pulse {
+  0% { box-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(0, 243, 255, 0.9); }
+  100% { box-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+}
+
+.manual-highlight .cyber-btn {
+  animation: cyber-pulse 1.5s infinite ease-in-out;
+}
