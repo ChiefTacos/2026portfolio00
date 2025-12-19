@@ -507,7 +507,7 @@ overflow: hidden;
 }
 
 .form-container .form .button-container .send-button {
-  flex-basis: 70%;
+  flex-basis: 50%;
   background: #00eeff;
   padding: 10px;
   color: #001925;
@@ -525,7 +525,7 @@ overflow: hidden;
 
 .form-container .form .button-container .reset-button-container {
   filter: drop-shadow(1px 1px 0px #00eeff);
-  flex-basis: 30%;
+  flex-basis: 50%;
 }
 
 .form-container .form .button-container .reset-button-container .reset-button {

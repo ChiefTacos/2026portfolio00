@@ -296,7 +296,7 @@ return (
               
               {/* COLUMN 1 */}
               <div className="flex flex-col text-white">
-                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
+                <span className=" font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
                  What Badger Surface Solutions Does in Winter
                 </span>
                 <div className="flex flex-col gap-2 mt-6">
@@ -424,7 +424,7 @@ Clears buildup before it forces water under shingles.                      </p>
               {/* COLUMN 3 */}
               
                   <div className="flex flex-col text-white">
-                      <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
+                      <span className="font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
                   Dealing with and preventing Ice Dams
                       </span>
                       <div className="flex flex-col gap-2 mt-6">
@@ -432,7 +432,7 @@ Clears buildup before it forces water under shingles.                      </p>
                           <div className="flex items-baseline gap-4">
                             <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                             <p className="text-lg leading-relaxed">
-                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">How to Take Immediate Action</span> 
+                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">How to Take Immediate Action</span> 
                                         <div className="flex items-baseline gap-4">
                                         <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
                                         <p className="text-lg leading-relaxed">
@@ -462,7 +462,7 @@ Clears buildup before it forces water under shingles.                      </p>
                           <div className="flex items-baseline gap-4">
                             <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                             <p className="text-lg leading-relaxed">
-                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">How to Take Long-Term Action</span> 
+                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">How to Take Long-Term Action</span> 
                                         <div className="flex items-baseline gap-4">
                                         <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
                                         <p className="text-lg leading-relaxed">
@@ -496,16 +496,13 @@ Clears buildup before it forces water under shingles.                      </p>
                           <div className="flex items-baseline gap-4">
                             <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                             <p className="leading-relaxed font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Warning
+                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">Warning
 !</span> 
-Anyone on the roof during the winter or performing work on the roof from below risks injury and may cause damage to the roof and house. <br />         It is important to contact professionals.
+Anyone on the roof during the winter or performing work on the roof from below risks injury and may cause damage to the roof and house. <br /> <br />   <span className=" font-bold text-xl lg:text-2xl 2xl:text-3xl">     It is important to contact professionals.</span>
                    </p>
+                  
                           </div>
-                        </div>
-                    </div>
-                  </div>
-
-            <div className="button-container mt-8">
+                          <div className="button-container mt-8">
               <div className="send-button">Customize a Quote</div>
               <div className="reset-button-container">
                 <div className="reset-button" id="reset-btn">
@@ -513,6 +510,13 @@ Anyone on the roof during the winter or performing work on the roof from below r
                 </div>
               </div>
             </div>
+                        </div>
+                        
+                    </div>
+                    
+                  </div>
+
+           
           </div>
         </div>
 
@@ -888,8 +892,7 @@ return (
                   Hours of Operation to Call and Schedule an Appointment are
                 </span>
                 <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-950 border-t-2 border-b-2">
-                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-
-                  <span className="text-[#00eeff]"> 5</span>:<span className="text-[#00eeff]">00</span>pm CST
+                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-<span className="text-[#00eeff]">5</span>:<span className="text-[#00eeff]">00</span>pm CST
                   <br />
                   <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
                 </span>
