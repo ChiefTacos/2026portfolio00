@@ -715,7 +715,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                 {/* <div className="hidden lg:inline "> */}
                 <div className="inline ">
 
-                  <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 text-2xl md:text-3xl lg:text-4xl font-medium pointer-events-none">
+                  <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 text-2xl md:text-3xl lg:text-4xl font-bold pointer-events-none">
                   {title}
                   </span>
                 </div>
@@ -1426,7 +1426,7 @@ src="/textures/sexyCleaning.jpeg"
       <OverlayItem
         section={section}
         ref={freeQOverlayRef}  // ← For menu button linkinkg
-        id="freeQ"                    
+        id="freeQ"                      
           key="freeQ"
   className="freeQ-overlay"
     setActiveOverlay={setActiveOverlay}

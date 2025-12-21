@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Allerta&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 #root {
   width: 100vw;
@@ -9,6 +12,9 @@
 
 body {
   margin: 0;
+    font-family: "Allerta", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 .hide-native-cursor {
   cursor: none !important;
@@ -35,6 +41,9 @@ body::-webkit-scrollbar,
           -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
         overflow: hidden;              /* Most important! Prevents scroll entirely */
+          font-family: "Allerta", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* Extra safety: target any possible scrolling container */
@@ -85,6 +94,9 @@ canvas {
 }
 #overlay-portals-root button{
     z-index: 9999 !important;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
 
 }
 .freeq-button-wrapper {

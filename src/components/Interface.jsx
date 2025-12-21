@@ -283,15 +283,223 @@ return (
           className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth "
         >
           <div className="form h-full">
-            {/* <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
-              <span className="text-teal-300">100% non-toxic</span> kid and pet friendly <span className="text-[#00eeff]">Surface Solutions </span> 
-            </span> */}
+                 <div className="grid pb-5 grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 md:gap-2 items-start text-center">
+                        
+                        <div className="flex flex-col text-white">
+                          <span className=" font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-red-400">
+                          What Badger Surface Solutions Does in the Spring, Summer, and Fall
+                          </span>
+                          <div className="flex flex-col gap-2 mt-6">
+                            
+                              <div className="flex items-baseline gap-4">
+                                <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                <p className="text-lg leading-relaxed font-semibold">
+                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-100">Gutter Cleaning:</span> 
+                                  Removes heavy snow loads before they turn into ice dams without damaging your shingles. 
+                                </p>
+                              </div>
+                              <div className="flex items-baseline gap-4">
+                                <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                <p className="text-lg leading-relaxed font-semibold">
+                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-100">Home Exterior Soft Washing:</span> 
+                                  Removes heavy snow loads before they turn into ice dams without damaging your shingles. 
+                                </p>
+                              </div>
+                              <div className="flex items-baseline gap-4">
+                                <span className="text-red-400 font-black text-2xl italic opacity-50 "></span>
+                                <p className="text-lg leading-relaxed font-semibold">
+                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-200">Roof Soft Wash & Rejuvination:</span> 
+          Clears buildup before it forces water under shingles.                      </p>
+                              </div>
 
-            {/* Grid is often cleaner for "locked" column counts.
-               - default: 1 col
-               - lg (1024px+): 2 cols
-               - 2xl (or your widest breakpoint): 3 cols
-            */}
+                              <div className="flex items-baseline gap-4">
+                                <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                <p className="text-lg leading-relaxed font-semibold">
+                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-100">Deck Cleaning Soft Wash & Rejuvination:</span> 
+          Keeps your property safe and accessible by shoveling and salting.                      </p>
+                              </div>
+                              
+                              <div className="flex items-baseline gap-4 border-slate-950 border-b-4 pb-4">
+                                <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                <p className="text-lg leading-relaxed font-semibold">
+                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-100">Gutter & Roofline Visual Checks:</span> 
+                                  Identify damage early so repairs stay manageable.
+                                </p>
+                              </div>
+
+
+
+                              <div className="flex items-baseline gap-4">
+                                      <span className="text-redred-400 font-black text-2xl italic opacity-50"></span>
+                                      <p className="text-lg leading-relaxed">
+                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-400">The Cost of Not Taking Action
+          </span> 
+                                                  <div className="flex items-baseline gap-4">
+                                                  <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    
+                                                  <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                          $1,000–$5,000+ in roof repairs
+                                      </span> 
+                                                  </p>
+                                                  <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                                        Mold remediation costs
+
+                                      </span> 
+                                      
+                                                  </p>
+                                                            <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                          Gutter replacement
+
+
+                                      </span> 
+                                                  </p>
+                                                  <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                                      Water-damaged drywall and insulation
+
+
+
+                                      </span> 
+                                      
+                                                  </p>
+                                                    <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
+                                                    <p className="text-lg leading-relaxed">
+                                                      <span className="font-bold text-lg md:text-xl mr-2 block pt-4 text-red-100">
+                                                        A simple winter maintenance visit can prevent almost all of these problems.
+
+
+
+                                                  </span> 
+                                        
+                                                    </p>
+                                                  </p>
+                                                </div>
+                                              
+                                      </p>
+                                    </div>
+                            </div>
+                        </div>
+
+                        
+                              <div className="lg:col-span-2 2xl:col-span-1 flex flex-col items-center justify-start gap-4">
+                                
+                                  <img 
+                                    className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
+                                    src="/about/roofWashbeforeafter00.jpeg" 
+                                    alt="Ice Dam Diagram" 
+                                  />
+                                  <img 
+                                    className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
+                                    src="/about/deckRestoration.jpg" 
+                                    alt="Ice Dam Buildup" 
+                                  />
+
+                                  <div className="lg:col-span-2 2xl:col-span-1 flex flex-col items-center justify-start gap-4">
+                                
+                                  <img 
+                                    className="w-full min-h-[400px] 2xl:max-w-full h-auto object-contain" 
+                                    src="/about/theWorldIsYours.jpeg" 
+                                    alt="Ice Dam Diagram" 
+                                  />
+                                <div className="flex items-baseline gap-4">
+                                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-300 pb-2">Choose us to clean and restore your home, so you can enjoy your time c'mon the world is yours</span> 
+                                              
+                                                </div>
+
+                              </div>
+                              </div>
+
+                        
+                            <div className="flex flex-col text-white">
+                                <span className="font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
+                            Sucking Cock All day
+                                </span>
+                                <div className="flex flex-col gap-2 mt-6">
+                                    <div className="flex items-baseline gap-4">
+                                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                                      <p className="text-lg leading-relaxed">
+                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">How to Take Immediate Action</span> 
+                                                  <div className="flex items-baseline gap-4">
+                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">Remove snow from the roof. This eliminates one of the ingredients necessary for the formation of an ice dam.
+                                      </span> 
+                                                  </p>
+                                                </div>
+                                                <div className="flex items-baseline gap-4">
+                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">2.</span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">A "roof rake" and push broom can be used to remove snow, but may damage the roofing materials.
+                                      </span> 
+                                                  </p>
+                                                </div>
+                                                <div className="flex items-baseline gap-4">
+                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">3.</span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">In an emergency situation where water is flowing into the house structure, making channels through the ice dam allows the water behind the dam to drain off the roof.
+
+                                      </span> 
+                                                  </p>
+                                                </div>
+                                      </p>
+                                    </div>
+
+                                    <div className="flex items-baseline gap-4">
+                                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                                      <p className="text-lg leading-relaxed">
+                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">How to Take Long-Term Action</span> 
+                                                  <div className="flex items-baseline gap-4">
+                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">First, make the ceiling air tight so no warm, moist air can flow from the house into the attic space.
+                                      </span> 
+                                                  </p>
+                                                </div>
+                                                <div className="flex items-baseline gap-4">
+                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">2.</span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">After sealing air leakage paths between the house and attic space, consider increasing the ceiling or roof insulation to cut down on heat loss by conduction.
+                                      </span> 
+                                                  </p>
+                                                </div>
+                                                <div className="flex items-baseline gap-4">
+                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">3.</span>
+                                                  <p className="text-lg leading-relaxed">
+                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">In an emergency situation where water is flowing into the house structure, making channels through the ice dam allows the water behind the dam to drain off the roof.
+
+                                      </span> 
+                                                  </p>
+                                                </div>
+                                      </p>
+                                    </div>
+
+                                    
+                                    
+                                    
+                                    <div className="flex items-baseline gap-4">
+                                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
+                                      <p className="leading-relaxed font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
+                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">Warning
+          !</span> 
+          Anyone on the roof during the winter or performing work on the roof from below risks injury and may cause damage to the roof and house. <br /> <br />   <span className=" font-bold text-xl lg:text-2xl 2xl:text-3xl">     It is important to contact professionals.</span>
+                            </p>
+                            
+                                    </div>
+                                  
+                                  </div>
+                                  
+                              </div>
+                              
+                            </div>
             <div className="grid  grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 md:gap-2 items-start text-center">
               
               {/* COLUMN 1 */}
@@ -515,6 +723,7 @@ Anyone on the roof during the winter or performing work on the roof from below r
                     </div>
                     
                   </div>
+            
 
            
           </div>
