@@ -451,7 +451,9 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
             }}
           >
 
-        <div className="flex p-4 lg:p-3 gap-2 bg-[#2a2a2a]">
+
+        <div className="flex p-4 lg:p-3 gap-2 bg-[#2a2a2a] overflow-hidden">
+          <div className="flex gap-2 flex-shrink-0">
           <button onClick={handleResetClick} style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
             <span className="bg-red-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
           
@@ -472,6 +474,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
           >
             <span className="bg-green-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-green-600 transition"></span>
           </button>
+          </div>
                     <h1 className="lg:text-5xl md:text-3xl text-xl font-bold lg:ml-20 lg:mb-2 md:ml-10 md:mb-1 mt-1 ml-5 ">{title}</h1>
                     <p className="lg:text-2xl text-lg text-gray-700 lg:mt-4 lg:ml-12 md:ml-4 md:mt-3 mt-1 line-clamp-3">{description}</p>
           
