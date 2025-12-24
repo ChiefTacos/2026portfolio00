@@ -85,6 +85,7 @@ const FirstSection = (props) => {
 
   return (
     <Section>
+      
       {/* <StyledWrapper>
           <div className="form-container
            lg:translate-x-[230px] md:translate-x-[230px]  translate-x-[-30px] 
@@ -421,7 +422,7 @@ return (
                         
                             <div className="flex flex-col text-white">
                                 <span className="font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
-                            Sucking Cock All day
+                            Sucking bootty All day
                                 </span>
                                 <div className="flex flex-col gap-2 mt-6">
                                     <div className="flex items-baseline gap-4">
@@ -862,11 +863,14 @@ return (
           <div className="form h-full">
             <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
              <span className="text-[#00eeff]">services page work in progress</span> 
+                             <img className="w-full max-w-[500px] 2xl:max-w-[1000px] h-auto object-contain" src="/textures/logo.png" alt="BadgerSSLogo" />
+
             </span>
 
           </div>
+          
         </div>
-
+ 
         <div 
           className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-4 
             bg-gradient-to-t from-black/80 to-transparent 

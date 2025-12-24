@@ -97,6 +97,10 @@ canvas {
   font-family: "Josefin Sans", sans-serif;
   font-weight: 500;
   font-style: normal;
+  overflow: hidden;
+overflow: hidden;
+
+
 
 }
 .freeq-button-wrapper {
