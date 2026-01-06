@@ -22,7 +22,7 @@ const OverlayItem = ({
   rotationX = 0,
   rotationY = 0,
   rotationZ = 0,
-  distanceFactor = 25,        // ← new prop, default 20
+  distanceFactor = 0.4,        // ← new prop, default 0.4
   parentGroupRef, 
   registerOverlayReset,
   section,
@@ -936,14 +936,14 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
       },
     },
     driveway: {
-      distanceFactor: { desktop: 0.4, tablet: 21, mobile: 18 },
+      distanceFactor: { desktop: 0.4, tablet: 0.4, mobile: 0.4 },
       position: {
         
         // desktop: [-610.128, 328.8, 172],
         desktop: [0.128, 0.8, 0],
+        tablet: [0.128, 0.8, 0],
+        mobile: [0.128, 0.8, 0],
 
-        tablet: [-430.128, 368.8, 172],
-        mobile: [-190.128, 173.8, 322],
 
       },
     },
@@ -960,26 +960,26 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
     },
     // music
     contact: {
-      distanceFactor: { desktop: 0.4, tablet: 18, mobile: 15 },
+      distanceFactor: { desktop: 0.4, tablet: 0.4, mobile: 0.4 },
       position: {
         // desktop: [103.2, 600.1, 1077.2],
         desktop: [-2.2 ,2, 0],
 
-        // tablet: [321.2, 820.1, 717.2],
-        tablet: [461.2, 200.1, 507.2],
+        tablet: [-2.2 ,2, 0],
+        // tablet: [461.2, 200.1, 507.2],
         
-         mobile:  [-40.128, 0, 805.314],
-        // mobile:  [-100.128, 100, 25.314],
+        //  mobile:  [-40.128, 0, 805.314],
+        mobile: [-2.2 ,2, 0],
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 1, tablet: 22, mobile: 18 },
+      distanceFactor: { desktop: 1, tablet: 1, mobile: 1 },
       position: {
         desktop: [0, 5, 0],
         // tablet: [461.2, 880.1, 707.2],
 
-        tablet:  [-140.128, 1000, -25.314],
-         mobile:  [115.128, 1070, 445.314],
+        tablet: [0, 5, 0],
+        mobile: [0, 5, 0],
       },
     },
   };
