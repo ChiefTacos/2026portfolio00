@@ -257,7 +257,7 @@ const SkillsSection = () => {
     };
   }, []);
 return (
-    <Section className="xl:mt-10 ">
+    <Section className="xl:mt-10">
     
       <div
         className="form-container
@@ -273,7 +273,7 @@ return (
           
           overflow-hidden
           
-
+opacity-5
           w-full 
           max-h-[85vh]
         "
@@ -838,9 +838,9 @@ const ProjectsSection = () => {
     };
   }, []);
 return (
-    <Section className="xl:-mt-20">
+    <Section className="xl:-mt-20 ">
       <div
-        className="form-container
+        className="form-container opacity-0
           relative
           lg:w-[950px] 
           lg:h-[1050px]
@@ -1065,7 +1065,7 @@ const ContactSection = () => {
     };
   }, []);
 return (
-    <Section className="xl:mt-30">
+    <Section className="xl:mt-30 ">
       <div
         className="form-container
           relative
@@ -1080,6 +1080,7 @@ return (
           overflow-hidden
           w-full 
           max-h-[85vh]
+          opacity-5
         "
       >
         <div 

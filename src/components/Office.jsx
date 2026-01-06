@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, } from "react";
 import * as THREE from "three";
 import { useSetAtom } from "jotai";
 import { currentProjectAtom } from "./Projects";
-
+import { useStore } from '../store/useStore' // Adjust path if needed
 
 
 
@@ -61,25 +61,42 @@ const isDragging = useRef(false);
 const lastPos = useRef({ x: 0, y: 0 });
 const velocity = useRef({ x: 0, y: 0 });
 const lastTimestamp = useRef(0);
-const isVisible = section === 0;
+const isVisible = section !== 3;
 const friction = 0.92; // momentum decay
-const minVelocity = 0.1; // stop threshold
 
-const portalRoot = useRef(null);
 
-const [formSubmitted, setFormSubmitted] = useState(false); //for freeQ different states of overlay html showing option to submit new form if already submitted
-const [confirmNewForm, setConfirmNewForm] = useState(false);
-// FREE QUOTE FORM FIELDS
-const [errors, setErrors] = useState({});
+// music
+  const notes = useStore((state) => state.notes)
+const [noteInput, setNoteInput] = useState("");
+const { currentTime, duration, isPlaying, prevTrack, nextTrack, togglePlay, setPlaying } = useStore();
+const rewindInterval = useRef(null);
 
-const [fullName, setFullName] = useState("");
-const [contactMethod, setContactMethod] = useState("");
-const [serviceType, setServiceType] = useState("");
-const [cityState, setCityState] = useState("");
-const [zipCode, setZipCode] = useState("");
+// Rewind Logic
+const startRewind = () => {
+  setPlaying(false); // Pause while rewinding
+  rewindInterval.current = setInterval(() => {
+    window.__AUDIO_ENGINE__?.rewind(5); // 5 seconds per tick
+  }, 200); // Ticks every 200ms (5 times a second)
+};
 
-const [email, setEmail] = useState("");
-const [phone, setPhone] = useState("");
+const stopRewind = () => {
+  clearInterval(rewindInterval.current);
+  setPlaying(true); // Resume playing
+};
+
+// Formatting helper: 0:00
+const formatTime = (time) => {
+  const min = Math.floor(time / 60);
+  const sec = Math.floor(time % 60);
+  return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+};
+
+
+
+
+
+
+
 
 const setCurrentProject = useSetAtom(currentProjectAtom);
 
@@ -310,7 +327,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
             <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-2 pt-1  px-1 tracking-wider text-white
            
                             ">
-             Free Quote
+             Explore
             </span>
           </div>
         </span>
@@ -486,114 +503,96 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
           <div className="card__content w-full">
             {id === "freeQ" ? (
-                  !formSubmitted ? (
-                    <form
-                      className="w-full max-w-3xl mx-auto p-1 lg:p-8 flex flex-col gap-3 lg:gap-6 text-left"
-                      onSubmit={(e) => {
-                        e.preventDefault();                          
-                        const newErrors = {};
-
-                            if (!fullName.trim()) newErrors.fullName = true;
-                            if (!contactMethod.trim()) newErrors.contactMethod = true;
-                            if (!serviceType.trim()) newErrors.serviceType = true;
-
-                            if (!cityState.trim() && !zipCode.trim()) {
-                              newErrors.cityState = true;
-                              newErrors.zipCode = true;
-                            }
-                            if (!email.trim() && !phone.trim()) {
-                              newErrors.email = true;
-                              newErrors.phone = true;
-                            }
-                            setErrors(newErrors);
-
-                            if (Object.keys(newErrors).length > 0) {
-                              return; // <-- block submit
-                            }
-                        // CLOSE OVERLAY
-                        handleResetClick(e);
-
-                        // mark form as submitted
-                        setFormSubmitted(true);
-
-                        // next time they click Free Quote → show confirmation box
-                        setConfirmNewForm(true);
-                      }}
+                  // Special simple overlay for freeQ — just a button to jump to section 1
+                  <div className="flex justify-center items-center h-full">
+                    <button
+                      onClick={() =>   jumpToSection(goToSection)}
+                      className="px-12 py-6 bg-yellow-600 hover:bg-yellow-700 text-white text-3xl lg:text-5xl rounded-lg font-bold shadow-lg transition-all duration-300 hover:scale-105"
                     >
-                      {/* <h1 className="text-5xl lg:text-7xl font-bold text-center">Custom Quote</h1> */}
+                      Explore SirMurOS NOW
+                    </button>
+                  </div>
+                ) : id === "contactWindow" ? (
+                  // NEW SPECIAL OVERLAY FOR contactWindow
+                  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
+    
+    {/* LEFT SIDE: MUSIC PLAYER */}
+    <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner">
+      <div className={`w-48 h-48 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl ${isPlaying ? 'animate-spin-slow' : ''}`}>
+        <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+        </svg>
+      </div>
+      
+      <div className="flex items-center gap-8">
+    {/* BACK BUTTON */}
+    <button 
+      onClick={() => {
+        const currentTime = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
+        if (currentTime > 3) {
+          window.__AUDIO_ENGINE__.restart();
+        } else {
+          useStore.getState().prevTrack();
+        }
+      }}
+      className="text-white hover:text-blue-400 transition-colors"
+    >
+      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+    </button>
 
-                      <div className="grid grid-cols-2 lg:grid-cols-2 gap-0 lg:gap-6">
-                        <input type="text" placeholder="Full Name"   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60  ${errors.fullName ? "border-red-500 bg-red-50" : ""}`}
+    {/* PLAY/PAUSE */}
+    <button
+      onClick={togglePlay}
+      className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${isPlaying ? 'bg-red-500' : 'bg-green-500'}`}
+    >
+      {isPlaying ? (
+        <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      ) : (
+        <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      )}
+    </button>
 
-                          value={fullName}
-                         onChange={(e) => setFullName(e.target.value)} />
-                        <input type="text" placeholder="Company Name" className="p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60" />
+    {/* NEXT BUTTON */}
+    <button 
+      onClick={() => useStore.getState().nextTrack()}
+      className="text-white hover:text-blue-400 transition-colors"
+    >
+      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+    </button>
+  </div>
+  
+  <p className="text-gray-400 font-mono text-sm">
+    Track {useStore.getState().currentTrackIndex + 1} of {useStore.getState().tracks.length}
+  </p>
+        {/* PROGRESS SLIDER */}
+        <div className="w-full flex flex-col gap-2 px-2">
+         <input
+            type="range"
+            min="0"
+            max={duration || 0}
+            value={currentTime}
+            onInput={(e) => {
+              const time = Number(e.target.value);
+              window.__AUDIO_ENGINE__?.seek(time);
+            }}
+            className="w-full h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
+          />
+          
+          <div className="flex justify-between text-[10px] text-gray-400 font-mono mt-1">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(duration)}</span>
+          </div>
+        </div>
+</div>
 
-                        <select className={`p-4 border rounded-lg text-xl lg:text-2xl placeholder-black placeholder-opacity-60 ${errors.contactMethod ? "border-red-500 bg-red-50" : ""}`}   value={contactMethod} onChange={(e) => setContactMethod(e.target.value)}
->
-                          <option value="">Preffered Contact Method</option>
-                          <option>Phone Number</option>
-                          <option>Email</option>
-                        </select>
-                        <select   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.serviceType ? "border-red-500 bg-red-50" : ""}`}  value={serviceType}  onChange={(e) => setServiceType(e.target.value)}>
-                          <option value="">Select Service</option>
-                          <option>Soft Washing</option>
-                          <option>Pressure Washing</option>
-                          <option>Roof Cleaning</option>
-                          <option>Gutter Cleaning</option>
-                          <option>Window Cleaning</option>
-                          <option>Other (Custom Message)</option>
-                        </select>
-
-                        <input type="text" placeholder="Address/City"   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.cityState ? "border-red-500 bg-red-50" : ""}`}  value={cityState} onChange={(e) => setCityState(e.target.value)} />
-                        <input type="text" placeholder="Zip Code"   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.zipCode ? "border-red-500 bg-red-50" : ""}`}  value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
-
-                        <input type="email" placeholder="Email Address" className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.email ? "border-red-500 bg-red-50" : ""}`}   value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <input type="tel" placeholder="Phone Number"   className={`p-4 border rounded-lg text-2xl lg:text-3xl placeholder-black placeholder-opacity-60 ${errors.phone ? "border-red-500 bg-red-50" : ""}`}  value={phone} onChange={(e) => setPhone(e.target.value)}/>
-                        
-                      </div>
-
-                      <textarea rows="2" lg:rows="3" placeholder="Explain What You Need in a Custom Message" className="p-4  border rounded-lg text-xl lg:text-2xl placeholder-black placeholder-opacity-60" />
-
-                      <button
-                        type="submit"
-                         onClick={(e) => {
-                        spawnCoin(e);
-
-  }}
-                        className="px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white text-2xl rounded-lg font-bold gap-0"
-                      >
-                        Submit Request
-                      </button>
-                    </form>
-
-                  ) : confirmNewForm ? (
-                    /* -------------- ASK IF THEY WANT A NEW FORM -------------- */
-                    <div className="flex flex-col items-center gap-6 p-10 text-center">
-                      <h2 className="text-5xl font-bold">Quote Submitted! <br /><br />We will contact you as soon as possible</h2>
-<br />
-                      <button
-                        className="px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white text-2xl rounded-lg font-bold"
-                        onClick={() => {
-                          resetFormFields();       // ← clears all
-                          setFormSubmitted(false);      
-                          setConfirmNewForm(false);
-                          setShowContent(true);
-                          setActiveOverlay([id]);
-                        }}
-                      >
-                        Yes — Start New Form
-                      </button>
-
-                      <button
-                        className="px-8 py-4 bg-gray-400 hover:bg-gray-500 text-black text-2xl rounded-lg font-bold"
-                        onClick={handleResetClick}
-                      >
-                        No — Close
-                      </button>
-                    </div>
-
-                  ) : null
+          {/* RIGHT SIDE: NOTES SYSTEM */}
+      <div className="bg-gray-750 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full">
+        <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
+          <span className="text-yellow-500">song</span> Lyrics
+        </h2>
+        
+      </div>
+  </div>
                 ) : (
                   // Normal Overlay CONTENT for mini services page
                   <div className="text-center">
@@ -603,66 +602,63 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                     {/* <img src={src} alt="" className="max-h-[250px] lg:max-h-[500px]" style={{ pointerEvents: "none" }} /> */}
 
                   
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center">
+                    {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center"> */}
+                  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
 
+                          {/* LEFT SIDE: NOTES SYSTEM */}
+                          <div className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
+                            <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
+                              <span className="text-yellow-500">sticky_note_2</span> Office Notes
+                            </h2>
+                            
+                            {/* The List of Notes */}
+                            <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
+                              {notes.length > 0 ? notes.map((note, index) => (
+                                <div key={index} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 text-lg shadow-sm">
+                                  {note}
+                                  <button 
+                                    onClick={() => useStore.getState().removeNote(index)}
+                                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
+                                  >
+                                    ✕
+                                  </button>
+                                </div>
+                              )) : (
+                                <div className="flex flex-col items-center justify-center h-full text-gray-400 opacity-60">
+                                  <p className="italic">No notes found for this user.</p>
+                                </div>
+                              )}
+                            </div>
 
-                            <div className="card flex" >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z" /></svg>
-                            <div className="card__content">
-                              <p className="card__title">I love Ass</p>
-                              <p className="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                            {/* NEW: Real Input Field Area */}
+                            <div className="flex flex-col gap-2 mt-auto">
+                              <input 
+                                type="text"
+                                value={noteInput}
+                                onChange={(e) => setNoteInput(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' && noteInput.trim()) {
+                                    useStore.getState().addNote(noteInput);
+                                    setNoteInput("");
+                                  }
+                                }}
+                                placeholder="Type a note and press Enter..."
+                                className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-xl outline-none transition-all text-gray-800"
+                              />
+                              <button 
+                                disabled={!noteInput.trim()}
+                                onClick={() => {
+                                  useStore.getState().addNote(noteInput);
+                                  setNoteInput("");
+                                }}
+                                className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                              >
+                                Save Note
+                              </button>
                             </div>
                           </div>
 
-
-                          
-                          <div className="card hidden lg:flex" >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z" /></svg>
-                            <div className="card__content">
-                              <p className="card__title">I love Ass</p>
-                              <p className="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                            </div>
-                          </div>
-<div className="relative group " style={{ pointerEvents:"auto" , opacity:  1, }}>
-                                          <button
-                                            className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-90 active:scale-75 scale-75 z-[50]
-                                                      bg-gradient-to-r from-orange-600 via-yellow-500 to-amber-600
-                                                      hover:from-orange-500 hover:via-yellow-400 hover:to-amber-500
-                                                      shadow-amber-700 hover:shadow-amber-500"
-    onClick={() => {
-  jumpToSection(goToSection);
-
-  if (projectIndex !== null) {
-    setCurrentProject(projectIndex);
-  }
-}}
-                              
-                                          >
-                                            <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
-
-                                            <span className="relative z-10 block px-4 lg:px-6 py-3 pb-5 lg:py-4 lg:pb-6 rounded-2xl bg-neutral-250 ">
-                                              <div className="flex items-center justify-center space-x-4 ">
-                                                  <svg className="w-16 h-16 lg:w-24 lg:h-24 bg-none" viewBox="0 -25 510 580" xmlns="http://www.w3.org/2000/svg">
-
-                                                  <path d="M512 416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H192c20.1 0 39.1 9.5 51.2 25.6l19.2 25.6c6 8.1 15.5 12.8 25.6 12.8H448c35.3 0 64 28.7 64 64V416zM232 376c0 13.3 10.7 24 24 24s24-10.7 24-24V312h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H280V200c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H168c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"></path>
-
-                                                  </svg>
-
-                                                <span className="text-4xl lg:text-6xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300
-                                                                group-hover:from-yellow-300 group-hover:to-orange-200 transition-all duration-500">
-                                                  More Info
-                                                </span>
-                                              </div>
-                                            </span>
-                                          </button>
-                                        </div>
-                          <div className="card hidden lg:flex" >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z" /></svg>
-                            <div className="card__content">
-                              <p className="card__title">Eating Ass</p>
-                              <p className="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                            </div>
-                          </div>
+                   
                      </div>
 
                      
@@ -730,7 +726,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                             stroke-white fill-white
                             group-hover:fill-emerald-300
                             group-hover:stroke-emerald-300
-                            ${section === 0 ? "animate-slow-scale" : ""} `}
+                            ${section !== 3 ? "animate-slow-scale" : ""} `}
                   viewBox="0 0 448 512"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -833,40 +829,66 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
   const deckFloorGroupRef = useRef();
   const drivewayGroupRef = useRef();
   const { nodes, materials, animations } = useGLTF("models/scene.glb");
-  const texture = useTexture("textures/scene.jpg");
+  const texture = useTexture("textures/sceneNight.jpg");
+  const nightTexture = useTexture("textures/scene.jpg"); 
   const textureVSCode = useVideoTexture("textures/vscode.mp4");
   const { actions, mixer } = useAnimations(animations, group);
 
   const freeQOverlayRef = useRef(null);
 
-
+[texture, nightTexture].forEach((t) => {
+  t.flipY = false;
+  t.encoding = THREE.sRGBEncoding;
+});
   texture.flipY = false;
   texture.encoding = THREE.sRGBEncoding;
 
-  const textureMaterial = new THREE.MeshStandardMaterial({
-    map: texture,
-    transparent: true,
-    opacity: 1,
-  });
+useEffect(() => {
+    animate(textureOpacity, section !== 3 ? 1 : 0);
+    animate(glassTextureOpacity, section !== 3 ? 0.42 : 0);
+    // Check the names of available animations
+  console.log("Available animations:", Object.keys(actions));
+    // 1. Move loopCounts and startAnimations definition to the TOP of useEffect
+  const startAnimations = () => {
+      Object.keys(actions).forEach((key) => {
+        const action = actions[key];
+        
+        if (action) {
+          action.reset();
+          action.setLoop(THREE.LoopRepeat, 3);
+          
+          action.clampWhenFinished = true; 
+          
+          action.play();
+        }
+      });
+    };
 
-  const textureGlassMaterial = new THREE.MeshStandardMaterial({
-    map: texture,
-    transparent: true,
-    opacity: 0.32,
-  });
+    if (section === 3) {
+      startAnimations();
+    }
+
+    return () => {
+      Object.keys(actions).forEach((key) => actions[key]?.stop());
+    };
+  }, [section, actions]);
+
+
+const textureMaterial = new THREE.MeshStandardMaterial({
+  map: isDay ? texture : nightTexture, // Toggle based on prop
+  transparent: true,
+  opacity: 1,
+});
+
+const textureGlassMaterial = new THREE.MeshStandardMaterial({
+  map: isDay ? texture : nightTexture, // Toggle based on prop
+  transparent: true,
+  opacity: 0.32,
+});
 
   const textureOpacity = useMotionValue(0);
   const glassTextureOpacity = useMotionValue(0);
 
-  useEffect(() => {
-    animate(textureOpacity, section === 0 ? 1 : 0);
-    animate(glassTextureOpacity, section === 0 ? 0.32 : 0);
-  }, [section]);
-
-  useFrame(() => {
-    textureMaterial.opacity = textureOpacity.get();
-    textureGlassMaterial.opacity = glassTextureOpacity.get();
-  });
 
 
   const [device, setDevice] = useState("desktop");
@@ -914,10 +936,12 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     driveway: {
-      distanceFactor: { desktop: 15, tablet: 21, mobile: 18 },
+      distanceFactor: { desktop: 0.4, tablet: 21, mobile: 18 },
       position: {
         
-        desktop: [-610.128, 328.8, 172],
+        // desktop: [-610.128, 328.8, 172],
+        desktop: [0.128, 0.8, 0],
+
         tablet: [-430.128, 368.8, 172],
         mobile: [-190.128, 173.8, 322],
 
@@ -934,11 +958,12 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
       },
     },
+    // music
     contact: {
-      distanceFactor: { desktop: 12, tablet: 18, mobile: 15 },
+      distanceFactor: { desktop: 0.4, tablet: 18, mobile: 15 },
       position: {
         // desktop: [103.2, 600.1, 1077.2],
-        desktop: [61.2,-10.1, 607.2],
+        desktop: [-2.2 ,2, 0],
 
         // tablet: [321.2, 820.1, 717.2],
         tablet: [461.2, 200.1, 507.2],
@@ -948,9 +973,9 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 15, tablet: 22, mobile: 18 },
+      distanceFactor: { desktop: 1, tablet: 22, mobile: 18 },
       position: {
-        desktop: [-511.2, 782, 207.2],
+        desktop: [0, 5, 0],
         // tablet: [461.2, 880.1, 707.2],
 
         tablet:  [-140.128, 1000, -25.314],
@@ -992,9 +1017,14 @@ export function Office({ section, menuOpened, isDay, setIsAnimating, setCameraTa
 
   const modelPosition =
   device === "mobile" || device === "tablet"
-    ? [-11, -4, -1]   // mobile + tablet
-    : [-10, -3, 0];    // desktop
+    ? [-6.5,  -7,  16.5]   // mobile + tablet
+     : [-6.5, -7, 16.5];     // desktop
+    // : [-9, -3, 0];    
 
+const currentXRotation = (section === 3) ? 0.29 : (section === 0) ? -0.29 : -0.2;
+const modelRotation = (section === 3) 
+    ? [currentXRotation, 4.2, 0.0]   // Unique Y and Z for Section 3
+    : [currentXRotation, 0.00, 0.003];
 
   const openOverlay = (id) => {
     if (isMobileOrTablet) {
@@ -1034,418 +1064,559 @@ const [fullyOpen, setFullyOpen] = useState(false);
 
   return (
     <group ref={group} {...props} dispose={null}     position={modelPosition}
- rotation={[0, 0.45, 0]} scale={0.01}>
+rotation={modelRotation}  scale={1} frustumCulled={false}>
+    <group name="Scene">
+        <group name="Cylinder004" position={[-3.693, -4.155, -4.282]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder111" geometry={nodes.Cylinder111.geometry} material={textureMaterial} />
+          <mesh name="Cylinder111_1" geometry={nodes.Cylinder111_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder111_2" geometry={nodes.Cylinder111_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder007" position={[-3.693, -4.155, -4.349]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder168" geometry={nodes.Cylinder168.geometry} material={textureMaterial} />
+          <mesh name="Cylinder168_1" geometry={nodes.Cylinder168_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder168_2" geometry={nodes.Cylinder168_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder057" position={[-3.693, -4.155, -4.416]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder169" geometry={nodes.Cylinder169.geometry} material={textureMaterial} />
+          <mesh name="Cylinder169_1" geometry={nodes.Cylinder169_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder169_2" geometry={nodes.Cylinder169_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder058" position={[-3.693, -4.155, -4.484]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder170" geometry={nodes.Cylinder170.geometry} material={textureMaterial} />
+          <mesh name="Cylinder170_1" geometry={nodes.Cylinder170_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder170_2" geometry={nodes.Cylinder170_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder059" position={[-3.693, -4.155, -4.551]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder171" geometry={nodes.Cylinder171.geometry} material={textureMaterial} />
+          <mesh name="Cylinder171_1" geometry={nodes.Cylinder171_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder171_2" geometry={nodes.Cylinder171_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder060" position={[-3.693, -4.155, -4.618]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder172" geometry={nodes.Cylinder172.geometry} material={textureMaterial} />
+          <mesh name="Cylinder172_1" geometry={nodes.Cylinder172_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder172_2" geometry={nodes.Cylinder172_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder061" position={[-3.693, -4.155, -4.685]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder173" geometry={nodes.Cylinder173.geometry} material={textureMaterial} />
+          <mesh name="Cylinder173_1" geometry={nodes.Cylinder173_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder173_2" geometry={nodes.Cylinder173_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder062" position={[-3.693, -4.155, -4.753]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder174" geometry={nodes.Cylinder174.geometry} material={textureMaterial} />
+          <mesh name="Cylinder174_1" geometry={nodes.Cylinder174_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder174_2" geometry={nodes.Cylinder174_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder063" position={[-3.693, -4.155, -4.82]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder175" geometry={nodes.Cylinder175.geometry} material={textureMaterial} />
+          <mesh name="Cylinder175_1" geometry={nodes.Cylinder175_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder175_2" geometry={nodes.Cylinder175_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder064" position={[-3.693, -4.155, -4.887]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder176" geometry={nodes.Cylinder176.geometry} material={textureMaterial} />
+          <mesh name="Cylinder176_1" geometry={nodes.Cylinder176_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder176_2" geometry={nodes.Cylinder176_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder065" position={[-3.693, -4.155, -4.954]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder177" geometry={nodes.Cylinder177.geometry} material={textureMaterial} />
+          <mesh name="Cylinder177_1" geometry={nodes.Cylinder177_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder177_2" geometry={nodes.Cylinder177_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder066" position={[-3.693, -4.155, -5.022]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder178" geometry={nodes.Cylinder178.geometry} material={textureMaterial} />
+          <mesh name="Cylinder178_1" geometry={nodes.Cylinder178_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder178_2" geometry={nodes.Cylinder178_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder067" position={[-3.693, -4.155, -5.089]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder179" geometry={nodes.Cylinder179.geometry} material={textureMaterial} />
+          <mesh name="Cylinder179_1" geometry={nodes.Cylinder179_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder179_2" geometry={nodes.Cylinder179_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder068" position={[-3.693, -4.155, -5.156]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder180" geometry={nodes.Cylinder180.geometry} material={textureMaterial} />
+          <mesh name="Cylinder180_1" geometry={nodes.Cylinder180_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder180_2" geometry={nodes.Cylinder180_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder069" position={[-3.693, -4.155, -5.223]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder181" geometry={nodes.Cylinder181.geometry} material={textureMaterial} />
+          <mesh name="Cylinder181_1" geometry={nodes.Cylinder181_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder181_2" geometry={nodes.Cylinder181_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder070" position={[-3.693, -4.155, -5.291]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder182" geometry={nodes.Cylinder182.geometry} material={textureMaterial} />
+          <mesh name="Cylinder182_1" geometry={nodes.Cylinder182_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder182_2" geometry={nodes.Cylinder182_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder071" position={[-3.693, -4.155, -5.358]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder183" geometry={nodes.Cylinder183.geometry} material={textureMaterial} />
+          <mesh name="Cylinder183_1" geometry={nodes.Cylinder183_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder183_2" geometry={nodes.Cylinder183_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder072" position={[-3.693, -4.155, -5.425]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder184" geometry={nodes.Cylinder184.geometry} material={textureMaterial} />
+          <mesh name="Cylinder184_1" geometry={nodes.Cylinder184_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder184_2" geometry={nodes.Cylinder184_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder073" position={[-3.693, -4.155, -5.492]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder185" geometry={nodes.Cylinder185.geometry} material={textureMaterial} />
+          <mesh name="Cylinder185_1" geometry={nodes.Cylinder185_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder185_2" geometry={nodes.Cylinder185_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder074" position={[-3.693, -4.155, -5.56]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder186" geometry={nodes.Cylinder186.geometry} material={textureMaterial} />
+          <mesh name="Cylinder186_1" geometry={nodes.Cylinder186_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder186_2" geometry={nodes.Cylinder186_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder075" position={[-3.693, -4.155, -5.627]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder187" geometry={nodes.Cylinder187.geometry} material={textureMaterial} />
+          <mesh name="Cylinder187_1" geometry={nodes.Cylinder187_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder187_2" geometry={nodes.Cylinder187_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder076" position={[-3.693, -4.155, -5.694]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder188" geometry={nodes.Cylinder188.geometry} material={textureMaterial} />
+          <mesh name="Cylinder188_1" geometry={nodes.Cylinder188_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder188_2" geometry={nodes.Cylinder188_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder077" position={[-3.693, -4.155, -5.761]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder189" geometry={nodes.Cylinder189.geometry} material={textureMaterial} />
+          <mesh name="Cylinder189_1" geometry={nodes.Cylinder189_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder189_2" geometry={nodes.Cylinder189_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder078" position={[-3.693, -4.155, -5.829]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder190" geometry={nodes.Cylinder190.geometry} material={textureMaterial} />
+          <mesh name="Cylinder190_1" geometry={nodes.Cylinder190_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder190_2" geometry={nodes.Cylinder190_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder079" position={[-3.693, -4.155, -5.896]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder191" geometry={nodes.Cylinder191.geometry} material={textureMaterial} />
+          <mesh name="Cylinder191_1" geometry={nodes.Cylinder191_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder191_2" geometry={nodes.Cylinder191_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder080" position={[-3.693, -4.155, -5.963]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder192" geometry={nodes.Cylinder192.geometry} material={textureMaterial} />
+          <mesh name="Cylinder192_1" geometry={nodes.Cylinder192_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder192_2" geometry={nodes.Cylinder192_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder081" position={[-3.693, -4.155, -6.03]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder193" geometry={nodes.Cylinder193.geometry} material={textureMaterial} />
+          <mesh name="Cylinder193_1" geometry={nodes.Cylinder193_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder193_2" geometry={nodes.Cylinder193_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder082" position={[-3.693, -4.155, -6.098]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder194" geometry={nodes.Cylinder194.geometry} material={textureMaterial} />
+          <mesh name="Cylinder194_1" geometry={nodes.Cylinder194_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder194_2" geometry={nodes.Cylinder194_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="Cylinder083" position={[-3.693, -4.155, -6.165]} scale={[0.037, 0.532, 0.037]}>
+          <mesh name="Cylinder195" geometry={nodes.Cylinder195.geometry} material={textureMaterial} />
+          <mesh name="Cylinder195_1" geometry={nodes.Cylinder195_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder195_2" geometry={nodes.Cylinder195_2.geometry} material={textureMaterial} />
+        </group>
+        <mesh name="Vert" geometry={nodes.Vert.geometry} material={textureMaterial} position={[-0.051, -5.859, -5.203]} />
+        <mesh name="Cube005" geometry={nodes.Cube005.geometry} material={textureMaterial} position={[-3.694, -4.155, -5.223]} scale={[0.077, 1.024, 1.011]} />
+        <mesh name="deckrailing00001" geometry={nodes.deckrailing00001.geometry} material={textureMaterial} />
+        <mesh name="deckrailing00002" geometry={nodes.deckrailing00002.geometry} material={textureMaterial} />
+        <mesh name="deckrailing00003" geometry={nodes.deckrailing00003.geometry} material={textureMaterial} />
+        <mesh name="deckrailing00004" geometry={nodes.deckrailing00004.geometry} material={textureMaterial} />
+        <mesh name="deckrailing00005" geometry={nodes.deckrailing00005.geometry} material={textureMaterial} />
+        <mesh name="deckrailing00006" geometry={nodes.deckrailing00006.geometry} material={textureMaterial} />
+        <mesh name="deck001" geometry={nodes.deck001.geometry} material={textureMaterial} />
+        <mesh name="deckrailing00" geometry={nodes.deckrailing00.geometry} material={textureMaterial} />
+        <mesh name="deckrailing001" geometry={nodes.deckrailing001.geometry} material={textureMaterial} />
+        <mesh name="topRail000" geometry={nodes.topRail000.geometry} material={textureMaterial} />
+        <mesh name="topRail001" geometry={nodes.topRail001.geometry} material={textureMaterial} />
+        <mesh name="topRail002" geometry={nodes.topRail002.geometry} material={textureMaterial} />
+        <mesh name="topRail006" geometry={nodes.topRail006.geometry} material={textureMaterial} position={[0.025, 0, -0.015]} />
+        <mesh name="stairs" geometry={nodes.stairs.geometry} material={textureMaterial} />
+        <mesh name="topRail001001" geometry={nodes.topRail001001.geometry} material={textureMaterial} position={[-3.604, 6.463, -0.862]} />
+        <mesh name="Plane005" geometry={nodes.Plane005.geometry} material={textureMaterial} position={[0.751, -5.959, -5.203]} scale={[1, 1, 0.997]} />
+        <mesh name="Plane006" geometry={nodes.Plane006.geometry} material={textureMaterial} />
+        <mesh name="Plane007" geometry={nodes.Plane007.geometry} material={textureMaterial} position={[-1.276, -5.959, -5.205]} scale={[2.215, 1.038, 1.038]} />
+        <mesh name="Plane013" geometry={nodes.Plane013.geometry} material={textureMaterial} position={[-3.587, -5.326, -6.307]} />
+        <mesh name="Plane016" geometry={nodes.Plane016.geometry} material={textureMaterial} position={[-1.276, -5.499, -5.097]} scale={[2.032, 0.961, 1.038]} />
+        <mesh name="Plane017" geometry={nodes.Plane017.geometry} material={textureMaterial} position={[-3.568, -5.863, -5.205]} scale={[2.215, 1.038, 0.931]} />
+        <mesh name="Plane008" geometry={nodes.Plane008.geometry} material={textureMaterial} position={[-3.602, -5.305, -5.205]} scale={[2.215, 1.038, 0.931]} />
+        <group name="building">
+          <mesh name="Cube009" geometry={nodes.Cube009.geometry} material={textureMaterial} />
+          <mesh name="Cube009_1" geometry={nodes.Cube009_1.geometry} material={textureMaterial} />
+          <mesh name="Cube009_2" geometry={nodes.Cube009_2.geometry} material={textureMaterial} />
+          <mesh name="Cube009_3" geometry={nodes.Cube009_3.geometry} material={textureMaterial} />
+          <mesh name="Cube009_4" geometry={nodes.Cube009_4.geometry} material={textureMaterial} />
+        </group>
+        <mesh name="door" geometry={nodes.door.geometry} material={textureMaterial} />
+        <group name="cielingBuilding">
+          <mesh name="Cube012" geometry={nodes.Cube012.geometry} material={textureMaterial} />
+          <mesh name="Cube012_1" geometry={nodes.Cube012_1.geometry} material={textureMaterial} />
+          <mesh name="Cube012_2" geometry={nodes.Cube012_2.geometry} material={textureMaterial} />
+          <mesh name="Cube012_3" geometry={nodes.Cube012_3.geometry} material={textureMaterial} />
+        </group>
+        <mesh name="doorHandle" geometry={nodes.doorHandle.geometry} material={textureMaterial} />
+        <mesh name="Plane" geometry={nodes.Plane.geometry} material={textureMaterial} position={[0.275, 0, -0.446]} scale={[1, 1, 0.999]} />
+        <mesh name="Plane001" geometry={nodes.Plane001.geometry} material={textureMaterial} position={[0.275, 0, -0.441]} />
+        <mesh name="building001" geometry={nodes.building001.geometry} material={textureMaterial} />
+        <mesh name="cover001" geometry={nodes.cover001.geometry} material={textureMaterial} />
+        <mesh name="cover004" geometry={nodes.cover004.geometry} material={textureMaterial} />
+        <mesh name="Cube" geometry={nodes.Cube.geometry} material={textureMaterial} />
+        <mesh name="Cube001" geometry={nodes.Cube001.geometry} material={textureMaterial} />
+        <mesh name="Cube002" geometry={nodes.Cube002.geometry} material={textureMaterial} />
+        <mesh name="Cylinder" geometry={nodes.Cylinder.geometry} material={textureMaterial} />
+        <mesh name="Cylinder001" geometry={nodes.Cylinder001.geometry} material={textureMaterial} />
+        <mesh name="cielinVernt00001" geometry={nodes.cielinVernt00001.geometry} material={textureMaterial} position={[-2.585, 6.467, -1.355]} rotation={[0, -Math.PI / 2, 0]} scale={[1.097, 0.902, 0.788]} />
+        <mesh name="Cube004" geometry={nodes.Cube004.geometry} material={textureMaterial} position={[-0.531, 0, 0.464]} />
+        <group name="Cylinder003" position={[-0.531, 0, 0.464]}>
+          <mesh name="Cylinder004_1" geometry={nodes.Cylinder004_1.geometry} material={textureMaterial} />
+          <mesh name="Cylinder004_2" geometry={nodes.Cylinder004_2.geometry} material={textureMaterial} />
+        </group>
+        <mesh name="Cylinder006" geometry={nodes.Cylinder006.geometry} material={textureMaterial} position={[-0.623, 0, 0]} />
+        <mesh name="Cylinder010" geometry={nodes.Cylinder010.geometry} material={textureMaterial} position={[-2.76, 7.024, -1.759]} rotation={[0, -Math.PI / 2, 0]} scale={[0.072, 0.035, 0.072]} />
+        <group name="Plane002" position={[0, 0, 0.064]}>
+          <mesh name="Plane004_1" geometry={nodes.Plane004_1.geometry} material={textureMaterial} />
+          <mesh name="Plane004_2" geometry={nodes.Plane004_2.geometry} material={textureMaterial} />
+        </group>
+        <mesh name="Plane003" geometry={nodes.Plane003.geometry} material={textureMaterial} position={[0, 0, 0.064]} />
+        <mesh name="Plane004" geometry={nodes.Plane004.geometry} material={textureMaterial} position={[0, 0, 0.064]} />
+        <mesh name="cover006" geometry={nodes.cover006.geometry} material={textureMaterial} />
+        <group name="group1646369301006" position={[2.685, -0.772, -2.356]} rotation={[2.887, 0.231, 3.046]} scale={0.261}>
+          <mesh name="mesh1646369301007" geometry={nodes.mesh1646369301007.geometry} material={textureMaterial} />
+          <mesh name="mesh1646369301007_1" geometry={nodes.mesh1646369301007_1.geometry} material={textureMaterial} />
+          <mesh name="mesh1646369301007_2" geometry={nodes.mesh1646369301007_2.geometry} material={textureMaterial} />
+          <mesh name="mesh1646369301007_3" geometry={nodes.mesh1646369301007_3.geometry} material={textureMaterial} />
+        </group>
+        <mesh name="Orchid_mesh" geometry={nodes.Orchid_mesh.geometry} material={textureMaterial} position={[1.575, -5.954, -3.786]} rotation={[-Math.PI, 1.039, -Math.PI]} scale={0.098} />
+        <mesh name="tavble" geometry={nodes.tavble.geometry} material={textureMaterial} position={[0.26, 6.808, -2.908]} scale={[0.829, 1.098, 0.829]} />
 
-      {/* <group scale={0.01}> */}
-        <SquareComponent
-          position={[420, 14, -260]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={1}
-        />
-        <GlassComponent
-          geometry={nodes.Door_Front_House_material_0001.geometry}
-          position={[400, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Window_front_2nd_floor001_House_material_0001.geometry}
-          position={[400, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Window_front_2nd_floor_House_material_0001.geometry}
-          position={[400, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Window_front_1st_floor_House_material_0001.geometry}
-          position={[400, 200, 10]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Door_side_House_material_0001.geometry}
-          position={[400, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Garage_door_House_material_0001.geometry}
-          position={[0, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <group position={[950.267, 199.77, -398.613]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={100}>
-          <mesh geometry={nodes.Balcony_Glass_door_Upper004_House_material_0.geometry} material={materials.House_material} />
-        </group>
-        <group position={[950.267, 199.77, -28.613]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]} scale={100}>
-          <mesh geometry={nodes.Balcony_Glass_door_Upper005_House_material_0.geometry} material={materials.House_material} />
-        </group>
-        <group position={[0.488, 406.956, 204.005]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-          <mesh geometry={nodes.Balcony_rail_glass_House_material_0.geometry} material={materials.House_material} />
-        </group>
-       {/* === BALCONY RAIL GROUP === */}
-      <group
-        position={[-228.117, 406.956, 1.194]}
-        rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-        scale={100}
-        ref={balconyRailGroupRef}
-      >
-        <mesh geometry={nodes.Balcony_rail_glass001_House_material_0.geometry} material={materials.House_material} />
+        {/* <mesh name="monitor" geometry={nodes.monitor.geometry} material={textureMaterial} position={[0.217, 7.15, -3.135]} scale={[0.081, 0.161, 0.024]} /> */}
         
+        <mesh name="mouseKeyboard" geometry={nodes.mouseKeyboard.geometry} material={textureMaterial} position={[0.255, 7.022, -2.714]} rotation={[-Math.PI / 2, Math.PI / 2, 0]} scale={[0.081, 0.119, 0.084]} />
+        <group name="couch" position={[1.569, 6.375, 2.226]} scale={1.918}>
+          <mesh name="mesh198131767" geometry={nodes.mesh198131767.geometry} material={textureMaterial} />
+          <mesh name="mesh198131767_1" geometry={nodes.mesh198131767_1.geometry} material={textureMaterial} />
+          <mesh name="mesh198131767_2" geometry={nodes.mesh198131767_2.geometry} material={textureMaterial} />
+          <mesh name="mesh198131767_3" geometry={nodes.mesh198131767_3.geometry} material={textureMaterial} />
+          <mesh name="mesh198131767_4" geometry={nodes.mesh198131767_4.geometry} material={textureMaterial} />
+          <mesh name="mesh198131767_5" geometry={nodes.mesh198131767_5.geometry} material={textureMaterial} />
+        </group>
+        <group name="Box003" position={[4.13, -5.92, -2.078]} rotation={[-Math.PI, 0.441, -Math.PI]} scale={0.017}>
+          <mesh name="Box003_1" geometry={nodes.Box003_1.geometry} material={textureMaterial} />
+          <mesh name="Box003_1_1" geometry={nodes.Box003_1_1.geometry} material={textureMaterial} />
+          <mesh name="Box003_1_2" geometry={nodes.Box003_1_2.geometry} material={textureMaterial} />
+          <mesh name="Box003_1_3" geometry={nodes.Box003_1_3.geometry} material={textureMaterial} />
+        </group>
+        <group name="FlowerPot2" position={[3.986, 1.181, -0.723]} rotation={[0, 0.635, 0]}>
+          <mesh name="FlowerPot2_1" geometry={nodes.FlowerPot2_1.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot2_2" geometry={nodes.FlowerPot2_2.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot2_3" geometry={nodes.FlowerPot2_3.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot2_4" geometry={nodes.FlowerPot2_4.geometry} material={textureMaterial} />
+        </group>
+        <group name="FlowerPot4001" position={[4.04, -4.869, -1.468]} rotation={[0, 1.286, 0]}>
+          <mesh name="FlowerPot4004" geometry={nodes.FlowerPot4004.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot4004_1" geometry={nodes.FlowerPot4004_1.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot4004_2" geometry={nodes.FlowerPot4004_2.geometry} material={textureMaterial} />
+        </group>
+        <group name="FlowerPot4003" position={[-2.757, 7.038, -2.937]} rotation={[-Math.PI, 0.856, -Math.PI]}>
+          <mesh name="FlowerPot4003_1" geometry={nodes.FlowerPot4003_1.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot4003_2" geometry={nodes.FlowerPot4003_2.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot4003_3" geometry={nodes.FlowerPot4003_3.geometry} material={textureMaterial} />
+        </group>
+        <group name="FlowerPot6" position={[2.282, -4.736, -3.95]} rotation={[-Math.PI, 0.867, -Math.PI]} scale={1.365}>
+          <mesh name="FlowerPot6_1" geometry={nodes.FlowerPot6_1.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot6_2" geometry={nodes.FlowerPot6_2.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot6_3" geometry={nodes.FlowerPot6_3.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot6_4" geometry={nodes.FlowerPot6_4.geometry} material={textureMaterial} />
+        </group>
+        <group name="GeoSphere001" position={[4.147, -5.92, -2.042]} rotation={[-Math.PI, 1.109, -Math.PI]} scale={0.015}>
+          <mesh name="GeoSphere001_1" geometry={nodes.GeoSphere001_1.geometry} material={textureMaterial} />
+          <mesh name="GeoSphere001_1_1" geometry={nodes.GeoSphere001_1_1.geometry} material={textureMaterial} />
+        </group>
+        <group name="GeoSphere001001" position={[4.518, -4.894, 0.971]} rotation={[-Math.PI, 0.469, -Math.PI]} scale={0.007}>
+          <mesh name="GeoSphere001_1001" geometry={nodes.GeoSphere001_1001.geometry} material={textureMaterial} />
+          <mesh name="GeoSphere001_1001_1" geometry={nodes.GeoSphere001_1001_1.geometry} material={textureMaterial} />
+        </group>
+        <mesh name="HibiscusFlower_mesh001" geometry={nodes.HibiscusFlower_mesh001.geometry} material={textureMaterial} position={[4.518, -4.734, 0.971]} scale={0.024} />
+        <mesh name="Plane010" geometry={nodes.Plane010.geometry} material={textureMaterial} position={[4.313, -4.597, 3.923]} rotation={[-0.487, -1.25, -1.128]} scale={0.165} />
+        <mesh name="Plane011" geometry={nodes.Plane011.geometry} material={textureMaterial} position={[-3.759, -4.597, -2.913]} rotation={[-0.487, -1.25, -1.128]} scale={0.165} />
+        <group name="FlowerPot2001" position={[-1.734, -3.647, -3.952]} rotation={[0, 0.635, 0]}>
+          <mesh name="FlowerPot2001_1" geometry={nodes.FlowerPot2001_1.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot2001_2" geometry={nodes.FlowerPot2001_2.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot2001_3" geometry={nodes.FlowerPot2001_3.geometry} material={textureMaterial} />
+          <mesh name="FlowerPot2001_4" geometry={nodes.FlowerPot2001_4.geometry} material={textureMaterial} />
+        </group>
+
+
+
+                    <mesh name="monitor" geometry={nodes.monitor.geometry} material={textureMaterial} position={[0.217, 7.15, -3.135]} scale={[0.081, 0.161, 0.024]} >
+                  
+                                        {/* <mesh position={freeQ.position} visible={false}   name="freeQ-overlay-anchor"
+                                      onClick={() => {
+                                        if (fullyOpen) {
+                                          setClickedFree(false);
+                                          setClickedQuote(false);
+                                          setFullyOpen(false);
+                                          return;
+                                        }
+
+                                        setClickedFree(true);
+                                        setClickedQuote(true);
+                                      }}
+                                    >
+                                      <OverlayItem
+                                        section={section}
+                                         jumpToSection={jumpToSection}
+                                              goToSection={1.3}
+                                        ref={freeQOverlayRef}  // ← For menu button linkinkg
+                                        id="freeQ"                      
+                                          key="freeQ"
+                                        className="freeQ-overlay"
+                                          setActiveOverlay={setActiveOverlay}
+                                          activeOverlay={activeOverlay}
+                                        openOverlay={openOverlay}
+                                          closeOverlay={closeOverlay}
+                                          device={device}  
+                                          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                                        position={[0, 0, 0]}
+                                        distanceFactor={freeQ.distanceFactor}
+                                          title="Free Cock Suck"
+                                          description="Customize your sucking and recieve a call or email from us!"
+                                          price="150-300"
+                                          bgColor="bg-yellow-500"
+                                src="/textures/sexyCleaning.jpeg"
+                                        /></mesh> */}
+{section === 0 && (
+  <mesh 
+    position={freeQ.position} 
+    visible={true}  // Now controlled by the condition
+    name="freeQ-overlay-anchor"
+    onClick={() => {
+      if (fullyOpen) {
+        setClickedFree(false);
+        setClickedQuote(false);
+        setFullyOpen(false);
+        return;
+      }
+
+      setClickedFree(true);
+      setClickedQuote(true);
+    }}
+  >
+    <OverlayItem
+      section={section}
+      jumpToSection={jumpToSection}
+      goToSection={1.3}
+      ref={freeQOverlayRef}
+      id="freeQ"                      
+      key="freeQ"
+      className="freeQ-overlay"
+      setActiveOverlay={setActiveOverlay}
+      activeOverlay={activeOverlay}
+      openOverlay={openOverlay}
+      closeOverlay={closeOverlay}
+      device={device}  
+      rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+      position={[0, 0, 0]}
+      distanceFactor={freeQ.distanceFactor}
+      title="Free Cock Suck"
+      description="Customize your sucking and recieve a call or email from us!"
+      price="150-300"
+      bgColor="bg-yellow-500"
+      src="/textures/sexyCleaning.jpeg"
+    />
+  </mesh>
+)}
+                                    <mesh
+                                        position={driveway.position}  
+                                        visible={false} 
+                                        name="driveway-overlay-anchor"
+                                      >
+                                        <OverlayItem
+                                          section={section}
+                                              jumpToSection={jumpToSection}
+                                                projectIndex={3}
+                                              goToSection={1.3}
+
+                                          id="driveway"
+                                          key="driveway"
+                                          position={[0, 0, 0]}       
+                                          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                                          setActiveOverlay={setActiveOverlay}
+                                          distanceFactor={driveway.distanceFactor}          
+                                          activeOverlay={activeOverlay}
+                                          openOverlay={openOverlay}
+                                          closeOverlay={closeOverlay}
+                                          device={device} 
+                                          title="Notetaking App"
+                                          description="Prepare some of the deadliest notes known to mankind."
+                                          price="300-600"
+                                          bgColor="bg-blue-500"
+                                      src="/textures/sexyCleaning.jpeg"
+                                        />
+                                  </mesh>
+                                  <mesh position={contact.position} visible={false}   name="contact-overlay-anchor"
+                                                              >
+                                                                    
+                                      <OverlayItem
+                                        section={section}
+                                        jumpToSection={jumpToSection}
+                                        goToSection={3.9}    
+                                        id="contactWindow"                    
+                                        key="contactWindow"
+                                        setActiveOverlay={setActiveOverlay}
+                                        activeOverlay={activeOverlay}
+                                        openOverlay={openOverlay}
+                                        closeOverlay={closeOverlay}
+                                        device={device}  
+                                        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                                        position={[0, 0, 0]}
+                                        distanceFactor={contact.distanceFactor}
+                                        title="Introseduction"
+                                        description="Michael Murray"
+                                        price="ssn 3938 2938 298"
+                                        bgColor="bg-yellow-500"
+                                        src="/textures/sirmur2025.png"
+                                      />
+
+                                            </mesh>
+                    </mesh>
+
+
+                                                              <mesh position={balcony.position} visible={false}   name="balcony-overlay-anchor"
+                                                              >
+                                                                {/* [1.2, -900.1, 257.2] */}
+                                                                    <OverlayItem
+                                                                      section={section}
+                                                                      jumpToSection={jumpToSection}
+                                                                        projectIndex={2}
+                                                                      goToSection={1.3}
+
+                                                                      id="balcony"                    
+                                                                        key="balcony"
+                                                                  setActiveOverlay={setActiveOverlay}
+                                                                  activeOverlay={activeOverlay}
+                                                              openOverlay={openOverlay}
+                                                                        closeOverlay={closeOverlay}
+                                                                        device={device}  
+                                                                        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                                                                      position={[0, 0, 0]}
+                                                                      distanceFactor={balcony.distanceFactor}
+                                                                        title="Gutter Cleaning"
+                                                                        description="Big Fat Ass scrub"
+                                                                        price="75-200"
+                                                                        bgColor="bg-yellow-500"
+                                                              src="/textures/sexyCleaning.jpeg"
+                                                                      />
+                                                                      </mesh>
+
+                                                                      {/* INVISIBLE ANCHOR FOR DRIVEWAY OVERLAY — this is the magic */}
+                                                              <mesh
+                                                                position={driveway.position}  
+                                                                visible={false} 
+                                                                name="driveway-overlay-anchor"
+                                                              >
+                                                                <OverlayItem
+                                                                  section={section}
+                                                                      jumpToSection={jumpToSection}
+                                                                        projectIndex={3}
+                                                                      goToSection={1.3}
+
+                                                                  id="driveway"
+                                                                  key="driveway"
+                                                                  position={[0, 0, 0]}       
+                                                                  rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                                                                  setActiveOverlay={setActiveOverlay}
+                                                                  distanceFactor={driveway.distanceFactor}          
+                                                                  activeOverlay={activeOverlay}
+                                                                  openOverlay={openOverlay}
+                                                                  closeOverlay={closeOverlay}
+                                                                  device={device} 
+                                                                  title="Roof Soft Washing"
+                                                                  description="Oil stains soft washed and algae removed."
+                                                                  price="300-600"
+                                                                  bgColor="bg-blue-500"
+                                                              src="/textures/sexyCleaning.jpeg"
+                                                                />
+                                                              </mesh>
+                                                              <mesh position={house.position} visible={false}   name="house-overlay-anchor"
+                                                              >
+                                                                    <OverlayItem
+                                                                      section={section}
+                                                                      jumpToSection={jumpToSection}
+                                                                        projectIndex={1}
+                                                                        goToSection={1.3}
+
+                                                                      id="house"                    
+                                                                        key="house"
+                                                                  setActiveOverlay={setActiveOverlay}
+                                                                  activeOverlay={activeOverlay}
+                                                              openOverlay={openOverlay}
+                                                                        closeOverlay={closeOverlay}
+                                                                        device={device}  
+                                                                        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                                                                      position={[0, 0, 0]}
+                                                                      distanceFactor={house.distanceFactor}
+                                                                        title="Seasonal Maitenance"
+                                                                        description="Raking Leaves, picking cotton"
+                                                                        price="250-500"
+                                                                        bgColor="bg-yellow-500"
+                                                              src="/textures/sexyCleaning.jpeg"
+                                                                      /></mesh>
+                                                                      <mesh position={car.position} visible={false}   name="car-overlay-anchor"
+                                                              >
+                                                                    <OverlayItem
+                                                                      section={section}
+                                                                      jumpToSection={jumpToSection}
+                                                                        projectIndex={0}
+                                                                        goToSection={1.3}
+
+                                                                      id="car"                    
+                                                                        key="car"
+                                                                  setActiveOverlay={setActiveOverlay}
+                                                                  activeOverlay={activeOverlay}
+                                                              openOverlay={openOverlay}
+                                                                        closeOverlay={closeOverlay}
+                                                                        device={device}  
+                                                                        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                                                                      position={[0, 0, 0]}
+                                                                      distanceFactor={car.distanceFactor}
+                                                                        title="Home Soft-Washing"
+                                                                        description="We love cleaning big boy homes boi"
+                                                                        price="50-300"
+                                                                        bgColor="bg-yellow-500"
+                                                              src="/textures/sexyCleaning.jpeg"
+                                                                      /></mesh>
+                                                                      
+                                                                      <mesh position={freeQ.position} visible={false}   name="freeQ-overlay-anchor"
+                                                                onClick={() => {
+                                                                  if (fullyOpen) {
+                                                                    setClickedFree(false);
+                                                                    setClickedQuote(false);
+                                                                    setFullyOpen(false);
+                                                                    return;
+                                                                  }
+
+                                                                  setClickedFree(true);
+                                                                  setClickedQuote(true);
+                                                                }}
+                                                              >
+                                                                    <OverlayItem
+                                                                      section={section}
+                                                                      ref={freeQOverlayRef}  // ← For menu button linkinkg
+                                                                      id="freeQ"                      
+                                                                        key="freeQ"
+                                                                className="freeQ-overlay"
+                                                                  setActiveOverlay={setActiveOverlay}
+                                                                  activeOverlay={activeOverlay}
+                                                              openOverlay={openOverlay}
+                                                                        closeOverlay={closeOverlay}
+                                                                        device={device}  
+                                                                        rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                                                                      position={[0, 0, 0]}
+                                                                      distanceFactor={freeQ.distanceFactor}
+                                                                        title="Free Quote"
+                                                                        description="Customize your quote and recieve a call or email from us!"
+                                                                        price="150-300"
+                                                                        bgColor="bg-yellow-500"
+                                                              src="/textures/sexyCleaning.jpeg"
+                                                                      /></mesh>
+                          
       </group>
-      <mesh position={balcony.position} visible={false}   name="balcony-overlay-anchor"
->
-  {/* [1.2, -900.1, 257.2] */}
-      <OverlayItem
-        section={section}
-         jumpToSection={jumpToSection}
-           projectIndex={2}
-         goToSection={1.3}
-
-        id="balcony"                    
-          key="balcony"
-    setActiveOverlay={setActiveOverlay}
-    activeOverlay={activeOverlay}
- openOverlay={openOverlay}
-          closeOverlay={closeOverlay}
-          device={device}  
-          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-         position={[0, 0, 0]}
-         distanceFactor={balcony.distanceFactor}
-          title="Gutter Cleaning"
-          description="Big Fat Ass scrub"
-          price="75-200"
-          bgColor="bg-yellow-500"
-src="/textures/sexyCleaning.jpeg"
-        /></mesh>
-        <group position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-          <mesh geometry={nodes.Door_Front_House_material_0.geometry} material={materials.House_material} />
-          <mesh geometry={nodes.Door_Front_House_material_0001.geometry} material={materials.House_material} />
-        </group>
-        <group position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-          <mesh geometry={nodes.Door_side_House_material_0.geometry} material={materials.House_material} />
-        </group>
-        <group position={[0, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-          <mesh geometry={nodes.Garage_door_House_material_0.geometry} material={materials.House_material} />
-        </group>
-        <group position={[400, 200, 8.401]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-          <mesh geometry={nodes.Window_front_1st_floor_House_material_0.geometry} material={materials.House_material} />
-        </group>
-        <group position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-          <mesh geometry={nodes.Window_front_2nd_floor_House_material_0.geometry} material={materials.House_material} />
-        </group>
-        <group position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-          <mesh geometry={nodes.Window_front_2nd_floor001_House_material_0.geometry} material={materials.House_material} />
-        </group>
-        <mesh geometry={nodes._Roof_Main_House_material_0.geometry} material={materials.newRoof} position={[450, 709.989, -200]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Back_wall_2nd_floor_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <GlassComponent
-          geometry={nodes.Balcony_Glass_door_House_material_0.geometry}
-          position={[400, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Balcony_Glass_door_2_House_material_0.geometry}
-          position={[402.152, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Balcony_Glass_door_2_Upper_House_material_0.geometry}
-          position={[400, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Balcony_Glass_door_2001_House_material_0.geometry}
-          position={[400, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <GlassComponent
-          geometry={nodes.Balcony_Glass_door_Upper_House_material_0.geometry}
-          position={[400, 200, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <mesh geometry={nodes.Balcony_Glass_door_Upper001_House_material_0.geometry} material={materials.House_material} position={[454.801, 182.653, -597.463]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_Glass_door_Upper002_House_material_0.geometry} material={materials.House_material} position={[-3.284, 499.399, -602.541]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_Glass_door_Upper003_House_material_0.geometry} material={materials.House_material} position={[-1.15, 199.77, -600.006]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_rail_House_material_0.geometry} material={materials.House_material} position={[3.947, 350.037, 204.274]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_rail_1_House_material_0.geometry} material={materials.House_material} position={[149.634, 350.037, 204.274]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_rail_2_House_material_0.geometry} material={materials.House_material} position={[-149.213, 350.037, 204.274]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_rail_3_House_material_0.geometry} material={materials.House_material} position={[-227.303, 350.037, 1.188]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_rail_4_House_material_0.geometry} material={materials.House_material} position={[-227.303, 350.037, 170.973]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_rail_5_House_material_0.geometry} material={materials.House_material} position={[-227.303, 350.037, -172.734]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_trim_House_material_0.geometry} material={materials.House_material} position={[0, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_wall_1_House_material_0.geometry} material={materials.House_material} position={[0, 545.015, -200]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Balcony_wall_2_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-
-        {/* deck not doing the deck persay we are doing the bacony rail as deck */}
-
-        <group
-        position={[0, 200, 0]}
-        rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-        scale={100}
-        ref={deckFloorGroupRef}
-      >
-        <mesh geometry={nodes.Balcony_wood_floor_House_material_0.geometry} material={materials.House_material} />
-       
-      </group>
-
-        {/* <mesh geometry={nodes.Balcony_wood_floor_House_material_0.geometry} material={materials.House_material} position={[0, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} /> old deck */}
-
-        {/* car //driveway */}
-  <group
-        position={[-4.128, 0, 305.314]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={100}
-        ref={drivewayGroupRef}
-      >
-        <mesh geometry={nodes.Driveway_House_material_0.geometry} material={materials.House_material} />
-        
-      </group>
-      {/* INVISIBLE ANCHOR FOR DRIVEWAY OVERLAY — this is the magic */}
-<mesh
-  position={driveway.position}  
-  visible={false} 
-  name="driveway-overlay-anchor"
->
-  <OverlayItem
-    section={section}
-         jumpToSection={jumpToSection}
-           projectIndex={3}
-         goToSection={1.3}
-
-    id="driveway"
-    key="driveway"
-    position={[0, 0, 0]}       
-    rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-    setActiveOverlay={setActiveOverlay}
-    distanceFactor={driveway.distanceFactor}          
-    activeOverlay={activeOverlay}
-    openOverlay={openOverlay}
-    closeOverlay={closeOverlay}
-    device={device} 
-    title="Roof Soft Washing"
-    description="Oil stains soft washed and algae removed."
-    price="300-600"
-    bgColor="bg-blue-500"
-src="/textures/sexyCleaning.jpeg"
-  />
-</mesh>
-      {/* <OverlayItem
-        section={section}
-        id="driveway"                     // ← give each one a unique string
-          key="driveway"
-          rotationX={Math.PI / 2}
-          rotationY={-Math.PI / 2}
-          rotationZ={0}
-          positionX={0.2}
-          positionY={3}          // ← was -900.1
-          positionZ={15}         // ← was 500.4
-          distanceFactor={16}
-          title="Driveway Cleaning"
-          description="Oil stains + power wash"
-          price="300-600"
-          bgColor="bg-blue-500"
-          parentGroupRef={drivewayGroupRef}
-          
-          activeOverlayId={activeOverlayId}
-        setActiveOverlayId={setActiveOverlayId}
-        /> */}
-
-
-        <group position={[-4.128, 0, 305.314]} rotation={[-Math.PI / 2, 0, 0]} scale={100} ref={balconyRailGroupRef}>
-          <mesh geometry={nodes.Driveway_House_material_0.geometry} material={materials.House_material} />
-          
-        </group>
-        
-
-
-        <mesh geometry={nodes.Driveway001_House_material_0.geometry} material={materials.House_material} position={[-162.113, -13.119, 752.987]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Driveway002_House_material_0.geometry} material={materials.House_material} position={[206.757, -13.119, 752.987]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Fence_House_material_0.geometry} material={materials.House_material} position={[-814.541, 174.924, 1.036]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Fence_poles_House_material_0.geometry} material={materials.House_material} position={[-814.53, 210.163, 1091.849]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Fence_poles001_House_material_0.geometry} material={materials.House_material} position={[1257.63, 137.628, 86.034]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Fence_poles002_House_material_0.geometry} material={materials.House_material} position={[224.22, 137.628, -919.778]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={100} />
-        <mesh geometry={nodes.Fence001_House_material_0.geometry} material={materials.House_material} position={[1257.619, 95.703, 86.354]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Fence002_House_material_0.geometry} material={materials.House_material} position={[224.209, 95.703, -919.458]} rotation={[-Math.PI / 2, 0, Math.PI / 2]} scale={100} />
-        <mesh geometry={nodes.Front_fence_House_material_0.geometry} material={materials.House_material} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Front_fence_2_House_material_0.geometry} material={materials.House_material} position={[535.435, 27.254, 1130.915]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-
-        <mesh geometry={nodes.Front_lawn_design_House_material_0.geometry} material={materials.House_material} position={[575.645, 3.672, 789.029]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-
-
-        <mesh geometry={nodes.Garden_Ground_Material_0.geometry} material={materials.Ground_Material} position={[-227.216, -3.571, -56.219]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Garden001_Ground_Material_0.geometry} material={materials.Ground_Material} position={[527.892, -3.677, 429.819]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Grage_wall__House_material_0.geometry} material={materials.House_material} position={[0, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Grass_Grass_Material_0.geometry} material={materials.Grass_Material} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Gutter_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Gutter_drain_big_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Gutter_drain_small_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.House_main_bottom_House_material_0.geometry} material={materials.House_material} position={[400, 200, 8.401]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.House_main_top_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-
-        <mesh geometry={nodes.Path_House_material_0.geometry} material={materials.House_material} position={[-308.445, 0, -458.168]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-      
-        <mesh geometry={nodes.Path001_House_material_0.geometry} material={materials.House_material} position={[-308.445, 0, -458.168]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-
-        <mesh geometry={nodes.Path002_House_material_0.geometry} material={materials.House_material} position={[-308.445, 0, -458.168]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Pine_Bush_texture_0.geometry} material={materials.Bush_texture} position={[-273.902, 88.13, -284.533]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Pine_2_Bush_texture_0.geometry} material={materials.Bush_texture} position={[-195.675, 17.79, 1117.777]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Pine_3_Bush_texture_0.geometry} material={materials.Bush_texture} position={[241.193, 17.79, 1117.777]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Pine001_Bush_texture_0.geometry} material={materials.Bush_texture} position={[-693.076, 185.116, 128.914]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Pine002_Bush_texture_0.geometry} material={materials.Bush_texture} position={[938.995, 185.116, -810.432]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Pine003_Bush_texture_0.geometry} material={materials.Bush_texture} position={[1119.298, 214.967, 1002.216]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Pine004_Bush_texture_0.geometry} material={materials.Bush_texture} position={[-519.526, 214.967, 983.236]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Plant_1_Plant3_0.geometry} material={materials.Plant3} position={[-193.577, -6.586, 1045.817]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Plant_2_Plant3_0.geometry} material={materials.Plant3} position={[243.292, -6.586, 1045.817]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Plant_3_Plant3_0.geometry} material={materials.Plant3} position={[279.711, 30.6, 399.54]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Plant_4_Plant3_0.geometry} material={materials.Plant3} position={[-253.745, 35.451, 260.801]} rotation={[-Math.PI / 2, 0, -0.306]} scale={100} />
-        <mesh geometry={nodes.Plant_4001_Plant3_0.geometry} material={materials.Plant3} position={[-683.364, 103.647, -785.771]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Plant_4002_Plant3_0.geometry} material={materials.Plant3} position={[929.224, 64.978, 1043.531]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh pointerEvents="none" geometry={nodes.Plant_4003_Plant3_0.geometry} material={materials.Plant3} position={[-721.595, 64.978, 988.766]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh pointerEvents="none" geometry={nodes.Plant_4004_Plant3_0.geometry} material={materials.Plant3} position={[-625.912, 64.978, 838.016]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh pointerEvents="none" geometry={nodes.Plant_4005_Plant3_0.geometry} material={materials.Plant3} position={[1161.17, 52.84, 801.259]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Ref_house_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Ref_house001_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Ref_house002_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Ref_house003_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Ref_house004_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Ref_house005_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Ref_house006_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Ref_house007_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.rocks_Rock_texture_0.geometry} material={materials.Rock_texture} position={[840.75, -4.967, 412.407]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.rocks001_Rock_texture_0.geometry} material={materials.Rock_texture} position={[-590.829, 12.965, 434.988]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.rocks002_Rock_texture_0.geometry} material={materials.Rock_texture} position={[-231.549, 1.286, -349.319]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.rocks003_Rock_texture_0.geometry} material={materials.Rock_texture} position={[-173.386, 12.965, 247.555]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.rocks004_Rock_texture_0.geometry} material={materials.Rock_texture} position={[1172.839, 12.965, -771.341]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Roof_2_House_material_0.geometry} material={materials.newRoof} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Roof_3_House_material_0.geometry} material={materials.newRoof} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-
-        {/* gutters */}
-        <mesh geometry={nodes.Roof_3001_House_material_0.geometry} material={materials.House_material} position={[400, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-
-        <mesh geometry={nodes.Stone_pillar_House_material_0.geometry} material={materials.House_material} position={[-199.478, 46, 198.253]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Stone_pillar_gate_House_material_0.geometry} material={materials.House_material} position={[-338.502, 43.966, 1129.598]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Stone_pillar_gate001_House_material_0.geometry} material={materials.House_material} position={[404.712, 43.966, 1129.598]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Stone_pillar001_House_material_0.geometry} material={materials.House_material} position={[200, 46, 198.253]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Stone_pillar002_House_material_0.geometry} material={materials.House_material} position={[-199.478, 46, -200]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Stone_pillar003_House_material_0.geometry} material={materials.House_material} position={[686.116, 46, 198.253]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Window_front_2nd_floor002_House_material_0.geometry} material={materials.House_material} position={[450, 477.255, -595.358]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.Wood_panel_top_G_House_material_0.geometry} material={materials.House_material} position={[0, 200, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh position={house.position} visible={false}   name="house-overlay-anchor"
->
-      <OverlayItem
-        section={section}
-         jumpToSection={jumpToSection}
-           projectIndex={1}
-           goToSection={1.3}
-
-        id="house"                    
-          key="house"
-    setActiveOverlay={setActiveOverlay}
-    activeOverlay={activeOverlay}
- openOverlay={openOverlay}
-          closeOverlay={closeOverlay}
-          device={device}  
-          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-         position={[0, 0, 0]}
-         distanceFactor={house.distanceFactor}
-          title="Seasonal Maitenance"
-          description="Raking Leaves, picking cotton"
-          price="250-500"
-          bgColor="bg-yellow-500"
-src="/textures/sexyCleaning.jpeg"
-        /></mesh>
-        <mesh position={car.position} visible={false}   name="car-overlay-anchor"
->
-      <OverlayItem
-        section={section}
-         jumpToSection={jumpToSection}
-           projectIndex={0}
-          goToSection={1.3}
-
-        id="car"                    
-          key="car"
-    setActiveOverlay={setActiveOverlay}
-    activeOverlay={activeOverlay}
- openOverlay={openOverlay}
-          closeOverlay={closeOverlay}
-          device={device}  
-          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-         position={[0, 0, 0]}
-         distanceFactor={car.distanceFactor}
-          title="Home Soft-Washing"
-          description="We love cleaning big boy homes boi"
-          price="50-300"
-          bgColor="bg-yellow-500"
-src="/textures/sexyCleaning.jpeg"
-        /></mesh>
-        <mesh position={contact.position} visible={false}   name="contact-overlay-anchor"
->
-      
-  <OverlayItem
-    section={section}
-    jumpToSection={jumpToSection}
-    goToSection={3.9}    
-    id="contactWindow"                    
-    key="contactWindow"
-    setActiveOverlay={setActiveOverlay}
-    activeOverlay={activeOverlay}
-    openOverlay={openOverlay}
-    closeOverlay={closeOverlay}
-    device={device}  
-    rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-    position={[0, 0, 0]}
-    distanceFactor={contact.distanceFactor}
-    title="Introseduction"
-    description="Michael Murray"
-    price="ssn 3938 2938 298"
-    bgColor="bg-yellow-500"
-    src="/textures/sirmur2025.png"
-  />
-
-        </mesh>
-        <mesh position={freeQ.position} visible={false}   name="freeQ-overlay-anchor"
-  onClick={() => {
-    if (fullyOpen) {
-      setClickedFree(false);
-      setClickedQuote(false);
-      setFullyOpen(false);
-      return;
-    }
-
-    setClickedFree(true);
-    setClickedQuote(true);
-  }}
->
-      <OverlayItem
-        section={section}
-        ref={freeQOverlayRef}  // ← For menu button linkinkg
-        id="freeQ"                      
-          key="freeQ"
-  className="freeQ-overlay"
-    setActiveOverlay={setActiveOverlay}
-    activeOverlay={activeOverlay}
- openOverlay={openOverlay}
-          closeOverlay={closeOverlay}
-          device={device}  
-          rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-         position={[0, 0, 0]}
-         distanceFactor={freeQ.distanceFactor}
-          title="Free Quote"
-          description="Customize your quote and recieve a call or email from us!"
-          price="150-300"
-          bgColor="bg-yellow-500"
-src="/textures/sexyCleaning.jpeg"
-        /></mesh>
       </group>
     
   );

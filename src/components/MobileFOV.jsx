@@ -8,7 +8,7 @@ export const MobileFOV = () => {
 
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth <= 768 || 
+      const mobile = window.innerWidth <= 1280 || 
                      'ontouchstart' in window || 
                      navigator.maxTouchPoints > 0;
       setIsMobile(mobile);
@@ -21,9 +21,9 @@ export const MobileFOV = () => {
 
   useEffect(() => {
     if (isMobile) {
-      camera.fov = 98; // mobile FOV  
+      camera.fov = 90; // mobile FOV  
     } else {
-      camera.fov = 90; // Desktop FOV
+      camera.fov = 71; // Desktop FOV
     }
     camera.updateProjectionMatrix();
   }, [isMobile, camera]);

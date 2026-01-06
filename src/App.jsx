@@ -1,4 +1,4 @@
-import { ScrollControls, Scroll } from "@react-three/drei";
+import { ScrollControls, Scroll, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { MotionConfig } from "framer-motion";
 import { Leva } from "leva";
@@ -111,7 +111,7 @@ const jumpToSection = (index) => {
         <Canvas
           key={canvasKey}
           shadows
-          camera={{ position: [0, 3, 10], fov: 59 }}
+          camera={{ position: [0, 3, 10] }}
           gl={{ preserveDrawingBuffer: true }}
           clear={false} // Ensures sky renders first
 
@@ -127,6 +127,7 @@ const jumpToSection = (index) => {
         >
           <MobileFOV />
           <DayNightSky debugForceDay={isDay} />
+          {section === 0 && <OrbitControls makeDefault />}
           <ScrollControls 
           pages={4} 
           damping={0.1} 

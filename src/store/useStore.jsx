@@ -1,0 +1,46 @@
+import { create } from 'zustand'
+
+export const useStore = create((set) => ({
+  // Music State
+        isPlaying: false,
+        currentTrackIndex: 0,
+        currentTime: 0,      // New
+        duration: 0,// New
+        // Your MP3s go in the /public/music folder
+  tracks: [
+    { title: "Blind Ambition", url: "/music/starter1.mp3", artist: "Admin" },
+    { title: "West Coast Cul-de-sac", url: "/music/starter2.mp3", artist: "Admin" },
+    { title: "Almond Joy", url: "/music/starter3.mp3", artist: "Admin" }
+  ],
+
+  // Actions
+  togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
+  // Cycles forward and loops to start
+  nextTrack: () => set((state) => ({ 
+    currentTrackIndex: (state.currentTrackIndex + 1) % state.tracks.length,
+    isPlaying: true // Auto-play when skipping
+  })),
+
+  // Cycles backward and loops to end
+  prevTrack: () => set((state) => ({ 
+    currentTrackIndex: (state.currentTrackIndex - 1 + state.tracks.length) % state.tracks.length,
+    isPlaying: true 
+  })),
+
+ setCurrentTime: (time) => set({ currentTime: time }),
+  setDuration: (dur) => set({ duration: dur }),
+
+  // Notes State
+  notes: ["Eat Ass", "Remember to feed the dog."],
+
+  addNote: (text) => set((state) => ({ 
+    notes: [...state.notes, text] 
+  })),
+  
+  removeNote: (index) => set((state) => ({
+    notes: state.notes.filter((_, i) => i !== index)
+  })),
+  // This will be used when we add the upload feature later
+  addTrack: (track) => set((state) => ({ tracks: [...state.tracks, track] })),
+
+}))

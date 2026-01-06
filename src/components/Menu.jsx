@@ -83,171 +83,11 @@ const StyledWrapper01 = styled.div`
     }
   }`;
 
-const CyberWrapper = styled.div`
 
-  .cyber-btn {
-    position: relative;
-    background: transparent;
-    color: white;
-    border: none;
-    padding-x: 0px 25px 0px 25px;
-    font-family: "Rajdhani", sans-serif;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
-    margin: 0px;
-  }
 
-  .cyber-btn:hover {
-    text-shadow: 0 0 12px rgba(0, 243, 255, 0.8);
-    letter-spacing: 3px;
-  }
 
-  .cyber-btn::before,
-  .cyber-btn::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 1px;
-    background: #00f3ff;
-    box-shadow: 0 0 5px #00f3ff;
-    transition: all 0.3s;
-  }
 
-  .cyber-btn::before {
-    top: 0;
-    left: 0;
-  }
 
-  .cyber-btn::after {
-    bottom: 0;
-    right: 0;
-  }
-
-  .cyber-btn:hover::before,
-  .cyber-btn:hover::after {
-    width: 100%;
-  }
-
-  .cyber-tooltip {
-    position: absolute;
-    width: 220px;
-    padding: 20px;
-    background: rgba(15, 15, 35, 0.95);
-    border: 1px solid rgba(0, 231, 255, 0.5);
-    color: #00e7ff;
-    font-size: 19px;
-    line-height: 1.5;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.4s;
-    box-shadow: 0 0 30px rgba(0, 231, 255, 0.2);
-    text-shadow: 0 0 8px rgba(0, 231, 255, 0.5);
-    z-index: 10;
-
-    clip-path: polygon(
-      0% 20%,
-      10% 0%,
-      90% 0%,
-      100% 20%,
-      100% 80%,
-      90% 100%,
-      10% 100%,
-      0% 80%
-    );
-
-    background-image: linear-gradient(rgba(0, 231, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 231, 255, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
-
-    bottom: calc(100% + 20px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .cyber-btn:hover + .cyber-tooltip {
-    visibility: visible;
-    opacity: 1;
-    transform: translateX(-50%) translateY(-10px);
-  }
-
-  @keyframes scan {
-    0% {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    20%,
-    80% {
-      opacity: 0.7;
-    }
-    100% {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-  }
-
-  .cyber-tooltip::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #00e7ff, transparent);
-    box-shadow: 0 0 10px #00e7ff;
-    animation: scan 2s infinite;
-  }
-
-  .cyber-tooltip .corner-tl {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 10px;
-    height: 10px;
-    border: 1px solid #00e7ff;
-    box-shadow: 0 0 5px #00e7ff;
-    border-right: none;
-    border-bottom: none;
-  }
-
-  .cyber-tooltip .corner-tr {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 10px;
-    height: 10px;
-    border: 1px solid #00e7ff;
-    box-shadow: 0 0 5px #00e7ff;
-    border-left: none;
-    border-bottom: none;
-  }
-
-  .cyber-tooltip .corner-bl {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    width: 10px;
-    height: 10px;
-    border: 1px solid #00e7ff;
-    box-shadow: 0 0 5px #00e7ff;
-    border-right: none;
-    border-top: none;
-  }
-
-  .cyber-tooltip .corner-br {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    width: 10px;
-    height: 10px;
-    border: 1px solid #00e7ff;
-    box-shadow: 0 0 5px #00e7ff;
-    border-left: none;
-    border-top: none;
-  }`;
 const MobileWrapper = styled.div`
   .social-buttons {
     display: flex;
@@ -458,54 +298,26 @@ useEffect(() => {
       <div
         className={`
             z-[2147483641]
-            xl:z-[2147483635]
+            xl:z-[2147483640]
 
-            fixed inset-y-0 md:right-[0px] xl:right-[-80px] transition-all overflow-y-auto
+            fixed inset-y-0  right-[0px] xl:right-[0px] transition-all overflow-y-auto
           flex flex-col bg-blue
         `}
         
         style={{
   width:
-    window.innerWidth >= 1280
-      ? "505px"          // Desktop: always open
-      : menuOpened
+       menuOpened
         ? "100%"         // Mobile/tablet: open
         : "0px",         // Mobile/tablet: closed
 }}
       >
 
-        {/* logo above menu */}
-        {/* {section !== 0 && (
-          <div>
-            <img className=' lg:w-64 lg:h-64 w-32 h-32 right-12' src="textures/counties.png" alt="" />
-          </div>
-        )} */}
-                 
-{/* <div className="flex-1 flex flex-col items-center justify-center gap-6 lg:gap-4 mt-4 lg:mt-64  "> */}
-
-
-{/* <div className="flex-1 flex flex-col items-center justify-center gap-1 lg:gap-4 mt-4 lg:mt-1  "> */}
-        {/* logo above menu */}
-          {/* <div className="mt-2 mb-1/2 lg:mt-0 lg:mb-0">        
-            
-          {section !== 0 && (
-            <img className=' lg:w-64 lg:h-64 w-32 h-32 transform  translate-x-[145px] 
-                object-contain' src="textures/logo.png" alt="" />
-          )}
-        </div> */}
-        
-        <div 
+       
+        {/* <div 
           className="flex-1 flex flex-col items-center justify-center lg:gap-4 mt-4 gap-1 lg:mt-[0px]"
             
-        >
-        {/* Dynamic Container Styling */}
-        {/* <div 
-          className={`flex-1 flex flex-col items-center justify-center lg:gap-4 mt-4 ${
-            section === 0 
-              ? "gap-6 mt-12 lg:mt-64" // Exact styling requested for Section 0
-              : "gap-1 lg:mt-[0px]"  // Styling for when NOT Section 0
-          }`}
         > */}
+   <div className="flex-1 flex flex-col justify-end pb-2 items-center">
 
 
 
@@ -516,310 +328,307 @@ useEffect(() => {
    
 
      
-               <div className="relative drop-shadow-xl lg:w-72 lg:h-[440px] w-72 h-80 overflow-hidden rounded-xl bg-[#3d3c3d] dark:bg-[#3d3c3d] lg:text-[40px] text-[40px]" >
-      <div className="absolute  flex items-center justify-center text-white dark:text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 pt-4">
+               
+        <div className="xl:fixed xl:bottom-4 xl:right-4 z-[2147483642] pointer-events-auto">
+            <div className="w-full max-w-sm xl:max-w-md p-4">
+                  <div className="relative overflow-hidden rounded-lg transition-all duration-300 group bg-background/20 hover:scale-[1.02] text-foreground backdrop-blur-[2px] p-6 bg-black hover:shadow-lg hover:shadow-primary/20">
+                    <div className="absolute inset-0 z-0 h-full w-full rounded-lg shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)] transition-all pointer-events-none dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]" />
+                    <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden rounded-lg glass-effect" />
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-2">
+                        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl flex items-center justify-center bg-zinc-200 dark:bg-zinc-800 -mt-1.5">
+                          <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500">
+                            <path d="M9 18V5l12-2v13" />
+                            <circle cx={6} cy={18} r={3} />
+                            <circle cx={18} cy={16} r={3} />
+                          </svg>
+                          <div className="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="space-y-1.5">
+                              <p className="font-semibold leading-none tracking-tight text-foreground dark:text-white">
+                                Now Playing
+                              </p>
+                              <p className="text-sm text-muted-foreground/80 dark:text-zinc-400">
+                                Lofi Beats - Chill Mix
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="pt-6 text-foreground dark:text-white">
+                        <div className="space-y-2">
+                          <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-zinc-200/50 dark:bg-zinc-800/50" role="presentation">
+                            <div className="absolute inset-0 bg-gradient-to-r from-zinc-300/20 via-zinc-300/30 to-zinc-300/20 dark:from-white/5 dark:via-white/10 dark:to-white/5" />
+                            <div className="absolute inset-y-0 left-0 flex bg-gradient-to-r from-black/50 via-black/50 to-black/50 dark:from-white/80 dark:via-white/80 dark:to-white/80 transition-all duration-200 ease-out progress-width">
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-white/5" />
+                            </div>
+                          </div>
+                          <div className="flex justify-between text-xs font-medium">
+                            <span className="tabular-nums text-zinc-600 dark:text-zinc-400">1:30</span>
+                            <span className="tabular-nums text-zinc-600 dark:text-zinc-400">3:45</span>
+                          </div>
+                        </div>
+                        <div className="mt-6 flex items-center justify-center gap-6">
+                          <button className="relative inline-flex items-center transition-colors justify-center cursor-pointer gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 bg-transparent hover:scale-105 duration-300 transition text-primary h-9 w-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100" aria-label="Previous track">
+                            <div className="absolute top-0 left-0 z-0 h-full w-full rounded-full shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)] transition-all dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]" />
+                            <div className="absolute top-0 left-0 isolate -z-10 h-full w-full overflow-hidden rounded-md glass-effect" />
+                            <div className="pointer-events-none z-10">
+                              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="size-5">
+                                <path d="m15 18-6-6 6-6" />
+                              </svg>
+                            </div>
+                          </button>
+                          <button className="relative inline-flex items-center transition-colors justify-center cursor-pointer gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 bg-transparent hover:scale-105 duration-300 transition text-primary h-9 w-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100" aria-label="Pause">
+                            <div className="absolute top-0 left-0 z-0 h-full w-full rounded-full shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)] transition-all dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]" />
+                            <div className="absolute top-0 left-0 isolate -z-10 h-full w-full overflow-hidden rounded-md glass-effect" />
+                            <div className="pointer-events-none z-10">
+                              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="size-5">
+                                <rect width={4} height={16} x={6} y={4} />
+                                <rect width={4} height={16} x={14} y={4} />
+                              </svg>
+                            </div>
+                          </button>
+                          <button className="relative inline-flex items-center transition-colors justify-center cursor-pointer gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 bg-transparent hover:scale-105 duration-300 transition text-primary h-9 w-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100" aria-label="Next track">
+                            <div className="absolute top-0 left-0 z-0 h-full w-full rounded-full shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)] transition-all dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]" />
+                            <div className="absolute top-0 left-0 isolate -z-10 h-full w-full overflow-hidden rounded-md glass-effect" />
+                            <div className="pointer-events-none z-10">
+                              <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="size-5">
+                                <path d="m9 18 6-6-6-6" />
+                              </svg>
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 z-20 rounded-lg bg-gradient-to-r from-transparent dark:via-white/5 via-black/5 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" />
+                  </div>
+                </div>
+        </div>
 
-
-
-         
-      <div className="w-full flex flex-col items-center justify-start gap-8 lg:pb-8 pb-8 px-1 ">
-      
-{/* Wrapper 1 */}
-<CyberWrapper 
-  className={activeIndex === 0 ? "manual-highlight" : ""}
-  onClick={() => { setMenuOpened(false); props.triggerFreeQuote(); }}
->
-  <div className="relative flex flex-col items-center">
-    <button className="cyber-btn py-0">Free quote</button>
-    <div className="cyber-tooltip">
-       <div className="corner-tl" /><div className="corner-tr" />
-       <div className="corner-bl" /><div className="corner-br" />
-       Jump to your custom quote.
-    </div>
-  </div>
-</CyberWrapper>
-
-{/* Wrapper 2 */}
-<CyberWrapper 
-  className={activeIndex === 1 ? "manual-highlight" : ""}
-  onClick={() => { setMenuOpened(false); onSectionChange(1.3); }}
->
-  <div className="relative flex flex-col items-center">
-    <button className="cyber-btn py-0">services <br /><span className='text-[37px] lg:block hidden'>page</span> </button>
-    <div className="cyber-tooltip">
-       <div className="corner-tl" /><div className="corner-tr" />
-       <div className="corner-bl" /><div className="corner-br" />
-       Detailed look at our services.
-    </div>
-  </div>
-</CyberWrapper>
-
-{/* Wrapper 3 */}
-<CyberWrapper 
-  className={activeIndex === 2 ? "manual-highlight" : ""}
-  onClick={() => { setMenuOpened(false); onSectionChange(2.6); }}
->
-  <div className="relative flex flex-col items-center">
-    <button className="cyber-btn py-0">About<br /><span className='text-[37px] lg:block hidden'>page</span></button>
-    <div className="cyber-tooltip">
-       <div className="corner-tl" /><div className="corner-tr" />
-       <div className="corner-bl" /><div className="corner-br" />
-       Check out our personal and online reviews.
-    </div>
-  </div>
-</CyberWrapper>       
-
-          </div>
-
-          
-          
-        
-      </div>
-      <div className="absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2 " />
-    </div>
-
-
-
-  <div className="relative drop-shadow-xl w-72 h-64 lg:w-80 lg:h-72 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[-10]" >
+   <div className="xl:fixed xl:bottom-4 xl:left-1/3 relative drop-shadow-xl w-[300px] h-64 md:w-[670px] md:h-36 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[0]" >
       <div className="absolute flex items-center justify-center dark:text-white text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 ">
 
 
 
          
-<div className="w-full flex flex-wrap justify-center items-center gap-4 lg:gap-10 py-6">
+<div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-6 lg:gap-12">
+                
+        <button
+    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
+  >
+   
+        <span
+      class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950  rounded-md group-hover:bg-opacity-0"
+    >
+      <StyledWrapper01  onClick={(event) => {
+      spawnCoin(event);
+          onSectionChange(4); 
+              setMenuOpened(false);
+
+
+    }}>
+        <article className="keycap">
+          <aside className="letter">
+            <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+
+    <path d="M512 80c8.8 0 16 7.2 16 16V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V96c0-8.8 7.2-16 16-16H512zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM208 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm-32 32c-44.2 0-80 35.8-80 80c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16c0-44.2-35.8-80-80-80H176zM376 144c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376z"></path>
+
+  </svg>
+            </aside>
+        </article>
+      </StyledWrapper01>
+              </span>
+    <div class="block">
+      <div
+        class={`group
+          ${isVisible ? 'opacity-100' : 'opacity-0'}
+          ${hasFadedIn ? 'animate-blink' : ''}
+          transition-opacity duration-1000 ease-in-out
+
+          absolute -top-[13px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
+      >
+        <div class="rounded-sm text-md bg-black py-1 px-2">
+          <p class="whitespace-nowrap">Contact Page</p>
+        </div>
+        <div
+          class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
+        ></div>
+      </div>
+    </div>
+  </button>
+
+
+
+
+            <button
+    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
+  >
+    <span
+      class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950 rounded-md group-hover:bg-opacity-0"
+    >
+            <StyledWrapper01  onClick={(event) => {
+      spawnCoin(event);
+          setIsDay((prev) => !prev);  
+
+    }}>
+        <article className="keycap">
+          <aside className="letter">
+            <svg class="w-[50px] h-[50px] fill-[#FFFFFF]" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
+
+    <path d="M495.8 0c5.5 0 10.9 .2 16.3 .7c7 .6 12.8 5.7 14.3 12.5s-1.6 13.9-7.7 17.3c-44.4 25.2-74.4 73-74.4 127.8c0 81 65.5 146.6 146.2 146.6c8.6 0 17-.7 25.1-2.1c6.9-1.2 13.8 2.2 17 8.5s1.9 13.8-3.1 18.7c-34.5 33.6-81.7 54.4-133.6 54.4c-9.3 0-18.4-.7-27.4-1.9c-11.2-22.6-29.8-40.9-52.6-51.7c-2.7-58.5-50.3-105.3-109.2-106.7c-1.7-10.4-2.6-21-2.6-31.8C304 86.1 389.8 0 495.8 0zM447.9 431.9c0 44.2-35.8 80-80 80H96c-53 0-96-43-96-96c0-47.6 34.6-87 80-94.6l0-1.3c0-53 43-96 96-96c34.9 0 65.4 18.6 82.2 46.4c13-9.1 28.8-14.4 45.8-14.4c44.2 0 80 35.8 80 80c0 5.9-.6 11.7-1.9 17.2c37.4 6.7 65.8 39.4 65.8 78.7z"></path>
+
+  </svg>
+            </aside>
+        </article>
         
-              
-       <button
-  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
->
-  {/* <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950  rounded-md group-hover:bg-opacity-0"
-  >
-     <StyledWrapper01  onClick={() => {
-    setMenuOpened(false);
-    openOverlay("serviceWindow"); 
-        onSectionChange(0); 
-
-  }}> */}
-       <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950  rounded-md group-hover:bg-opacity-0"
-  >
-     <StyledWrapper01  onClick={(event) => {
-    spawnCoin(event);
-        onSectionChange(4); 
-            setMenuOpened(false);
-
-
-  }}>
-      <article className="keycap">
-        <aside className="letter">
-          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
-
-  <path d="M512 80c8.8 0 16 7.2 16 16V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V96c0-8.8 7.2-16 16-16H512zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM208 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm-32 32c-44.2 0-80 35.8-80 80c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16c0-44.2-35.8-80-80-80H176zM376 144c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376z"></path>
-
-</svg>
-          </aside>
-      </article>
-    </StyledWrapper01>
-            </span>
-  <div class="block">
-    <div
-      class={`group
-         ${isVisible ? 'opacity-100' : 'opacity-0'}
-        ${hasFadedIn ? 'animate-blink' : ''}
-        transition-opacity duration-1000 ease-in-out
-
-        absolute -top-[13px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
-    >
-      <div class="rounded-sm text-md bg-black py-1 px-2">
-        <p class="whitespace-nowrap">Contact Page</p>
-      </div>
+      </StyledWrapper01>
+      </span>
+    <div class="block">
       <div
-        class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
-      ></div>
+        class={`group 
+          ${isVisible ? 'opacity-100' : 'opacity-0'}
+          ${hasFadedIn ? 'animate-blink' : ''}
+          transition-opacity duration-1000 ease-in-out
+
+          absolute -top-[13px] left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
+      >
+        
+        <div class="rounded-sm text-md bg-black py-1 px-2">
+          <p class="whitespace-nowrap">Change Background</p>
+        </div>
+        <div
+          class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
+        ></div>
+      </div>
+    </div>
+  </button>
+
+
+
+      <button
+    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-[rgb(0,200,255)] via-[#00aacc] to-[rgb(0,170,255)] group-hover:from-black-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
+  >
+    <span
+      class="relative  px-4 py-2 transition-all ease-in duration-75  rounded-md bg-opacity-0"
+    >
+      <StyledWrapper01  onClick={() => {
+      setMenuOpened(false);
+
+        if (section === 0 ) {
+        reset3D();
+      } 
+      
+      else {
+        onSectionChange(0);
+      }
+    }}
+    className='zIndex[99980]'>
+        <article className="keycap">
+          <aside className="letter">
+            <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+
+    <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z"></path>
+
+  </svg>
+            </aside>
+        </article>
+      </StyledWrapper01>
+    </span>
+    <div className="block ">
+      <div 
+        className="group absolute -top-[33px] left-[54px] lg:-top-[50px] lg:left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      >
+       
+        <div
+          class="h-0 w-fit border-l-8 border-r-8 border-b-0 border-transparent border-t-black"
+        ></div>
+      </div>
+    </div>
+    <div className="block">
+    <div className={`group 
+      ${isVisible ? 'opacity-100' : 'opacity-0'}
+          ${hasFadedIn ? 'animate-blink' : ''}
+          transition-opacity duration-1000 ease-in-out
+
+      absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center`}>
+     
+      <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
+
+      <div className="rounded-sm bg-black py-1 px-2 text-md">
+        <p className="whitespace-nowrap text-white">
+          {section === 0 ? "Reset Page" : "Home Page"}
+        </p>
+      </div>
     </div>
   </div>
-</button>
-
-
-
-
-          <button
-  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
->
-  <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950 rounded-md group-hover:bg-opacity-0"
-  >
-          <StyledWrapper01  onClick={(event) => {
-    spawnCoin(event);
-        setIsDay((prev) => !prev);  
-
-  }}>
-      <article className="keycap">
-        <aside className="letter">
-          <svg class="w-[50px] h-[50px] fill-[#FFFFFF]" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
-
-  <path d="M495.8 0c5.5 0 10.9 .2 16.3 .7c7 .6 12.8 5.7 14.3 12.5s-1.6 13.9-7.7 17.3c-44.4 25.2-74.4 73-74.4 127.8c0 81 65.5 146.6 146.2 146.6c8.6 0 17-.7 25.1-2.1c6.9-1.2 13.8 2.2 17 8.5s1.9 13.8-3.1 18.7c-34.5 33.6-81.7 54.4-133.6 54.4c-9.3 0-18.4-.7-27.4-1.9c-11.2-22.6-29.8-40.9-52.6-51.7c-2.7-58.5-50.3-105.3-109.2-106.7c-1.7-10.4-2.6-21-2.6-31.8C304 86.1 389.8 0 495.8 0zM447.9 431.9c0 44.2-35.8 80-80 80H96c-53 0-96-43-96-96c0-47.6 34.6-87 80-94.6l0-1.3c0-53 43-96 96-96c34.9 0 65.4 18.6 82.2 46.4c13-9.1 28.8-14.4 45.8-14.4c44.2 0 80 35.8 80 80c0 5.9-.6 11.7-1.9 17.2c37.4 6.7 65.8 39.4 65.8 78.7z"></path>
-
-</svg>
-          </aside>
-      </article>
-      
-    </StyledWrapper01>
-     </span>
-  <div class="block">
-    <div
-      class={`group 
-         ${isVisible ? 'opacity-100' : 'opacity-0'}
-        ${hasFadedIn ? 'animate-blink' : ''}
-        transition-opacity duration-1000 ease-in-out
-
-        absolute -top-[13px] left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
-    >
-      
-      <div class="rounded-sm text-md bg-black py-1 px-2">
-        <p class="whitespace-nowrap">Change Background</p>
-      </div>
-      <div
-        class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
-      ></div>
-    </div>
-  </div>
-</button>
-
-
-
-    <button
-  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-[rgb(0,200,255)] via-[#00aacc] to-[rgb(0,170,255)] group-hover:from-black-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
->
-  <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75  rounded-md bg-opacity-0"
-  >
+  </button>
     <StyledWrapper01  onClick={() => {
-    setMenuOpened(false);
+      setMenuOpened(false);
 
-      if (section === 0 ) {
-      reset3D();
-    } 
-    
-    else {
-      onSectionChange(0);
-    }
-  }}
-  className='zIndex[99980]'>
-      <article className="keycap">
-        <aside className="letter">
-          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
-
-  <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z"></path>
-
-</svg>
-          </aside>
-      </article>
-    </StyledWrapper01>
-  </span>
-  <div className="block ">
-    <div 
-      className="group absolute -top-[33px] left-[54px] lg:-top-[50px] lg:left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
-    >
-      <div className="rounded-sm bg-transparent py-1 px-2">
-        <p className="whitespace-nowrap">
-                
-                <span className='text-[14px] lg:text-[16px]'>
-                9am-5pm Mon-Fri
-                </span>
-                </p>
-      </div>
-      <div
-        class="h-0 w-fit border-l-8 border-r-8 border-b-0 border-transparent border-t-black"
-      ></div>
-    </div>
-  </div>
-  <div className="block">
-  <div className={`group 
-     ${isVisible ? 'opacity-100' : 'opacity-0'}
-        ${hasFadedIn ? 'animate-blink' : ''}
-        transition-opacity duration-1000 ease-in-out
-
-    absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center`}>
-    {/* Upward-pointing triangle (on top) */}
-    <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
-
-    {/* The text box */}
-    <div className="rounded-sm bg-black py-1 px-2 text-md">
-      <p className="whitespace-nowrap text-white">
-        {section === 0 ? "Reset Page" : "Home Page"}
-      </p>
-    </div>
-  </div>
-</div>
-</button>
-  <StyledWrapper01  onClick={() => {
-window.location.href = 'tel:+12622305182';     
-  }} 
-  className='zIndex[99980]'>
-       <button
-  class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-500 to-green-700  group-hover:from-black-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-800 dark:focus:ring-green-800"
->
-  <span
-    class="relative  px-4 py-2 transition-all ease-in duration-75rounded-md group-hover:bg-opacity-0"
+        if (section === 1 ) {
+        null   
+         } 
+      
+      else {
+        onSectionChange(1.3);
+      }
+    }}
+    className='zIndex[99980]'>
+        <button
+    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-500 to-green-700  group-hover:from-black-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-800 dark:focus:ring-green-800"
   >
-  
-      <article className="keycap">
-        <aside className="letter">
-         <svg className="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-
-  <path d="M347.1 24.6c7.7-18.6 28-28.5 47.4-23.2l88 24C499.9 30.2 512 46 512 64c0 247.4-200.6 448-448 448c-18 0-33.8-12.1-38.6-29.5l-24-88c-5.3-19.4 4.6-39.7 23.2-47.4l96-40c16.3-6.8 35.2-2.1 46.3 11.6L207.3 368c70.4-33.3 127.4-90.3 160.7-160.7L318.7 167c-13.7-11.2-18.4-30-11.6-46.3l40-96z"></path>
-
-</svg>
-          </aside>
-      </article>
-  </span>
-  <div className="block  ">
-    <div 
-      className="group absolute  -top-[32px] left-[60px] lg:-top-[50px] lg:left-[57px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+    <span
+      class="relative  px-4 py-2 transition-all ease-in duration-75rounded-md group-hover:bg-opacity-0"
     >
-      <div className="rounded-sm bg-transparent py-1 px-2">
-        <p className="whitespace-nowrap">
-                
-                <span className='text-[18px] lg:text-[21px]'>
-                1+262-230-5182 
-                </span>
-                </p>
+    
+        <article className="keycap">
+          <aside className="letter">
+          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+
+          <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"></path>
+
+        </svg>
+
+            </aside>
+        </article>
+    </span>
+    <div className="block  ">
+      <div 
+        className="group absolute  -top-[32px] left-[60px] lg:-top-[50px] lg:left-[57px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+      >
+       
+        <div
+          class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
+        ></div>
       </div>
-      <div
-        class="h-0 w-fit border-l-8 border-r-8 border-b-8 border-transparent border-t-black"
-      ></div>
     </div>
-  </div>
-   <div className="block">
-  <div className={`group
-     ${isVisible ? 'opacity-100' : 'opacity-0'}
-        ${hasFadedIn ? 'animate-blink' : ''}
-        transition-opacity duration-1000 ease-in-out
+    <div className="block">
+    <div className={`group
+      ${isVisible ? 'opacity-100' : 'opacity-0'}
+          ${hasFadedIn ? 'animate-blink' : ''}
+          transition-opacity duration-1000 ease-in-out
 
-    absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center`}>
-    {/* Upward-pointing triangle (on top) */}
-    <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
+      absolute top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center`}>
+      <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
 
-    {/* The text box */}
-    <div className="rounded-sm bg-black py-1 px-2 text-md">
-      <p className="whitespace-nowrap text-white">
-Call Us      </p>
-    </div>
-    </div>
-  </div>
-</button>
-    </StyledWrapper01>
-
-
+      <div className="rounded-sm bg-black py-1 px-2 text-md">
+        <p className="whitespace-nowrap text-white">
+  Zoom In   </p>
       </div>
-      <div className="absolute w-16 h-24 bg-white blur-[50px] -left-1/2 -top-1/2" />
+      </div>
     </div>
-          </div>
+  </button>
+      </StyledWrapper01>
 
 
-                 {/* {menuOpened && <GoogleReviewsBox placeId={placeId} apiKey={apiKey} />} */}
+        </div>
+        <div className="absolute w-16 h-24 bg-white blur-[50px] -left-1/2 -top-1/2" />
+      </div>
+          </div> 
+
+
 
   
 
@@ -837,7 +646,9 @@ Call Us      </p>
       </div> 
 
 
-               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4 xl:hidden z-[2147483643] mobile-fade-in ${menuOpened ? 'hidden' : 'block'}`}>
+               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4 xl:hidden block z-[2147483643] mobile-fade-in 
+                ${menuOpened ? 'hidden' : 'block'}`}
+                >
             
             
                {(section === 0 && !menuOpened) && (
