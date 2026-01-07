@@ -111,7 +111,7 @@ const [showPassword, setShowPassword] = useState(false);
 
 const onLoginSubmit = async (e) => {
   e.preventDefault();
-  await login(email, password);
+  await login(email.trim(), password);
 };
 
 const onSignupSubmit = async (e) => {
