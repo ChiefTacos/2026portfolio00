@@ -107,6 +107,7 @@ const login = useStore((state) => state.login);
 const signup = useStore((state) => state.signup);
 const resetPassword = useStore((state) => state.resetPassword);
 const logout = useStore((state) => state.logout);
+const [showPassword, setShowPassword] = useState(false);
 
 const onLoginSubmit = async (e) => {
   e.preventDefault();
@@ -550,13 +551,20 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                         required
                                       />
                                       <input 
-                                        type="password" 
+                                        type={showPassword ? "text" : "password"}
                                         placeholder="Password"
                                         value={password} // Add this
                                         onChange={(e) => setPassword(e.target.value)} // Add this
                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
                                         required
                                       />
+                                      <button 
+                                      type="button"
+                                      onClick={() => setShowPassword(!showPassword)}
+                                      className="absolute right-12 bottom-1/3 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
+                                    >
+                                      {showPassword ? "HIDE" : "SHOW"}
+                                    </button>
                                       <button 
                                         type="submit"
                                         className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-colors"
@@ -590,14 +598,22 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                         required
                                       />
                                       <div className="col-span-2 space-y-2">
+                                        
                                       <input 
-                                        type="password" 
+                                        type={showPassword ? "text" : "password"}
                                         placeholder="Create Password"
                                         value={signupPassword}
                                         onChange={(e) => setSignupPassword(e.target.value)}
                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800 large-dots"
                                         required
                                       />
+                                      <button 
+                                      type="button"
+                                      onClick={() => setShowPassword(!showPassword)}
+                                      className="absolute right-12 top-[248px] -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
+                                    >
+                                      {showPassword ? "HIDE" : "SHOW"}
+                                    </button>
                                       
                                       {/* PASSWORD STRENGTH METER */}
                                       <div className="flex gap-1 h-1.5 w-full mt-1">

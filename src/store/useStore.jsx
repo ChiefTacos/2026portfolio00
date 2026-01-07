@@ -85,13 +85,20 @@ user: null,
     });
   },
 
-  login: async (email, password) => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
+login: async (email, password) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    // Standardize the error message
+    if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+      alert("Invalid email or password. Please try again.");
+    } else if (error.code === 'auth/user-not-found') {
+      alert("No account found with this email.");
+    } else {
       alert(error.message);
     }
-  },
+  }
+},
 
   signup: async (email, password) => {
     try {
