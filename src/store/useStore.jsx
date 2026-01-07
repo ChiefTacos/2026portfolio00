@@ -1,4 +1,11 @@
 import { create } from 'zustand'
+import { auth } from '../firebase';
+import { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  onAuthStateChanged,
+  signOut 
+} from "firebase/auth";
 
 export const useStore = create((set) => ({
   // Music State
@@ -65,4 +72,36 @@ export const useStore = create((set) => ({
     }
   })),
   
+
+
+  // sign in
+user: null,
+  authLoading: true,
+
+  // Initialize Auth Listener (Call this once when app starts)
+  initAuth: () => {
+    onAuthStateChanged(auth, (user) => {
+      set({ user, authLoading: false });
+    });
+  },
+
+  login: async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      alert(error.message);
+    }
+  },
+
+  signup: async (email, password) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      alert(error.message);
+    }
+  },
+
+  logout: () => signOut(auth),
+
+
 }))

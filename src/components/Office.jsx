@@ -78,18 +78,6 @@ const handleInputChange = (id, value) => {
 const { currentTime, duration, isPlaying, prevTrack, nextTrack, togglePlay, setPlaying } = useStore();
 const rewindInterval = useRef(null);
 
-// Rewind Logic
-const startRewind = () => {
-  setPlaying(false); // Pause while rewinding
-  rewindInterval.current = setInterval(() => {
-    window.__AUDIO_ENGINE__?.rewind(5); // 5 seconds per tick
-  }, 200); // Ticks every 200ms (5 times a second)
-};
-
-const stopRewind = () => {
-  clearInterval(rewindInterval.current);
-  setPlaying(true); // Resume playing
-};
 
 // Formatting helper: 0:00
 const formatTime = (time) => {
@@ -99,9 +87,21 @@ const formatTime = (time) => {
 };
 
 
-
-
-
+//login page
+const [view, setView] = useState("login"); // "login" or "reset", or "signup"
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [signupPassword, setSignupPassword] = useState("");
+const [showTermsModal, setShowTermsModal] = useState(false);
+const user = useStore((state) => state.user);
+const getStrength = (pw) => {
+  let score = 0;
+  if (pw.length >= 8) score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9!@#$%^&*]/.test(pw)) score++;
+  return score; // Returns 0, 1, 2, or 3
+};
+const strength = getStrength(signupPassword);
 
 
 
@@ -450,7 +450,8 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                 //     lg:w-[70vw] lg:max-w-[1400px]
 
                 // "
-                className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-700 overflow-hidden 
+                className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-700 
+                overflow-y-auto custom-scrollbar 
   min-h-[110vh] max-h-[130vh] lg:min-h-[80vh] lg:max-h-[110vh]
   w-[100vw] max-w-[1000px] md:w-[90vw] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1400px]`}
 
@@ -509,16 +510,217 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
 
           <div className="card__content w-full">
-            {id === "freeQ" ? (
-                  // Special simple overlay for freeQ — just a button to jump to section 1
-                  <div className="flex justify-center items-center h-full">
-                    <button
-                      onClick={() =>   jumpToSection(goToSection)}
-                      className="px-12 py-6 bg-yellow-600 hover:bg-yellow-700 text-white text-3xl lg:text-5xl rounded-lg font-bold shadow-lg transition-all duration-300 hover:scale-105"
-                    >
-                      Explore SirMurOS NOW
-                    </button>
-                  </div>
+            {id === "freeQ" ?
+            
+            (
+                  // Special simple overlay for login and reset pass
+                  
+                                        <div className="flex flex-col justify-center items-center h-full w-full max-w-2xl mx-auto p-6">
+
+  
+    
+  
+                                  {view === "login" && (
+                                    /* LOGIN FORM */
+                                    <form 
+                                      onSubmit={(e) => { e.preventDefault(); console.log("Login logic here"); }}
+                                      className="w-full space-y-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+                                    >
+                                      <h2 className="text-2xl font-bold text-white text-center mb-4">Member Login</h2>
+                                      <input 
+                                        type="email" 
+                                        placeholder="Email Address"
+                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                        required
+                                      />
+                                      <input 
+                                        type="password" 
+                                        placeholder="Password"
+                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                        required
+                                      />
+                                      <button 
+                                        type="submit"
+                                        className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-colors"
+                                      >
+                                        Sign In
+                                      </button>
+                                    </form>
+                                  )}
+
+                                  {view === "signup" && (
+                                    <form 
+                                      onSubmit={(e) => { 
+                                        e.preventDefault(); 
+                                        if(strength < 3) return alert("Please meet all password requirements");
+                                        console.log("Registered!"); 
+                                      }}
+                                      className="w-full grid grid-cols-2 gap-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+                                    >
+                                      <h2 className="col-span-2 text-2xl font-bold text-white text-center mb-2">Create Account</h2>
+                                      <input 
+                                        type="text" 
+                                        placeholder="Full Name"
+                                        className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                        required
+                                      />
+                                      <input 
+                                        type="tel" 
+                                        placeholder="Phone (Optional)"
+                                        className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                      />
+                                      <input 
+                                        type="email" 
+                                        placeholder="Email Address"
+                                        className="col-span-2 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                        required
+                                      />
+                                      <div className="col-span-2 space-y-2">
+                                      <input 
+                                        type="password" 
+                                        placeholder="Create Password"
+                                        value={signupPassword}
+                                        onChange={(e) => setSignupPassword(e.target.value)}
+                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800 large-dots"
+                                        required
+                                      />
+                                      
+                                      {/* PASSWORD STRENGTH METER */}
+                                      <div className="flex gap-1 h-1.5 w-full mt-1">
+                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 1 ? 'bg-red-500' : 'bg-gray-600'}`}></div>
+                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 2 ? 'bg-orange-500' : 'bg-gray-600'}`}></div>
+                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 3 ? 'bg-green-500' : 'bg-gray-600'}`}></div>
+                                      </div>
+                                      
+                                      {/* REQUIREMENTS LIST */}
+                                      <div className="text-[10px] text-gray-300 flex justify-between px-1">
+                                        <span className={signupPassword.length >= 8 ? "text-green-400" : ""}>8+ Chars</span>
+                                        <span className={/[A-Z]/.test(signupPassword) ? "text-green-400" : ""}>1 Uppercase</span>
+                                        <span className={/[0-9!@#$%^&*]/.test(signupPassword) ? "text-green-400" : ""}>1 Num/Spec</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="col-span-2 flex items-center gap-2 py-2">
+                                    <input type="checkbox" id="terms" className="w-5 h-5 accent-yellow-500" required />
+                                    <label htmlFor="terms" className="text-gray-200 text-sm">
+                                      Accept{" "}
+                                      <span 
+                                        onClick={() => setShowTermsModal(true)}
+                                        className="text-yellow-400 underline cursor-pointer hover:text-yellow-300 transition-colors"
+                                      >
+                                        Terms & Conditions
+                                      </span>
+                                    </label>
+                                  </div>
+
+                                    <button 
+                                      type="submit"
+                                      disabled={strength < 3}
+                                      className="col-span-2 py-4 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 disabled:opacity-50 text-white rounded-xl font-bold transition-all"
+                                    >
+                                      {strength < 3 ? "Fix Password to Continue" : "Register Now"}
+                                    </button>
+                                    
+                                    <button type="button" onClick={() => setView("login")} className="col-span-2 text-sm text-gray-300 underline">
+                                      Already have an account? Login
+                                    </button>
+                                  </form>
+                                )}
+                                   {showTermsModal && (
+  /* The Overlay Layer */
+  <div className="block inset-0   items-center justify-center  backdrop-blur-md">
+    
+    <div 
+      className="relative  w-[450px] h-[760px] bg-[#1a1a1a] border border-gray-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
+      onClick={(e) => e.stopPropagation()} // Prevents clicking the modal from closing it
+    >
+      
+      {/* Header */}
+      <div className="w-full p-6 border-b border-gray-800 flex justify-between items-center bg-[#222]">
+        <h3 className="text-xl font-bold text-white">Terms of Service</h3>
+        <button 
+          onClick={() => setShowTermsModal(false)}
+          className="text-gray-400 hover:text-white text-2xl leading-none"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* Scrollable Body - Added w-full */}
+      <div className="w-full flex-grow p-6 overflow-y-auto text-gray-300 text-sm leading-relaxed">
+        <p className="mb-4 text-center">
+          <strong>No Data Storage & Privacy</strong><br />This application is a client-side productivity tool. We do not host, store, or have access to any files, media, or data you upload or interact with. All processing occurs locally on your device. Consequently, we cannot retrieve, delete, or manage any content you use within the app.
+        </p>
+        <p className="mb-4 text-center">
+          <strong>User Responsibility & Conduct</strong> You are solely responsible for the content you upload. By using this app, you agree:
+          <br />Not to engage in any illegal or criminal activity.
+          <br />To comply with all applicable laws of the United States of America.
+          <br />That you own or have the necessary rights to the media you are using.
+
+        </p>
+        <p className="mb-4 text-center">
+          <strong>Limitation of Liability</strong> Since we do not have control over user-uploaded content, we are not liable for any copyright infringement, damages, or legal repercussions resulting from your use of the application. The tool is provided "as-is" for research and productivity purposes.
+        </p>
+        <p className="mb-4 text-center">
+          <strong>DMCA Notice</strong> While we do not host content, we comply with the Digital Millennium Copyright Act. Because all content is local to the user's browser, there is no content on our servers for us to "take down."
+        </p>
+      </div>
+
+      {/* Footer */}
+      
+    </div>
+  </div>
+)}
+                                  {view === "reset" && (
+                                    /* RESET PASSWORD FORM */
+                                    <form 
+                                      onSubmit={(e) => { e.preventDefault(); }}
+                                      className="w-full space-y-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+                                    >
+                                      <h2 className="text-2xl font-bold text-white text-center mb-4">Reset Password</h2>
+                                      <input 
+                                        type="email" 
+                                        placeholder="Email Address"
+                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                        required
+                                      />
+                                      <button className="w-full py-4 bg-yellow-600 text-white rounded-xl font-bold">Send Link</button>
+                                      <button type="button" onClick={() => setView("login")} className="w-full text-sm text-gray-300">Back</button>
+                                    </form>
+                                  )}
+
+                                  {/* INTERMEDIATE LINKS (Between form and Explore button) */}
+                                  {view === "login" && (
+                                    <div className="flex flex-col items-center gap-3 mb-8">
+                                      <button 
+                                        onClick={() => setView("signup")}
+                                        className="px-6 py-2 bg-white/20 hover:bg-white/30 text-white border border-white/40 rounded-full font-semibold transition-all"
+                                      >
+                                        Create an Account
+                                      </button>
+                                      <button 
+                                        onClick={() => setView("reset")}
+                                        className="text-yellow-400 hover:text-yellow-300 underline text-sm font-medium transition-colors"
+                                      >
+                                        Forgot Password?
+                                      </button>
+                                    </div>
+                                  )}
+
+                                  {/* ORIGINAL EXPLORE BUTTON */}
+                                  <button
+                                    onClick={() => jumpToSection(goToSection)}
+                                    className="px-12 py-6 bg-yellow-600 hover:bg-yellow-700 text-white text-3xl lg:text-5xl rounded-lg font-bold shadow-lg transition-all duration-300 hover:scale-105"
+                                  >
+                                    Explore SirMurOS NOW
+                                  </button>
+                                </div>
+
+
+
+
+
+
                 ) : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
                   <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
@@ -686,7 +888,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                               >✕</button>
                             </div>
                           )) : (
-                            <p className="italic text-gray-400 text-center mt-10">Need to be filled with juicy notes.</p>
+                            <p className="italic !text-gray-400 text-center mt-10">Need to be filled with juicy notes.</p>
                           )}
                         </div>
 
@@ -1482,7 +1684,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
       rotation={[Math.PI / 2, -Math.PI / 2, 0]}
       position={[0, 0, 0]}
       distanceFactor={freeQ.distanceFactor}
-      title="Free Cock Suck"
+      title="Free Boopy  Suck"
       description="Customize your sucking and recieve a call or email from us!"
       price="150-300"
       bgColor="bg-yellow-500"
