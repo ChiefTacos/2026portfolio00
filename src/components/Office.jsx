@@ -740,7 +740,11 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                               )}
                                   {/* ORIGINAL EXPLORE BUTTON */}
                                   <button
-                                    onClick={() => jumpToSection(goToSection)}
+                                    onClick={(e) => {
+                                      jumpToSection(goToSection);
+                                      handleResetClick(e); 
+                                      
+                                    }}
                                     className="px-12 py-6 bg-yellow-600 hover:bg-yellow-700 text-white text-3xl lg:text-5xl rounded-lg font-bold shadow-lg transition-all duration-300 hover:scale-105"
                                   >
                                     Explore SirMurOS NOW
