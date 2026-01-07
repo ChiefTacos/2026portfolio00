@@ -101,7 +101,17 @@ user: null,
     }
   },
 
-  logout: () => signOut(auth),
+resetPassword: async (email) => {
+  try {
+    const { sendPasswordResetEmail } = await import("firebase/auth");
+    await sendPasswordResetEmail(auth, email);
+    alert("Reset link sent to your email!");
+  } catch (error) {
+    alert(error.message);
+  }
+},
 
+logout: () => signOut(auth),
 
 }))
+

@@ -12,6 +12,7 @@ import { framerMotionConfig } from "./config";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { DayNightSky } from "./components/DayNightSky";
 import { MobileFOV } from "./components/MobileFOV";
+import { useStore } from "./store/useStore";
 
 function App() {
   const [section, setSection] = useState(0);
@@ -38,6 +39,9 @@ const openOverlay = (id) => {
   setActiveOverlay([id]);  
 };
 
+useEffect(() => {
+  useStore.getState().initAuth();
+}, []);
 
       useEffect(() => {
         setMenuOpened(false);
@@ -74,6 +78,8 @@ const jumpToSection = (index) => {
     }
   });
 };
+
+
 
 
   return (

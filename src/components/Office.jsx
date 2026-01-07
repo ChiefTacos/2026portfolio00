@@ -10,7 +10,7 @@ import { useStore } from '../store/useStore' // Adjust path if needed
 
 
 
-const OverlayItem = ({
+const OverlayItem = ({ 
   className = "",
   title,
   description,
@@ -103,25 +103,27 @@ const getStrength = (pw) => {
 };
 const strength = getStrength(signupPassword);
 
+const login = useStore((state) => state.login);
+const signup = useStore((state) => state.signup);
+const resetPassword = useStore((state) => state.resetPassword);
+const logout = useStore((state) => state.logout);
 
+const onLoginSubmit = async (e) => {
+  e.preventDefault();
+  await login(email, password);
+};
 
-const setCurrentProject = useSetAtom(currentProjectAtom);
+const onSignupSubmit = async (e) => {
+  e.preventDefault();
+  if (strength < 3) return alert("Please meet all password requirements");
+  await signup(email, signupPassword);
+};
 
- function spawnCoin(e) {
-  const coin = document.createElement("div");
-  coin.className = "mario-coin";
-
-  // Position coin above the button
-  const rect = e.currentTarget.getBoundingClientRect();
-  coin.style.left = rect.left + rect.width / 2 + "px";
-  coin.style.top = rect.top + "px";
-
-  document.body.appendChild(coin);
-
-  // Remove after animation
-  setTimeout(() => coin.remove(), 800);
-}
-
+const onResetSubmit = async (e) => {
+  e.preventDefault();
+  await resetPassword(email);
+  setView("login");
+};
 
 const resetFormFields = () => {
   setFullName("");
@@ -133,6 +135,7 @@ const resetFormFields = () => {
   setPhone("");
   setErrors({});
 };
+
 
 
 
@@ -173,14 +176,12 @@ const handleButtonClick = (e) => {
 
   if (isMobileOrTablet) {
     // Mobile: only one at a time
-            spawnCoin(e);
 
     setActiveOverlay([id]);
 
   } else {
     // Desktop: allow multiple
       
-        spawnCoin(e);
 
     setActiveOverlay(prev => {
       if (prev.includes(id)) return prev;
@@ -189,13 +190,7 @@ const handleButtonClick = (e) => {
     });
   }
 // If they submitted before, show confirmation instead of form
-  if (id === "freeQ" && formSubmitted) {
-    setConfirmNewForm(true);
-  } else {
-    setConfirmNewForm(false);
-  }
-  setShowContent(true);
-  setIsClickable(false);
+
 };
 const handleResetClick = (e) => {
   e.stopPropagation();
@@ -518,24 +513,47 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                         <div className="flex flex-col justify-center items-center h-full w-full max-w-2xl mx-auto p-6">
 
   
-    
+    {user ? (
+        <div className="w-full flex flex-col items-center space-y-6 bg-white/10 p-10 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl text-center">
+          <div className="w-24 h-24 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-4xl shadow-lg">
+            {user.email?.charAt(0).toUpperCase() || "U"}
+          </div>
+          <div>
+            <h2 className="text-3xl font-bold text-white">Welcome Back!</h2>
+            <p className="text-gray-300 mt-1">{user.email}</p>
+          </div>
+          
+          <button 
+            onClick={() => useStore.getState().logout()} // Assuming logout is in your store
+            className="w-full py-4 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all transform hover:scale-105"
+          >
+            Logout from SirMurOS
+          </button>
+        </div>
+      ) : (
+        /* 2. IF NOT LOGGED IN, SHOW YOUR EXISTING FORMS */
+        <>
   
                                   {view === "login" && (
                                     /* LOGIN FORM */
                                     <form 
-                                      onSubmit={(e) => { e.preventDefault(); console.log("Login logic here"); }}
+                                     onSubmit={onLoginSubmit}
                                       className="w-full space-y-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
                                     >
                                       <h2 className="text-2xl font-bold text-white text-center mb-4">Member Login</h2>
                                       <input 
                                         type="email" 
                                         placeholder="Email Address"
+                                        value={email} // Add this
+                                        onChange={(e) => setEmail(e.target.value)}
                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
                                         required
                                       />
                                       <input 
                                         type="password" 
                                         placeholder="Password"
+                                        value={password} // Add this
+                                        onChange={(e) => setPassword(e.target.value)} // Add this
                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
                                         required
                                       />
@@ -550,11 +568,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
                                   {view === "signup" && (
                                     <form 
-                                      onSubmit={(e) => { 
-                                        e.preventDefault(); 
-                                        if(strength < 3) return alert("Please meet all password requirements");
-                                        console.log("Registered!"); 
-                                      }}
+                                      onSubmit={onSignupSubmit}
                                       className="w-full grid grid-cols-2 gap-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
                                     >
                                       <h2 className="col-span-2 text-2xl font-bold text-white text-center mb-2">Create Account</h2>
@@ -674,7 +688,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                   {view === "reset" && (
                                     /* RESET PASSWORD FORM */
                                     <form 
-                                      onSubmit={(e) => { e.preventDefault(); }}
+                                     onSubmit={onResetSubmit}
                                       className="w-full space-y-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
                                     >
                                       <h2 className="text-2xl font-bold text-white text-center mb-4">Reset Password</h2>
@@ -706,7 +720,8 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                       </button>
                                     </div>
                                   )}
-
+                        </>
+                              )}
                                   {/* ORIGINAL EXPLORE BUTTON */}
                                   <button
                                     onClick={() => jumpToSection(goToSection)}
