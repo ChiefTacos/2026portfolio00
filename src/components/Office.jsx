@@ -65,9 +65,16 @@ const isVisible = section !== 3;
 const friction = 0.92; // momentum decay
 
 
+//notes
+const [noteContainers, setNoteContainers] = useState(["default"]); // IDs for each section
+const [inputs, setInputs] = useState({}); // Local state for multiple inputs: { "id": "text" }
+const notesMap = useStore((state) => state.notes); // Get the whole notes object
+
+const handleInputChange = (id, value) => {
+  setInputs(prev => ({ ...prev, [id]: value }));
+};
+
 // music
-  const notes = useStore((state) => state.notes)
-const [noteInput, setNoteInput] = useState("");
 const { currentTime, duration, isPlaying, prevTrack, nextTrack, togglePlay, setPlaying } = useStore();
 const rewindInterval = useRef(null);
 
@@ -513,157 +520,219 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                     </button>
                   </div>
                 ) : id === "contactWindow" ? (
-                  // NEW SPECIAL OVERLAY FOR contactWindow
+                  // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
                   <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
     
     {/* LEFT SIDE: MUSIC PLAYER */}
-    <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner">
-      <div className={`w-48 h-48 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl ${isPlaying ? 'animate-spin-slow' : ''}`}>
-        <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-        </svg>
-      </div>
-      
-      <div className="flex items-center gap-8">
-    {/* BACK BUTTON */}
-    <button 
-      onClick={() => {
-        const currentTime = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
-        if (currentTime > 3) {
-          window.__AUDIO_ENGINE__.restart();
-        } else {
-          useStore.getState().prevTrack();
-        }
-      }}
-      className="text-white hover:text-blue-400 transition-colors"
-    >
-      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-    </button>
+                      <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner">
+                        <div className={`w-48 h-48 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl ${isPlaying ? 'animate-spin-slow' : ''}`}>
+                          <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+                          </svg>
+                        </div>
+                        
+                        <div className="flex items-center gap-8">
+                      {/* BACK BUTTON */}
+                      <button 
+                        onClick={() => {
+                          const currentTime = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
+                          if (currentTime > 3) {
+                            window.__AUDIO_ENGINE__.restart();
+                          } else {
+                            useStore.getState().prevTrack();
+                          }
+                        }}
+                        className="text-white hover:text-blue-400 transition-colors"
+                      >
+                        <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                      </button>
 
-    {/* PLAY/PAUSE */}
-    <button
-      onClick={togglePlay}
-      className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${isPlaying ? 'bg-red-500' : 'bg-green-500'}`}
-    >
-      {isPlaying ? (
-        <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-      ) : (
-        <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      )}
-    </button>
+                      {/* PLAY/PAUSE */}
+                      <button
+                        onClick={togglePlay}
+                        className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${isPlaying ? 'bg-red-500' : 'bg-green-500'}`}
+                      >
+                        {isPlaying ? (
+                          <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        ) : (
+                          <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        )}
+                      </button>
 
-    {/* NEXT BUTTON */}
-    <button 
-      onClick={() => useStore.getState().nextTrack()}
-      className="text-white hover:text-blue-400 transition-colors"
-    >
-      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-    </button>
-  </div>
-  
-  <p className="text-gray-400 font-mono text-sm">
-    Track {useStore.getState().currentTrackIndex + 1} of {useStore.getState().tracks.length}
-  </p>
-        {/* PROGRESS SLIDER */}
-        <div className="w-full flex flex-col gap-2 px-2">
-         <input
-            type="range"
-            min="0"
-            max={duration || 0}
-            value={currentTime}
-            onInput={(e) => {
-              const time = Number(e.target.value);
-              window.__AUDIO_ENGINE__?.seek(time);
-            }}
-            className="w-full h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
-          />
-          
-          <div className="flex justify-between text-[10px] text-gray-400 font-mono mt-1">
-            <span>{formatTime(currentTime)}</span>
-            <span>{formatTime(duration)}</span>
-          </div>
-        </div>
-</div>
-
-          {/* RIGHT SIDE: NOTES SYSTEM */}
-      <div className="bg-gray-750 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
-          <span className="text-yellow-500">song</span> Lyrics
-        </h2>
-        
-      </div>
-  </div>
-                ) : (
-                  // Normal Overlay CONTENT for mini services page
-                  <div className="text-center">
-                    {/* MORE INFO BUTTON GOLDEN */}
-                                    
-                    {/* <p className="lg:text-2xl text-xl text-gray-700 mb-4">{description}</p> */}
-                    {/* <img src={src} alt="" className="max-h-[250px] lg:max-h-[500px]" style={{ pointerEvents: "none" }} /> */}
-
-                  
-                    {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center"> */}
-                  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
-
-                          {/* LEFT SIDE: NOTES SYSTEM */}
-                          <div className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
-                            <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
-                              <span className="text-yellow-500">sticky_note_2</span> Office Notes
-                            </h2>
+                      {/* NEXT BUTTON */}
+                      <button 
+                        onClick={() => useStore.getState().nextTrack()}
+                        className="text-white hover:text-blue-400 transition-colors"
+                      >
+                        <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                      </button>
+                    </div>
+                    
+                    <p className="text-gray-400 font-mono text-sm">
+                      Track {useStore.getState().currentTrackIndex + 1} of {useStore.getState().tracks.length}
+                    </p>
+                          {/* PROGRESS SLIDER */}
+                          <div className="w-full flex flex-col gap-2 px-2">
+                          <input
+                              type="range"
+                              min="0"
+                              max={duration || 0}
+                              value={currentTime}
+                              onInput={(e) => {
+                                const time = Number(e.target.value);
+                                window.__AUDIO_ENGINE__?.seek(time);
+                              }}
+                              className="w-full h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                            />
                             
-                            {/* The List of Notes */}
-                            <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
-                              {notes.length > 0 ? notes.map((note, index) => (
-                                <div key={index} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 text-lg shadow-sm">
-                                  {note}
-                                  <button 
-                                    onClick={() => useStore.getState().removeNote(index)}
-                                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
-                                  >
-                                    ✕
-                                  </button>
-                                </div>
-                              )) : (
-                                <div className="flex flex-col items-center justify-center h-full text-gray-400 opacity-60">
-                                  <p className="italic">No notes found for this user.</p>
-                                </div>
-                              )}
-                            </div>
-
-                            {/* NEW: Real Input Field Area */}
-                            <div className="flex flex-col gap-2 mt-auto">
-                              <input 
-                                type="text"
-                                value={noteInput}
-                                onChange={(e) => setNoteInput(e.target.value)}
-                                onKeyDown={(e) => {
-                                  if (e.key === 'Enter' && noteInput.trim()) {
-                                    useStore.getState().addNote(noteInput);
-                                    setNoteInput("");
-                                  }
-                                }}
-                                placeholder="Type a note and press Enter..."
-                                className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-xl outline-none transition-all text-gray-800"
-                              />
-                              <button 
-                                disabled={!noteInput.trim()}
-                                onClick={() => {
-                                  useStore.getState().addNote(noteInput);
-                                  setNoteInput("");
-                                }}
-                                className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-                              >
-                                Save Note
-                              </button>
+                            <div className="flex justify-between text-[10px] text-gray-400 font-mono mt-1">
+                              <span>{formatTime(currentTime)}</span>
+                              <span>{formatTime(duration)}</span>
                             </div>
                           </div>
+                  </div>
+
+                  <div className="bg-gray-750 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full">
+                    <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
+                      <span className="text-yellow-500">song</span> Lyrics
+                    </h2>
+                    
+                  </div>
+              </div>
+                ) : (
+                  // Normal Overlay CONTENT for mini notes page
+                  // <div className="text-center">
+                  
+                  // <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
+
+                  //         {/* LEFT SIDE: NOTES SYSTEM */}
+                  //         <div className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
+                  //           <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
+                  //             <span className="text-yellow-500">sticky_note_2</span> Office Notes
+                  //           </h2>
+                            
+                  //           {/* The List of Notes */}
+                  //           <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
+                  //             {notes.length > 0 ? notes.map((note, index) => (
+                  //               <div key={index} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 text-lg shadow-sm">
+                  //                 {note}
+                  //                 <button 
+                  //                   onClick={() => useStore.getState().removeNote(index)}
+                  //                   className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
+                  //                 >
+                  //                   ✕
+                  //                 </button>
+                  //               </div>
+                  //             )) : (
+                  //               <div className="flex flex-col items-center justify-center h-full  opacity-100">
+                  //                 <p className="italic text-lg !text-gray-900">No notes found for this user.</p>
+                  //               </div>
+                  //             )}
+                  //           </div>
+
+                  //           {/* NEW: Real Input Field Area */}
+                  //           <div className="flex flex-col gap-2 mt-auto">
+                  //             <input 
+                  //               type="text"
+                  //               value={noteInput}
+                  //               onChange={(e) => setNoteInput(e.target.value)}
+                  //               onKeyDown={(e) => {
+                  //                 if (e.key === 'Enter' && noteInput.trim()) {
+                  //                   useStore.getState().addNote(noteInput);
+                  //                   setNoteInput("");
+                  //                 }
+                  //               }}
+                  //               placeholder="Type a note and press Enter..."
+                  //               className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-xl outline-none transition-all text-gray-800"
+                  //             />
+                  //             <button 
+                  //               disabled={!noteInput.trim()}
+                  //               onClick={() => {
+                  //                 useStore.getState().addNote(noteInput);
+                  //                 setNoteInput("");
+                  //               }}
+                  //               className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                  //             >
+                  //               Save Note
+                  //             </button>
+                  //           </div>
+                  //         </div>
 
                    
-                     </div>
+                  //    </div>
 
                      
-                  </div>
+                  // </div>
+              <div className="text-center">
+                <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
                   
+                  {noteContainers.map((id, index) => {
+                    const currentNotes = notesMap[id] || [];
+                    const currentInputValue = inputs[id] || "";
+
+                    return (
+                      <div key={id} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
+                        <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
+                          <span className="text-yellow-500">sticky_note_2</span> Note Board {index + 1}
+                        </h2>
+                        
+                        <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
+                          {currentNotes.length > 0 ? currentNotes.map((note, noteIdx) => (
+                            <div key={noteIdx} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 text-lg shadow-sm text-left">
+                              {note}
+                              <button 
+                                onClick={() => useStore.getState().removeNote(id, noteIdx)}
+                                className="absolute top-5 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
+                              >✕</button>
+                            </div>
+                          )) : (
+                            <p className="italic text-gray-400 text-center mt-10">Need to be filled with juicy notes.</p>
+                          )}
+                        </div>
+
+                        <div className="flex flex-col gap-2 mt-auto">
+                          <input 
+                            type="text"
+                            value={currentInputValue}
+                            onChange={(e) => handleInputChange(id, e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' && currentInputValue.trim()) {
+                                useStore.getState().addNote(id, currentInputValue);
+                                handleInputChange(id, ""); // Clear this specific input
+                              }
+                            }}
+                            placeholder="New note..."
+                            className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 rounded-xl outline-none"
+                          />
+                          <button 
+                            disabled={!currentInputValue.trim()}
+                            onClick={() => {
+                              useStore.getState().addNote(id, currentInputValue);
+                              handleInputChange(id, "");
+                            }}
+                            className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold disabled:bg-gray-300"
+                          >
+                            Save to Board {index + 1}
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* PLUS BUTTON: Creates a unique ID for the new board */}
+                  {noteContainers.length < 9 && (
+                    <button 
+                      onClick={() => setNoteContainers([...noteContainers, `board-${Date.now()}`])}
+                      className="flex items-center justify-center bg-gray-50 border-4 border-dashed border-gray-300 rounded-3xl min-h-[400px] hover:border-blue-400 hover:bg-blue-50 transition-all group"
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <span className="text-6xl text-gray-300 group-hover:text-blue-500">+</span>
+                        <p className="text-gray-400 group-hover:text-blue-500 font-medium">Add New Board</p>
+                      </div>
+                    </button>
+                  )}
+                </div>
+              </div>
                 )}
 
          

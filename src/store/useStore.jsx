@@ -30,17 +30,39 @@ export const useStore = create((set) => ({
  setCurrentTime: (time) => set({ currentTime: time }),
   setDuration: (dur) => set({ duration: dur }),
 
-  // Notes State
-  notes: ["Eat Ass", "Remember to feed the dog."],
 
-  addNote: (text) => set((state) => ({ 
-    notes: [...state.notes, text] 
-  })),
-  
-  removeNote: (index) => set((state) => ({
-    notes: state.notes.filter((_, i) => i !== index)
-  })),
-  // This will be used when we add the upload feature later
+// This will be used when we add the upload feature later
   addTrack: (track) => set((state) => ({ tracks: [...state.tracks, track] })),
 
+  // Notes State OLD
+  // notes: [],
+
+  // addNote: (text) => set((state) => ({ 
+  //   notes: [...state.notes, text] 
+  // })),
+  
+  // removeNote: (index) => set((state) => ({
+  //   notes: state.notes.filter((_, i) => i !== index)
+  // })),
+
+
+  // Notes State: Now an object like { "container-1": ["note1"], "container-2": ["note2"] }
+  notes: {
+    "default": [] 
+  },
+
+  addNote: (containerId, text) => set((state) => ({ 
+    notes: {
+      ...state.notes,
+      [containerId]: [...(state.notes[containerId] || []), text]
+    }
+  })),
+  
+  removeNote: (containerId, noteIndex) => set((state) => ({
+    notes: {
+      ...state.notes,
+      [containerId]: state.notes[containerId].filter((_, i) => i !== noteIndex)
+    }
+  })),
+  
 }))
