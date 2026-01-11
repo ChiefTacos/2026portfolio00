@@ -448,8 +448,8 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                 // "
                 className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-700 
                 overflow-y-auto custom-scrollbar 
-  min-h-[110vh] max-h-[130vh] lg:min-h-[80vh] lg:max-h-[110vh]
-  w-[100vw] max-w-[1000px] md:w-[90vw] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1400px]`}
+  min-h-[110vh] max-h-[130vh] lg:min-h-[90vh] lg:max-h-[100vh]
+  w-[100vw] max-w-[1000px] md:w-[90vw] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1800px]`}
 
                   onPointerDown={isVisible ? handleDragStart : undefined}
 
@@ -459,10 +459,10 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                     left: windowPos.x,
                     top: windowPos.y,
                       
-  width: isFullscreen ? "130vw" : undefined,
-  height: isFullscreen ? "130vh" : undefined,
-  maxWidth: isFullscreen ? "140vw" : undefined,
-  maxHeight: isFullscreen ? "140vh" : undefined,
+  width: isFullscreen ? "120vw" : undefined,
+  height: isFullscreen ? "110vh" : undefined,
+  maxWidth: isFullscreen ? "110vw" : undefined,
+  maxHeight: isFullscreen ? "120vh" : undefined,
   borderRadius: isFullscreen ? "8px" : "12px",
                     transition: isDragging.current ? "none" : "transform 0.2s ease",
                     cursor: "default",
