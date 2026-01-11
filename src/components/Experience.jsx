@@ -220,21 +220,21 @@ export const Experience = (props) => {
                 // rotateY={0}
                 animate={{
                   // X Logic: Section 3 is 2, Sections 1 & 2 are -4.59, Section 0 is 6
-                  x: section === 3 ? 5.4 : (section === 1 || section === 2 ? 6.304  : (isMobile ? 6.3 : 6.3)),
+                  x: section === 3 ? 6.4 : (section === 1 || section === 2 ? 6.304  : (isMobile ? 6.3 : 6.3)),
 
                   // Y Logic: Section 1, 2, and 3 are all 1 unit higher than Section 0 (1 + 1 = 2)
                   // y: section === 0 ? 3.2 : 4.1,
                   y: section === 3 
-                    ? 14.4
+                    ? 9.4
                     : (section === 1 || section === 2 
-                        ? (isMobile ? 3.23 : 3.23) 
-                        : 3.42),
+                        ? (isMobile ? 3.28 : 3.32) 
+                        : 3.52),
                   // Z Logic
                   z: section === 3 
-                    ? -12.4
+                    ? -20.4
                     : (section === 1 || section === 2 
-                        ? (isMobile ? -2.29 : -2.29) 
-                        : -3.2),
+                        ? (isMobile ? -3.39 : -3.25) 
+                        : -3.4),
 
                 
                 }}

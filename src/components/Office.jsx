@@ -539,7 +539,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                     /* LOGIN FORM */
                                     <form 
                                      onSubmit={onLoginSubmit}
-                                      className="w-full space-y-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+                                      className="w-full space-y-4 mb-4 bg-black/70 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
                                     >
                                       <h2 className="text-2xl font-bold text-white text-center mb-4">Member Login</h2>
                                       <input 
@@ -567,7 +567,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                     </button>
                                       <button 
                                         type="submit"
-                                        className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-colors"
+                                        className="w-full py-4 bg-yellow-600 hover:bg-green-700 text-white rounded-xl font-bold transition-colors"
                                       >
                                         Sign In
                                       </button>
@@ -577,7 +577,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                   {view === "signup" && (
                                     <form 
                                       onSubmit={onSignupSubmit}
-                                      className="w-full grid grid-cols-2 gap-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+                                      className="w-full grid grid-cols-2 gap-4 mb-4 bg-black/80 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
                                     >
                                       <h2 className="col-span-2 text-2xl font-bold text-white text-center mb-2">Create Account</h2>
                                       <input 
@@ -705,7 +705,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                     /* RESET PASSWORD FORM */
                                     <form 
                                      onSubmit={onResetSubmit}
-                                      className="w-full space-y-4 mb-4 bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+                                      className="w-full space-y-4 mb-4 bg-black/90 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
                                     >
                                       <h2 className="text-2xl font-bold text-white text-center mb-4">Reset Password</h2>
                                       <input 
@@ -724,13 +724,13 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                                     <div className="flex flex-col items-center gap-3 mb-8">
                                       <button 
                                         onClick={() => setView("signup")}
-                                        className="px-6 py-2 bg-white/20 hover:bg-white/30 text-white border border-white/40 rounded-full font-semibold transition-all"
+                                        className="px-6 py-2 bg-black/20 hover:bg-black/10 text-black border border-white/40 rounded-full font-semibold transition-all"
                                       >
                                         Create an Account
                                       </button>
                                       <button 
                                         onClick={() => setView("reset")}
-                                        className="text-yellow-400 hover:text-yellow-300 underline text-sm font-medium transition-colors"
+                                        className="text-gray-400 hover:text-gray-300 underline text-sm font-medium transition-colors"
                                       >
                                         Forgot Password?
                                       </button>
@@ -1323,8 +1323,8 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
 
   const modelPosition =
   device === "mobile" || device === "tablet"
-    ? [-6.5,  -7,  16.5]   // mobile + tablet
-     : [-6.5, -7, 16.5];     // desktop
+    ? [-6.5,  -7,  17.5]   // mobile + tablet
+     : [-6.5, -7, 17.5];     // desktop
     // : [-9, -3, 0];    
 
 const currentXRotation = (section === 3) ? 0.29 : (section === 0) ? -0.29 : -0.2;
