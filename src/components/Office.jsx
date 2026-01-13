@@ -515,7 +515,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
   
     {user ? (
-        <div className="w-full flex flex-col items-center space-y-6 bg-white/10 p-10 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl text-center">
+        <div className="w-full flex flex-col items-center space-y-6 bg-black/70 p-10 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl text-center ">
           <div className="w-24 h-24 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-4xl shadow-lg">
             {user.email?.charAt(0).toUpperCase() || "U"}
           </div>
@@ -829,12 +829,59 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                           </div>
                   </div>
 
-                  <div className="bg-gray-750 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full">
+                  {/* <div className="bg-gray-750 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full">
                     <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
                       <span className="text-yellow-500">song</span> Lyrics
                     </h2>
                     
                   </div>
+                   */}
+                   {/* RIGHT SIDE: PLAYLIST & LYRICS */}
+  <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
+    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+      <span className="text-blue-500">Your</span> Playlist
+    </h2>
+    
+    {/* PLAYLIST SCROLL AREA */}
+    <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
+      {useStore.getState().tracks.map((track, index) => {
+        const isActive = useStore.getState().currentTrackIndex === index;
+        return (
+          <div 
+            key={index}
+            onClick={() => useStore.getState().selectTrack(index)}
+            className={`p-4 rounded-xl cursor-pointer transition-all border ${
+              isActive 
+                ? 'bg-blue-600/20 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
+                : 'bg-neutral-800 border-transparent hover:bg-neutral-700'
+            }`}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <span className={`text-xs font-mono ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h3 className={`font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>
+                    {track.title}
+                  </h3>
+                  <p className="text-xs text-gray-500">{track.artist}</p>
+                </div>
+              </div>
+              
+              {isActive && isPlaying && (
+                <div className="flex gap-1 items-end h-4">
+                  <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.5s'}}></div>
+                  <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.8s'}}></div>
+                  <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.6s'}}></div>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
               </div>
                 ) : (
                   // Normal Overlay CONTENT for mini notes page
