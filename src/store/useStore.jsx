@@ -1,29 +1,28 @@
   import { create } from 'zustand'
-  import { auth } from '../firebase';
+  import { auth} from '../firebase';
   import { 
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword, 
     onAuthStateChanged,
     signOut 
   } from "firebase/auth";
+// import { doc, getDoc, setDoc } from "firebase/firestore";
+
 
   export const useStore = create((set) => ({
     // Music State
           isPlaying: false,
           currentTrackIndex: 0,
-          currentTime: 0,      // New
-          duration: 0,// New
+          currentTime: 0,      
+          duration: 0,
           // NEW: Navigation State
   activePlaylist: "Now Playing",   // What you see in the UI
   playingPlaylist: "Now Playing",  // What is coming out of the speakers
             // Your MP3s go in the /public/music folder
         // Playlists Object
           playlists: {
-            "Songs": [
-              { title: "Blind Ambition", url: "/music/starter1.mp3", artist: "Admin" },
-              { title: "West Coast Cul-de-sac", url: "/music/starter2.mp3", artist: "Admin" },
-              { title: "Almond Joy", url: "/music/starter3.mp3", artist: "Admin" }
-            ]
+            "Now Playing": [] // Empty array instead of the 3 starter songs
+           
           },
 
     // Actions
@@ -65,13 +64,18 @@
     };
   }),
 
-  addTrackToPlaylist: (playlistName, track) => set((state) => ({
-    playlists: {
-      ...state.playlists,
-      [playlistName]: [...state.playlists[playlistName], track]
-    }
-  })),
-
+  // addTrackToPlaylist: (playlistName, track) => set((state) => ({
+  //   playlists: {
+  //     ...state.playlists,
+  //     [playlistName]: [...state.playlists[playlistName], track]
+  //   }
+  // })),
+addTrackToPlaylist: (playlistName, track) => set((state) => ({
+  playlists: {
+    ...state.playlists,
+    [playlistName]: [...state.playlists[playlistName], track]
+  }
+})),
   setCurrentTime: (time) => set({ currentTime: time }),
     setDuration: (dur) => set({ duration: dur }),
 

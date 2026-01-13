@@ -87,6 +87,47 @@ const formatTime = (time) => {
 };
 
 
+// Music Upload
+const [isUploading, setIsUploading] = useState(false);
+const fileInputRef = useRef(null);
+
+const handleFileUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file || file.type !== "audio/mpeg") {
+    alert("Please upload a valid MP3 file.");
+    return;
+  }
+
+  const songTitle = prompt("Enter Song Title:");
+  if (!songTitle) return;
+
+  const artistName = prompt("Enter Artist Name:");
+  if (!artistName) return;
+
+  setIsUploading(true);
+
+  try {
+    // CURRENT LOGIC: Create a local temporary URL
+    const localUrl = URL.createObjectURL(file);
+    
+    const newTrack = {
+      title: songTitle,
+      artist: artistName,
+      url: localUrl,
+      isLocal: true // Tag to identify it's not from Firebase yet
+    };
+
+    useStore.getState().addTrackToPlaylist(useStore.getState().activePlaylist, newTrack);
+    
+  } catch (error) {
+    console.error("Upload failed", error);
+  } finally {
+    setIsUploading(false);
+  }
+};
+
+
+
 //login page
 const [view, setView] = useState("login"); // "login" or "reset", or "signup"
 const [email, setEmail] = useState("");
@@ -996,22 +1037,23 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
     {/* RIGHT SIDE: DYNAMIC PLAYLIST VIEW (UP NEXT / BROWSE) */}
     <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <span className="text-blue-500 font-mono italic">#</span> {useStore.getState().activePlaylist}
-        </h2>
-        <button 
-          onClick={() => {
-            const title = prompt("Track Title:");
-            const url = prompt("Audio URL:");
-            if(title && url) useStore.getState().addTrackToPlaylist(useStore.getState().activePlaylist, { title, url, artist: "Manual" });
-          }}
-          className="bg-neutral-800 hover:bg-neutral-700 text-xs text-blue-400 border border-gray-700 px-3 py-1.5 rounded-lg transition-colors"
-        >
-          + Add Song
-        </button>
-      </div>
-      
+                <div className="flex items-center gap-2">
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handleFileUpload} 
+                        accept=".mp3" 
+                        className="hidden" 
+                      />
+                      <button 
+                        disabled={isUploading}
+                        onClick={() => fileInputRef.current.click()}
+                        className="bg-blue-600 hover:bg-blue-500 text-xs text-white px-4 py-2 rounded-lg transition-all flex items-center gap-2"
+                      >
+                        {isUploading ? "Uploading..." : "+ Upload MP3"}
+                      </button>
+                </div>
+                
       <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
         {useStore.getState().playlists[useStore.getState().activePlaylist]?.length === 0 && (
           <div className="flex flex-col items-center justify-center h-40 text-gray-600 border-2 border-dashed border-gray-800 rounded-2xl">
