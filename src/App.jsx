@@ -39,10 +39,13 @@ const openOverlay = (id) => {
   setActiveOverlay([id]);  
 };
 
-useEffect(() => {
-  useStore.getState().initAuth();
-}, []);
+const initAuth = useStore((state) => state.initAuth);
 
+  useEffect(() => {
+    initAuth(); // This "wakes up" the connection to Firebase
+  }, [initAuth]);
+
+  
       useEffect(() => {
         setMenuOpened(false);
       }, [section]);

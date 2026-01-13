@@ -1,15 +1,15 @@
   import { create } from 'zustand'
-  import { auth} from '../firebase';
+  import { auth, db } from '../firebase';
   import { 
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword, 
     onAuthStateChanged,
     signOut 
   } from "firebase/auth";
-// import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 
-  export const useStore = create((set) => ({
+  export const useStore = create((set, get) => ({
     // Music State
           isPlaying: false,
           currentTrackIndex: 0,
@@ -24,9 +24,92 @@
             "Now Playing": [] // Empty array instead of the 3 starter songs
            
           },
+      // --- AUTH STATE ---
+        user: null,
+        authLoading: true,
+    // --- ACTIONS ---
 
-    // Actions
-  togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
+          // NEW: Fetch user data from Firestore
+          initAuth: () => {
+    onAuthStateChanged(auth, (user) => {
+      set({ user, authLoading: false });
+      if (user) {
+        // Automatically fetch data when user logs in
+        get().fetchUserData(user); 
+      } else {
+        // Clear data on logout
+        set({ 
+          playlists: { "Now Playing": [] }, 
+          notes: { "default": [] } 
+        });
+      }
+    });
+  },
+
+  fetchUserData: async (user) => {
+    if (!user) return;
+    try {
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        console.log("Data loaded from cloud:", data); // Add this to debug!
+        set({ 
+          playlists: data.playlists || { "Now Playing": [] },
+          notes: data.notes || { "default": [] }
+        });
+      } else {
+        // New User: Create their initial doc in Firestore
+        await setDoc(docRef, {
+          playlists: { "Now Playing": [] },
+          notes: { "default": [] }
+        });
+      }
+    } catch (error) {
+      console.error("Error loading user data:", error);
+    }
+  },
+
+  addTrackToPlaylist: async (playlistName, track) => {
+    const { user, playlists } = get(); // get() now works!
+    
+    const updatedPlaylists = {
+      ...playlists,
+      [playlistName]: [...(playlists[playlistName] || []), track]
+    };
+
+    set({ playlists: updatedPlaylists });
+
+    if (user) {
+      try {
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, { playlists: updatedPlaylists }, { merge: true });
+      } catch (error) {
+        console.error("Cloud save failed:", error);
+      }
+    }
+  },
+
+  addPlaylist: async (name) => {
+    const { user, playlists } = get();
+    if (Object.keys(playlists).length >= 10) return;
+
+    const updatedPlaylists = { ...playlists, [name]: [] };
+    set({ playlists: updatedPlaylists, activePlaylist: name });
+
+    if (user) {
+      try {
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, { playlists: updatedPlaylists }, { merge: true });
+      } catch (error) {
+        console.error("Cloud save failed:", error);
+      }
+    }
+  },
+
+
+   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
   
   nextTrack: () => set((state) => {
     const currentList = state.playlists[state.playingPlaylist] || [];
@@ -54,43 +137,9 @@
   }),
 
   setActivePlaylist: (name) => set({ activePlaylist: name }),
-
-  addPlaylist: (name) => set((state) => {
-    const currentCount = Object.keys(state.playlists).length;
-    if (currentCount >= 10) return state; // Max 9 extra + default
-    return {
-      playlists: { ...state.playlists, [name]: [] },
-      activePlaylist: name // Jump to the new one
-    };
-  }),
-
-  // addTrackToPlaylist: (playlistName, track) => set((state) => ({
-  //   playlists: {
-  //     ...state.playlists,
-  //     [playlistName]: [...state.playlists[playlistName], track]
-  //   }
-  // })),
-addTrackToPlaylist: (playlistName, track) => set((state) => ({
-  playlists: {
-    ...state.playlists,
-    [playlistName]: [...state.playlists[playlistName], track]
-  }
-})),
   setCurrentTime: (time) => set({ currentTime: time }),
     setDuration: (dur) => set({ duration: dur }),
 
-
-
-    // Notes State OLD
-    // notes: [],
-
-    // addNote: (text) => set((state) => ({ 
-    //   notes: [...state.notes, text] 
-    // })),
-    
-    // removeNote: (index) => set((state) => ({
-    //   notes: state.notes.filter((_, i) => i !== index)
-    // })),
 
 
     // Notes State: Now an object like { "container-1": ["note1"], "container-2": ["note2"] }
@@ -114,16 +163,7 @@ addTrackToPlaylist: (playlistName, track) => set((state) => ({
     
 
 
-    // sign in
-  user: null,
-    authLoading: true,
 
-    // Initialize Auth Listener (Call this once when app starts)
-    initAuth: () => {
-      onAuthStateChanged(auth, (user) => {
-        set({ user, authLoading: false });
-      });
-    },
 
   login: async (email, password) => {
     try {

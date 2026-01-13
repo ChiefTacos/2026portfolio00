@@ -6,6 +6,8 @@ import * as THREE from "three";
 import { useSetAtom } from "jotai";
 import { currentProjectAtom } from "./Projects";
 import { useStore } from '../store/useStore' // Adjust path if needed
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase";
 
 
 
@@ -90,41 +92,78 @@ const formatTime = (time) => {
 // Music Upload
 const [isUploading, setIsUploading] = useState(false);
 const fileInputRef = useRef(null);
-
 const handleFileUpload = async (e) => {
   const file = e.target.files[0];
-  if (!file || file.type !== "audio/mpeg") {
-    alert("Please upload a valid MP3 file.");
-    return;
-  }
+  const user = useStore.getState().user;
 
-  const songTitle = prompt("Enter Song Title:");
-  if (!songTitle) return;
+  if (!user || !file) return;
 
-  const artistName = prompt("Enter Artist Name:");
-  if (!artistName) return;
-
-  setIsUploading(true);
+  const songTitle = prompt("Song Title:");
+  const artistName = prompt("Artist Name:");
 
   try {
-    // CURRENT LOGIC: Create a local temporary URL
-    const localUrl = URL.createObjectURL(file);
-    
+    setIsUploading(true);
+
+    // 1. Create Storage Reference
+    const fileRef = ref(storage, `users/${user.uid}/music/${Date.now()}_${file.name}`);
+
+    // 2. Upload to Firebase Storage
+    const snapshot = await uploadBytes(fileRef, file);
+
+    // 3. GET THE PERMANENT URL (This is the crucial step!)
+    const permanentUrl = await getDownloadURL(snapshot.ref);
+
+    // 4. Save the PERMANENT URL to the store/database
     const newTrack = {
       title: songTitle,
       artist: artistName,
-      url: localUrl,
-      isLocal: true // Tag to identify it's not from Firebase yet
+      url: permanentUrl, // DO NOT USE URL.createObjectURL(file) here
     };
 
-    useStore.getState().addTrackToPlaylist(useStore.getState().activePlaylist, newTrack);
-    
+    const activePlaylist = useStore.getState().activePlaylist;
+    await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
+
+    alert("Uploaded and saved permanently!");
   } catch (error) {
-    console.error("Upload failed", error);
+    console.error("Upload Error:", error);
   } finally {
     setIsUploading(false);
   }
 };
+// const handleFileUpload = async (e) => {
+//   const file = e.target.files[0];
+//   if (!file || file.type !== "audio/mpeg") {
+//     alert("Please upload a valid MP3 file.");
+//     return;
+//   }
+
+//   const songTitle = prompt("Enter Song Title:");
+//   if (!songTitle) return;
+
+//   const artistName = prompt("Enter Artist Name:");
+//   if (!artistName) return;
+
+//   setIsUploading(true);
+
+//   try {
+//     // CURRENT LOGIC: Create a local temporary URL
+//     const localUrl = URL.createObjectURL(file);
+    
+//     const newTrack = {
+//       title: songTitle,
+//       artist: artistName,
+//       url: localUrl,
+//       isLocal: true // Tag to identify it's not from Firebase yet
+//     };
+
+//     useStore.getState().addTrackToPlaylist(useStore.getState().activePlaylist, newTrack);
+    
+//   } catch (error) {
+//     console.error("Upload failed", error);
+//   } finally {
+//     setIsUploading(false);
+//   }
+// };
 
 
 
