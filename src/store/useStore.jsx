@@ -13,32 +13,64 @@
           currentTrackIndex: 0,
           currentTime: 0,      // New
           duration: 0,// New
-          // Your MP3s go in the /public/music folder
-    tracks: [
-      { title: "Blind Ambition", url: "/music/starter1.mp3", artist: "Admin" },
-      { title: "West Coast Cul-de-sac", url: "/music/starter2.mp3", artist: "Admin" },
-      { title: "Almond Joy", url: "/music/starter3.mp3", artist: "Admin" }
-    ],
+          // NEW: Navigation State
+  activePlaylist: "Now Playing",   // What you see in the UI
+  playingPlaylist: "Now Playing",  // What is coming out of the speakers
+            // Your MP3s go in the /public/music folder
+        // Playlists Object
+          playlists: {
+            "Songs": [
+              { title: "Blind Ambition", url: "/music/starter1.mp3", artist: "Admin" },
+              { title: "West Coast Cul-de-sac", url: "/music/starter2.mp3", artist: "Admin" },
+              { title: "Almond Joy", url: "/music/starter3.mp3", artist: "Admin" }
+            ]
+          },
 
     // Actions
-    togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
-    // Cycles forward and loops to start
-    nextTrack: () => set((state) => ({ 
-      currentTrackIndex: (state.currentTrackIndex + 1) % state.tracks.length,
-      isPlaying: true // Auto-play when skipping
-    })),
-
-    // Cycles backward and loops to end
-    prevTrack: () => set((state) => ({ 
-      currentTrackIndex: (state.currentTrackIndex - 1 + state.tracks.length) % state.tracks.length,
+  togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
+  
+  nextTrack: () => set((state) => {
+    const currentList = state.playlists[state.playingPlaylist] || [];
+    if (currentList.length === 0) return { isPlaying: false };
+    return { 
+      currentTrackIndex: (state.currentTrackIndex + 1) % currentList.length,
       isPlaying: true 
-    })),
-// NEW: Action to play a specific song from the list
-  selectTrack: (index) => set({ 
+    };
+  }),
+
+  prevTrack: () => set((state) => {
+    const currentList = state.playlists[state.playingPlaylist] || [];
+    if (currentList.length === 0) return { isPlaying: false };
+    return { 
+      currentTrackIndex: (state.currentTrackIndex - 1 + currentList.length) % currentList.length,
+      isPlaying: true 
+    };
+  }),
+
+  // Selection: Sets BOTH which song and which playlist is "live"
+  selectTrack: (playlistName, index) => set({ 
+    playingPlaylist: playlistName,
     currentTrackIndex: index, 
     isPlaying: true 
   }),
 
+  setActivePlaylist: (name) => set({ activePlaylist: name }),
+
+  addPlaylist: (name) => set((state) => {
+    const currentCount = Object.keys(state.playlists).length;
+    if (currentCount >= 10) return state; // Max 9 extra + default
+    return {
+      playlists: { ...state.playlists, [name]: [] },
+      activePlaylist: name // Jump to the new one
+    };
+  }),
+
+  addTrackToPlaylist: (playlistName, track) => set((state) => ({
+    playlists: {
+      ...state.playlists,
+      [playlistName]: [...state.playlists[playlistName], track]
+    }
+  })),
 
   setCurrentTime: (time) => set({ currentTime: time }),
     setDuration: (dur) => set({ duration: dur }),

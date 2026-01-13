@@ -17,31 +17,30 @@ import { useStore } from '../store/useStore'
       export function AudioEngine() {
   const {
     isPlaying,
-    tracks,
+    playlists,
+    playingPlaylist,
     currentTrackIndex,
     nextTrack,
     setCurrentTime,
     setDuration
   } = useStore();
+// Logic: Find the track based on which playlist is actually playing
+const currentTracks = playlists[playingPlaylist] || [];
+const trackUrl = currentTracks[currentTrackIndex]?.url;
 
-  const trackUrl = tracks[currentTrackIndex]?.url;
   const audioRef = useRef(null);
 
   // Create audio once
   useEffect(() => {
     const audio = new Audio(trackUrl);
     audioRef.current = audio;
-
     audio.onended = () => nextTrack();
-
     audio.ontimeupdate = () => {
       setCurrentTime(audio.currentTime);
     };
-
     audio.onloadedmetadata = () => {
       setDuration(audio.duration || 0);
     };
-
     // Global API (your existing pattern, just extended)
     window.__AUDIO_ENGINE__ = {
       getCurrentTime: () => audio.currentTime || 0,
@@ -51,28 +50,24 @@ import { useStore } from '../store/useStore'
         setCurrentTime(time);
       }
     };
-
     return () => {
       audio.pause();
       audio.src = "";
     };
   }, []);
 
-  // Play / Pause
-  useEffect(() => {
+useEffect(() => {
     if (!audioRef.current) return;
-    if (isPlaying) audioRef.current.play().catch(() => {});
+    if (isPlaying && trackUrl) audioRef.current.play().catch(() => {});
     else audioRef.current.pause();
   }, [isPlaying]);
 
-  // Track change
   useEffect(() => {
-    if (!audioRef.current) return;
+    if (!audioRef.current || !trackUrl) return;
     audioRef.current.src = trackUrl;
     audioRef.current.load();
-    if (isPlaying) audioRef.current.play();
-  }, [trackUrl]);
-
+    if (isPlaying) audioRef.current.play().catch(() => {});
+  }, [trackUrl]); // This triggers on track index OR playlist change
   return null;
 }
 export const Experience = (props) => {

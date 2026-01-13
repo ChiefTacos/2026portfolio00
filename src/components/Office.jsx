@@ -758,131 +758,303 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
                 ) : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
-                  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
-    
-    {/* LEFT SIDE: MUSIC PLAYER */}
-                      <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner">
-                        <div className={`w-48 h-48 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl ${isPlaying ? 'animate-spin-slow' : ''}`}>
-                          <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-                          </svg>
-                        </div>
+  //                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
+
+  //                        {/* LEFT SIDE: MUSIC PLAYER */}
+  //                      <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner">
+  //                       <div className={`w-48 h-48 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl ${isPlaying ? 'animate-spin-slow' : ''}`}>
+  //                         <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
+  //                           <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+  //                         </svg>
+  //                       </div>
                         
-                        <div className="flex items-center gap-8">
-                      {/* BACK BUTTON */}
-                      <button 
-                        onClick={() => {
-                          const currentTime = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
-                          if (currentTime > 3) {
-                            window.__AUDIO_ENGINE__.restart();
-                          } else {
-                            useStore.getState().prevTrack();
-                          }
-                        }}
-                        className="text-white hover:text-blue-400 transition-colors"
-                      >
-                        <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-                      </button>
+  //                       <div className="flex items-center gap-8">
+  //                     {/* BACK BUTTON */}
+  //                     <button 
+  //                       onClick={() => {
+  //                         const currentTime = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
+  //                         if (currentTime > 3) {
+  //                           window.__AUDIO_ENGINE__.restart();
+  //                         } else {
+  //                           useStore.getState().prevTrack();
+  //                         }
+  //                       }}
+  //                       className="text-white hover:text-blue-400 transition-colors"
+  //                     >
+  //                       <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+  //                     </button>
 
-                      {/* PLAY/PAUSE */}
-                      <button
-                        onClick={togglePlay}
-                        className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${isPlaying ? 'bg-red-500' : 'bg-green-500'}`}
-                      >
-                        {isPlaying ? (
-                          <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                        ) : (
-                          <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        )}
-                      </button>
+  //                     {/* PLAY/PAUSE */}
+  //                     <button
+  //                       onClick={togglePlay}
+  //                       className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${isPlaying ? 'bg-red-500' : 'bg-green-500'}`}
+  //                     >
+  //                       {isPlaying ? (
+  //                         <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+  //                       ) : (
+  //                         <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+  //                       )}
+  //                     </button>
 
-                      {/* NEXT BUTTON */}
-                      <button 
-                        onClick={() => useStore.getState().nextTrack()}
-                        className="text-white hover:text-blue-400 transition-colors"
-                      >
-                        <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-                      </button>
-                    </div>
+  //                     {/* NEXT BUTTON */}
+  //                     <button 
+  //                       onClick={() => useStore.getState().nextTrack()}
+  //                       className="text-white hover:text-blue-400 transition-colors"
+  //                     >
+  //                       <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+  //                     </button>
+  //                   </div>
                     
-                    <p className="text-gray-400 font-mono text-sm">
-                      Track {useStore.getState().currentTrackIndex + 1} of {useStore.getState().tracks.length}
-                    </p>
-                          {/* PROGRESS SLIDER */}
-                          <div className="w-full flex flex-col gap-2 px-2">
-                          <input
-                              type="range"
-                              min="0"
-                              max={duration || 0}
-                              value={currentTime}
-                              onInput={(e) => {
-                                const time = Number(e.target.value);
-                                window.__AUDIO_ENGINE__?.seek(time);
-                              }}
-                              className="w-full h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
-                            />
+  //                   <p className="text-gray-400 font-mono text-sm">
+  //                     Track {useStore.getState().currentTrackIndex + 1} of {useStore.getState().tracks.length}
+  //                   </p>
+  //                         {/* PROGRESS SLIDER */}
+  //                         <div className="w-full flex flex-col gap-2 px-2">
+  //                         <input
+  //                             type="range"
+  //                             min="0"
+  //                             max={duration || 0}
+  //                             value={currentTime}
+  //                             onInput={(e) => {
+  //                               const time = Number(e.target.value);
+  //                               window.__AUDIO_ENGINE__?.seek(time);
+  //                             }}
+  //                             className="w-full h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
+  //                           />
                             
-                            <div className="flex justify-between text-[10px] text-gray-400 font-mono mt-1">
-                              <span>{formatTime(currentTime)}</span>
-                              <span>{formatTime(duration)}</span>
-                            </div>
-                          </div>
-                  </div>
+  //                           <div className="flex justify-between text-[10px] text-gray-400 font-mono mt-1">
+  //                             <span>{formatTime(currentTime)}</span>
+  //                             <span>{formatTime(duration)}</span>
+  //                           </div>
+  //                         </div>
+  //                 </div>
 
-                  {/* <div className="bg-gray-750 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
-                      <span className="text-yellow-500">song</span> Lyrics
-                    </h2>
-                    
-                  </div>
-                   */}
-                   {/* RIGHT SIDE: PLAYLIST & LYRICS */}
-  <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
-    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-      <span className="text-blue-500">Your</span> Playlist
-    </h2>
+                 
+  //                  {/* RIGHT SIDE: PLAYLIST */}
+  // <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
+  //   <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+  //     <span className="text-blue-500">Your</span> Playlist
+  //   </h2>
     
-    {/* PLAYLIST SCROLL AREA */}
-    <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
-      {useStore.getState().tracks.map((track, index) => {
-        const isActive = useStore.getState().currentTrackIndex === index;
+  //   {/* PLAYLIST SCROLL AREA */}
+  //   <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
+  //     {useStore.getState().tracks.map((track, index) => {
+  //       const isActive = useStore.getState().currentTrackIndex === index;
+  //       return (
+  //         <div 
+  //           key={index}
+  //           onClick={() => useStore.getState().selectTrack(index)}
+  //           className={`p-4 rounded-xl cursor-pointer transition-all border ${
+  //             isActive 
+  //               ? 'bg-blue-600/20 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
+  //               : 'bg-neutral-800 border-transparent hover:bg-neutral-700'
+  //           }`}
+  //         >
+  //           <div className="flex items-center justify-between">
+  //             <div className="flex items-center gap-4">
+  //               <span className={`text-xs font-mono ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
+  //                 {String(index + 1).padStart(2, '0')}
+  //               </span>
+  //               <div>
+  //                 <h3 className={`font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>
+  //                   {track.title}
+  //                 </h3>
+  //                 <p className="text-xs text-gray-500">{track.artist}</p>
+  //               </div>
+  //             </div>
+              
+  //             {isActive && isPlaying && (
+  //               <div className="flex gap-1 items-end h-4">
+  //                 <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.5s'}}></div>
+  //                 <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.8s'}}></div>
+  //                 <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.6s'}}></div>
+  //               </div>
+  //             )}
+  //           </div>
+  //         </div>
+  //       );
+  //     })}
+  //   </div>
+  // </div>
+  //             </div>
+  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 h-full overflow-hidden text-white">
+  
+  {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
+  <div className="lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4 overflow-hidden">
+    <div className="flex items-center justify-between px-2">
+      <h3 className="text-xs font-bold uppercase text-gray-500 tracking-widest">Library</h3>
+      <span className="text-[10px] text-gray-600">{Object.keys(useStore.getState().playlists).length} / 10</span>
+    </div>
+
+    <div className="flex flex-col gap-2 overflow-y-auto custom-scrollbar flex-1">
+      {Object.keys(useStore.getState().playlists).map((name) => {
+        const isBrowsing = useStore.getState().activePlaylist === name;
+        const isCurrentlyPlayingList = useStore.getState().playingPlaylist === name;
+        
         return (
-          <div 
-            key={index}
-            onClick={() => useStore.getState().selectTrack(index)}
-            className={`p-4 rounded-xl cursor-pointer transition-all border ${
-              isActive 
-                ? 'bg-blue-600/20 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
-                : 'bg-neutral-800 border-transparent hover:bg-neutral-700'
+          <button
+            key={name}
+            onClick={() => useStore.getState().setActivePlaylist(name)}
+            className={`text-left px-4 py-3 rounded-xl transition-all group ${
+              isBrowsing 
+              ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' 
+              : 'text-gray-400 hover:bg-neutral-800 hover:text-gray-200'
             }`}
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <span className={`text-xs font-mono ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <div>
-                  <h3 className={`font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>
-                    {track.title}
-                  </h3>
-                  <p className="text-xs text-gray-500">{track.artist}</p>
-                </div>
-              </div>
-              
-              {isActive && isPlaying && (
-                <div className="flex gap-1 items-end h-4">
-                  <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.5s'}}></div>
-                  <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.8s'}}></div>
-                  <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.6s'}}></div>
+              <span className="truncate font-medium">{name}</span>
+              {isCurrentlyPlayingList && isPlaying && (
+                <div className="flex gap-0.5 items-end h-3">
+                  <div className="w-0.5 bg-current animate-bounce" style={{animationDuration: '0.4s'}}></div>
+                  <div className="w-0.5 bg-current animate-bounce" style={{animationDuration: '0.7s'}}></div>
                 </div>
               )}
             </div>
-          </div>
+          </button>
         );
       })}
+
+      {/* ADD PLAYLIST BUTTON (Max 10 total) */}
+      {Object.keys(useStore.getState().playlists).length < 10 && (
+        <button 
+          onClick={() => {
+            const name = prompt("Enter new playlist name:");
+            if (name) useStore.getState().addPlaylist(name);
+          }}
+          className="mt-2 border border-dashed border-gray-700 hover:border-blue-500 hover:text-blue-500 p-3 rounded-xl text-sm text-gray-500 transition-colors flex items-center justify-center gap-2"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"/></svg>
+          New Playlist
+        </button>
+      )}
     </div>
   </div>
+
+  {/* MAIN CONTENT AREA (Col 4-12) */}
+  <div className="lg:col-span-9 grid lg:grid-cols-2 gap-8 overflow-hidden">
+    
+    {/* LEFT SIDE: CURRENTLY PLAYING PLAYER */}
+    <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner relative overflow-hidden">
+      {/* Small badge showing which playlist the music is coming from */}
+      <div className="absolute top-4 left-4 flex items-center gap-2 text-[10px] text-gray-500 font-mono uppercase tracking-widest">
+        <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        Playing from: {useStore.getState().playingPlaylist}
+      </div>
+
+      <div className={`w-48 h-48 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl ${isPlaying ? 'animate-spin-slow' : ''}`}>
+        <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+        </svg>
+      </div>
+      
+      <div className="flex items-center gap-8">
+        <button 
+          onClick={() => {
+            const time = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
+            if (time > 3) window.__AUDIO_ENGINE__.restart();
+            else useStore.getState().prevTrack();
+          }}
+          className="text-white hover:text-blue-400 transition-colors"
+        >
+          <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+
+        <button
+          onClick={togglePlay}
+          className={`w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-lg ${isPlaying ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}`}
+        >
+          {isPlaying ? (
+            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          ) : (
+            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          )}
+        </button>
+
+        <button 
+          onClick={() => useStore.getState().nextTrack()}
+          className="text-white hover:text-blue-400 transition-colors"
+        >
+          <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+      </div>
+      
+      <div className="w-full flex flex-col gap-2 px-2">
+        <input
+          type="range"
+          min="0"
+          max={duration || 0}
+          value={currentTime}
+          onInput={(e) => window.__AUDIO_ENGINE__?.seek(Number(e.target.value))}
+          className="w-full h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
+        />
+        <div className="flex justify-between text-[10px] text-gray-400 font-mono">
+          <span>{formatTime(currentTime)}</span>
+          <span>{formatTime(duration)}</span>
+        </div>
+      </div>
+    </div>
+
+    {/* RIGHT SIDE: DYNAMIC PLAYLIST VIEW (UP NEXT / BROWSE) */}
+    <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+          <span className="text-blue-500 font-mono italic">#</span> {useStore.getState().activePlaylist}
+        </h2>
+        <button 
+          onClick={() => {
+            const title = prompt("Track Title:");
+            const url = prompt("Audio URL:");
+            if(title && url) useStore.getState().addTrackToPlaylist(useStore.getState().activePlaylist, { title, url, artist: "Manual" });
+          }}
+          className="bg-neutral-800 hover:bg-neutral-700 text-xs text-blue-400 border border-gray-700 px-3 py-1.5 rounded-lg transition-colors"
+        >
+          + Add Song
+        </button>
+      </div>
+      
+      <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
+        {useStore.getState().playlists[useStore.getState().activePlaylist]?.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-40 text-gray-600 border-2 border-dashed border-gray-800 rounded-2xl">
+            <p className="text-sm">Playlist is empty</p>
+          </div>
+        )}
+
+        {useStore.getState().playlists[useStore.getState().activePlaylist]?.map((track, index) => {
+          const isActuallyPlaying = (useStore.getState().playingPlaylist === useStore.getState().activePlaylist && useStore.getState().currentTrackIndex === index);
+          
+          return (
+            <div 
+              key={index}
+              onClick={() => useStore.getState().selectTrack(useStore.getState().activePlaylist, index)}
+              className={`p-4 rounded-xl cursor-pointer transition-all border group flex items-center justify-between ${
+                isActuallyPlaying 
+                  ? 'bg-blue-600/20 border-blue-500 shadow-lg' 
+                  : 'bg-neutral-800/40 border-transparent hover:bg-neutral-800 hover:border-gray-700'
+              }`}
+            >
+              <div className="flex items-center gap-4">
+                <span className={`text-xs font-mono w-4 ${isActuallyPlaying ? 'text-blue-400' : 'text-gray-500 group-hover:text-gray-300'}`}>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h3 className={`font-medium text-sm ${isActuallyPlaying ? 'text-white' : 'text-gray-300'}`}>
+                    {track.title}
+                  </h3>
+                  <p className="text-[10px] text-gray-500 uppercase tracking-tighter">{track.artist}</p>
+                </div>
               </div>
+              
+              {isActuallyPlaying && (
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-ping"></div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+  </div>
+</div>
                 ) : (
                   // Normal Overlay CONTENT for mini notes page
                   // <div className="text-center">
