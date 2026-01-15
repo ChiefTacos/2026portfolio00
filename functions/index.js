@@ -1,6 +1,4 @@
 const { initializeApp } = require("firebase-admin/app"); 
-initializeApp(); 
-
 const { onObjectFinalized } = require("firebase-functions/v2/storage");
 const { getStorage } = require("firebase-admin/storage");
 const logger = require("firebase-functions/logger");
@@ -9,7 +7,10 @@ const os = require("os");
 const fs = require("fs");
 const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const ffmpeg = require("fluent-ffmpeg");
+
+
 ffmpeg.setFfmpegPath(ffmpegPath);
+initializeApp(); 
 
 exports.compressAudio = onObjectFinalized({ 
   bucket: "portfolio-e7379.firebasestorage.app",
@@ -21,11 +22,12 @@ exports.compressAudio = onObjectFinalized({
   const contentType = event.data.contentType;
 const metadata = event.data.metadata; // Add this line
 
-  // If it's not an MP3 OR if it already has our 'true' flag, EXIT IMMEDIATELY
-  if (!contentType?.startsWith("audio/mpeg") || metadata?.isCompressed === "true") {
-    console.log("File already processed or not MP3. Skipping.");
+// NEW: Stronger Exit Condition
+if (metadata?.isCompressed === "true" || !contentType?.startsWith("audio/mpeg")) {
+    logger.log("File already processed or not audio. Exiting.");
     return null;
   }
+
   const fileName = path.basename(filePath);
   const tempFilePath = path.join(os.tmpdir(), `tmp_${fileName}`);
   const tempOutputPath = path.join(os.tmpdir(), `output_${fileName}`);
@@ -50,13 +52,13 @@ const metadata = event.data.metadata; // Add this line
       destination: filePath,
       metadata: { 
         contentType: "audio/mpeg",
-        customMetadata: { isCompressed: "true" } 
+        metadata: { isCompressed: "true" } 
       },
     });
 
-    // Cleanup temp files
     fs.unlinkSync(tempFilePath);
     fs.unlinkSync(tempOutputPath);
+    logger.log("Compression complete for:", filePath);
   } catch (error) {
     logger.error("Compression failed", error);
   }
