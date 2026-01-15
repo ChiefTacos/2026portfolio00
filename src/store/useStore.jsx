@@ -53,33 +53,31 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
     });
   },
 
-  fetchUserData: async (user) => {
-    if (!user) return;
-    try {
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
+ fetchUserData: async (user) => {
+  if (!user) return;
+  try {
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        console.log("Data loaded from cloud:", data); // Add this to debug!
-        set({ 
-          playlists: data.playlists || { "Now Playing": [] },
-          notes: data.notes || { "default": [] },
-          boardList: data.boardList || ["default"],
-        });
-      } else {
-        // New User: Create their initial doc in Firestore
-        await setDoc(docRef, {
-          playlists: { "Now Playing": [] },
-          notes: { "default": [] },
-          boardList: ["default"], 
-            });
-      }
-    } catch (error) {
-      console.error("Error loading user data:", error);
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      set({ 
+        playlists: data.playlists || { "Now Playing": [] },
+        notes: data.notes || { "default": [] },
+        // FIX: Ensure we fall back to an object, not a string
+        boardList: data.boardList || [{ id: "default", name: "Board 1" }],
+      });
+    } else {
+      await setDoc(docRef, {
+        playlists: { "Now Playing": [] },
+        notes: { "default": [] },
+        boardList: [{ id: "default", name: "Board 1" }], // FIX: Object format
+      });
     }
-  },
-
+  } catch (error) {
+    console.error("Error loading user data:", error);
+  }
+},
   addTrackToPlaylist: async (playlistName, track) => {
     const { user, playlists } = get(); // get() now works!
     
@@ -204,22 +202,31 @@ renameBoard: async (id, newName) => {
     await setDoc(doc(db, "users", user.uid), { boardList: updatedBoards }, { merge: true });
   }
 },
-  // NEW: REMOVE BOARD + CLOUD SYNC
-  removeBoard: async (containerId) => {
-    const { user, boardList, notes } = get();
-    const updatedBoards = boardList.filter(id => id !== containerId);
-    const updatedNotes = { ...notes };
-    delete updatedNotes[containerId];
+// NEW: REMOVE BOARD + CLOUD SYNC (FIXED)
+removeBoard: async (containerId) => {
+  const { user, boardList, notes } = get();
+  
+  // FIX: Filter by board.id because board is now an object
+  const updatedBoards = boardList.filter(board => board.id !== containerId);
+  
+  const updatedNotes = { ...notes };
+  delete updatedNotes[containerId];
 
-    set({ boardList: updatedBoards, notes: updatedNotes });
-    if (user) {
-      await setDoc(doc(db, "users", user.uid), { 
+  set({ boardList: updatedBoards, notes: updatedNotes });
+  
+  if (user) {
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      // We send the new board list and updated notes to Firebase
+      await setDoc(userDocRef, { 
         boardList: updatedBoards, 
         notes: updatedNotes 
       }, { merge: true });
+    } catch (error) {
+      console.error("Failed to delete board from cloud:", error);
     }
-  },
-
+  }
+},
 
   login: async (email, password) => {
     try {
