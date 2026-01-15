@@ -6,8 +6,8 @@
     onAuthStateChanged,
     signOut 
   } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-
+import { doc, getDoc, setDoc, updateDoc, arrayRemove } from "firebase/firestore";
+import { deleteObject, ref as storageRef } from "firebase/storage";
 
   export const useStore = create((set, get) => ({
     // Music State
@@ -135,6 +135,82 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
       isPlaying: true 
     };
   }),
+
+// deleteTrack: async (playlistName, track) => {
+//   const { storage, db, user } = get();
+  
+//   try {
+//     // 1. Delete from Storage
+//     const fileRef = storageRef(storage, track.url); // Use the URL to find the file
+//     await deleteObject(fileRef);
+//     console.log("File deleted from storage");
+
+//     // 2. Delete from Firestore
+//     const playlistRef = doc(db, `users/${user.uid}/playlists`, playlistName);
+//     await updateDoc(playlistRef, {
+//       tracks: arrayRemove(track)
+//     });
+    
+//     // 3. Update local state (Zustand will auto-refresh the UI)
+//     set((state) => {
+//       const updatedPlaylist = state.playlists[playlistName].filter(t => t.url !== track.url);
+//       return {
+//         playlists: { ...state.playlists, [playlistName]: updatedPlaylist }
+//       };
+//     });
+
+//     alert("Track deleted successfully!");
+//   } catch (error) {
+//     console.error("Delete failed:", error);
+//   }
+// },
+deleteTrack: async (playlistName, track) => {
+  // 1. Grab everything from the current state
+  const { user, playlists } = get();
+  
+  // 2. We need to make sure we are using the 'db' we imported at the top of the file
+  // If 'db' is undefined here, that's what causes your error.
+  if (!user || !db) {
+    console.error("User or Database not initialized");
+    return;
+  }
+
+  try {
+    // 3. Delete from Storage
+    const { storage } = await import('../firebase'); 
+    const fileRef = storageRef(storage, track.url);
+    await deleteObject(fileRef).catch(err => console.log("Storage file already gone."));
+
+    // 4. Update the local data
+    const updatedPlaylist = playlists[playlistName].filter(t => t.url !== track.url);
+    const updatedPlaylists = {
+      ...playlists,
+      [playlistName]: updatedPlaylist
+    };
+
+    // 5. Push the new object to Firestore
+    // We use the 'db' imported at the top of your useStore file
+    const userDocRef = doc(db, "users", user.uid); 
+    
+    await updateDoc(userDocRef, { 
+      playlists: updatedPlaylists 
+    });
+
+    // 6. Update local state ONLY after the DB call succeeds
+    set({ playlists: updatedPlaylists });
+
+    alert("Track deleted successfully!");
+  } catch (error) {
+    console.error("Delete failed details:", error);
+    alert("Delete failed: " + error.message);
+  }
+},
+
+
+
+
+
+
 
   // Selection: Sets BOTH which song and which playlist is "live"
   selectTrack: (playlistName, index) => set({ 
