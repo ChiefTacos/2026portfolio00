@@ -46,7 +46,7 @@ const groupRef = useRef(); // Ref for the THREE.Group
 const initialCameraState = useRef({ position: null, quaternion: null });
 const [showContent, setShowContent] = useState(false); // State to control visibility
 const [isClickable, setIsClickable] = useState(true); //prevent bug when going reseting while animation runs
-
+const user = useStore((state) => state.user);
 const [windowPos, setWindowPos] = useState({ x: 0, y: 0 });
 const overlayRef = useRef(null); 
 
@@ -68,13 +68,38 @@ const friction = 0.92; // momentum decay
 
 
 //notes
-const [noteContainers, setNoteContainers] = useState(["default"]); // IDs for each section
-const [inputs, setInputs] = useState({}); // Local state for multiple inputs: { "id": "text" }
-const notesMap = useStore((state) => state.notes); // Get the whole notes object
+const { notes: notesMap, boardList, addBoard, removeBoard, addNote, removeNote } = useStore();
+  const [inputs, setInputs] = useState({});
 
-const handleInputChange = (id, value) => {
-  setInputs(prev => ({ ...prev, [id]: value }));
-};
+  const handleInputChange = (id, value) => {
+    setInputs(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleFileNotesUpload = async (e, containerId) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      // Compression Stream API
+      const stream = new Blob([text]).stream();
+      const compressedStream = stream.pipeThrough(new CompressionStream('gzip'));
+      const compressedBlob = await new Response(compressedStream).blob();
+      
+      // Decompress for display
+      const decompressedStream = compressedBlob.stream().pipeThrough(new DecompressionStream('gzip'));
+      const finalResult = await new Response(decompressedStream).text();
+
+      await addNote(containerId, finalResult);
+      alert(`Compressed file (${compressedBlob.size} bytes) imported!`);
+    } catch (err) {
+      console.error("Compression failed:", err);
+    }
+  };
+
+  const displayName = user?.displayName || user?.email?.split('@')[0] || "Unknown User";
+
+
 
 // music
 const { currentTime, duration, isPlaying, prevTrack, nextTrack, togglePlay, setPlaying } = useStore();
@@ -130,40 +155,6 @@ const handleFileUpload = async (e) => {
     setIsUploading(false);
   }
 };
-// const handleFileUpload = async (e) => {
-//   const file = e.target.files[0];
-//   if (!file || file.type !== "audio/mpeg") {
-//     alert("Please upload a valid MP3 file.");
-//     return;
-//   }
-
-//   const songTitle = prompt("Enter Song Title:");
-//   if (!songTitle) return;
-
-//   const artistName = prompt("Enter Artist Name:");
-//   if (!artistName) return;
-
-//   setIsUploading(true);
-
-//   try {
-//     // CURRENT LOGIC: Create a local temporary URL
-//     const localUrl = URL.createObjectURL(file);
-    
-//     const newTrack = {
-//       title: songTitle,
-//       artist: artistName,
-//       url: localUrl,
-//       isLocal: true // Tag to identify it's not from Firebase yet
-//     };
-
-//     useStore.getState().addTrackToPlaylist(useStore.getState().activePlaylist, newTrack);
-    
-//   } catch (error) {
-//     console.error("Upload failed", error);
-//   } finally {
-//     setIsUploading(false);
-//   }
-// };
 
 
 
@@ -173,7 +164,6 @@ const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [signupPassword, setSignupPassword] = useState("");
 const [showTermsModal, setShowTermsModal] = useState(false);
-const user = useStore((state) => state.user);
 const getStrength = (pw) => {
   let score = 0;
   if (pw.length >= 8) score++;
@@ -838,125 +828,6 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
                 ) : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
-  //                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
-
-  //                        {/* LEFT SIDE: MUSIC PLAYER */}
-  //                      <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner">
-  //                       <div className={`w-48 h-48 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl ${isPlaying ? 'animate-spin-slow' : ''}`}>
-  //                         <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
-  //                           <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-  //                         </svg>
-  //                       </div>
-                        
-  //                       <div className="flex items-center gap-8">
-  //                     {/* BACK BUTTON */}
-  //                     <button 
-  //                       onClick={() => {
-  //                         const currentTime = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
-  //                         if (currentTime > 3) {
-  //                           window.__AUDIO_ENGINE__.restart();
-  //                         } else {
-  //                           useStore.getState().prevTrack();
-  //                         }
-  //                       }}
-  //                       className="text-white hover:text-blue-400 transition-colors"
-  //                     >
-  //                       <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-  //                     </button>
-
-  //                     {/* PLAY/PAUSE */}
-  //                     <button
-  //                       onClick={togglePlay}
-  //                       className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${isPlaying ? 'bg-red-500' : 'bg-green-500'}`}
-  //                     >
-  //                       {isPlaying ? (
-  //                         <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-  //                       ) : (
-  //                         <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-  //                       )}
-  //                     </button>
-
-  //                     {/* NEXT BUTTON */}
-  //                     <button 
-  //                       onClick={() => useStore.getState().nextTrack()}
-  //                       className="text-white hover:text-blue-400 transition-colors"
-  //                     >
-  //                       <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-  //                     </button>
-  //                   </div>
-                    
-  //                   <p className="text-gray-400 font-mono text-sm">
-  //                     Track {useStore.getState().currentTrackIndex + 1} of {useStore.getState().tracks.length}
-  //                   </p>
-  //                         {/* PROGRESS SLIDER */}
-  //                         <div className="w-full flex flex-col gap-2 px-2">
-  //                         <input
-  //                             type="range"
-  //                             min="0"
-  //                             max={duration || 0}
-  //                             value={currentTime}
-  //                             onInput={(e) => {
-  //                               const time = Number(e.target.value);
-  //                               window.__AUDIO_ENGINE__?.seek(time);
-  //                             }}
-  //                             className="w-full h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
-  //                           />
-                            
-  //                           <div className="flex justify-between text-[10px] text-gray-400 font-mono mt-1">
-  //                             <span>{formatTime(currentTime)}</span>
-  //                             <span>{formatTime(duration)}</span>
-  //                           </div>
-  //                         </div>
-  //                 </div>
-
-                 
-  //                  {/* RIGHT SIDE: PLAYLIST */}
-  // <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
-  //   <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-  //     <span className="text-blue-500">Your</span> Playlist
-  //   </h2>
-    
-  //   {/* PLAYLIST SCROLL AREA */}
-  //   <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
-  //     {useStore.getState().tracks.map((track, index) => {
-  //       const isActive = useStore.getState().currentTrackIndex === index;
-  //       return (
-  //         <div 
-  //           key={index}
-  //           onClick={() => useStore.getState().selectTrack(index)}
-  //           className={`p-4 rounded-xl cursor-pointer transition-all border ${
-  //             isActive 
-  //               ? 'bg-blue-600/20 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
-  //               : 'bg-neutral-800 border-transparent hover:bg-neutral-700'
-  //           }`}
-  //         >
-  //           <div className="flex items-center justify-between">
-  //             <div className="flex items-center gap-4">
-  //               <span className={`text-xs font-mono ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
-  //                 {String(index + 1).padStart(2, '0')}
-  //               </span>
-  //               <div>
-  //                 <h3 className={`font-medium ${isActive ? 'text-white' : 'text-gray-300'}`}>
-  //                   {track.title}
-  //                 </h3>
-  //                 <p className="text-xs text-gray-500">{track.artist}</p>
-  //               </div>
-  //             </div>
-              
-  //             {isActive && isPlaying && (
-  //               <div className="flex gap-1 items-end h-4">
-  //                 <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.5s'}}></div>
-  //                 <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.8s'}}></div>
-  //                 <div className="w-1 bg-blue-500 animate-bounce" style={{animationDuration: '0.6s'}}></div>
-  //               </div>
-  //             )}
-  //           </div>
-  //         </div>
-  //       );
-  //     })}
-  //   </div>
-  // </div>
-  //             </div>
   <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 h-full overflow-hidden text-white">
   
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
@@ -1137,137 +1008,66 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
   </div>
 </div>
                 ) : (
-                  // Normal Overlay CONTENT for mini notes page
-                  // <div className="text-center">
-                  
-                  // <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
-
-                  //         {/* LEFT SIDE: NOTES SYSTEM */}
-                  //         <div className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
-                  //           <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
-                  //             <span className="text-yellow-500">sticky_note_2</span> Office Notes
-                  //           </h2>
-                            
-                  //           {/* The List of Notes */}
-                  //           <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
-                  //             {notes.length > 0 ? notes.map((note, index) => (
-                  //               <div key={index} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 text-lg shadow-sm">
-                  //                 {note}
-                  //                 <button 
-                  //                   onClick={() => useStore.getState().removeNote(index)}
-                  //                   className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
-                  //                 >
-                  //                   ✕
-                  //                 </button>
-                  //               </div>
-                  //             )) : (
-                  //               <div className="flex flex-col items-center justify-center h-full  opacity-100">
-                  //                 <p className="italic text-lg !text-gray-900">No notes found for this user.</p>
-                  //               </div>
-                  //             )}
-                  //           </div>
-
-                  //           {/* NEW: Real Input Field Area */}
-                  //           <div className="flex flex-col gap-2 mt-auto">
-                  //             <input 
-                  //               type="text"
-                  //               value={noteInput}
-                  //               onChange={(e) => setNoteInput(e.target.value)}
-                  //               onKeyDown={(e) => {
-                  //                 if (e.key === 'Enter' && noteInput.trim()) {
-                  //                   useStore.getState().addNote(noteInput);
-                  //                   setNoteInput("");
-                  //                 }
-                  //               }}
-                  //               placeholder="Type a note and press Enter..."
-                  //               className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 focus:bg-white rounded-xl outline-none transition-all text-gray-800"
-                  //             />
-                  //             <button 
-                  //               disabled={!noteInput.trim()}
-                  //               onClick={() => {
-                  //                 useStore.getState().addNote(noteInput);
-                  //                 setNoteInput("");
-                  //               }}
-                  //               className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-                  //             >
-                  //               Save Note
-                  //             </button>
-                  //           </div>
-                  //         </div>
-
-                   
-                  //    </div>
-
-                     
-                  // </div>
+                 
               <div className="text-center">
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
                   
-                  {noteContainers.map((id, index) => {
-                    const currentNotes = notesMap[id] || [];
-                    const currentInputValue = inputs[id] || "";
+{boardList.map((id, index) => {
+  
+        const currentNotes = notesMap[id] || [];
+        const currentInputValue = inputs[id] || "";
 
-                    return (
-                      <div key={id} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
-                        <h2 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 flex items-center gap-2">
-                          <span className="text-yellow-500">sticky_note_2</span> Note Board {index + 1}
-                        </h2>
-                        
-                        <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
-                          {currentNotes.length > 0 ? currentNotes.map((note, noteIdx) => (
-                            <div key={noteIdx} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 text-lg shadow-sm text-left">
-                              {note}
-                              <button 
-                                onClick={() => useStore.getState().removeNote(id, noteIdx)}
-                                className="absolute top-5 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
-                              >✕</button>
-                            </div>
-                          )) : (
-                            <p className="italic !text-gray-400 text-center mt-10">Need to be filled with juicy notes.</p>
-                          )}
-                        </div>
+        return (
+          <div key={id} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
+            <div className="flex justify-between items-start mb-4 border-b pb-2">
+              <div>
+                <span className="text-[10px] uppercase text-blue-500 font-bold tracking-widest">{displayName}'s Workspace</span>
+                <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                   Board {index + 1}
+                </h2>
+              </div>
 
-                        <div className="flex flex-col gap-2 mt-auto">
-                          <input 
-                            type="text"
-                            value={currentInputValue}
-                            onChange={(e) => handleInputChange(id, e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' && currentInputValue.trim()) {
-                                useStore.getState().addNote(id, currentInputValue);
-                                handleInputChange(id, ""); // Clear this specific input
-                              }
-                            }}
-                            placeholder="New note..."
-                            className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 rounded-xl outline-none"
-                          />
-                          <button 
-                            disabled={!currentInputValue.trim()}
-                            onClick={() => {
-                              useStore.getState().addNote(id, currentInputValue);
-                              handleInputChange(id, "");
-                            }}
-                            className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold disabled:bg-gray-300"
-                          >
-                            Save to Board {index + 1}
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
+              <div className="flex gap-2">
+                <input type="file" id={`file-${id}`} className="hidden" accept=".txt" onChange={(e) => handleFileUpload(e, id)} />
+                <button onClick={() => document.getElementById(`file-${id}`).click()} className="text-[9px] bg-gray-100 p-2 rounded-lg hover:bg-blue-50 transition-colors">IMPORT TXT</button>
+                <button onClick={() => window.confirm("Delete Board?") && removeBoard(id)} className="text-[9px] bg-gray-100 p-2 rounded-lg hover:bg-red-50 text-red-500 transition-colors">DELETE</button>
+              </div>
+            </div>
 
-                  {/* PLUS BUTTON: Creates a unique ID for the new board */}
-                  {noteContainers.length < 9 && (
-                    <button 
-                      onClick={() => setNoteContainers([...noteContainers, `board-${Date.now()}`])}
-                      className="flex items-center justify-center bg-gray-50 border-4 border-dashed border-gray-300 rounded-3xl min-h-[400px] hover:border-blue-400 hover:bg-blue-50 transition-all group"
-                    >
-                      <div className="flex flex-col items-center gap-2">
-                        <span className="text-6xl text-gray-300 group-hover:text-blue-500">+</span>
-                        <p className="text-gray-400 group-hover:text-blue-500 font-medium">Add New Board</p>
-                      </div>
-                    </button>
-                  )}
+            <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
+              {currentNotes.map((note, noteIdx) => (
+                <div key={noteIdx} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
+                  {note}
+                  <button onClick={() => removeNote(id, noteIdx)} className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity">✕</button>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <input 
+                type="text" 
+                value={currentInputValue} 
+                onChange={(e) => handleInputChange(id, e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && currentInputValue.trim() && (addNote(id, currentInputValue), handleInputChange(id, ""))}
+                placeholder="New note..."
+                className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 rounded-xl outline-none"
+              />
+              <button onClick={() => { addNote(id, currentInputValue); handleInputChange(id, ""); }} disabled={!currentInputValue.trim()} className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold disabled:bg-gray-300">Save to Board {index + 1}</button>
+            </div>
+          </div>
+        );
+      })}
+
+      {boardList.length < 10 && (
+        <button onClick={addBoard} className="flex items-center justify-center bg-gray-50 border-4 border-dashed border-gray-300 rounded-3xl min-h-[400px] hover:border-blue-400 hover:bg-blue-50 transition-all group">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-6xl text-gray-300 group-hover:text-blue-500">+</span>
+            <p className="text-gray-400 group-hover:text-blue-500 font-medium">Add New Board</p>
+          </div>
+        </button>
+      )}
+
+               
                 </div>
               </div>
                 )}

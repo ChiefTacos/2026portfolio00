@@ -27,6 +27,13 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
       // --- AUTH STATE ---
         user: null,
         authLoading: true,
+
+            // Notes State: Now an object like { "container-1": ["note1"], "container-2": ["note2"] }
+    notes: {
+      "default": [] 
+    },
+    boardList: [{ id: "default", name: "Board 1" }],
+
     // --- ACTIONS ---
 
           // NEW: Fetch user data from Firestore
@@ -57,14 +64,16 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
         console.log("Data loaded from cloud:", data); // Add this to debug!
         set({ 
           playlists: data.playlists || { "Now Playing": [] },
-          notes: data.notes || { "default": [] }
+          notes: data.notes || { "default": [] },
+          boardList: data.boardList || ["default"],
         });
       } else {
         // New User: Create their initial doc in Firestore
         await setDoc(docRef, {
           playlists: { "Now Playing": [] },
-          notes: { "default": [] }
-        });
+          notes: { "default": [] },
+          boardList: ["default"], 
+            });
       }
     } catch (error) {
       console.error("Error loading user data:", error);
@@ -142,27 +151,74 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 
 
 
-    // Notes State: Now an object like { "container-1": ["note1"], "container-2": ["note2"] }
-    notes: {
-      "default": [] 
-    },
 
-    addNote: (containerId, text) => set((state) => ({ 
-      notes: {
-        ...state.notes,
-        [containerId]: [...(state.notes[containerId] || []), text]
-      }
-    })),
-    
-    removeNote: (containerId, noteIndex) => set((state) => ({
-      notes: {
-        ...state.notes,
-        [containerId]: state.notes[containerId].filter((_, i) => i !== noteIndex)
-      }
-    })),
-    
+// ADD NOTE + CLOUD SYNC
+  addNote: async (containerId, text) => {
+    const { user, notes } = get();
+    const updatedNotes = {
+      ...notes,
+      [containerId]: [...(notes[containerId] || []), text]
+    };
+    set({ notes: updatedNotes });
+    if (user) {
+      await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+    }
+  },
 
+  // REMOVE NOTE + CLOUD SYNC
+  removeNote: async (containerId, noteIndex) => {
+    const { user, notes } = get();
+    const updatedNotes = {
+      ...notes,
+      [containerId]: notes[containerId].filter((_, i) => i !== noteIndex)
+    };
+    set({ notes: updatedNotes });
+    if (user) {
+      await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+    }
+  },
 
+  // NEW: ADD BOARD + CLOUD SYNC
+addBoard: async () => {
+  const { user, boardList } = get();
+  const newBoard = { 
+    id: `board-${Date.now()}`, 
+    name: `Board ${boardList.length + 1}` 
+  };
+  const updatedBoards = [...boardList, newBoard];
+  
+  set({ boardList: updatedBoards });
+  if (user) {
+    await setDoc(doc(db, "users", user.uid), { boardList: updatedBoards }, { merge: true });
+  }
+},
+//new rename board
+renameBoard: async (id, newName) => {
+  const { user, boardList } = get();
+  const updatedBoards = boardList.map(board => 
+    board.id === id ? { ...board, name: newName } : board
+  );
+
+  set({ boardList: updatedBoards });
+  if (user) {
+    await setDoc(doc(db, "users", user.uid), { boardList: updatedBoards }, { merge: true });
+  }
+},
+  // NEW: REMOVE BOARD + CLOUD SYNC
+  removeBoard: async (containerId) => {
+    const { user, boardList, notes } = get();
+    const updatedBoards = boardList.filter(id => id !== containerId);
+    const updatedNotes = { ...notes };
+    delete updatedNotes[containerId];
+
+    set({ boardList: updatedBoards, notes: updatedNotes });
+    if (user) {
+      await setDoc(doc(db, "users", user.uid), { 
+        boardList: updatedBoards, 
+        notes: updatedNotes 
+      }, { merge: true });
+    }
+  },
 
 
   login: async (email, password) => {
