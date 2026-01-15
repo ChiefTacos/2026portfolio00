@@ -1,3 +1,6 @@
+const { initializeApp } = require("firebase-admin/app"); 
+initializeApp(); 
+
 const { onObjectFinalized } = require("firebase-functions/v2/storage");
 const { getStorage } = require("firebase-admin/storage");
 const logger = require("firebase-functions/logger");
