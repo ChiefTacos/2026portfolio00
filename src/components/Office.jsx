@@ -148,33 +148,35 @@ const handleFileUpload = async (event) => {
 
     // 4. Start Polling for the Cloud Function metadata
     const checkStatus = setInterval(async () => {
-      try {
-        const metadata = await getMetadata(snapshot.ref);
-        
-        // If the Cloud Function has finished and added our flag
-        if (metadata.customMetadata?.isCompressed === "true") {
-          clearInterval(checkStatus);
-          
-          // 5. Get the URL of the compressed file
-          const permanentUrl = await getDownloadURL(snapshot.ref);
-          
-          // 6. Save to your Zustund Store (This updates Firestore & UI)
-          const newTrack = {
-            title: songTitle,
-            artist: artistName,
-            url: permanentUrl,
-          };
+  try {
+    // Instead of using the old snapshot.ref, let's create a fresh reference
+    const freshRef = ref(storage, snapshot.ref.fullPath); 
+    const metadata = await getMetadata(freshRef);
+    
+    console.log("Current Custom Metadata:", metadata.customMetadata);
 
-          const activePlaylist = useStore.getState().activePlaylist;
-          await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
+    if (metadata.customMetadata && metadata.customMetadata.isCompressed === "true") {
+      console.log("MATCH FOUND! Closing spinner.");
+      clearInterval(checkStatus);
+      
+      const permanentUrl = await getDownloadURL(freshRef);
+      
+      const newTrack = {
+        title: songTitle,
+        artist: artistName,
+        url: permanentUrl,
+      };
 
-          setIsProcessing(false);
-          alert("Success! File optimized and added to library.");
-        }
-      } catch (e) {
-        console.log("Checking compression status...");
-      }
-    }, 2000);
+      const activePlaylist = useStore.getState().activePlaylist;
+      await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
+
+      setIsProcessing(false);
+      alert("Success! File optimized and added to library.");
+    }
+  } catch (e) {
+    console.log("Waiting for metadata to update...");
+  }
+}, 3000); // Increased to 3s to give the API breathing room
 
     // Timeout safety: if server takes longer than 90s
     setTimeout(() => {
