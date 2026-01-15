@@ -8,7 +8,11 @@ const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const ffmpeg = require("fluent-ffmpeg");
 ffmpeg.setFfmpegPath(ffmpegPath);
 
-exports.compressAudio = onObjectFinalized({ cpu: 2, memory: "1GiB" }, async (event) => {
+exports.compressAudio = onObjectFinalized({ 
+  bucket: "portfolio-e7379.firebasestorage.app",
+  cpu: 2, 
+  memory: "2GiB" 
+}, async (event) => {
   const fileBucket = event.data.bucket;
   const filePath = event.data.name;
   const contentType = event.data.contentType;
