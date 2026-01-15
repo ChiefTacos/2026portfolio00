@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { useSetAtom } from "jotai";
 import { currentProjectAtom } from "./Projects";
 import { useStore } from '../store/useStore' // Adjust path if needed
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, getMetadata } from "firebase/storage";
 import { storage } from "../firebase";
 
 
@@ -119,6 +119,8 @@ const [isUploading, setIsUploading] = useState(false);
 const [isProcessing, setIsProcessing] = useState(false);
 const fileInputRef = useRef(null);
 
+
+
 const handleFileUpload = async (event) => {
   const file = event.target.files[0];
   const user = useStore.getState().user;
@@ -182,8 +184,10 @@ const checkStatus = setInterval(async () => {
     // THE FIX: Adding a custom 'cacheControl' request or using a fresh fetch
     // Firebase doesn't have a 'force-refresh' flag on getMetadata, 
     // but re-creating the ref and checking customMetadata usually works.
-    const metadata = await getMetadata(freshRef);
-    
+    // debug
+      const metadata = await getMetadata(freshRef);
+      console.log("FULL METADATA OBJECT:", metadata); // Add this!
+
     console.log("Checking Metadata for:", freshRef.name);
     console.log("Custom Metadata Found:", metadata.customMetadata);
 

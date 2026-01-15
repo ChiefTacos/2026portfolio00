@@ -48,11 +48,13 @@ if (metadata?.isCompressed === "true" || !contentType?.startsWith("audio/mpeg"))
     });
 
     // Upload back with "isCompressed" flag in metadata
-    await bucket.upload(tempOutputPath, {
+   await bucket.upload(tempOutputPath, {
       destination: filePath,
       metadata: { 
         contentType: "audio/mpeg",
-        customMetadata: { isCompressed: "true" } 
+        metadata: { 
+          isCompressed: "true" 
+        } 
       },
     });
 
