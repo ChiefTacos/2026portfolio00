@@ -68,7 +68,7 @@ const user = useStore((state) => state.user);
 
 
 //notes
-const { notes: notesMap, boardList, addBoard, removeBoard, addNote, removeNote } = useStore();
+const { notes: notesMap, boardList, addBoard, removeBoard, addNote, removeNote, renameBoard } = useStore();
   const [inputs, setInputs] = useState({});
 const [newlyCreatedId, setNewlyCreatedId] = useState(null);
   const handleInputChange = (id, value) => {
