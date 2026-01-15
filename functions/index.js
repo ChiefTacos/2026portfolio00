@@ -19,10 +19,13 @@ exports.compressAudio = onObjectFinalized({
   const fileBucket = event.data.bucket;
   const filePath = event.data.name;
   const contentType = event.data.contentType;
+const metadata = event.data.metadata; // Add this line
 
-  // Exit if not an MP3 or if we already processed it
-  if (!contentType.startsWith("audio/mpeg") || filePath.includes("tmp_")) return null;
-
+  // If it's not an MP3 OR if it already has our 'true' flag, EXIT IMMEDIATELY
+  if (!contentType?.startsWith("audio/mpeg") || metadata?.isCompressed === "true") {
+    console.log("File already processed or not MP3. Skipping.");
+    return null;
+  }
   const fileName = path.basename(filePath);
   const tempFilePath = path.join(os.tmpdir(), `tmp_${fileName}`);
   const tempOutputPath = path.join(os.tmpdir(), `output_${fileName}`);
