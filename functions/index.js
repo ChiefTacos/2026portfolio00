@@ -52,7 +52,7 @@ if (metadata?.isCompressed === "true" || !contentType?.startsWith("audio/mpeg"))
       destination: filePath,
       metadata: { 
         contentType: "audio/mpeg",
-        metadata: { isCompressed: "true" } 
+        customMetadata: { isCompressed: "true" } 
       },
     });
 
