@@ -118,81 +118,80 @@ const formatTime = (time) => {
 const [isUploading, setIsUploading] = useState(false);
 const [isProcessing, setIsProcessing] = useState(false);
 const fileInputRef = useRef(null);
-// const handleFileUpload = async (e) => {
-//   const file = e.target.files[0];
-//   const user = useStore.getState().user;
 
-//   if (!user || !file) return;
-
-//   const songTitle = prompt("Song Title:");
-//   const artistName = prompt("Artist Name:");
-
-//   try {
-//     setIsUploading(true);
-
-//     // 1. Create Storage Reference
-//     const fileRef = ref(storage, `users/${user.uid}/music/${Date.now()}_${file.name}`);
-
-//     // 2. Upload to Firebase Storage
-//     const snapshot = await uploadBytes(fileRef, file);
-
-//     // 3. GET THE PERMANENT URL (This is the crucial step!)
-//     const permanentUrl = await getDownloadURL(snapshot.ref);
-
-//     // 4. Save the PERMANENT URL to the store/database
-//     const newTrack = {
-//       title: songTitle,
-//       artist: artistName,
-//       url: permanentUrl, // DO NOT USE URL.createObjectURL(file) here
-//     };
-
-//     const activePlaylist = useStore.getState().activePlaylist;
-//     await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
-
-//     alert("Uploaded and saved permanently!");
-//   } catch (error) {
-//     console.error("Upload Error:", error);
-//   } finally {
-//     setIsUploading(false);
-//   }
-// };
 const handleFileUpload = async (event) => {
   const file = event.target.files[0];
-  if (!file) return;
+  const user = useStore.getState().user;
+
+  // 1. Validation and Input Prompts
+  if (!user || !file) return;
+
+  const songTitle = prompt("Song Title:");
+  const artistName = prompt("Artist Name:");
+  
+  if (!songTitle || !artistName) {
+    alert("Title and Artist are required!");
+    return;
+  }
 
   setIsUploading(true);
   
   try {
-    // Step A: Upload to Firebase Storage
-    const storageRef = ref(storage, `music/${file.name}`);
-    await uploadBytes(storageRef, file);
+    // 2. Create Storage Reference (Using your specific user path)
+    const fileRef = ref(storage, `users/${user.uid}/music/${Date.now()}_${file.name}`);
+    
+    // 3. Upload to Firebase Storage
+    const snapshot = await uploadBytes(fileRef, file);
     
     setIsUploading(false);
-    setIsProcessing(true); // Switch to processing mode
+    setIsProcessing(true); // Switch to "Optimizing Bitrate" mode
 
-    // Step B: Poll Firebase every 2 seconds to see if the Cloud Function is done
+    // 4. Start Polling for the Cloud Function metadata
     const checkStatus = setInterval(async () => {
       try {
-        const metadata = await getMetadata(storageRef);
-        // Once the Cloud Function adds 'isCompressed', we know it's ready
+        const metadata = await getMetadata(snapshot.ref);
+        
+        // If the Cloud Function has finished and added our flag
         if (metadata.customMetadata?.isCompressed === "true") {
-          setIsProcessing(false);
           clearInterval(checkStatus);
-          // Optional: trigger a library refresh here
-          alert("File optimized and added to library!");
+          
+          // 5. Get the URL of the compressed file
+          const permanentUrl = await getDownloadURL(snapshot.ref);
+          
+          // 6. Save to your Zustund Store (This updates Firestore & UI)
+          const newTrack = {
+            title: songTitle,
+            artist: artistName,
+            url: permanentUrl,
+          };
+
+          const activePlaylist = useStore.getState().activePlaylist;
+          await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
+
+          setIsProcessing(false);
+          alert("Success! File optimized and added to library.");
         }
       } catch (e) {
-        console.log("Waiting for file...");
+        console.log("Checking compression status...");
       }
     }, 2000);
+
+    // Timeout safety: if server takes longer than 90s
+    setTimeout(() => {
+      if (isProcessing) {
+        clearInterval(checkStatus);
+        setIsProcessing(false);
+        alert("Server is taking longer than usual. Check your library in a minute.");
+      }
+    }, 90000);
 
   } catch (error) {
     console.error("Upload error:", error);
     setIsUploading(false);
     setIsProcessing(false);
+    alert("Upload failed. Check console for details.");
   }
 };
-
 
 //login page
 const [view, setView] = useState("login"); // "login" or "reset", or "signup"
@@ -972,20 +971,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
     {/* RIGHT SIDE: DYNAMIC PLAYLIST VIEW (UP NEXT / BROWSE) */}
     <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
                 <div className="flex items-center gap-2">
-                      {/* <input 
-                        type="file" 
-                        ref={fileInputRef} 
-                        onChange={handleFileUpload} 
-                        accept=".mp3" 
-                        className="hidden" 
-                      />
-                      <button 
-                        disabled={isUploading}
-                        onClick={() => fileInputRef.current.click()}
-                        className="bg-blue-600 hover:bg-blue-500 text-xs text-white px-4 py-2 rounded-lg transition-all flex items-center gap-2"
-                      >
-                        {isUploading ? "Uploading..." : "+ Upload MP3"}
-                      </button> */}
+                      
                       <input 
                         type="file" 
                         ref={fileInputRef} 
