@@ -430,21 +430,9 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
         {/* Inner button content container */}
         <span className="relative block px-1 lg:px-3 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
-          <div className="relative lg:w-[700px] lg:h-[370px] w-[430px] h-[230px]  flex items-center justify-center">
+          <div className="relative lg:w-[600px] lg:h-[370px] w-[370px] h-[230px]  flex items-center justify-center">
             {/* Full-cover video */}
-            <video
-              className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-              autoPlay
-              loop
-              muted
-              playsInline
-              // Replace this with your actual video path
-              src="/videos/eatingAss.mp4"
-              // Optional fallback poster image while loading
-              poster="/textures/sirmur2025.png"
-            >
-              Your browser does not support the video tag.
-            </video>
+            <img src="./textures/turntable.png" alt="" srcset="" />
 
             {/* Optional subtle dark overlay to improve contrast if needed */}
             <div className="absolute inset-0 bg-black opacity-20 rounded-2xl pointer-events-none"></div>
@@ -1165,56 +1153,36 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         <ServiceWindowButton onClick={handleButtonClick} isClickable={isClickable} />
       ) : (
 
+       <div
+      className="
+             
+              relative group scale-100 lg:scale-90  "
+      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
+    >
       <button
-        className="relative inline-block p-px font-semibold leading-6 text-white bg-neutral-200 shadow-2xl cursor-pointer rounded-2xl shadow-emerald-900 transition-all duration-300 ease-in-out hover:scale-100 active:scale-95 lg:scale-90 hover:shadow-emerald-600 z-[50]"
-        type="button"
+        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90
+                   bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600
+                   hover:from-blue-500 hover:via-cyan-400 hover:to-teal-500
+                   shadow-cyan-700 hover:shadow-cyan-500"
         onClick={handleButtonClick}
         onPointerDown={(e) => e.stopPropagation()}
-        style={{
-          cursor: isClickable ? "pointer" : "not-allowed",
-        }}
+        style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
       >
-        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-sky-600 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+        {/* Glow effect (kept exactly the same) */}
+        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
-        <span className="relative z-10  block pr-4  lg:pr-4 pt-3 lg:pt-1 py-3 lg:py-2  rounded-2xl dark:bg-neutral-950 bg-neutral-950">
-          <div className="relative z-10 flex items-center space-x-3 ">
-                {/* <div className="hidden lg:inline "> */}
-                <div className="inline ">
+        {/* Inner button content container */}
+        <span className="relative block px-1 lg:px-3 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
+          <div className="relative lg:w-[600px] lg:h-[370px] w-[370px] h-[230px]  flex items-center justify-center">
+            {/* Full-cover video */}
+            <img src={src} alt="" srcset="" />
 
-                  <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-emerald-300 text-2xl md:text-3xl lg:text-4xl font-bold pointer-events-none">
-                  {title}
-                  </span>
-                </div>
-
-         
-
-                <svg
-                  className={`w-16 h-16 transition-all duration-300
-                            stroke-white fill-white
-                            group-hover:fill-emerald-300
-                            group-hover:stroke-emerald-300
-                            ${section !== 3 ? "animate-slow-scale" : ""} `}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="236"      // centered
-                    y="48"
-                    width="40"   // halfway thickness
-                    height="416" // halfway length
-                    
-                  />
-
-                  <rect
-                    x="48"
-                    y="236"
-                    width="416"  // halfway length
-                    height="40"  // halfway thickness
-                  />
-                </svg>
+            {/* Optional subtle dark overlay to improve contrast if needed */}
+            <div className="absolute inset-0 bg-black opacity-20 rounded-2xl pointer-events-none"></div>
           </div>
         </span>
       </button>
+    </div>
       )}
     </div>
   </div>
