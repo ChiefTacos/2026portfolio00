@@ -116,46 +116,82 @@ const formatTime = (time) => {
 
 // Music Upload
 const [isUploading, setIsUploading] = useState(false);
+const [isProcessing, setIsProcessing] = useState(false);
 const fileInputRef = useRef(null);
-const handleFileUpload = async (e) => {
-  const file = e.target.files[0];
-  const user = useStore.getState().user;
+// const handleFileUpload = async (e) => {
+//   const file = e.target.files[0];
+//   const user = useStore.getState().user;
 
-  if (!user || !file) return;
+//   if (!user || !file) return;
 
-  const songTitle = prompt("Song Title:");
-  const artistName = prompt("Artist Name:");
+//   const songTitle = prompt("Song Title:");
+//   const artistName = prompt("Artist Name:");
 
+//   try {
+//     setIsUploading(true);
+
+//     // 1. Create Storage Reference
+//     const fileRef = ref(storage, `users/${user.uid}/music/${Date.now()}_${file.name}`);
+
+//     // 2. Upload to Firebase Storage
+//     const snapshot = await uploadBytes(fileRef, file);
+
+//     // 3. GET THE PERMANENT URL (This is the crucial step!)
+//     const permanentUrl = await getDownloadURL(snapshot.ref);
+
+//     // 4. Save the PERMANENT URL to the store/database
+//     const newTrack = {
+//       title: songTitle,
+//       artist: artistName,
+//       url: permanentUrl, // DO NOT USE URL.createObjectURL(file) here
+//     };
+
+//     const activePlaylist = useStore.getState().activePlaylist;
+//     await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
+
+//     alert("Uploaded and saved permanently!");
+//   } catch (error) {
+//     console.error("Upload Error:", error);
+//   } finally {
+//     setIsUploading(false);
+//   }
+// };
+const handleFileUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  setIsUploading(true);
+  
   try {
-    setIsUploading(true);
-
-    // 1. Create Storage Reference
-    const fileRef = ref(storage, `users/${user.uid}/music/${Date.now()}_${file.name}`);
-
-    // 2. Upload to Firebase Storage
-    const snapshot = await uploadBytes(fileRef, file);
-
-    // 3. GET THE PERMANENT URL (This is the crucial step!)
-    const permanentUrl = await getDownloadURL(snapshot.ref);
-
-    // 4. Save the PERMANENT URL to the store/database
-    const newTrack = {
-      title: songTitle,
-      artist: artistName,
-      url: permanentUrl, // DO NOT USE URL.createObjectURL(file) here
-    };
-
-    const activePlaylist = useStore.getState().activePlaylist;
-    await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
-
-    alert("Uploaded and saved permanently!");
-  } catch (error) {
-    console.error("Upload Error:", error);
-  } finally {
+    // Step A: Upload to Firebase Storage
+    const storageRef = ref(storage, `music/${file.name}`);
+    await uploadBytes(storageRef, file);
+    
     setIsUploading(false);
+    setIsProcessing(true); // Switch to processing mode
+
+    // Step B: Poll Firebase every 2 seconds to see if the Cloud Function is done
+    const checkStatus = setInterval(async () => {
+      try {
+        const metadata = await getMetadata(storageRef);
+        // Once the Cloud Function adds 'isCompressed', we know it's ready
+        if (metadata.customMetadata?.isCompressed === "true") {
+          setIsProcessing(false);
+          clearInterval(checkStatus);
+          // Optional: trigger a library refresh here
+          alert("File optimized and added to library!");
+        }
+      } catch (e) {
+        console.log("Waiting for file...");
+      }
+    }, 2000);
+
+  } catch (error) {
+    console.error("Upload error:", error);
+    setIsUploading(false);
+    setIsProcessing(false);
   }
 };
-
 
 
 //login page
@@ -936,7 +972,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
     {/* RIGHT SIDE: DYNAMIC PLAYLIST VIEW (UP NEXT / BROWSE) */}
     <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
                 <div className="flex items-center gap-2">
-                      <input 
+                      {/* <input 
                         type="file" 
                         ref={fileInputRef} 
                         onChange={handleFileUpload} 
@@ -949,7 +985,37 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                         className="bg-blue-600 hover:bg-blue-500 text-xs text-white px-4 py-2 rounded-lg transition-all flex items-center gap-2"
                       >
                         {isUploading ? "Uploading..." : "+ Upload MP3"}
+                      </button> */}
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handleFileUpload} 
+                        accept=".mp3" 
+                        className="hidden" 
+                      />
+                      
+                      <button 
+                        disabled={isUploading || isProcessing}
+                        onClick={() => fileInputRef.current.click()}
+                        className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-xs text-white ${
+                          isProcessing ? "bg-amber-600 animate-pulse" : "bg-blue-600 hover:bg-blue-500"
+                        }`}
+                      >
+                        {isUploading && "Uploading to Cloud..."}
+                        {isProcessing && (
+                          <>
+                            <svg className="animate-spin h-3 w-3 text-white" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                            </svg>
+                            Optimizing Bitrate (128kbps)...
+                          </>
+                        )}
+                        {!isUploading && !isProcessing && "+ Upload MP3"}
                       </button>
+                      <p className="text-[10px] text-gray-500 italic">
+                        Files &gt; 128kbps are automatically compressed to save storage.
+                      </p>
                 </div>
                 
       <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
