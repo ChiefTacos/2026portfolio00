@@ -1,32 +1,53 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
+const { onObjectFinalized } = require("firebase-functions/v2/storage");
+const { getStorage } = require("firebase-admin/storage");
 const logger = require("firebase-functions/logger");
+const path = require("path");
+const os = require("os");
+const fs = require("fs");
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+const ffmpeg = require("fluent-ffmpeg");
+ffmpeg.setFfmpegPath(ffmpegPath);
 
-// For cost control, you can set the maximum number of containers that can be
-// running at the same time. This helps mitigate the impact of unexpected
-// traffic spikes by instead downgrading performance. This limit is a
-// per-function limit. You can override the limit for each function using the
-// `maxInstances` option in the function's options, e.g.
-// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
-// functions should each use functions.runWith({ maxInstances: 10 }) instead.
-// In the v1 API, each function can only serve one request per container, so
-// this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+exports.compressAudio = onObjectFinalized({ cpu: 2, memory: "1GiB" }, async (event) => {
+  const fileBucket = event.data.bucket;
+  const filePath = event.data.name;
+  const contentType = event.data.contentType;
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+  // Exit if not an MP3 or if we already processed it
+  if (!contentType.startsWith("audio/mpeg") || filePath.includes("tmp_")) return null;
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+  const fileName = path.basename(filePath);
+  const tempFilePath = path.join(os.tmpdir(), `tmp_${fileName}`);
+  const tempOutputPath = path.join(os.tmpdir(), `output_${fileName}`);
+  const bucket = getStorage().bucket(fileBucket);
+
+  try {
+    // Download original
+    await bucket.file(filePath).download({ destination: tempFilePath });
+
+    // Convert to 128kbps
+    await new Promise((resolve, reject) => {
+      ffmpeg(tempFilePath)
+        .audioBitrate(128)
+        .toFormat("mp3")
+        .on("end", resolve)
+        .on("error", reject)
+        .save(tempOutputPath);
+    });
+
+    // Upload back with "isCompressed" flag in metadata
+    await bucket.upload(tempOutputPath, {
+      destination: filePath,
+      metadata: { 
+        contentType: "audio/mpeg",
+        customMetadata: { isCompressed: "true" } 
+      },
+    });
+
+    // Cleanup temp files
+    fs.unlinkSync(tempFilePath);
+    fs.unlinkSync(tempOutputPath);
+  } catch (error) {
+    logger.error("Compression failed", error);
+  }
+});
