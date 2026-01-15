@@ -46,7 +46,6 @@ const groupRef = useRef(); // Ref for the THREE.Group
 const initialCameraState = useRef({ position: null, quaternion: null });
 const [showContent, setShowContent] = useState(false); // State to control visibility
 const [isClickable, setIsClickable] = useState(true); //prevent bug when going reseting while animation runs
-const user = useStore((state) => state.user);
 const [windowPos, setWindowPos] = useState({ x: 0, y: 0 });
 const overlayRef = useRef(null); 
 
@@ -65,12 +64,13 @@ const velocity = useRef({ x: 0, y: 0 });
 const lastTimestamp = useRef(0);
 const isVisible = section !== 3;
 const friction = 0.92; // momentum decay
+const user = useStore((state) => state.user);
 
 
 //notes
 const { notes: notesMap, boardList, addBoard, removeBoard, addNote, removeNote } = useStore();
   const [inputs, setInputs] = useState({});
-
+const [newlyCreatedId, setNewlyCreatedId] = useState(null);
   const handleInputChange = (id, value) => {
     setInputs(prev => ({ ...prev, [id]: value }));
   };
@@ -1014,83 +1014,117 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                   
 
 {boardList.map((board, index) => {
-  // FIX: Extract the actual string ID from the board object
-  const boardId = board.id || board; // fallback in case data is mixed
-  const currentNotes = notesMap[boardId] || [];
-  const currentInputValue = inputs[boardId] || "";
+        const boardId = board.id || board;
+        const currentNotes = notesMap[boardId] || [];
+        const currentInputValue = inputs[boardId] || "";
 
-  return (
-    // FIX: Use boardId (a string) as the key, not the board object
-    <div key={boardId} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
-      <div className="flex justify-between items-start mb-4 border-b pb-2">
-        <div>
-          <span className="text-[10px] uppercase text-blue-500 font-bold tracking-widest">{displayName}'s Workspace</span>
-          
-          {/* IMPLEMENT RENAME UI HERE */}
-          <div className="relative group">
-            <h2 
-              contentEditable
-              suppressContentEditableWarning
-              onBlur={(e) => {
-                const newName = e.target.innerText.trim();
-                if (!newName) e.target.innerText = board.name;
-                else useStore.getState().renameBoard(boardId, newName);
-              }}
-              onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), e.target.blur())}
-              className="text-2xl font-bold text-gray-800 outline-none hover:bg-gray-50 px-1 rounded cursor-pointer"
-            >
-              {board.name || `Board ${index + 1}`}
-            </h2>
-            <span className="absolute -bottom-4 left-0 text-[9px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">Click to rename</span>
+        // Hook was removed from here!
+
+        return (
+          <div key={boardId} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
+            <div className="flex justify-between items-start mb-4 border-b pb-2">
+              <div className="relative group flex-1">
+                <span className="text-[10px] uppercase text-blue-500 font-bold tracking-widest block mb-1">
+                  {displayName}'s Workspace
+                </span>
+                
+                <div className="flex items-center gap-2">
+                  <h2 
+                    id={`title-${boardId}`}
+                    contentEditable
+                    suppressContentEditableWarning
+                    className={`text-2xl font-bold text-gray-800 outline-none rounded px-1 transition-all ${newlyCreatedId === boardId ? 'bg-blue-50 ring-2 ring-blue-400' : 'hover:bg-gray-100'}`}
+                    onFocus={(e) => {
+                      const range = document.createRange();
+                      range.selectNodeContents(e.target);
+                      window.getSelection().removeAllRanges();
+                      window.getSelection().addRange(range);
+                    }}
+                    onBlur={(e) => {
+                      const newName = e.target.innerText.trim();
+                      if (newName) renameBoard(boardId, newName);
+                      setNewlyCreatedId(null); 
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        e.target.blur();
+                      }
+                    }}
+                  >
+                    {board.name || `Board ${index + 1}`}
+                  </h2>
+
+                  {/* Tooltip logic remains the same, but references the single state above */}
+                  {newlyCreatedId === boardId && (
+                    <div className="flex items-center gap-2 bg-blue-600 text-white px-2 py-1 rounded-lg shadow-lg animate-bounce duration-700">
+                      <span className="text-[10px] font-bold whitespace-nowrap">Rename & Enter?</span>
+                      <button 
+                        onMouseDown={(e) => e.preventDefault()} 
+                        onClick={() => setNewlyCreatedId(null)}
+                        className="bg-white text-blue-600 rounded-full w-4 h-4 flex items-center justify-center text-xs font-bold"
+                      >
+                        ✓
+                      </button>
+                    </div>
+                  )}
+                </div>
+                
+                {!newlyCreatedId && (
+                  <p className="absolute -bottom-4 left-1 text-[9px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Click to rename
+                  </p>
+                )}
+              </div>
+
+              <div className="flex gap-2">
+                <input type="file" id={`file-${boardId}`} className="hidden" accept=".txt" onChange={(e) => handleFileNotesUpload(e, boardId)} />
+                <button onClick={() => document.getElementById(`file-${boardId}`).click()} className="text-[9px] bg-gray-100 p-2 rounded-lg hover:bg-blue-50 transition-colors">IMPORT TXT</button>
+                <button onClick={() => window.confirm("Delete Board?") && removeBoard(boardId)} className="text-[9px] bg-gray-100 p-2 rounded-lg hover:bg-red-50 text-red-500 transition-colors">DELETE</button>
+              </div>
+            </div>
+
+            {/* Notes display and Input area remain exactly as you had them... */}
+            <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
+               {currentNotes.map((note, noteIdx) => (
+                 <div key={noteIdx} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
+                   {note}
+                   <button onClick={() => removeNote(boardId, noteIdx)} className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
+                 </div>
+               ))}
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <input 
+                type="text" 
+                value={currentInputValue} 
+                onChange={(e) => handleInputChange(boardId, e.target.value)}
+                placeholder="New note..."
+                className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 rounded-xl outline-none"
+              />
+              <button onClick={() => { addNote(boardId, currentInputValue); handleInputChange(boardId, ""); }} disabled={!currentInputValue.trim()} className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold">
+                Save Note
+              </button>
+            </div>
           </div>
-        </div>
+        );
+      })}
 
-        <div className="flex gap-2">
-          {/* FIX: Use boardId for file uploads and deletes */}
-          <input type="file" id={`file-${boardId}`} className="hidden" accept=".txt" onChange={(e) => handleFileNotesUpload(e, boardId)} />
-          <button onClick={() => document.getElementById(`file-${boardId}`).click()} className="text-[9px] bg-gray-100 p-2 rounded-lg hover:bg-blue-50 transition-colors">IMPORT TXT</button>
-          <button onClick={() => window.confirm("Delete Board?") && removeBoard(boardId)} className="text-[9px] bg-gray-100 p-2 rounded-lg hover:bg-red-50 text-red-500 transition-colors">DELETE</button>
-        </div>
-      </div>
-
-      <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
-        {currentNotes.map((note, noteIdx) => (
-          <div key={noteIdx} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
-            {note}
-            {/* FIX: Use boardId here */}
-            <button onClick={() => removeNote(boardId, noteIdx)} className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity">✕</button>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <input 
-          type="text" 
-          value={currentInputValue} 
-          // FIX: Use boardId here
-          onChange={(e) => handleInputChange(boardId, e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && currentInputValue.trim() && (addNote(boardId, currentInputValue), handleInputChange(boardId, ""))}
-          placeholder="New note..."
-          className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 rounded-xl outline-none"
-        />
-        <button 
-          // FIX: Use boardId here
-          onClick={() => { addNote(boardId, currentInputValue); handleInputChange(boardId, ""); }} 
-          disabled={!currentInputValue.trim()} 
-          className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold disabled:bg-gray-300"
-        >
-          Save to {board.name || `Board ${index + 1}`}
-        </button>
-      </div>
-    </div>
-  );
-})}
+      {/* Add Board button remains at the bottom, using the same setNewlyCreatedId */}
       {boardList.length < 10 && (
-        <button onClick={addBoard} className="flex items-center justify-center bg-gray-50 border-4 border-dashed border-gray-300 rounded-3xl min-h-[400px] hover:border-blue-400 hover:bg-blue-50 transition-all group">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-6xl text-gray-300 group-hover:text-blue-500">+</span>
-            <p className="text-gray-400 group-hover:text-blue-500 font-medium">Add New Board</p>
-          </div>
+        <button onClick={async () => {
+          const newId = `board-${Date.now()}`;
+          await addBoard(newId);
+          setNewlyCreatedId(newId);
+          setTimeout(() => {
+            const el = document.getElementById(`title-${newId}`);
+            if (el) el.focus();
+          }, 50);
+        }} className="flex items-center justify-center bg-gray-50 border-4 border-dashed border-gray-300 rounded-3xl min-h-[400px] hover:border-blue-400 transition-all group">
+           <div className="flex flex-col items-center gap-2">
+             <span className="text-6xl text-gray-300 group-hover:text-blue-500">+</span>
+             <p className="text-gray-400 group-hover:text-blue-500 font-medium">Add New Board</p>
+           </div>
         </button>
       )}
 

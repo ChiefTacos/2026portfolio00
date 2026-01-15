@@ -177,12 +177,10 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
   },
 
   // NEW: ADD BOARD + CLOUD SYNC
-addBoard: async () => {
+addBoard: async (customId) => {
   const { user, boardList } = get();
-  const newBoard = { 
-    id: `board-${Date.now()}`, 
-    name: `Board ${boardList.length + 1}` 
-  };
+const id = customId || `board-${Date.now()}`;
+  const newBoard = { id, name: `Board ${boardList.length + 1}` };
   const updatedBoards = [...boardList, newBoard];
   
   set({ boardList: updatedBoards });
