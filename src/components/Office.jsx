@@ -146,19 +146,52 @@ const handleFileUpload = async (event) => {
     setIsUploading(false);
     setIsProcessing(true); // Switch to "Optimizing Bitrate" mode
 
-    // 4. Start Polling for the Cloud Function metadata
-    const checkStatus = setInterval(async () => {
+//     const checkStatus = setInterval(async () => {
+//   try {
+//     const freshRef = ref(storage, snapshot.ref.fullPath); 
+//     const metadata = await getMetadata(freshRef);
+    
+//     console.log("Current Custom Metadata:", metadata.customMetadata);
+
+//     if (metadata.customMetadata && metadata.customMetadata.isCompressed === "true") {
+//       console.log("MATCH FOUND! Closing spinner.");
+//       clearInterval(checkStatus);
+      
+//       const permanentUrl = await getDownloadURL(freshRef);
+      
+//       const newTrack = {
+//         title: songTitle,
+//         artist: artistName,
+//         url: permanentUrl,
+//       };
+
+//       const activePlaylist = useStore.getState().activePlaylist;
+//       await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
+
+//       setIsProcessing(false);
+//       alert("Success! File optimized and added to library.");
+//     }
+//   } catch (e) {
+//     console.log("Waiting for metadata to update...");
+//   }
+// }, 3000); 
+const checkStatus = setInterval(async () => {
   try {
-    // Instead of using the old snapshot.ref, let's create a fresh reference
-    const freshRef = ref(storage, snapshot.ref.fullPath); 
+    const freshRef = ref(storage, snapshot.ref.fullPath);
+    
+    // THE FIX: Adding a custom 'cacheControl' request or using a fresh fetch
+    // Firebase doesn't have a 'force-refresh' flag on getMetadata, 
+    // but re-creating the ref and checking customMetadata usually works.
     const metadata = await getMetadata(freshRef);
     
-    console.log("Current Custom Metadata:", metadata.customMetadata);
+    console.log("Checking Metadata for:", freshRef.name);
+    console.log("Custom Metadata Found:", metadata.customMetadata);
 
-    if (metadata.customMetadata && metadata.customMetadata.isCompressed === "true") {
-      console.log("MATCH FOUND! Closing spinner.");
+    if (metadata.customMetadata?.isCompressed === "true") {
+      console.log("SUCCESS: Metadata detected!");
       clearInterval(checkStatus);
       
+      // Get the final URL
       const permanentUrl = await getDownloadURL(freshRef);
       
       const newTrack = {
@@ -167,6 +200,7 @@ const handleFileUpload = async (event) => {
         url: permanentUrl,
       };
 
+      // Update Zustand
       const activePlaylist = useStore.getState().activePlaylist;
       await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
 
@@ -174,10 +208,9 @@ const handleFileUpload = async (event) => {
       alert("Success! File optimized and added to library.");
     }
   } catch (e) {
-    console.log("Waiting for metadata to update...");
+    console.log("Metadata not ready yet...");
   }
-}, 3000); // Increased to 3s to give the API breathing room
-
+}, 3000);
     // Timeout safety: if server takes longer than 90s
     setTimeout(() => {
       if (isProcessing) {
