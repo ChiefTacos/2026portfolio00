@@ -15,15 +15,17 @@ import { deleteObject, ref as storageRef } from "firebase/storage";
           currentTrackIndex: 0,
           currentTime: 0,      
           duration: 0,
-          // NEW: Navigation State
-  activePlaylist: "Now Playing",   // What you see in the UI
-  playingPlaylist: "Now Playing",  // What is coming out of the speakers
+           activePlaylist: "Songs",   // What you see in the UI
+           playingPlaylist: "Songs",  // What is coming out of the speakers
             // Your MP3s go in the /public/music folder
         // Playlists Object
           playlists: {
-            "Now Playing": [] // Empty array instead of the 3 starter songs
+            "Songs": [] // Empty array instead of the 3 starter songs
            
           },
+          volume: 1,
+          repeatMode: 'off', // 'off' | 'one' | 'all'
+          isShuffled: false,
       // --- AUTH STATE ---
         user: null,
         authLoading: true,
@@ -46,7 +48,7 @@ import { deleteObject, ref as storageRef } from "firebase/storage";
       } else {
         // Clear data on logout
         set({ 
-          playlists: { "Now Playing": [] }, 
+          playlists: { "Songs": [] }, 
           notes: { "default": [] } 
         });
       }
@@ -62,14 +64,14 @@ import { deleteObject, ref as storageRef } from "firebase/storage";
     if (docSnap.exists()) {
       const data = docSnap.data();
       set({ 
-        playlists: data.playlists || { "Now Playing": [] },
+        playlists: data.playlists || { "Songs": [] },
         notes: data.notes || { "default": [] },
         // FIX: Ensure we fall back to an object, not a string
         boardList: data.boardList || [{ id: "default", name: "Board 1" }],
       });
     } else {
       await setDoc(docRef, {
-        playlists: { "Now Playing": [] },
+        playlists: { "Songs": [] },
         notes: { "default": [] },
         boardList: [{ id: "default", name: "Board 1" }], // FIX: Object format
       });
@@ -116,17 +118,110 @@ import { deleteObject, ref as storageRef } from "firebase/storage";
   },
 
 
-   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
-  
-  nextTrack: () => set((state) => {
-    const currentList = state.playlists[state.playingPlaylist] || [];
-    if (currentList.length === 0) return { isPlaying: false };
-    return { 
-      currentTrackIndex: (state.currentTrackIndex + 1) % currentList.length,
-      isPlaying: true 
-    };
+
+  // NEW VOLUME AND SHUFFLE/REPEAT
+preMuteVolume: 1, // Store the volume level before muting
+
+  setVolume: (val) => {
+    set({ volume: val, preMuteVolume: val > 0 ? val : get().preMuteVolume });
+    if (window.__AUDIO_ENGINE__) window.__AUDIO_ENGINE__.setVolume(val);
+  },
+
+  toggleMute: () => {
+    const { volume, preMuteVolume, setVolume } = get();
+    if (volume > 0) {
+      setVolume(0); // Mute
+    } else {
+      setVolume(preMuteVolume || 0.5); // Unmute to previous level or 50%
+    }
+  },
+  toggleShuffle: () => set((state) => ({ isShuffled: !state.isShuffled })),
+
+  toggleRepeat: () => set((state) => {
+    const modes = ['off', 'all', 'one'];
+    const nextIndex = (modes.indexOf(state.repeatMode) + 1) % modes.length;
+    return { repeatMode: modes[nextIndex] };
   }),
 
+   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
+      // nextTrack: () => {
+      //   const state = get();
+      //   const currentList = state.playlists[state.playingPlaylist] || [];
+      //   if (currentList.length === 0) return set({ isPlaying: false });
+
+      //   // 1. Handle REPEAT ONE
+      //   if (state.repeatMode === 'one') {
+      //     if (window.__AUDIO_ENGINE__) window.__AUDIO_ENGINE__.restart();
+      //     return set({ isPlaying: true, currentTime: 0 });
+      //   }
+
+      //   let nextIndex;
+      //   // 2. Handle SHUFFLE
+      //   if (state.isShuffled && currentList.length > 1) {
+      //     let randomIndex = state.currentTrackIndex;
+      //     while (randomIndex === state.currentTrackIndex) {
+      //       randomIndex = Math.floor(Math.random() * currentList.length);
+      //     }
+      //     nextIndex = randomIndex;
+      //   } else {
+      //     nextIndex = state.currentTrackIndex + 1;
+      //   }
+
+      //   // 3. Handle End of List / REPEAT ALL
+      //   if (nextIndex >= currentList.length) {
+      //     if (state.repeatMode === 'all') {
+      //       nextIndex = 0;
+      //     } else {
+      //       // Stop playback if not repeating all
+      //       return set({ isPlaying: false, currentTrackIndex: 0 });
+      //     }
+      //   }
+
+      //   set({ currentTrackIndex: nextIndex, isPlaying: true });
+      // }, 
+
+nextTrack: () => {
+    const state = get();
+    const currentList = state.playlists[state.playingPlaylist] || [];
+    if (currentList.length === 0) return set({ isPlaying: false });
+
+    // --- 1. HANDLE REPEAT 'ONE' (Infinite Loop) ---
+    if (state.repeatMode === 'one') {
+      if (window.__AUDIO_ENGINE__) window.__AUDIO_ENGINE__.restart();
+      return set({ isPlaying: true, currentTime: 0 });
+    }
+
+    // --- 2. HANDLE "REPEAT ONCE" (The 'all' highlight) ---
+    // If repeatMode is 'all', we replay the current index, then flip repeat to 'off'
+    if (state.repeatMode === 'all') {
+      if (window.__AUDIO_ENGINE__) window.__AUDIO_ENGINE__.restart();
+      return set({ 
+        isPlaying: true, 
+        currentTime: 0, 
+        repeatMode: 'off' // Automatically turn off after this repeat
+      });
+    }
+
+    // --- 3. HANDLE SHUFFLE ---
+    let nextIndex;
+    if (state.isShuffled && currentList.length > 1) {
+      // Pick a random index that isn't the current one
+      let randomIndex = state.currentTrackIndex;
+      while (randomIndex === state.currentTrackIndex) {
+        randomIndex = Math.floor(Math.random() * currentList.length);
+      }
+      nextIndex = randomIndex;
+    } else {
+      nextIndex = state.currentTrackIndex + 1;
+    }
+
+    // --- 4. END OF PLAYLIST LOGIC ---
+    if (nextIndex >= currentList.length) {
+      return set({ isPlaying: false, currentTrackIndex: 0 });
+    }
+
+    set({ currentTrackIndex: nextIndex, isPlaying: true });
+  },
   prevTrack: () => set((state) => {
     const currentList = state.playlists[state.playingPlaylist] || [];
     if (currentList.length === 0) return { isPlaying: false };

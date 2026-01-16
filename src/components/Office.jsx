@@ -102,8 +102,15 @@ const [newlyCreatedId, setNewlyCreatedId] = useState(null);
 
 
 // music
-const { currentTime, duration, isPlaying, prevTrack, nextTrack, togglePlay, setPlaying } = useStore();
-const rewindInterval = useRef(null);
+const { 
+  volume, setVolume, 
+  isShuffled, toggleShuffle, 
+  repeatMode, toggleRepeat,
+  isPlaying, togglePlay,
+  currentTime, duration,
+  playingPlaylist,
+toggleMute,
+} = useStore();
 
 
 // Formatting helper: 0:00
@@ -891,7 +898,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
                 ) : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
-  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 h-full overflow-hidden text-white">
+  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[800px] h-[800px] overflow-hidden text-white">
   
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
   <div className="lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4 overflow-hidden">
@@ -945,11 +952,10 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
   </div>
 
   {/* MAIN CONTENT AREA (Col 4-12) */}
-  <div className="lg:col-span-9 grid lg:grid-cols-2 gap-8 overflow-hidden">
+  <div className="lg:col-span-9 grid lg:grid-cols-2 gap-8 xl:overflow-hidden">
     
-    {/* LEFT SIDE: CURRENTLY PLAYING PLAYER */}
-    <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner relative overflow-hidden">
-      {/* Small badge showing which playlist the music is coming from */}
+    {/* LMIDDLE: CURRENTLY PLAYING PLAYER */}
+    {/* <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner relative overflow-hidden">
       <div className="absolute top-4 left-4 flex items-center gap-2 text-[10px] text-gray-500 font-mono uppercase tracking-widest">
         <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
         Playing from: {useStore.getState().playingPlaylist}
@@ -960,6 +966,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
           <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
         </svg>
       </div>
+      
       
       <div className="flex items-center gap-8">
         <button 
@@ -1006,7 +1013,137 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
           <span>{formatTime(duration)}</span>
         </div>
       </div>
+    </div> */}
+<div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-8 shadow-inner relative overflow-hidden h-full">
+  
+  {/* 1. RESTORED: TOP BADGE */}
+  <div className="absolute top-4 left-4 flex items-center gap-2 text-[10px] text-gray-500 font-mono uppercase tracking-widest">
+    <span className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-blue-500 animate-pulse' : 'bg-gray-600'}`}></span>
+    Playing from: {playingPlaylist}
+  </div>
+
+  {/* 2. RESTORED: DYNAMIC VINYL / MUSIC ICON */}
+  <div className={`w-44 h-44 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl transition-transform duration-500 ${isPlaying ? 'animate-spin-slow scale-105' : 'scale-100'}`}>
+    <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+    </svg>
+  </div>
+  
+  <div className="w-full flex flex-col gap-6">
+    
+    {/* 3. POSITION BAR */}
+    <div className="w-full flex flex-col gap-2">
+      <input
+        type="range"
+        min="0"
+        max={duration || 0}
+        value={currentTime}
+        onInput={(e) => window.__AUDIO_ENGINE__?.seek(Number(e.target.value))}
+        className="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+      />
+      <div className="flex justify-between text-[10px] text-gray-500 font-mono">
+        <span>{formatTime(currentTime)}</span>
+        <span>{formatTime(duration)}</span>
+      </div>
     </div>
+
+    {/* 4. EXPANSIVE CONTROLS ROW */}
+    <div className="flex items-center w-full gap-4">
+      
+      {/* LEFT: Shuffle & Repeat (Fills space to the left) */}
+      <div className="flex-1 flex items-center justify-start gap-6">
+        <button 
+          onClick={toggleShuffle}
+          className={`transition-all hover:scale-110 ${isShuffled ? 'text-blue-500' : 'text-gray-600 hover:text-gray-400'}`}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+        </button>
+        <button 
+          onClick={toggleRepeat}
+          className={`relative transition-all hover:scale-110 ${repeatMode !== 'off' ? 'text-blue-500' : 'text-gray-600 hover:text-gray-400'}`}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          {repeatMode === 'one' && <span className="absolute -top-1.5 -right-1.5 text-[8px] font-bold bg-blue-500 text-white rounded-full w-3 h-3 flex items-center justify-center">1</span>}
+        </button>
+      </div>
+
+      {/* CENTER: Fixed Playback Controls */}
+      <div className="flex items-center gap-6 shrink-0">
+        <button 
+          onClick={() => {
+            const time = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
+            if (time > 3) window.__AUDIO_ENGINE__.restart();
+            else useStore.getState().prevTrack();
+          }}
+          className="text-gray-400 hover:text-white transition-colors"
+        >
+          <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+
+        <button
+          onClick={togglePlay}
+          className={`w-16 h-16 rounded-full flex items-center justify-center transition-all shadow-lg active:scale-90 ${isPlaying ? 'bg-red-500 hover:bg-red-600' : 'bg-white hover:bg-gray-200'}`}
+        >
+          {isPlaying ? (
+            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          ) : (
+            <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          )}
+        </button>
+
+        <button 
+          onClick={() => useStore.getState().nextTrack()}
+          className="text-gray-400 hover:text-white transition-colors"
+        >
+          <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+      </div>
+
+      {/* RIGHT: Volume (Expansive with Mute Toggle) */}
+              <div className="flex-1 flex items-center justify-end gap-3 group">
+                <button 
+                  onClick={toggleMute}
+                  className="text-gray-600 hover:text-blue-500 transition-colors p-1"
+                  title={volume === 0 ? "Unmute" : "Mute"}
+                >
+                  {/* Dynamic Volume Icon */}
+                  {volume === 0 ? (
+                    <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                    </svg>
+                  ) : volume < 0.5 ? (
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M7 9v6h4l5 5V4L7 9zm11.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                  )}
+                </button>
+
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume || 0}
+                  onChange={(e) => setVolume(parseFloat(e.target.value))}
+                  className="w-full max-w-[120px] h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                />
+              </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
 
     {/* RIGHT SIDE: DYNAMIC PLAYLIST VIEW (UP NEXT / BROWSE) */}
     <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
@@ -1182,7 +1319,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
             {/* Notes display and Input area remain exactly as you had them... */}
             <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
                {currentNotes.map((note, noteIdx) => (
-                 <div key={noteIdx} className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
+                 <div key={noteIdx} className="select-text group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
                    {note}
                    <button onClick={() => removeNote(boardId, noteIdx)} className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
                  </div>

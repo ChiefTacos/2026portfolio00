@@ -367,14 +367,14 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
           <div className="flex-1">
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-1.5">
-                <p className="font-semibold leading-none tracking-tight text-foreground dark:text-white flex items-center gap-2">
+                <p className="font-semibold leading-none tracking-tight text-foreground dark:text-white flex items-center gap-2 pl-1">
                   {isPlaying ? "Now Playing" : "Paused"}
                   {/* Small badge showing source playlist */}
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-zinc-500 font-mono italic">
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-zinc-500 font-mono italic ">
                     {playingPlaylist}
                   </span>
                 </p>
-                <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[180px]">
+                <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[180px] pl-1 mr-12">
                   {currentTrack ? `${currentTrack.title} - ${currentTrack.artist}` : "No Track Selected"}
                 </p>
               </div>
