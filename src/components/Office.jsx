@@ -8,7 +8,7 @@ import { currentProjectAtom } from "./Projects";
 import { useStore } from '../store/useStore' // Adjust path if needed
 import { getStorage, ref, uploadBytes, getDownloadURL, getMetadata } from "firebase/storage";
 import { storage } from "../firebase";
-
+import jsmediatags from "jsmediatags/dist/jsmediatags.min.js";
 
 
 
@@ -125,34 +125,48 @@ const handleFileUpload = async (event) => {
   const file = event.target.files[0];
   const user = useStore.getState().user;
 
-  // 0. Validation and Input Prompts
   if (!user || !file) return;
 
-
-  // 1. Define the limit (30MB)
+  // 1. Size Validation (30MB Limit)
   const MAX_SIZE_MB = 30;
   const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
-  // 2. Check the file size
   if (file.size > MAX_SIZE_BYTES) {
     alert(`File is too large! Maximum size allowed is ${MAX_SIZE_MB}MB.`);
-    // Reset the input so the user can try again
-    e.target.value = null; 
+    event.target.value = null; 
     return;
   }
 
-  // ... Proceed with your existing compression and upload logic ...
-  console.log("File is within limits, starting upload...");
-  const songTitle = prompt("Song Title:");
-  const artistName = prompt("Artist Name:");
+  // 2. Extract Metadata (Bypass Prompts)
+  // Wrap jsmediatags in a Promise so we can use 'await'
+const metadata = await new Promise((resolve) => {
+    jsmediatags.read(file, {
+      onSuccess: (tag) => {
+        resolve({
+          title: tag.tags.title || "",
+          artist: tag.tags.artist || ""
+        });
+      },
+      onError: () => resolve({ title: "", artist: "" })
+    });
+  });
+
+  // 3. Smart Naming Logic
+  // Priority: 1. Metadata Title -> 2. Filename (no extension) -> 3. "Unknown Title"
+  const fileNameCleaned = decodeURI(file.name).replace(/\.[^/.]+$/, "").replace(/_/g, " "); // Removes .mp3, .wav, etc.
+  
+  const songTitle = metadata.title || fileNameCleaned || "Unknown Title";
+  const artistName = metadata.artist || "Unknown Artist";
+
   
   if (!songTitle || !artistName) {
     alert("Title and Artist are required!");
     return;
   }
-
   setIsUploading(true);
-  
+  console.log(`Uploading: ${songTitle} by ${artistName}`);
+
+
   try {
     // 2. Create Storage Reference (Using your specific user path)
     const fileRef = ref(storage, `users/${user.uid}/music/${Date.now()}_${file.name}`);
