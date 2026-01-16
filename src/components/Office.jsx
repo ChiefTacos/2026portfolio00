@@ -588,8 +588,8 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                 // "
                 className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-700 
                 overflow-y-auto custom-scrollbar 
-  min-h-[150vh]  lg:min-h-[90vh] lg:max-h-[100vh]
-  w-[200vw] h-[200vw]  max-w-[1000px] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1800px]`}
+  min-h-[220vh]  lg:min-h-[90vh] lg:max-h-[100vh]
+  w-[240vw] h-[240vw] md:h-[200vw] max-w-[1000px] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1800px]`}
 
                   onPointerDown={isVisible ? handleDragStart : undefined}
 
@@ -898,10 +898,10 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
                 ) : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
-  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[800px] h-[800px] overflow-hidden text-white">
+  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[70vh] h-auto overflow-y-auto  lg:overflow-hidden text-white">
   
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
-  <div className="lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4 overflow-hidden">
+  <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4  min-h-[220px] overflow-y-visible lg:overflow-hidden">
     <div className="flex items-center justify-between px-2">
       <h3 className="text-xs font-bold uppercase text-gray-500 tracking-widest">Library</h3>
       <span className="text-[10px] text-gray-600">{Object.keys(useStore.getState().playlists).length} / 10</span>
@@ -952,7 +952,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
   </div>
 
   {/* MAIN CONTENT AREA (Col 4-12) */}
-  <div className="lg:col-span-9 grid lg:grid-cols-2 gap-8 xl:overflow-hidden">
+  <div className=" lg:col-span-9 grid lg:grid-cols-2 gap-8 h-[160vh] lg:h-auto overflow-hidden">
     
     {/* LMIDDLE: CURRENTLY PLAYING PLAYER */}
     {/* <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner relative overflow-hidden">
@@ -1014,6 +1014,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         </div>
       </div>
     </div> */}
+    
 <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-8 shadow-inner relative overflow-hidden h-full">
   
   {/* 1. RESTORED: TOP BADGE */}
@@ -1146,7 +1147,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
 
     {/* RIGHT SIDE: DYNAMIC PLAYLIST VIEW (UP NEXT / BROWSE) */}
-    <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg h-full overflow-hidden">
+    <div className="bg-neutral-900 p-6 rounded-3xl border border-gray-800 flex flex-col shadow-lg  overflow-hidden">
                 <div className="flex items-center gap-2">
                       
                       <input 
