@@ -125,9 +125,24 @@ const handleFileUpload = async (event) => {
   const file = event.target.files[0];
   const user = useStore.getState().user;
 
-  // 1. Validation and Input Prompts
+  // 0. Validation and Input Prompts
   if (!user || !file) return;
 
+
+  // 1. Define the limit (30MB)
+  const MAX_SIZE_MB = 30;
+  const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
+  // 2. Check the file size
+  if (file.size > MAX_SIZE_BYTES) {
+    alert(`File is too large! Maximum size allowed is ${MAX_SIZE_MB}MB.`);
+    // Reset the input so the user can try again
+    e.target.value = null; 
+    return;
+  }
+
+  // ... Proceed with your existing compression and upload logic ...
+  console.log("File is within limits, starting upload...");
   const songTitle = prompt("Song Title:");
   const artistName = prompt("Artist Name:");
   
@@ -148,35 +163,6 @@ const handleFileUpload = async (event) => {
     setIsUploading(false);
     setIsProcessing(true); // Switch to "Optimizing Bitrate" mode
 
-//     const checkStatus = setInterval(async () => {
-//   try {
-//     const freshRef = ref(storage, snapshot.ref.fullPath); 
-//     const metadata = await getMetadata(freshRef);
-    
-//     console.log("Current Custom Metadata:", metadata.customMetadata);
-
-//     if (metadata.customMetadata && metadata.customMetadata.isCompressed === "true") {
-//       console.log("MATCH FOUND! Closing spinner.");
-//       clearInterval(checkStatus);
-      
-//       const permanentUrl = await getDownloadURL(freshRef);
-      
-//       const newTrack = {
-//         title: songTitle,
-//         artist: artistName,
-//         url: permanentUrl,
-//       };
-
-//       const activePlaylist = useStore.getState().activePlaylist;
-//       await useStore.getState().addTrackToPlaylist(activePlaylist, newTrack);
-
-//       setIsProcessing(false);
-//       alert("Success! File optimized and added to library.");
-//     }
-//   } catch (e) {
-//     console.log("Waiting for metadata to update...");
-//   }
-// }, 3000); 
 const checkStatus = setInterval(async () => {
   try {
     const freshRef = ref(storage, snapshot.ref.fullPath);
