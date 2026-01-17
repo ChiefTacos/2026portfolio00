@@ -1318,9 +1318,9 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
             </div>
 
             {/* Notes display and Input area remain exactly as you had them... */}
-            <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 custom-scrollbar">
+            <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
                {currentNotes.map((note, noteIdx) => (
-                 <div key={noteIdx} className="select-text group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
+                 <div key={noteIdx} className=" group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
                    {note}
                    <button onClick={() => removeNote(boardId, noteIdx)} className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
                  </div>
