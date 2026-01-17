@@ -1353,7 +1353,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                           <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
                             {currentNotes.map((note, noteIdx) => (
                               <NoteItem 
-                                key={`${boardId}-${noteIdx}`} 
+                              key={`${boardId}-${note}-${noteIdx}`} // More unique key
                                 note={note} 
                                 theme={currentTheme} // PASS THE THEME HERE
                                 onRemove={() => removeNote(boardId, noteIdx)} 
@@ -2454,17 +2454,29 @@ const NoteItem = ({ note, onRemove, theme }) => {
   const [countdown, setCountdown] = useState(5);
   const timerRef = useRef(null);
 
-  useEffect(() => {
+const onRemoveRef = useRef(onRemove);
+
+useEffect(() => {
+    onRemoveRef.current = onRemove;
+  }, [onRemove]);
+
+
+
+useEffect(() => {
     if (isDeleting && countdown > 0) {
       timerRef.current = setTimeout(() => {
         setCountdown(prev => prev - 1);
       }, 1000);
     } else if (isDeleting && countdown === 0) {
-      // Actually trigger the removal from database
-      onRemove();
+      // Call the version of the function from the Ref
+      onRemoveRef.current();
+      setIsDeleting(false); // Reset state
     }
     return () => clearTimeout(timerRef.current);
-  }, [isDeleting, countdown, onRemove]);
+  }, [isDeleting, countdown]); 
+
+
+
 
   const startDelete = (e) => {
     e.stopPropagation();
@@ -2472,15 +2484,16 @@ const NoteItem = ({ note, onRemove, theme }) => {
     setCountdown(5);
   };
 
-  const cancelDelete = () => {
+  const cancelDelete = (e) => {
+    e.stopPropagation(); // Prevent trigger issues
     setIsDeleting(false);
-    clearTimeout(timerRef.current);
-    setCountdown(5);
+if (timerRef.current) clearTimeout(timerRef.current); 
+ setCountdown(5);
   };
 
   // Helper to extract the color name for hover states
   // e.g., "border-blue-400" -> "bg-blue-400"
-  const hoverBgColor = theme.border.replace('border-', 'bg-');
+  const hoverBgColor = theme.border.replace('border-green-400', 'bg-');
 
   return (
     <div className={`group relative p-4 ${theme.bg} border-l-4 ${theme.border} rounded-r-lg text-gray-700 shadow-sm text-left transition-all duration-300`}>
