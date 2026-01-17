@@ -348,10 +348,31 @@ deleteTrack: async (playlistName, track) => {
   },
 
   // NEW: ADD BOARD + CLOUD SYNC
+// addBoard: async (customId) => {
+//   const { user, boardList } = get();
+// const id = customId || `board-${Date.now()}`;
+//   const newBoard = { id, name: `Board ${boardList.length + 1}` };
+//   const updatedBoards = [...boardList, newBoard];
+  
+//   set({ boardList: updatedBoards });
+//   if (user) {
+//     await setDoc(doc(db, "users", user.uid), { boardList: updatedBoards }, { merge: true });
+//   }
+// },
+// In useStore.js, update the addBoard action:
 addBoard: async (customId) => {
   const { user, boardList } = get();
-const id = customId || `board-${Date.now()}`;
-  const newBoard = { id, name: `Board ${boardList.length + 1}` };
+  const id = customId || `board-${Date.now()}`;
+  
+  // Pick a random number between 0 and 4
+  const randomColorIndex = Math.floor(Math.random() * 5);
+
+  const newBoard = { 
+    id, 
+    name: `Board ${boardList.length + 1}`,
+    colorIndex: randomColorIndex // Store the color preference
+  };
+  
   const updatedBoards = [...boardList, newBoard];
   
   set({ boardList: updatedBoards });

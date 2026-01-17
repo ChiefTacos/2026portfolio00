@@ -99,6 +99,15 @@ const [newlyCreatedId, setNewlyCreatedId] = useState(null);
 
   const displayName = user?.displayName || user?.email?.split('@')[0] || "Unknown User";
 
+  
+  const BOARD_THEMES = [
+  { bg: "bg-blue-50", border: "border-blue-400", text: "text-blue-600", hover: "hover:bg-blue-400" },
+  { bg: "bg-green-50", border: "border-green-400", text: "text-green-600", hover: "hover:bg-green-400" },
+  { bg: "bg-purple-50", border: "border-purple-400", text: "text-purple-600", hover: "hover:bg-purple-400" },
+  { bg: "bg-pink-50", border: "border-pink-400", text: "text-pink-600", hover: "hover:bg-pink-400" },
+  { bg: "bg-orange-50", border: "border-orange-400", text: "text-orange-600", hover: "hover:bg-orange-400" },
+];
+
 
 
 // music
@@ -1257,6 +1266,11 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         const currentNotes = notesMap[boardId] || [];
         const currentInputValue = inputs[boardId] || "";
 
+// NEW: Determine which pastel theme to use for this specific board
+    // It tries board.colorIndex first, then falls back to the map index
+    const themeIndex = (board.colorIndex !== undefined) ? board.colorIndex : (index % 5);
+    const currentTheme = BOARD_THEMES[themeIndex];
+
 
         return (
           <div key={boardId} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
@@ -1324,15 +1338,8 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
             </div>
 
             {/* Notes display and Input area remain exactly as you had them... */}
-            {/* <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
-               {currentNotes.map((note, noteIdx) => (
-                 <div key={noteIdx} className=" group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
-                   {note}
-                   <button onClick={() => removeNote(boardId, noteIdx)} className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
-                 </div>
-               ))}
-            </div> */}
-                  <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
+            
+                  {/* <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
                     {currentNotes.map((note, noteIdx) => (
                       <NoteItem 
                         key={`${boardId}-${noteIdx}`} 
@@ -1340,7 +1347,19 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                         onRemove={() => removeNote(boardId, noteIdx)} 
                       />
                     ))}
-                  </div>
+                  </div> */}
+
+                  {/* --- THE UPDATED NOTES DISPLAY AREA --- */}
+                          <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
+                            {currentNotes.map((note, noteIdx) => (
+                              <NoteItem 
+                                key={`${boardId}-${noteIdx}`} 
+                                note={note} 
+                                theme={currentTheme} // PASS THE THEME HERE
+                                onRemove={() => removeNote(boardId, noteIdx)} 
+                              />
+                            ))}
+                          </div>
 
 
 
@@ -2326,18 +2345,112 @@ useGLTF.preload("models/scene.glb");
 
 
 // --- PLACE AT THE VERY BOTTOM OF YOUR FILE ---
-const NoteItem = ({ note, onRemove }) => {
+// const NoteItem = ({ note, onRemove, theme }) => {
+//   const [sizeLevel, setSizeLevel] = useState(0); // 0 to 3
+// const sizeClasses = [
+//     "text-xl",   // Base (Level 0)
+//     "text-2xl",  // Level 1
+//     "text-3xl",  // Level 2
+//     "text-4xl"   // Level 3
+//   ];
+
+
+// // Handle the countdown logic
+// const [isDeleting, setIsDeleting] = useState(false);
+//   const [countdown, setCountdown] = useState(5);
+//   const timerRef = useRef(null);
+
+//   useEffect(() => {
+//     if (isDeleting && countdown > 0) {
+//       timerRef.current = setTimeout(() => {
+//         setCountdown(prev => prev - 1);
+//       }, 1000);
+//     } else if (isDeleting && countdown === 0) {
+//       // Actually trigger the removal from database
+//       onRemove();
+//     }
+//     return () => clearTimeout(timerRef.current);
+//   }, [isDeleting, countdown, onRemove]);
+
+//   const startDelete = (e) => {
+//     e.stopPropagation();
+//     setIsDeleting(true);
+//     setCountdown(5);
+//   };
+
+//   const cancelDelete = () => {
+//     setIsDeleting(false);
+//     clearTimeout(timerRef.current);
+//     setCountdown(5);
+//   };
+
+
+
+//   return (
+//     <div className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
+//       <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-8`}>
+//         {note}
+//       </div>
+
+
+// {/* Delete Overlay */}
+//       {isDeleting && (
+//         <div 
+//           onClick={cancelDelete}
+//           className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/60 rounded-r-lg cursor-pointer animate-pulse"
+//         >
+//           <p className="text-white font-black text-xl text-center px-4 leading-tight">
+//             NOTE WILL DELETE IN {countdown} SECONDS
+//           </p>
+//           <p className="text-yellow-400 font-bold text-sm mt-2">CLICK TO UNDO</p>
+//         </div>
+//       )}
+
+
+//         {/* Size Controls */}
+//       {!isDeleting && (  
+//       <div className="absolute  flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+//       style={{ top: "50px", right: "5px" }}>
+//         {sizeLevel < 3 && (
+//           <button 
+//             onClick={() => setSizeLevel(prev => prev + 1)}
+//             className="w-10 h-10 flex items-center justify-center bg-white border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-400 hover:text-white font-bold text-lg leading-none"
+//           >
+//             +
+//           </button>
+//         )}
+//         {sizeLevel > 0 && (
+//           <button 
+//             onClick={() => setSizeLevel(prev => prev - 1)}
+//             className="w-10 h-10 flex items-center justify-center bg-white border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-400 hover:text-white font-bold text-lg leading-none"
+//           >
+//             −
+//           </button>
+//         )}
+//       </div>
+
+//       )}
+
+
+//         {!isDeleting && (
+//               <button onClick={startDelete} className="text-2xl absolute top-2 right-4 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
+//         )}
+
+//     </div>
+  
+//   );
+// };
+const NoteItem = ({ note, onRemove, theme }) => {
   const [sizeLevel, setSizeLevel] = useState(0); // 0 to 3
-const sizeClasses = [
-    "text-lg",   // Base (Level 0)
-    "text-xl",  // Level 1
-    "text-2xl",  // Level 2
+  const sizeClasses = [
+    "text-xl",   // Base (Level 0)
+    "text-2xl",  // Level 1
+    "text-3xl",  // Level 2
     "text-4xl"   // Level 3
   ];
 
-
-// Handle the countdown logic
-const [isDeleting, setIsDeleting] = useState(false);
+  // Handle the countdown logic
+  const [isDeleting, setIsDeleting] = useState(false);
   const [countdown, setCountdown] = useState(5);
   const timerRef = useRef(null);
 
@@ -2365,59 +2478,67 @@ const [isDeleting, setIsDeleting] = useState(false);
     setCountdown(5);
   };
 
-
+  // Helper to extract the color name for hover states
+  // e.g., "border-blue-400" -> "bg-blue-400"
+  const hoverBgColor = theme.border.replace('border-', 'bg-');
 
   return (
-    <div className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
-      <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-8`}>
+    <div className={`group relative p-4 ${theme.bg} border-l-4 ${theme.border} rounded-r-lg text-gray-700 shadow-sm text-left transition-all duration-300`}>
+      
+      {/* Note Text */}
+      <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-12`}>
         {note}
       </div>
 
-
-{/* Delete Overlay */}
+      {/* Delete Overlay */}
       {isDeleting && (
         <div 
           onClick={cancelDelete}
-          className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/60 rounded-r-lg cursor-pointer animate-pulse"
+          className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/70 rounded-r-lg cursor-pointer animate-pulse"
         >
           <p className="text-white font-black text-xl text-center px-4 leading-tight">
             NOTE WILL DELETE IN {countdown} SECONDS
           </p>
-          <p className="text-yellow-400 font-bold text-sm mt-2">CLICK TO UNDO</p>
+          <p className="text-yellow-400 font-bold text-sm mt-2 uppercase tracking-widest">
+            Click anywhere to Undo
+          </p>
         </div>
       )}
 
-
-        {/* Size Controls */}
-      {!isDeleting && (  
-      <div className="absolute  flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
-      style={{ top: "50px", right: "5px" }}>
-        {sizeLevel < 3 && (
-          <button 
-            onClick={() => setSizeLevel(prev => prev + 1)}
-            className="w-10 h-10 flex items-center justify-center bg-white border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-400 hover:text-white font-bold text-lg leading-none"
-          >
-            +
-          </button>
-        )}
-        {sizeLevel > 0 && (
-          <button 
-            onClick={() => setSizeLevel(prev => prev - 1)}
-            className="w-10 h-10 flex items-center justify-center bg-white border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-400 hover:text-white font-bold text-lg leading-none"
-          >
-            −
-          </button>
-        )}
-      </div>
-
+      {/* Size Controls - Themed */}
+      {!isDeleting && (
+        <div 
+          className="absolute flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          style={{ top: "45px", right: "8px" }}
+        >
+          {sizeLevel < 3 && (
+            <button 
+              onClick={() => setSizeLevel(prev => prev + 1)}
+              className={`w-10 h-10 flex items-center justify-center bg-white border ${theme.border} rounded-full ${theme.text} hover:${hoverBgColor} hover:text-white font-bold text-xl shadow-sm transition-colors`}
+            >
+              +
+            </button>
+          )}
+          {sizeLevel > 0 && (
+            <button 
+              onClick={() => setSizeLevel(prev => prev - 1)}
+              className={`w-10 h-10 flex items-center justify-center bg-white border ${theme.border} rounded-full ${theme.text} hover:${hoverBgColor} hover:text-white font-bold text-xl shadow-sm transition-colors`}
+            >
+              −
+            </button>
+          )}
+        </div>
       )}
 
-
-        {!isDeleting && (
-              <button onClick={startDelete} className="text-2xl absolute top-2 right-4 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
-        )}
-
+      {/* Delete Button */}
+      {!isDeleting && (
+        <button 
+          onClick={startDelete} 
+          className="text-2xl absolute top-2 right-4 opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all"
+        >
+          ✕
+        </button>
+      )}
     </div>
-  
   );
 };
