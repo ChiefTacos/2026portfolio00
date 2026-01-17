@@ -1257,7 +1257,6 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         const currentNotes = notesMap[boardId] || [];
         const currentInputValue = inputs[boardId] || "";
 
-        // Hook was removed from here!
 
         return (
           <div key={boardId} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
@@ -2335,13 +2334,62 @@ const sizeClasses = [
     "text-2xl",  // Level 2
     "text-4xl"   // Level 3
   ];
+
+
+// Handle the countdown logic
+const [isDeleting, setIsDeleting] = useState(false);
+  const [countdown, setCountdown] = useState(5);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    if (isDeleting && countdown > 0) {
+      timerRef.current = setTimeout(() => {
+        setCountdown(prev => prev - 1);
+      }, 1000);
+    } else if (isDeleting && countdown === 0) {
+      // Actually trigger the removal from database
+      onRemove();
+    }
+    return () => clearTimeout(timerRef.current);
+  }, [isDeleting, countdown, onRemove]);
+
+  const startDelete = (e) => {
+    e.stopPropagation();
+    setIsDeleting(true);
+    setCountdown(5);
+  };
+
+  const cancelDelete = () => {
+    setIsDeleting(false);
+    clearTimeout(timerRef.current);
+    setCountdown(5);
+  };
+
+
+
   return (
     <div className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
       <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-8`}>
         {note}
       </div>
 
-      {/* Font Size Controls */}
+
+{/* Delete Overlay */}
+      {isDeleting && (
+        <div 
+          onClick={cancelDelete}
+          className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/60 rounded-r-lg cursor-pointer animate-pulse"
+        >
+          <p className="text-white font-black text-xl text-center px-4 leading-tight">
+            NOTE WILL DELETE IN {countdown} SECONDS
+          </p>
+          <p className="text-yellow-400 font-bold text-sm mt-2">CLICK TO UNDO</p>
+        </div>
+      )}
+
+
+        {/* Size Controls */}
+      {!isDeleting && (  
       <div className="absolute  flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
       style={{ top: "50px", right: "5px" }}>
         {sizeLevel < 3 && (
@@ -2362,7 +2410,14 @@ const sizeClasses = [
         )}
       </div>
 
-      <button onClick={onRemove} className="text-2xl absolute top-2 right-4 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
+      )}
+
+
+        {!isDeleting && (
+              <button onClick={startDelete} className="text-2xl absolute top-2 right-4 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
+        )}
+
     </div>
+  
   );
 };
