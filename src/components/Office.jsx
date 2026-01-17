@@ -524,6 +524,12 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
     </div>
   );
 };
+
+
+
+
+
+
   return (
     <group
       ref={groupRef}
@@ -1257,7 +1263,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
           <div key={boardId} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
             <div className="flex justify-between items-start mb-4 border-b pb-2">
               <div className="relative group flex-1">
-                <span className="text-[10px] uppercase text-blue-500 font-bold tracking-widest block mb-1">
+                <span className="text-[12px] uppercase text-blue-500 font-bold tracking-widest block mb-1">
                   {displayName}'s Workspace
                 </span>
                 
@@ -1265,8 +1271,9 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                   <h2 
                     id={`title-${boardId}`}
                     contentEditable
+                    spellCheck="false" 
                     suppressContentEditableWarning
-                    className={`text-2xl font-bold text-gray-800 outline-none rounded px-1 transition-all ${newlyCreatedId === boardId ? 'bg-blue-50 ring-2 ring-blue-400' : 'hover:bg-gray-100'}`}
+                    className={` text-2xl font-bold text-gray-800 outline-none rounded px-1 transition-all ${newlyCreatedId === boardId ? 'bg-blue-50 ring-2 ring-blue-400' : 'hover:bg-gray-100'}`}
                     onFocus={(e) => {
                       const range = document.createRange();
                       range.selectNodeContents(e.target);
@@ -1304,7 +1311,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                 </div>
                 
                 {!newlyCreatedId && (
-                  <p className="absolute -bottom-4 left-1 text-[9px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <p className="absolute -bottom-6 left-1 text-[15px] !text-black opacity-0 group-hover:opacity-90 transition-opacity">
                     Click to rename
                   </p>
                 )}
@@ -1318,14 +1325,26 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
             </div>
 
             {/* Notes display and Input area remain exactly as you had them... */}
-            <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
+            {/* <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
                {currentNotes.map((note, noteIdx) => (
                  <div key={noteIdx} className=" group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
                    {note}
                    <button onClick={() => removeNote(boardId, noteIdx)} className="absolute top-4 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
                  </div>
                ))}
-            </div>
+            </div> */}
+                  <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
+                    {currentNotes.map((note, noteIdx) => (
+                      <NoteItem 
+                        key={`${boardId}-${noteIdx}`} 
+                        note={note} 
+                        onRemove={() => removeNote(boardId, noteIdx)} 
+                      />
+                    ))}
+                  </div>
+
+
+
 
             <div className="flex flex-col gap-2">
               <input 
@@ -2307,3 +2326,43 @@ useGLTF.preload("models/scene.glb");
 
 
 
+// --- PLACE AT THE VERY BOTTOM OF YOUR FILE ---
+const NoteItem = ({ note, onRemove }) => {
+  const [sizeLevel, setSizeLevel] = useState(0); // 0 to 3
+const sizeClasses = [
+    "text-lg",   // Base (Level 0)
+    "text-xl",  // Level 1
+    "text-2xl",  // Level 2
+    "text-4xl"   // Level 3
+  ];
+  return (
+    <div className="group relative p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg text-gray-700 shadow-sm text-left">
+      <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-8`}>
+        {note}
+      </div>
+
+      {/* Font Size Controls */}
+      <div className="absolute  flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+      style={{ top: "50px", right: "5px" }}>
+        {sizeLevel < 3 && (
+          <button 
+            onClick={() => setSizeLevel(prev => prev + 1)}
+            className="w-10 h-10 flex items-center justify-center bg-white border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-400 hover:text-white font-bold text-lg leading-none"
+          >
+            +
+          </button>
+        )}
+        {sizeLevel > 0 && (
+          <button 
+            onClick={() => setSizeLevel(prev => prev - 1)}
+            className="w-10 h-10 flex items-center justify-center bg-white border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-400 hover:text-white font-bold text-lg leading-none"
+          >
+            −
+          </button>
+        )}
+      </div>
+
+      <button onClick={onRemove} className="text-2xl absolute top-2 right-4 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600">✕</button>
+    </div>
+  );
+};
