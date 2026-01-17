@@ -588,6 +588,11 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         }}
       >
 
+
+{/*               bg-white rounded-lg shadow-2xl border border-gray-700  overflow-y-auto 
+                   min-h-[220vh]  lg:min-h-[90vh] lg:max-h-[100vh]
+                   w-[240vw] h-[240vw] md:h-[200vw] max-w-[1000px] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1800px] */}
+                  
           <div className="text-sm w-full relative" style={{ pointerEvents: isVisible ? "auto" : "none" }}>
               {isActive && (
                 <div
@@ -601,10 +606,13 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                 //     lg:w-[70vw] lg:max-w-[1400px]
 
                 // "
-                className={`overlay-window ${className} bg-white rounded-lg shadow-2xl border border-gray-700 
-                overflow-y-auto custom-scrollbar 
-  min-h-[220vh]  lg:min-h-[90vh] lg:max-h-[100vh]
-  w-[240vw] h-[240vw] md:h-[200vw] max-w-[1000px] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1800px]`}
+                className={`overlay-window ${className} custom-scrollbar 
+           ${isFullscreen 
+      ? 'overflow-hidden' // Remove huge sizing when minimized
+      : 'bg-white shadow-2xl border border-gray-700 overflow-y-auto min-h-[220vh] lg:min-h-[90vh] lg:max-h-[100vh] w-[240vw] h-[240vw] md:h-[200vw] max-w-[1000px] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1800px]' 
+    }
+                  
+                  `}
 
                   onPointerDown={isVisible ? handleDragStart : undefined}
 
@@ -613,12 +621,16 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                     position: "absolute",
                     left: windowPos.x,
                     top: windowPos.y,
-                      
-  width: isFullscreen ? "120vw" : undefined,
-  height: isFullscreen ? "110vh" : undefined,
-  maxWidth: isFullscreen ? "110vw" : undefined,
-  maxHeight: isFullscreen ? "120vh" : undefined,
-  borderRadius: isFullscreen ? "8px" : "12px",
+width: isFullscreen ? "600px" : undefined,
+    height: isFullscreen ? "auto" : undefined,
+maxWidth: isFullscreen ? "90vw" : undefined,
+    maxHeight: isFullscreen ? "none" : undefined,
+    borderRadius: "12px",
+  // width: isFullscreen ? "120vw" : undefined,
+  // height: isFullscreen ? "110vh" : undefined,
+  // maxWidth: isFullscreen ? "110vw" : undefined,
+  // maxHeight: isFullscreen ? "120vh" : undefined,
+  // borderRadius: isFullscreen ? "8px" : "12px",
                     transition: isDragging.current ? "none" : "transform 0.2s ease",
                     cursor: "default",
                     pointerEvents: isVisible ? "auto" : "none",  
@@ -651,11 +663,29 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
             <span className="bg-green-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-green-600 transition"></span>
           </button>
           </div>
-                    <h1 className="lg:text-5xl md:text-3xl text-xl font-bold lg:ml-20 lg:mb-2 md:ml-10 md:mb-1 mt-1 ml-5 ">{title}</h1>
-                    <p className="lg:text-2xl text-lg text-gray-700 lg:mt-4 lg:ml-12 md:ml-4 md:mt-3 mt-1 line-clamp-3">{description}</p>
+
+
+
+          {/* 2. THE TITLE (Always shows, but changes size slightly for the bar) */}
+                        <h1 className={`font-bold transition-all duration-300 whitespace-nowrap  text-white
+                ${isFullscreen 
+                  ? 'lg:text-5xl md:text-3xl text-xl ml-10 pb-1' 
+                  : 'lg:text-5xl md:text-3xl text-xl md:ml-10 ml-5 mt-1 pb-2'
+                }`}>
+                {title}
+              </h1>
+
+              {/* 3. THE DESCRIPTION (Only shows when isFullscreen is FALSE) */}
+              {!isFullscreen && (
+                <p className="lg:text-2xl text-lg text-gray-400 lg:mt-4 lg:ml-12 md:ml-4 md:mt-3 mt-1 line-clamp-3">
+                  {description}
+                </p>
+              )}
+                 
           
         </div>
-
+{/* MAIN CONTENT: Only show if NOT fullscreen */}
+  {!isFullscreen && (
         <div className="p-10 flex flex-col items-center justify-center gap-10 pt-1">
           
 
@@ -1408,6 +1438,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 
           
         </div>
+        )}
       </div>
   )}
  
@@ -1464,12 +1495,19 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
           </div>
         </span>
       </button>
+      
     </div>
+
       )}
+      
     </div>
+    
   </div>
+  
 )}
+
   </div>
+  
 </div>
 
 </Html>
