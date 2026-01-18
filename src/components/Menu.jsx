@@ -252,18 +252,7 @@ useEffect(() => {
   }
 }, [activeIndex, rounds]);
 
-  useEffect(() => {
-  function handleResize() {
-    if (window.innerWidth >= 1280) {
-      setMenuOpened(true);     // Always open on LG+
-    }
-  }
 
-  handleResize();              // Run on first render
-  window.addEventListener("resize", handleResize);
-
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
 
   function spawnCoin(e) {
   const coin = document.createElement("div");
@@ -317,7 +306,6 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       <div
         className={`
             z-[2147483641]
-            xl:z-[2147483640]
 
             fixed inset-y-0  right-[0px] xl:right-[0px] transition-all overflow-y-auto
           flex flex-col bg-blue
@@ -328,6 +316,8 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
        menuOpened
         ? "100%"         // Mobile/tablet: open
         : "0px",         // Mobile/tablet: closed
+        opacity: menuOpened ? 1 : 0,        // Optional: adds a fade
+    pointerEvents: menuOpened ? "auto" : "none"
 }}
       >
 
@@ -701,9 +691,11 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       </div> 
 
 
-               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4 xl:hidden block z-[2147483643] mobile-fade-in 
-                ${menuOpened ? 'hidden' : 'block'}`}
+               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4  block z-[2147483643] mobile-fade-in 
+                ${menuOpened ? 'hidden' : 'block'}
+                `}
                 >
+                {/* ${menuOpened ? 'hidden' : 'block'} */}
             
             
                {(section === 0 && !menuOpened) && (
