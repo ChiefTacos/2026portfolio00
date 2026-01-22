@@ -635,7 +635,7 @@ const handleScroll = (e) => {
                   
                   `}
                   onScroll={handleScroll} 
-                  onPointerDown={isVisible ? handleDragStart : undefined}
+                  // onPointerDown={isVisible ? handleDragStart : undefined}
 
 
                     style={{
@@ -651,7 +651,7 @@ const handleScroll = (e) => {
  // WIDTH LOGIC
   width: isFullscreen 
     ? "600px" // Fullscreen size
-    : (isMobileOrTablet ? "240vw" : "100vw"), // Mobile vs Desktop window
+    : (isMobileOrTablet ? "230vw" : "100vw"), // Mobile vs Desktop window
 
   // HEIGHT LOGIC
   height: isFullscreen 
@@ -679,30 +679,56 @@ const handleScroll = (e) => {
         {/* <div className="flex p-4 lg:p-3 gap-2 bg-[#2a2a2a] overflow-hidden"> */}
         <div 
     className={`sticky top-0 z-[2147483639] flex items-center bg-[#2a2a2a] transition-all duration-300 ease-in-out
-      ${isScrolled ? 'h-12 px-2 pt-0' : 'p-2 lg:p-2'} 
+      ${isScrolled ? 'h-12 px-2 pt-2' : 'p-2 lg:p-2'} 
       `}
-        style={{ 
-   top: "-1px", // Moves it up 1px to cover any potential gap
-    paddingTop: isScrolled ? "1px" : "", // Offsets the move up so buttons stay centered
-    boxShadow: "0 -5px 0 0 #2a2a2a", // Creates a "safety buffer" of color above the bar
-    borderTopLeftRadius: "2px", // Matches your window's border radius
-    borderTopRightRadius: "2px" 
+                  onPointerDown={isVisible ? handleDragStart : undefined}
+
+style={{ 
+    // 1. The "Glass" Base
+    backgroundColor: "rgba(0, 0, 0, 0.9)", 
+    backdropFilter: "blur(25px) saturate(150%) brightness(1.1)",
+    WebkitBackdropFilter: "blur(25px) saturate(150%) brightness(1.1)",
+    
+    // 2. The "Bubble" Edge Effect
+    // This creates a thin, bright top edge and a softer glow around the sides
+    border: "1px solid rgba(255, 255, 255, 0.15)",
+    boxShadow: `
+      inset 0 1px 1px rgba(255, 255, 255, 0.3),   /* Top highlight */
+      inset 0 -1px 20px rgba(255, 255, 255, 0.05), /* Subtle inner glow */
+      0 10px 30px rgba(0, 0, 0, 0.2)               /* Outer depth */
+    `,
+
+    // 3. Shaping
+    borderTopLeftRadius: "2px", 
+    borderTopRightRadius: "2px",
+    marginTop: "0px",
+    top: "-1.5px",
   }}
   >
           <div className="flex gap-2 flex-shrink-0">
-          <button onClick={handleResetClick} style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
+          <button onClick={(e) => {
+    e.stopPropagation(); // Prevents dragging from triggering when closing
+    handleResetClick(e);
+  }}onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down 
+  style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
             <span className="bg-red-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
           
           </button>
-          <button onClick={handleResetClick} style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
+          <button onClick={(e) => {
+    e.stopPropagation(); // Prevents dragging from triggering when closing
+    handleResetClick(e);
+  }} onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down
+  style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
             <span className="bg-yellow-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
           
           </button>
           <button
-            onClick={() => {
-              setIsFullscreen(prev => !prev);
-              setTimeout(() => snapBackIntoBounds(), 50); // keep inside screen
-            }}
+           onClick={(e) => {
+            e.stopPropagation(); 
+            setIsFullscreen(prev => !prev);
+            setTimeout(() => snapBackIntoBounds(), 50);
+          }}
+            onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down
             style={{ pointerEvents: "auto" }}
             alt="MAX WINDOW"
             title="Adjust Window Size"
