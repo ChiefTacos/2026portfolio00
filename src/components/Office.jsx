@@ -330,29 +330,42 @@ useEffect(() => {
 }, [props.registerOverlayReset]);
 
 
-
 const handleButtonClick = (e) => {
   if (!isClickable) return;
   e.stopPropagation();
 
-  if (isMobileOrTablet) {
-    // Mobile: only one at a time
+  setActiveOverlay(prev => {
+    // If already open, just ensure it's at the end of the array (top of stack)
+    if (prev.includes(id)) {
+      return [...prev.filter(item => item !== id), id];
+    }
+    // Otherwise add it to the stack
+    return [...prev, id];
+  });
+};
+// const handleButtonClick = (e) => {
+//   if (!isClickable) return;
+//   e.stopPropagation();
 
-    setActiveOverlay([id]);
+//   if (isMobileOrTablet) {
+//     // Mobile: only one at a time
 
-  } else {
-    // Desktop: allow multiple
+//     setActiveOverlay([id]);
+
+//   } else {
+//     // Desktop: allow multiple
       
 
-    setActiveOverlay(prev => {
-      if (prev.includes(id)) return prev;
-      return [...prev, id];
+//     setActiveOverlay(prev => {
+//       if (prev.includes(id)) return prev;
+//       return [...prev, id];
 
-    });
-  }
-// If they submitted before, show confirmation instead of form
+//     });
+//   }
 
-};
+// };
+
+
 const handleResetClick = (e) => {
   e.stopPropagation();
 
@@ -457,7 +470,8 @@ useEffect(() => {
 
 const showViewButton = hideTriggerButton 
     ? false 
-    : (isMobileOrTablet ? !isAnyOpen : !isActive);
+    // : (isMobileOrTablet ? !isAnyOpen : !isActive);
+    : !isActive; // Now it only checks if THIS specific window is open, regardless of device
 
 const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
@@ -628,11 +642,31 @@ const handleScroll = (e) => {
                     position: "absolute",
                     left: windowPos.x,
                     top: windowPos.y,
-width: isFullscreen ? "600px" : "100vw",
-    height: isFullscreen ? "auto" : "110vh",
-maxWidth: isFullscreen ? "90vw" : "120vw",
-    maxHeight: isFullscreen ? "none" : "120vh",
-    borderRadius: "12px",
+// width: isFullscreen ? "600px" : "100vw",
+//     height: isFullscreen ? "auto" : "110vh",
+// maxWidth: isFullscreen ? "90vw" : "120vw",
+//     maxHeight: isFullscreen ? "none" : "120vh",
+//     borderRadius: "12px",
+// Logic: if Mobile/Tablet, use specific sizes, otherwise use your desktop defaults
+ // WIDTH LOGIC
+  width: isFullscreen 
+    ? "600px" // Fullscreen size
+    : (isMobileOrTablet ? "240vw" : "100vw"), // Mobile vs Desktop window
+
+  // HEIGHT LOGIC
+  height: isFullscreen 
+    ? "auto" 
+    : (isMobileOrTablet ? "120vh" : "110vh"),
+
+  // MAX WIDTH LOGIC
+  maxWidth: isFullscreen 
+    ? "90vw" 
+    : (isMobileOrTablet ? "240vw" : "120vw"),
+
+  // MAX HEIGHT LOGIC
+  maxHeight: isFullscreen 
+    ? "none" 
+    : (isMobileOrTablet ? "120vh" : "120vh"),
                     transition: isDragging.current ? "none" : "transform 0.2s ease",
                     cursor: "default",
                     pointerEvents: isVisible ? "auto" : "none",  
@@ -677,15 +711,15 @@ maxWidth: isFullscreen ? "90vw" : "120vw",
           {!isScrolled && (
                         <h1 className={`font-bold transition-all duration-300 whitespace-nowrap  text-white
                 ${isFullscreen 
-                  ? 'lg:text-5xl md:text-3xl text-xl ml-10 pb-1' 
-                  : 'lg:text-5xl md:text-3xl text-xl md:ml-10 ml-5 mt-1 pb-2'
+                  ? 'lg:text-5xl md:text-3xl text-xl  pb-1 px-4' 
+                  : 'lg:text-5xl md:text-3xl text-xl md:ml-10 ml-5 mt-1 pb-2 pr-2'
                 }`}>
                 {title}
               </h1>
             )}
               {/* 3. THE DESCRIPTION (Only shows when isFullscreen is FALSE) */}
               {!isFullscreen && !isScrolled && (
-                <p className="lg:text-2xl text-lg text-gray-400 lg:mt-4 lg:ml-12 md:ml-4 md:mt-3 mt-1 line-clamp-3">
+                <p className="lg:text-2xl text-lg text-gray-400 lg:mt-4 lg:ml-12 ml-4  line-clamp-3">
                   {description}
                 </p>
               )}
@@ -951,7 +985,7 @@ maxWidth: isFullscreen ? "90vw" : "120vw",
 
                 ) : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
-  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[120vh] h-auto overflow-y-auto  lg:overflow-hidden text-white">
+  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[80vh] h-auto overflow-y-auto  lg:overflow-hidden text-white">
   
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
   <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4  min-h-[220px] overflow-y-visible lg:overflow-hidden">
