@@ -1,10 +1,9 @@
 import { useGLTF, useTexture, useVideoTexture, useAnimations, MeshTransmissionMaterial, Html  } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { animate, useMotionValue } from "framer-motion";
-import { useEffect, useRef, useState, } from "react";
+import { useEffect, useRef, useState}  from "react";
+import React from 'react';
 import * as THREE from "three";
-import { useSetAtom } from "jotai";
-import { currentProjectAtom } from "./Projects";
 import { useStore } from '../store/useStore' // Adjust path if needed
 import { getStorage, ref, uploadBytes, getDownloadURL, getMetadata } from "firebase/storage";
 import { storage } from "../firebase";
@@ -535,10 +534,19 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 };
 
 
+const [isScrolled, setIsScrolled] = React.useState(false);
 
-
-
-
+const handleScroll = (e) => {
+  const scrollTop = e.target.scrollTop;
+  
+  // Only shrink if scrolled more than 50px
+  // Only expand if scrolled back up to almost the very top (under 10px)
+  if (scrollTop > 50 && !isScrolled) {
+    setIsScrolled(true);
+  } else if (scrollTop < 10 && isScrolled) {
+    setIsScrolled(false);
+  }
+};
   return (
     <group
       ref={groupRef}
@@ -561,7 +569,6 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
           occlude={false}
             className={className}   
 
-          // portal={{ current: document.getElementById("overlay-portals-root") }}
           portal={{ 
   current: id === "freeQ" 
     ? document.getElementById("freeq-portal-root") 
@@ -613,7 +620,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
     }
                   
                   `}
-
+                  onScroll={handleScroll} 
                   onPointerDown={isVisible ? handleDragStart : undefined}
 
 
@@ -621,16 +628,11 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
                     position: "absolute",
                     left: windowPos.x,
                     top: windowPos.y,
-width: isFullscreen ? "600px" : undefined,
-    height: isFullscreen ? "auto" : undefined,
-maxWidth: isFullscreen ? "90vw" : undefined,
-    maxHeight: isFullscreen ? "none" : undefined,
+width: isFullscreen ? "600px" : "100vw",
+    height: isFullscreen ? "auto" : "110vh",
+maxWidth: isFullscreen ? "90vw" : "120vw",
+    maxHeight: isFullscreen ? "none" : "120vh",
     borderRadius: "12px",
-  // width: isFullscreen ? "120vw" : undefined,
-  // height: isFullscreen ? "110vh" : undefined,
-  // maxWidth: isFullscreen ? "110vw" : undefined,
-  // maxHeight: isFullscreen ? "120vh" : undefined,
-  // borderRadius: isFullscreen ? "8px" : "12px",
                     transition: isDragging.current ? "none" : "transform 0.2s ease",
                     cursor: "default",
                     pointerEvents: isVisible ? "auto" : "none",  
@@ -640,7 +642,12 @@ maxWidth: isFullscreen ? "90vw" : undefined,
           >
 
 
-        <div className="flex p-4 lg:p-3 gap-2 bg-[#2a2a2a] overflow-hidden">
+        {/* <div className="flex p-4 lg:p-3 gap-2 bg-[#2a2a2a] overflow-hidden"> */}
+        <div 
+    className={`sticky top-0 z-[2147483639] flex items-center bg-[#2a2a2a] transition-all duration-300 ease-in-out
+      ${isScrolled ? 'h-12 px-2 pt-1' : 'p-2 lg:p-2'} 
+    `}
+  >
           <div className="flex gap-2 flex-shrink-0">
           <button onClick={handleResetClick} style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
             <span className="bg-red-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
@@ -667,6 +674,7 @@ maxWidth: isFullscreen ? "90vw" : undefined,
 
 
           {/* 2. THE TITLE (Always shows, but changes size slightly for the bar) */}
+          {!isScrolled && (
                         <h1 className={`font-bold transition-all duration-300 whitespace-nowrap  text-white
                 ${isFullscreen 
                   ? 'lg:text-5xl md:text-3xl text-xl ml-10 pb-1' 
@@ -674,9 +682,9 @@ maxWidth: isFullscreen ? "90vw" : undefined,
                 }`}>
                 {title}
               </h1>
-
+            )}
               {/* 3. THE DESCRIPTION (Only shows when isFullscreen is FALSE) */}
-              {!isFullscreen && (
+              {!isFullscreen && !isScrolled && (
                 <p className="lg:text-2xl text-lg text-gray-400 lg:mt-4 lg:ml-12 md:ml-4 md:mt-3 mt-1 line-clamp-3">
                   {description}
                 </p>
@@ -943,7 +951,7 @@ maxWidth: isFullscreen ? "90vw" : undefined,
 
                 ) : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
-  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[70vh] h-auto overflow-y-auto  lg:overflow-hidden text-white">
+  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[120vh] h-auto overflow-y-auto  lg:overflow-hidden text-white">
   
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
   <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4  min-h-[220px] overflow-y-visible lg:overflow-hidden">

@@ -7,6 +7,304 @@ import {  useEffect, useRef, useState } from "react";
 import { currentProjectAtom01 } from "./GoogleReviewsPage";
 
 
+const StyledWrapper = styled.div`
+  .card-wrapper {
+    position: relative;
+    width: 320px;
+    height: 480px;
+  }
+
+  .mouse-position-tracker {
+    position: absolute;
+    width: 33.333%;
+    height: 33.333%;
+    z-index: 10;
+  }
+
+  .tr-1 {
+    top: 0;
+    left: 0;
+  }
+  .tr-2 {
+    top: 0;
+    left: 33.333%;
+  }
+  .tr-3 {
+    top: 0;
+    left: 66.666%;
+  }
+  .tr-4 {
+    top: 33.333%;
+    left: 0;
+  }
+  .tr-5 {
+    top: 33.333%;
+    left: 33.333%;
+  }
+  .tr-6 {
+    top: 33.333%;
+    left: 66.666%;
+  }
+  .tr-7 {
+    top: 66.666%;
+    left: 0;
+  }
+  .tr-8 {
+    top: 66.666%;
+    left: 33.333%;
+  }
+  .tr-9 {
+    top: 66.666%;
+    left: 66.666%;
+  }
+
+  .card {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition:
+      transform 0.2s ease-out,
+      box-shadow 0.2s ease;
+    transform-style: preserve-3d;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+    mask-image: radial-gradient(circle at center, white, transparent 80%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(0, 243, 255, 0.2),
+      transparent 50%
+    );
+    top: -50%;
+    left: -50%;
+    opacity: 0;
+    transition: 0.3s;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .content {
+    z-index: 5;
+    transform: translateZ(40px);
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    line-height: 1;
+    position: relative;
+    mix-blend-mode: lighten;
+  }
+
+  .subtitle {
+    margin-top: 10px;
+    color: var(--neon-blue);
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .hud-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--neon-blue);
+    transition: 0.3s;
+    z-index: 4;
+  }
+  .tl {
+    top: 20px;
+    left: 20px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .tr {
+    top: 20px;
+    right: 20px;
+    border-left: none;
+    border-bottom: none;
+  }
+  .bl {
+    bottom: 20px;
+    left: 20px;
+    border-right: none;
+    border-top: none;
+  }
+  .br {
+    bottom: 20px;
+    right: 20px;
+    border-left: none;
+    border-top: none;
+  }
+
+  .glitch {
+    position: relative;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.8);
+  }
+  .glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+  }
+  .glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 #00fff9;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-anim {
+    0% {
+      clip: rect(15px, 9999px, 81px, 0);
+    }
+    5% {
+      clip: rect(72px, 9999px, 24px, 0);
+    }
+    10% {
+      clip: rect(4px, 9999px, 88px, 0);
+    }
+    15% {
+      clip: rect(66px, 9999px, 14px, 0);
+    }
+    20% {
+      clip: rect(25px, 9999px, 96px, 0);
+    }
+    100% {
+      clip: rect(50px, 9999px, 50px, 0);
+    }
+  }
+  @keyframes glitch-anim2 {
+    0% {
+      clip: rect(80px, 9999px, 4px, 0);
+    }
+    5% {
+      clip: rect(30px, 9999px, 100px, 0);
+    }
+    10% {
+      clip: rect(10px, 9999px, 20px, 0);
+    }
+    100% {
+      clip: rect(90px, 9999px, 90px, 0);
+    }
+  }
+
+  .tr-1:hover ~ .card {
+    transform: rotateX(20deg) rotateY(-20deg);
+  }
+  .tr-1:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(-20%, -20%);
+  }
+
+  .tr-2:hover ~ .card {
+    transform: rotateX(20deg) rotateY(0deg);
+  }
+  .tr-2:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(0%, -20%);
+  }
+
+  .tr-3:hover ~ .card {
+    transform: rotateX(20deg) rotateY(20deg);
+  }
+  .tr-3:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(20%, -20%);
+  }
+
+  .tr-4:hover ~ .card {
+    transform: rotateX(0deg) rotateY(-20deg);
+  }
+  .tr-4:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(-20%, 0%);
+  }
+
+  .tr-5:hover ~ .card {
+    transform: rotateX(0deg) rotateY(0deg) scale(1.05);
+    box-shadow: 0 0 30px var(--neon-blue);
+  }
+  .tr-5:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(0%, 0%);
+  }
+
+  .tr-6:hover ~ .card {
+    transform: rotateX(0deg) rotateY(20deg);
+  }
+  .tr-6:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(20%, 0%);
+  }
+
+  .tr-7:hover ~ .card {
+    transform: rotateX(-20deg) rotateY(-20deg);
+  }
+  .tr-7:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(-20%, 20%);
+  }
+
+  .tr-8:hover ~ .card {
+    transform: rotateX(-20deg) rotateY(0deg);
+  }
+  .tr-8:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(0%, 20%);
+  }
+
+  .tr-9:hover ~ .card {
+    transform: rotateX(-20deg) rotateY(20deg);
+  }
+  .tr-9:hover ~ .card::after {
+    opacity: 1;
+    transform: translate(20%, 20%);
+  }
+
+  .card-wrapper:hover .hud-corner {
+    box-shadow: 0 0 10px var(--neon-blue);
+    width: 30px;
+    height: 30px;
+  }`;
 
 
 const Section = (props) => {
@@ -85,7 +383,30 @@ const FirstSection = (props) => {
 
   return (
     <Section>
-      
+       {/* <StyledWrapper>
+      <div className="card-wrapper">
+        <div className="mouse-position-tracker tr-1" />
+        <div className="mouse-position-tracker tr-2" />
+        <div className="mouse-position-tracker tr-3" />
+        <div className="mouse-position-tracker tr-4" />
+        <div className="mouse-position-tracker tr-5" />
+        <div className="mouse-position-tracker tr-6" />
+        <div className="mouse-position-tracker tr-7" />
+        <div className="mouse-position-tracker tr-8" />
+        <div className="mouse-position-tracker tr-9" />
+        <div className="card">
+          <div className="hud-corner tl" />
+          <div className="hud-corner tr" />
+          <div className="hud-corner bl" />
+          <div className="hud-corner br" />
+          <div className="content">
+            <div className="title glitch" data-text="CYBER">CYBER</div>
+            <div className="title glitch" data-text="CORE">CORE</div>
+            <div className="subtitle">System Online</div>
+          </div>
+        </div>
+      </div>
+    </StyledWrapper> */}
       {/* <StyledWrapper>
           <div className="form-container
            lg:translate-x-[230px] md:translate-x-[230px]  translate-x-[-30px] 
