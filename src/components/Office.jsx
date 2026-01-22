@@ -679,8 +679,15 @@ const handleScroll = (e) => {
         {/* <div className="flex p-4 lg:p-3 gap-2 bg-[#2a2a2a] overflow-hidden"> */}
         <div 
     className={`sticky top-0 z-[2147483639] flex items-center bg-[#2a2a2a] transition-all duration-300 ease-in-out
-      ${isScrolled ? 'h-12 px-2 pt-1' : 'p-2 lg:p-2'} 
-    `}
+      ${isScrolled ? 'h-12 px-2 pt-0' : 'p-2 lg:p-2'} 
+      `}
+        style={{ 
+   top: "-1px", // Moves it up 1px to cover any potential gap
+    paddingTop: isScrolled ? "1px" : "", // Offsets the move up so buttons stay centered
+    boxShadow: "0 -5px 0 0 #2a2a2a", // Creates a "safety buffer" of color above the bar
+    borderTopLeftRadius: "2px", // Matches your window's border radius
+    borderTopRightRadius: "2px" 
+  }}
   >
           <div className="flex gap-2 flex-shrink-0">
           <button onClick={handleResetClick} style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
