@@ -180,7 +180,7 @@ overflow: hidden;
 
 @layer utilities {
 .overlay-window {
-    background: linear-gradient(135deg, #e7e7e7, #f5f5f5);
+    background: linear-gradient(135deg, #636363, #535353);
   box-shadow: 
     0 0 50px rgba(255, 255, 255, 0.7),
     0 0 100px rgba(255, 255, 255, 0.4) !important;

@@ -1318,10 +1318,10 @@ style={{
 
 
         return (
-          <div key={boardId} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col shadow-lg h-full">
+          <div key={boardId} className="bg-slate-300 p-6 rounded-3xl border border-black flex flex-col shadow-lg h-full">
             <div className="flex justify-between items-start mb-4 border-b pb-2">
               <div className="relative group flex-1">
-                <span className="text-[12px] uppercase text-blue-500 font-bold tracking-widest block mb-1">
+                <span className="text-[12px] uppercase text-gray-500 font-bold tracking-widest block mb-1">
                   {displayName}'s Workspace
                 </span>
                 
@@ -1331,7 +1331,7 @@ style={{
                     contentEditable
                     spellCheck="false" 
                     suppressContentEditableWarning
-                    className={` text-2xl font-bold text-gray-800 outline-none rounded px-1 transition-all ${newlyCreatedId === boardId ? 'bg-blue-50 ring-2 ring-blue-400' : 'hover:bg-gray-100'}`}
+                    className={` text-2xl font-bold text-black outline-none rounded px-1 transition-all ${newlyCreatedId === boardId ? 'bg-blue-50 ring-2 ring-blue-400' : 'hover:bg-gray-100'}`}
                     onFocus={(e) => {
                       const range = document.createRange();
                       range.selectNodeContents(e.target);
@@ -1440,7 +1440,7 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
             scrollbarWidth: 'none'
           }} 
         />
-              <button onClick={() => { addNote(boardId, currentInputValue); handleInputChange(boardId, ""); }} disabled={!currentInputValue.trim()} className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold">
+              <button onClick={() => { addNote(boardId, currentInputValue); handleInputChange(boardId, ""); }} disabled={!currentInputValue.trim()} className="w-full py-3 bg-blue-900 text-white rounded-xl font-bold">
                 Save Note
               </button>
             </div>
@@ -2236,7 +2236,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
                                           closeOverlay={closeOverlay}
                                           device={device} 
                                           title="Notetaking App"
-                                          description="Prepare some of the deadliest notes known to mankind."
+                                          description="Double click on desktop / Tap and Hold on mobile, each note to EDIT or DELETE"
                                           price="300-600"
                                           bgColor="bg-blue-500"
                                       src="/textures/sexyCleaning.jpeg"
@@ -2565,7 +2565,7 @@ const tooltipRef = useRef(null); // New ref for the tooltip
   const editNote = useStore((state) => state.editNote);
   const removeNote = useStore((state) => state.removeNote);
 
-  const sizeClasses = ["text-base", "text-xl", "text-2xl", "text-3xl"];
+  const sizeClasses = ["text-2xl", "text-3xl", "text-4xl", "text-6xl"];
 
   useEffect(() => {
     if (isDeleting && countdown > 0) {
@@ -2633,7 +2633,7 @@ const tooltipRef = useRef(null); // New ref for the tooltip
         onDoubleClick={() => setShowTooltip(true)}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:ring-2 hover:ring-blue-300 active:scale-[0.98] text-left relative
+        className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:ring-2 hover:ring-white active:scale-[0.98] text-left relative
           ${theme?.bg || 'bg-gray-100'} ${theme?.text || 'text-gray-800'} border-l-4 ${theme?.border || 'border-gray-300'}`}
       >
         <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-10`} style={{ whiteSpace: 'pre-wrap' }}>

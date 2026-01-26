@@ -136,7 +136,7 @@ const jumpToSection = (index) => {
         >
           <MobileFOV />
           <DayNightSky debugForceDay={isDay} />
-          {section === 0 && <OrbitControls makeDefault />}
+          {/* {section === 0 && <OrbitControls makeDefault />} */}
           <ScrollControls 
           pages={4} 
           damping={0.1} 
