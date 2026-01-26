@@ -322,18 +322,50 @@ deleteTrack: async (playlistName, track) => {
 
 
 // ADD NOTE + CLOUD SYNC
-  addNote: async (containerId, text) => {
-    const { user, notes } = get();
-    const updatedNotes = {
-      ...notes,
-      [containerId]: [...(notes[containerId] || []), text]
-    };
-    set({ notes: updatedNotes });
-    if (user) {
-      await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
-    }
-  },
+  // addNote: async (containerId, text) => {
+  //   const { user, notes } = get();
+  //   const updatedNotes = {
+  //     ...notes,
+  //     [containerId]: [...(notes[containerId] || []), text]
+  //   };
+  //   set({ notes: updatedNotes });
+  //   if (user) {
+  //     await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+  //   }
+  // },
+addNote: async (containerId, text) => {
+  const { user, notes } = get();
+  // Store as an object instead of a string
+  const newNoteObj = { text: text, size: 0 }; 
+  
+  const updatedNotes = {
+    ...notes,
+    [containerId]: [...(notes[containerId] || []), newNoteObj]
+  };
+  
+  set({ notes: updatedNotes });
+  if (user) {
+    await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+  }
+},
 
+editNote: async (containerId, noteIndex, newText) => {
+  const { user, notes } = get();
+  const containerNotes = [...(notes[containerId] || [])];
+  
+  // Update the text property, keeping the existing size
+  const currentNote = containerNotes[noteIndex];
+  containerNotes[noteIndex] = typeof currentNote === 'string' 
+    ? { text: newText, size: 0 } 
+    : { ...currentNote, text: newText };
+
+  const updatedNotes = { ...notes, [containerId]: containerNotes };
+  set({ notes: updatedNotes });
+
+  if (user) {
+    await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+  }
+},
   // REMOVE NOTE + CLOUD SYNC
   removeNote: async (containerId, noteIndex) => {
     const { user, notes } = get();
@@ -346,28 +378,45 @@ deleteTrack: async (playlistName, track) => {
       await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
     }
   },
-    editNote: async (containerId, noteIndex, newText) => {
-      const { user, notes } = get();
-      const containerNotes = [...(notes[containerId] || [])];
+  // NEW ACTION: Update only the size
+setNoteSize: async (containerId, noteIndex, newSize) => {
+  const { user, notes } = get();
+  const containerNotes = [...(notes[containerId] || [])];
+  
+  const currentNote = containerNotes[noteIndex];
+  containerNotes[noteIndex] = typeof currentNote === 'string'
+    ? { text: currentNote, size: newSize }
+    : { ...currentNote, size: newSize };
+
+  const updatedNotes = { ...notes, [containerId]: containerNotes };
+  set({ notes: updatedNotes });
+
+  if (user) {
+    await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+  }
+},
+    // editNote: async (containerId, noteIndex, newText) => {
+    //   const { user, notes } = get();
+    //   const containerNotes = [...(notes[containerId] || [])];
       
-      // Update the specific note at the index
-      containerNotes[noteIndex] = newText;
+    //   // Update the specific note at the index
+    //   containerNotes[noteIndex] = newText;
 
-      const updatedNotes = {
-        ...notes,
-        [containerId]: containerNotes
-      };
+    //   const updatedNotes = {
+    //     ...notes,
+    //     [containerId]: containerNotes
+    //   };
 
-      set({ notes: updatedNotes });
+    //   set({ notes: updatedNotes });
 
-      if (user) {
-        try {
-          await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
-        } catch (error) {
-          console.error("Failed to edit note in cloud:", error);
-        }
-      }
-    },
+    //   if (user) {
+    //     try {
+    //       await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+    //     } catch (error) {
+    //       console.error("Failed to edit note in cloud:", error);
+    //     }
+    //   }
+    // },
 
 addBoard: async (customId) => {
   const { user, boardList } = get();

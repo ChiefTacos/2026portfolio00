@@ -2554,7 +2554,7 @@ const NoteItem = ({ note, noteIdx, boardId, theme }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(note);
-  const [sizeLevel, setSizeLevel] = useState(0);
+  // const [sizeLevel, setSizeLevel] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [countdown, setCountdown] = useState(5);
   
@@ -2562,11 +2562,21 @@ const NoteItem = ({ note, noteIdx, boardId, theme }) => {
   const deleteTimerRef = useRef(null);
   const touchTimerRef = useRef(null);
 
+
+  // If the note is an old string, default to size 0. If it's an object, use note.text
+  const noteText = typeof note === 'string' ? note : note.text;
+  const noteSize = typeof note === 'string' ? 0 : (note.size || 0);
+
   const editNote = useStore((state) => state.editNote);
   const removeNote = useStore((state) => state.removeNote);
+const setNoteSize = useStore((state) => state.setNoteSize); // Get the new action
 
   const sizeClasses = ["text-2xl", "text-3xl", "text-4xl", "text-6xl"];
 
+// Sync editValue when the note text changes from the cloud
+  useEffect(() => {
+    setEditValue(noteText);
+  }, [noteText]);
   // --- 1. THE FIX: GLOBAL CLICK-AWAY LOGIC ---
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -2642,10 +2652,12 @@ const NoteItem = ({ note, noteIdx, boardId, theme }) => {
         className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:ring-1 hover:ring-black active:scale-[0.98] text-left relative
           ${theme?.bg || 'bg-gray-100'} ${theme?.text || 'text-gray-800'} border-l-4 ${theme?.border || 'border-gray-300'}`}
       >
-        <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-10`} style={{ whiteSpace: 'pre-wrap' }}>
+        {/* <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-10`} style={{ whiteSpace: 'pre-wrap' }}>
           {note}
+        </div> */}
+        <div className={`${sizeClasses[noteSize]} transition-all duration-200 break-words pr-10`} style={{ whiteSpace: 'pre-wrap' }}>
+          {noteText}
         </div>
-
         {isDeleting && (
           <div onClick={(e) => { e.stopPropagation(); setIsDeleting(false); clearTimeout(deleteTimerRef.current); }}
             className="absolute inset-0 z-[60] flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm rounded-2xl animate-in fade-in cursor-pointer">
@@ -2656,9 +2668,15 @@ const NoteItem = ({ note, noteIdx, boardId, theme }) => {
 
         {!isDeleting && (
           <div className="absolute flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity right-2 top-2 z-10">
-            <button onClick={(e) => { e.stopPropagation(); if(sizeLevel < 3) setSizeLevel(s => s + 1); }}
+          <button onClick={(e) => { 
+                e.stopPropagation(); 
+                if(noteSize < 3) setNoteSize(boardId, noteIdx, noteSize + 1); 
+              }}
               className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-black hover:text-white transition-colors font-bold">+</button>
-            <button onClick={(e) => { e.stopPropagation(); if(sizeLevel > 0) setSizeLevel(s => s - 1); }}
+            <button onClick={(e) => { 
+                e.stopPropagation(); 
+                if(noteSize > 0) setNoteSize(boardId, noteIdx, noteSize - 1); 
+              }}
               className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-black hover:text-white transition-colors font-bold">−</button>
           </div>
         )}
