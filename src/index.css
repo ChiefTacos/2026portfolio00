@@ -241,8 +241,16 @@ overflow: hidden;
 
 
 
+/* Specific override for text inputs to allow internal scrolling */
+input[type="text"] {
+  overflow-x: scroll !important; /* Allows the text to move left */
+  scrollbar-width: none !important; /* Keeps it clean/hidden */
+  white-space: nowrap !important;
+}
 
-
+input[type="text"]::-webkit-scrollbar {
+  display: none !important; /* Hide scrollbar for Chrome/Safari */
+}
 
 .card {
     position: relative;

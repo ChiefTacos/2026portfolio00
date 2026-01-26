@@ -4,11 +4,10 @@ import { animate, useMotionValue } from "framer-motion";
 import { useEffect, useRef, useState}  from "react";
 import React from 'react';
 import * as THREE from "three";
-import { useStore } from '../store/useStore' // Adjust path if needed
+import { useStore } from '../store/useStore'
 import { getStorage, ref, uploadBytes, getDownloadURL, getMetadata } from "firebase/storage";
 import { storage } from "../firebase";
 import jsmediatags from "jsmediatags/dist/jsmediatags.min.js";
-
 
 
 const OverlayItem = ({ 
@@ -457,7 +456,7 @@ const snapBackIntoBounds = () => {
   });
 
 };
-
+const inputRef = useRef({}); // We use an object to store refs for multiple boards
 
 useEffect(() => {
   const handleResize = () => {
@@ -1074,66 +1073,7 @@ style={{
   {/* MAIN CONTENT AREA (Col 4-12) */}
   <div className=" lg:col-span-9 grid lg:grid-cols-2 gap-8 h-[160vh] lg:h-auto overflow-hidden">
     
-    {/* LMIDDLE: CURRENTLY PLAYING PLAYER */}
-    {/* <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-6 shadow-inner relative overflow-hidden">
-      <div className="absolute top-4 left-4 flex items-center gap-2 text-[10px] text-gray-500 font-mono uppercase tracking-widest">
-        <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-        Playing from: {useStore.getState().playingPlaylist}
-      </div>
-
-      <div className={`w-48 h-48 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl ${isPlaying ? 'animate-spin-slow' : ''}`}>
-        <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-        </svg>
-      </div>
-      
-      
-      <div className="flex items-center gap-8">
-        <button 
-          onClick={() => {
-            const time = window.__AUDIO_ENGINE__?.getCurrentTime() || 0;
-            if (time > 3) window.__AUDIO_ENGINE__.restart();
-            else useStore.getState().prevTrack();
-          }}
-          className="text-white hover:text-blue-400 transition-colors"
-        >
-          <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-        </button>
-
-        <button
-          onClick={togglePlay}
-          className={`w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-lg ${isPlaying ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}`}
-        >
-          {isPlaying ? (
-            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          ) : (
-            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          )}
-        </button>
-
-        <button 
-          onClick={() => useStore.getState().nextTrack()}
-          className="text-white hover:text-blue-400 transition-colors"
-        >
-          <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-        </button>
-      </div>
-      
-      <div className="w-full flex flex-col gap-2 px-2">
-        <input
-          type="range"
-          min="0"
-          max={duration || 0}
-          value={currentTime}
-          onInput={(e) => window.__AUDIO_ENGINE__?.seek(Number(e.target.value))}
-          className="w-full h-1.5 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
-        />
-        <div className="flex justify-between text-[10px] text-gray-400 font-mono">
-          <span>{formatTime(currentTime)}</span>
-          <span>{formatTime(duration)}</span>
-        </div>
-      </div>
-    </div> */}
+    
     
 <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-8 shadow-inner relative overflow-hidden h-full">
   
@@ -1442,24 +1382,18 @@ style={{
               </div>
             </div>
 
-            {/* Notes display and Input area remain exactly as you had them... */}
             
-                  {/* <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
-                    {currentNotes.map((note, noteIdx) => (
-                      <NoteItem 
-                        key={`${boardId}-${noteIdx}`} 
-                        note={note} 
-                        onRemove={() => removeNote(boardId, noteIdx)} 
-                      />
-                    ))}
-                  </div> */}
+             
 
-                  {/* --- THE UPDATED NOTES DISPLAY AREA --- */}
-                          <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar">
+                          <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar ">
                             {currentNotes.map((note, noteIdx) => (
                               <NoteItem 
-                              key={`${boardId}-${note}-${noteIdx}`} // More unique key
+
+
+                                key={`${boardId}-${noteIdx}`} // Changed key slightly to avoid re-rendering issues
                                 note={note} 
+                                noteIdx={noteIdx}
+                                 boardId={boardId}
                                 theme={currentTheme} // PASS THE THEME HERE
                                 onRemove={() => removeNote(boardId, noteIdx)} 
                               />
@@ -1470,13 +1404,42 @@ style={{
 
 
             <div className="flex flex-col gap-2">
-              <input 
-                type="text" 
-                value={currentInputValue} 
-                onChange={(e) => handleInputChange(boardId, e.target.value)}
-                placeholder="New note..."
-                className="w-full p-4 bg-gray-100 border-2 border-transparent focus:border-blue-500 rounded-xl outline-none"
-              />
+              
+              <textarea 
+          ref={el => inputRef.current[boardId] = el}
+          value={currentInputValue} 
+          rows={currentInputValue.includes('\n') ? 3 : 1} // Auto-expands slightly if multi-line
+          onChange={(e) => {
+            handleInputChange(boardId, e.target.value);
+            // Auto-scroll to bottom of textarea
+            const target = e.target;
+            setTimeout(() => {
+              target.scrollTop = target.scrollHeight;
+            }, 0);
+          }}
+          onKeyDown={(e) => {
+            // If user presses Enter without Shift -> Save Note
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault(); // Prevent adding the newline character
+              if (currentInputValue.trim()) {
+                addNote(boardId, currentInputValue); 
+                handleInputChange(boardId, "");
+              }
+            }
+            // If user presses Shift + Enter -> Naturally allows a new paragraph
+          }}
+          placeholder="Ducking rules, hugging blocks that don't love you
+I pray you be a man with goals and point of views
+Stuck in a life, where the son don't even know his popps
+And the cyclical nature of doing time continues.
+
+This is where you write your goals, diaries, and thoughts.    (Shift+Enter for new paragraph)"
+          className="w-full px-5 pb-6 pt-1 bg-gray-100 border-2 border-transparent focus:border-blue-500 rounded-2xl outline-none resize-none transition-all text-gray-700"
+          style={{ 
+            lineHeight: '1.5',
+            scrollbarWidth: 'none'
+          }} 
+        />
               <button onClick={() => { addNote(boardId, currentInputValue); handleInputChange(boardId, ""); }} disabled={!currentInputValue.trim()} className="w-full py-3 bg-blue-600 text-white rounded-xl font-bold">
                 Save Note
               </button>
@@ -2458,118 +2421,313 @@ useGLTF.preload("models/scene.glb");
 
 
 
-const NoteItem = ({ note, onRemove, theme }) => {
-  const [sizeLevel, setSizeLevel] = useState(0); // 0 to 3
-  const sizeClasses = [
-    "text-xl",   // Base (Level 0)
-    "text-2xl",  // Level 1
-    "text-3xl",  // Level 2
-    "text-4xl"   // Level 3
-  ];
+// const NoteItem = ({ note, onRemove, theme }) => {
 
-  // Handle the countdown logic
+
+//   const [sizeLevel, setSizeLevel] = useState(0); // 0 to 3
+//   const sizeClasses = [
+//     "text-xl",   // Base (Level 0)
+//     "text-2xl",  // Level 1
+//     "text-3xl",  // Level 2
+//     "text-4xl"   // Level 3
+//   ];
+
+//   // Handle the countdown logic
+//   const [isDeleting, setIsDeleting] = useState(false);
+//   const [countdown, setCountdown] = useState(5);
+//   const timerRef = useRef(null);
+
+
+//   const [showTooltip, setShowTooltip] = useState(false);
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [editValue, setEditValue] = useState(note);
+  
+//   // Zustand actions
+//   const editNote = useStore((state) => state.editNote);
+//   const removeNote = useStore((state) => state.removeNote);
+  
+
+  
+// const onRemoveRef = useRef(onRemove);
+
+// useEffect(() => {
+//     onRemoveRef.current = onRemove;
+//   }, [onRemove]);
+
+
+
+// useEffect(() => {
+//     if (isDeleting && countdown > 0) {
+//       timerRef.current = setTimeout(() => {
+//         setCountdown(prev => prev - 1);
+//       }, 1000);
+//     } else if (isDeleting && countdown === 0) {
+//       // Call the version of the function from the Ref
+//       onRemoveRef.current();
+//       setIsDeleting(false); // Reset state
+//     }
+//     return () => clearTimeout(timerRef.current);
+//   }, [isDeleting, countdown]); 
+
+
+
+
+//   const startDelete = (e) => {
+//     e.stopPropagation();
+//     setIsDeleting(true);
+//     setCountdown(5);
+//   };
+
+//   const cancelDelete = (e) => {
+//     e.stopPropagation(); // Prevent trigger issues
+//     setIsDeleting(false);
+// if (timerRef.current) clearTimeout(timerRef.current); 
+//  setCountdown(5);
+//   };
+
+//   // Helper to extract the color name for hover states
+//   // e.g., "border-blue-400" -> "bg-blue-400"
+//   const hoverBgColor = theme.border.replace('border-green-400', 'bg-');
+
+//   return (
+//     <div className={`group relative p-4 ${theme.bg} border-l-4 ${theme.border} rounded-r-lg text-gray-700 shadow-sm text-left transition-all duration-300`}>
+      
+//       {/* Note Text */}
+//       <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-12`}>
+//         {note}
+//       </div>
+
+//       {/* Delete Overlay */}
+//       {isDeleting && (
+//         <div 
+//           onClick={cancelDelete}
+//           className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/70 rounded-r-lg cursor-pointer animate-pulse"
+//         >
+//           <p className="text-white font-black text-xl text-center px-4 leading-tight">
+//             NOTE WILL DELETE IN {countdown} SECONDS
+//           </p>
+//           <p className="text-yellow-400 font-bold text-sm mt-2 uppercase tracking-widest">
+//             Click anywhere to Undo
+//           </p>
+//         </div>
+//       )}
+
+//       {/* Size Controls - Themed */}
+//       {!isDeleting && (
+//         <div 
+//           className="absolute flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
+//           style={{ top: "45px", right: "8px" }}
+//         >
+//           {sizeLevel < 3 && (
+//             <button 
+//               onClick={() => setSizeLevel(prev => prev + 1)}
+//               className={`w-10 h-10 flex items-center justify-center bg-white border ${theme.border} rounded-full ${theme.text} hover:${hoverBgColor} hover:text-white font-bold text-xl shadow-sm transition-colors`}
+//             >
+//               +
+//             </button>
+//           )}
+//           {sizeLevel > 0 && (
+//             <button 
+//               onClick={() => setSizeLevel(prev => prev - 1)}
+//               className={`w-10 h-10 flex items-center justify-center bg-white border ${theme.border} rounded-full ${theme.text} hover:${hoverBgColor} hover:text-white font-bold text-xl shadow-sm transition-colors`}
+//             >
+//               −
+//             </button>
+//           )}
+//         </div>
+//       )}
+
+//       {/* Delete Button */}
+//       {!isDeleting && (
+//         <button 
+//           onClick={startDelete} 
+//           className="text-2xl absolute top-2 right-4 opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all"
+//         >
+//           ✕
+//         </button>
+//       )}
+//     </div>
+//   );
+// };
+
+const NoteItem = ({ note, noteIdx, boardId, theme }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(note);
+  const [sizeLevel, setSizeLevel] = useState(0);
+const tooltipRef = useRef(null); // New ref for the tooltip
   const [isDeleting, setIsDeleting] = useState(false);
   const [countdown, setCountdown] = useState(5);
-  const timerRef = useRef(null);
+  
+  const deleteTimerRef = useRef(null);
+  const touchTimerRef = useRef(null);
 
-const onRemoveRef = useRef(onRemove);
+  const editNote = useStore((state) => state.editNote);
+  const removeNote = useStore((state) => state.removeNote);
 
-useEffect(() => {
-    onRemoveRef.current = onRemove;
-  }, [onRemove]);
+  const sizeClasses = ["text-base", "text-xl", "text-2xl", "text-3xl"];
 
-
-
-useEffect(() => {
+  useEffect(() => {
     if (isDeleting && countdown > 0) {
-      timerRef.current = setTimeout(() => {
-        setCountdown(prev => prev - 1);
-      }, 1000);
+      deleteTimerRef.current = setTimeout(() => setCountdown(prev => prev - 1), 1000);
     } else if (isDeleting && countdown === 0) {
-      // Call the version of the function from the Ref
-      onRemoveRef.current();
-      setIsDeleting(false); // Reset state
+      removeNote(boardId, noteIdx);
+      setIsDeleting(false);
     }
-    return () => clearTimeout(timerRef.current);
-  }, [isDeleting, countdown]); 
+    return () => clearTimeout(deleteTimerRef.current);
+  }, [isDeleting, countdown]);
+// New effect for handling clicks outside the tooltip
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showTooltip && tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+        setShowTooltip(false);
+      }
+    };
 
+    if (showTooltip) {
+      document.addEventListener('click', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside); // For mobile support
+    }
 
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [showTooltip]);
 
+  const handleTouchStart = () => {
+    touchTimerRef.current = setTimeout(() => setShowTooltip(true), 600);
+  };
+  const handleTouchEnd = () => clearTimeout(touchTimerRef.current);
 
-  const startDelete = (e) => {
-    e.stopPropagation();
-    setIsDeleting(true);
-    setCountdown(5);
+  const handleSave = () => {
+    if (editValue.trim()) {
+      editNote(boardId, noteIdx, editValue);
+      setIsEditing(false);
+      setShowTooltip(false);
+    }
   };
 
-  const cancelDelete = (e) => {
-    e.stopPropagation(); // Prevent trigger issues
-    setIsDeleting(false);
-if (timerRef.current) clearTimeout(timerRef.current); 
- setCountdown(5);
-  };
+  const hoverBgColor = theme?.border?.replace('border-', 'bg-') || 'bg-blue-400';
 
-  // Helper to extract the color name for hover states
-  // e.g., "border-blue-400" -> "bg-blue-400"
-  const hoverBgColor = theme.border.replace('border-green-400', 'bg-');
+  if (isEditing) {
+    return (
+      <div className="bg-white p-4 rounded-2xl border-2 border-blue-400 shadow-xl animate-in fade-in zoom-in-95 duration-200 z-10 relative">
+        <textarea 
+          value={editValue}
+          onChange={(e) => setEditValue(e.target.value)}
+          className="w-full bg-transparent outline-none text-gray-800 min-h-[120px] resize-none leading-relaxed"
+          autoFocus
+        />
+        <div className="flex justify-end gap-2 mt-2">
+          <button onClick={() => setIsEditing(false)} className="text-xs font-bold text-gray-400 px-2">Cancel</button>
+          <button onClick={handleSave} className="bg-blue-600 text-white px-5 py-2 rounded-xl text-xs font-bold shadow-md">Update</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className={`group relative p-4 ${theme.bg} border-l-4 ${theme.border} rounded-r-lg text-gray-700 shadow-sm text-left transition-all duration-300`}>
-      
-      {/* Note Text */}
-      <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-12`}>
-        {note}
+    <div className="relative group">
+      <div 
+        onDoubleClick={() => setShowTooltip(true)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:ring-2 hover:ring-blue-300 active:scale-[0.98] text-left relative
+          ${theme?.bg || 'bg-gray-100'} ${theme?.text || 'text-gray-800'} border-l-4 ${theme?.border || 'border-gray-300'}`}
+      >
+        <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-10`} style={{ whiteSpace: 'pre-wrap' }}>
+          {note}
+        </div>
+
+        {isDeleting && (
+          <div onClick={(e) => { e.stopPropagation(); setIsDeleting(false); clearTimeout(deleteTimerRef.current); }}
+            className="absolute inset-0 z-[60] flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm rounded-2xl animate-in fade-in cursor-pointer">
+            <p className="text-white font-black text-lg">DELETING IN {countdown}...</p>
+            <p className="text-yellow-400 text-xs font-bold uppercase">Tap to Undo</p>
+          </div>
+        )}
+
+        {!isDeleting && (
+          <div className="absolute flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity right-2 top-2 z-10">
+            <button onClick={(e) => { e.stopPropagation(); if(sizeLevel < 3) setSizeLevel(s => s + 1); }}
+              className={`w-7 h-7 flex items-center justify-center bg-white border ${theme?.border} rounded-full shadow-sm hover:${hoverBgColor} hover:text-white transition-colors font-bold`}>+</button>
+            <button onClick={(e) => { e.stopPropagation(); if(sizeLevel > 0) setSizeLevel(s => s - 1); }}
+              className={`w-7 h-7 flex items-center justify-center bg-white border ${theme?.border} rounded-full shadow-sm hover:${hoverBgColor} hover:text-white transition-colors font-bold`}>−</button>
+          </div>
+        )}
       </div>
+{showTooltip && !isDeleting && (
+  <>
+    {/* 1. THE CLICK-AWAY LAYER */}
+    <div 
+       ref={tooltipRef} // Attach ref here
+      className="fixed inset-0 w-full h-full bg-black/5" // Use bg-black/5 to test, then change to bg-transparent
+      style={{ 
+        zIndex: 2147483642, // Massive Z-index
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      }} 
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setShowTooltip(false);
+      }} 
+    />
+    
+    {/* 2. THE TOOLTIP BOX */}
+    <div 
+      className="absolute top-2 left-1/2 -translate-x-1/2 bg-white border border-gray-100 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center"
+      style={{ zIndex: 2147483643 }} // One higher than the overlay
+    >
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsEditing(true); 
+          setShowTooltip(false); 
+        }}
+        className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg hover:bg-blue-700 active:scale-95 transition-all"
+      >
+        Edit Note
+      </button>
+      
+      <div className="h-6 w-[1px] bg-gray-200 mx-1" />
+      
+      <button 
+        onClick={(e) => { 
+          e.stopPropagation(); 
+          setIsDeleting(true); 
+          setCountdown(5); 
+          setShowTooltip(false); 
+        }}
+        className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+      >
+        🗑️
+      </button>
+    </div>
+  </>
+)}
+      {/* {showTooltip && !isDeleting && (
+        <>
 
-      {/* Delete Overlay */}
-      {isDeleting && (
-        <div 
-          onClick={cancelDelete}
-          className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/70 rounded-r-lg cursor-pointer animate-pulse"
-        >
-          <p className="text-white font-black text-xl text-center px-4 leading-tight">
-            NOTE WILL DELETE IN {countdown} SECONDS
-          </p>
-          <p className="text-yellow-400 font-bold text-sm mt-2 uppercase tracking-widest">
-            Click anywhere to Undo
-          </p>
-        </div>
-      )}
 
-      {/* Size Controls - Themed */}
-      {!isDeleting && (
-        <div 
-          className="absolute flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{ top: "45px", right: "8px" }}
-        >
-          {sizeLevel < 3 && (
-            <button 
-              onClick={() => setSizeLevel(prev => prev + 1)}
-              className={`w-10 h-10 flex items-center justify-center bg-white border ${theme.border} rounded-full ${theme.text} hover:${hoverBgColor} hover:text-white font-bold text-xl shadow-sm transition-colors`}
-            >
-              +
+        
+          <div className="fixed inset-0 z-[2147483646] bg-transparent" onClick={() => setShowTooltip(false)} />
+          
+          <div className="absolute -top-4 left-1/2 -translate-x-1/2  bg-white border border-gray-100 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in slide-in-from-bottom-2 duration-200 min-w-[180px] justify-center">
+            <button onClick={() => { setIsEditing(true); setShowTooltip(false); }}
+              className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg hover:bg-blue-700 active:scale-95 transition-all">
+              Edit
             </button>
-          )}
-          {sizeLevel > 0 && (
-            <button 
-              onClick={() => setSizeLevel(prev => prev - 1)}
-              className={`w-10 h-10 flex items-center justify-center bg-white border ${theme.border} rounded-full ${theme.text} hover:${hoverBgColor} hover:text-white font-bold text-xl shadow-sm transition-colors`}
-            >
-              −
-            </button>
-          )}
-        </div>
-      )}
-
-      {/* Delete Button */}
-      {!isDeleting && (
-        <button 
-          onClick={startDelete} 
-          className="text-2xl absolute top-2 right-4 opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all"
-        >
-          ✕
-        </button>
-      )}
+            <div className="h-6 w-[1px] bg-gray-200 mx-1" />
+            <button onClick={(e) => { e.stopPropagation(); setIsDeleting(true); setCountdown(5); setShowTooltip(false); }}
+              className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors">🗑️</button>
+          </div>
+        </>
+      )} */}
     </div>
   );
 };

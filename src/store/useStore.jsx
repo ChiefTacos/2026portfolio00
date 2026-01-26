@@ -346,7 +346,28 @@ deleteTrack: async (playlistName, track) => {
       await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
     }
   },
+    editNote: async (containerId, noteIndex, newText) => {
+      const { user, notes } = get();
+      const containerNotes = [...(notes[containerId] || [])];
+      
+      // Update the specific note at the index
+      containerNotes[noteIndex] = newText;
 
+      const updatedNotes = {
+        ...notes,
+        [containerId]: containerNotes
+      };
+
+      set({ notes: updatedNotes });
+
+      if (user) {
+        try {
+          await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+        } catch (error) {
+          console.error("Failed to edit note in cloud:", error);
+        }
+      }
+    },
   // NEW: ADD BOARD + CLOUD SYNC
 // addBoard: async (customId) => {
 //   const { user, boardList } = get();
