@@ -52,7 +52,7 @@ const overlayRef = useRef(null);
 const isActive = activeOverlay.includes(id);
 const isAnyOpen = activeOverlay.length > 0;
 const [isFullscreen, setIsFullscreen] = useState(false);
-
+const [isEnlarged, setIsEnlarged] = useState(false);
 
 const htmlOffset = useRef({ x: 0, y: 0 });
 const dragOffset = useRef({ x: 0, y: 0 });
@@ -342,27 +342,6 @@ const handleButtonClick = (e) => {
     return [...prev, id];
   });
 };
-// const handleButtonClick = (e) => {
-//   if (!isClickable) return;
-//   e.stopPropagation();
-
-//   if (isMobileOrTablet) {
-//     // Mobile: only one at a time
-
-//     setActiveOverlay([id]);
-
-//   } else {
-//     // Desktop: allow multiple
-      
-
-//     setActiveOverlay(prev => {
-//       if (prev.includes(id)) return prev;
-//       return [...prev, id];
-
-//     });
-//   }
-
-// };
 
 
 const handleResetClick = (e) => {
@@ -641,31 +620,52 @@ const handleScroll = (e) => {
                     position: "absolute",
                     left: windowPos.x,
                     top: windowPos.y,
-// width: isFullscreen ? "600px" : "100vw",
-//     height: isFullscreen ? "auto" : "110vh",
-// maxWidth: isFullscreen ? "90vw" : "120vw",
-//     maxHeight: isFullscreen ? "none" : "120vh",
-//     borderRadius: "12px",
-// Logic: if Mobile/Tablet, use specific sizes, otherwise use your desktop defaults
- // WIDTH LOGIC
-  width: isFullscreen 
-    ? "600px" // Fullscreen size
-    : (isMobileOrTablet ? "230vw" : "100vw"), // Mobile vs Desktop window
+// WIDTH LOGIC
+width: isFullscreen 
+  ? "600px" 
+  : isEnlarged 
+    ? "95vw"  // Enlarged size
+    : (isMobileOrTablet ? "230vw" : "100vw"), // Normal size
 
-  // HEIGHT LOGIC
-  height: isFullscreen 
-    ? "auto" 
+// HEIGHT LOGIC
+height: isFullscreen 
+  ? "auto" 
+  : isEnlarged 
+    ? "95vh"  // Enlarged size
     : (isMobileOrTablet ? "120vh" : "110vh"),
 
-  // MAX WIDTH LOGIC
-  maxWidth: isFullscreen 
-    ? "90vw" 
+// MAX WIDTH LOGIC
+maxWidth: isFullscreen 
+  ? "90vw" 
+  : isEnlarged 
+    ? "98vw" 
     : (isMobileOrTablet ? "240vw" : "120vw"),
 
-  // MAX HEIGHT LOGIC
-  maxHeight: isFullscreen 
-    ? "none" 
+// MAX HEIGHT LOGIC
+maxHeight: isFullscreen 
+  ? "none" 
+  : isEnlarged 
+    ? "98vh" 
     : (isMobileOrTablet ? "120vh" : "120vh"),
+
+  // width: isFullscreen 
+  //   ? "600px" // Fullscreen size
+  //   : (isMobileOrTablet ? "230vw" : "100vw"), // Mobile vs Desktop window
+
+  // // HEIGHT LOGIC
+  // height: isFullscreen 
+  //   ? "auto" 
+  //   : (isMobileOrTablet ? "120vh" : "110vh"),
+
+  // // MAX WIDTH LOGIC
+  // maxWidth: isFullscreen 
+  //   ? "90vw" 
+  //   : (isMobileOrTablet ? "240vw" : "120vw"),
+
+  // // MAX HEIGHT LOGIC
+  // maxHeight: isFullscreen 
+  //   ? "none" 
+  //   : (isMobileOrTablet ? "120vh" : "120vh"),
                     transition: isDragging.current ? "none" : "transform 0.2s ease",
                     cursor: "default",
                     pointerEvents: isVisible ? "auto" : "none",  
@@ -715,24 +715,21 @@ style={{
           </button>
           <button onClick={(e) => {
     e.stopPropagation(); // Prevents dragging from triggering when closing
-    handleResetClick(e);
+    setIsFullscreen(prev => !prev);
+    setIsEnlarged(false); // Turn off enlarge if minimizing
+    setTimeout(() => snapBackIntoBounds(), 50);
   }} onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down
-  style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
+  style={{ pointerEvents: "auto" }} alt="MINIMIZE" title="MINIMIZE">
             <span className="bg-yellow-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
           
           </button>
           <button
            onClick={(e) => {
-            e.stopPropagation(); 
-            setIsFullscreen(prev => !prev);
-            setTimeout(() => snapBackIntoBounds(), 50);
-          }}
-            onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down
-            style={{ pointerEvents: "auto" }}
-            alt="MAX WINDOW"
-            title="Adjust Window Size"
-            
-          >
+           e.stopPropagation(); 
+    setIsEnlarged(prev => !prev);
+    setIsFullscreen(false); // Ensure it's not in "Minimized" mode so content shows
+    setTimeout(() => snapBackIntoBounds(), 50);
+  }} onPointerDown={(e) => e.stopPropagation()} style={{ pointerEvents: "auto" }} title="Enlarge Window">
             <span className="bg-green-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-green-600 transition"></span>
           </button>
           </div>
