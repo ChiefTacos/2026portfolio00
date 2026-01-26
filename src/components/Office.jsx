@@ -2577,23 +2577,6 @@ const tooltipRef = useRef(null); // New ref for the tooltip
     return () => clearTimeout(deleteTimerRef.current);
   }, [isDeleting, countdown]);
 // New effect for handling clicks outside the tooltip
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showTooltip && tooltipRef.current && !tooltipRef.current.contains(event.target)) {
-        setShowTooltip(false);
-      }
-    };
-
-    if (showTooltip) {
-      document.addEventListener('click', handleClickOutside);
-      document.addEventListener('touchstart', handleClickOutside); // For mobile support
-    }
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
-    };
-  }, [showTooltip]);
 
   const handleTouchStart = () => {
     touchTimerRef.current = setTimeout(() => setShowTooltip(true), 600);
@@ -2608,8 +2591,8 @@ const tooltipRef = useRef(null); // New ref for the tooltip
     }
   };
 
-  const hoverBgColor = theme?.border?.replace('border-', 'bg-') || 'bg-blue-400';
-
+  // const hoverBgColor = theme?.border?.replace('border-', 'bg-') || 'bg-blue-400';
+      const hoverBgColor = 'bg-black';
   if (isEditing) {
     return (
       <div className="bg-white p-4 rounded-2xl border-2 border-blue-400 shadow-xl animate-in fade-in zoom-in-95 duration-200 z-10 relative">
@@ -2671,7 +2654,7 @@ const tooltipRef = useRef(null); // New ref for the tooltip
         right: 0,
         bottom: 0
       }} 
-      onClick={(e) => {
+      onPointerDown={(e) => {
         e.preventDefault();
         e.stopPropagation();
         setShowTooltip(false);
@@ -2684,7 +2667,7 @@ const tooltipRef = useRef(null); // New ref for the tooltip
       style={{ zIndex: 2147483643 }} // One higher than the overlay
     >
       <button 
-        onClick={(e) => {
+        onPointerDown={(e) => {
           e.stopPropagation();
           setIsEditing(true); 
           setShowTooltip(false); 
@@ -2697,7 +2680,7 @@ const tooltipRef = useRef(null); // New ref for the tooltip
       <div className="h-6 w-[1px] bg-gray-200 mx-1" />
       
       <button 
-        onClick={(e) => { 
+        onPointerDown={(e) => { 
           e.stopPropagation(); 
           setIsDeleting(true); 
           setCountdown(5); 
