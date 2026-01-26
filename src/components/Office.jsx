@@ -2420,7 +2420,7 @@ useGLTF.preload("models/scene.glb");
 
 
 
-
+// OG NOTES
 // const NoteItem = ({ note, onRemove, theme }) => {
 
 
@@ -2555,10 +2555,10 @@ const NoteItem = ({ note, noteIdx, boardId, theme }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(note);
   const [sizeLevel, setSizeLevel] = useState(0);
-const tooltipRef = useRef(null); // New ref for the tooltip
   const [isDeleting, setIsDeleting] = useState(false);
   const [countdown, setCountdown] = useState(5);
   
+  const tooltipRef = useRef(null); // Ref for the Tooltip Box
   const deleteTimerRef = useRef(null);
   const touchTimerRef = useRef(null);
 
@@ -2567,6 +2567,28 @@ const tooltipRef = useRef(null); // New ref for the tooltip
 
   const sizeClasses = ["text-2xl", "text-3xl", "text-4xl", "text-6xl"];
 
+  // --- 1. THE FIX: GLOBAL CLICK-AWAY LOGIC ---
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // If the tooltip is open AND we click something that is NOT inside the tooltipRef
+      if (showTooltip && tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+        setShowTooltip(false);
+      }
+    };
+
+    if (showTooltip) {
+      // Use mousedown/touchstart instead of click for faster response
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [showTooltip]);
+
+  // --- 2. DELETION TIMER ---
   useEffect(() => {
     if (isDeleting && countdown > 0) {
       deleteTimerRef.current = setTimeout(() => setCountdown(prev => prev - 1), 1000);
@@ -2575,8 +2597,7 @@ const tooltipRef = useRef(null); // New ref for the tooltip
       setIsDeleting(false);
     }
     return () => clearTimeout(deleteTimerRef.current);
-  }, [isDeleting, countdown]);
-// New effect for handling clicks outside the tooltip
+  }, [isDeleting, countdown, boardId, noteIdx, removeNote]);
 
   const handleTouchStart = () => {
     touchTimerRef.current = setTimeout(() => setShowTooltip(true), 600);
@@ -2591,11 +2612,9 @@ const tooltipRef = useRef(null); // New ref for the tooltip
     }
   };
 
-  // const hoverBgColor = theme?.border?.replace('border-', 'bg-') || 'bg-blue-400';
-      const hoverBgColor = 'bg-black';
   if (isEditing) {
     return (
-      <div className="bg-white p-4 rounded-2xl border-2 border-blue-400 shadow-xl animate-in fade-in zoom-in-95 duration-200 z-10 relative">
+      <div className="bg-white p-4 rounded-2xl border-2 border-black shadow-xl animate-in fade-in zoom-in-95 duration-200 z-10 relative">
         <textarea 
           value={editValue}
           onChange={(e) => setEditValue(e.target.value)}
@@ -2604,7 +2623,7 @@ const tooltipRef = useRef(null); // New ref for the tooltip
         />
         <div className="flex justify-end gap-2 mt-2">
           <button onClick={() => setIsEditing(false)} className="text-xs font-bold text-gray-400 px-2">Cancel</button>
-          <button onClick={handleSave} className="bg-blue-600 text-white px-5 py-2 rounded-xl text-xs font-bold shadow-md">Update</button>
+          <button onClick={handleSave} className="bg-black text-white px-5 py-2 rounded-xl text-xs font-bold shadow-md">Update</button>
         </div>
       </div>
     );
@@ -2612,11 +2631,15 @@ const tooltipRef = useRef(null); // New ref for the tooltip
 
   return (
     <div className="relative group">
+      {/* THE NOTE CARD */}
       <div 
-        onDoubleClick={() => setShowTooltip(true)}
+        onDoubleClick={(e) => {
+           e.stopPropagation(); // Prevents the click from reaching the document immediately
+           setShowTooltip(true);
+        }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:ring-2 hover:ring-white active:scale-[0.98] text-left relative
+        className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:ring-1 hover:ring-black active:scale-[0.98] text-left relative
           ${theme?.bg || 'bg-gray-100'} ${theme?.text || 'text-gray-800'} border-l-4 ${theme?.border || 'border-gray-300'}`}
       >
         <div className={`${sizeClasses[sizeLevel]} transition-all duration-200 break-words pr-10`} style={{ whiteSpace: 'pre-wrap' }}>
@@ -2634,83 +2657,46 @@ const tooltipRef = useRef(null); // New ref for the tooltip
         {!isDeleting && (
           <div className="absolute flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity right-2 top-2 z-10">
             <button onClick={(e) => { e.stopPropagation(); if(sizeLevel < 3) setSizeLevel(s => s + 1); }}
-              className={`w-7 h-7 flex items-center justify-center bg-white border ${theme?.border} rounded-full shadow-sm hover:${hoverBgColor} hover:text-white transition-colors font-bold`}>+</button>
+              className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-black hover:text-white transition-colors font-bold">+</button>
             <button onClick={(e) => { e.stopPropagation(); if(sizeLevel > 0) setSizeLevel(s => s - 1); }}
-              className={`w-7 h-7 flex items-center justify-center bg-white border ${theme?.border} rounded-full shadow-sm hover:${hoverBgColor} hover:text-white transition-colors font-bold`}>−</button>
+              className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-black hover:text-white transition-colors font-bold">−</button>
           </div>
         )}
       </div>
-{showTooltip && !isDeleting && (
-  <>
-    {/* 1. THE CLICK-AWAY LAYER */}
-    <div 
-       ref={tooltipRef} // Attach ref here
-      className="fixed inset-0 w-full h-full bg-black/5" // Use bg-black/5 to test, then change to bg-transparent
-      style={{ 
-        zIndex: 2147483642, // Massive Z-index
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-      }} 
-      onPointerDown={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setShowTooltip(false);
-      }} 
-    />
-    
-    {/* 2. THE TOOLTIP BOX */}
-    <div 
-      className="absolute top-2 left-1/2 -translate-x-1/2 bg-white border border-gray-100 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center"
-      style={{ zIndex: 2147483643 }} // One higher than the overlay
-    >
-      <button 
-        onPointerDown={(e) => {
-          e.stopPropagation();
-          setIsEditing(true); 
-          setShowTooltip(false); 
-        }}
-        className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg hover:bg-blue-700 active:scale-95 transition-all"
-      >
-        Edit Note
-      </button>
-      
-      <div className="h-6 w-[1px] bg-gray-200 mx-1" />
-      
-      <button 
-        onPointerDown={(e) => { 
-          e.stopPropagation(); 
-          setIsDeleting(true); 
-          setCountdown(5); 
-          setShowTooltip(false); 
-        }}
-        className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors"
-      >
-        🗑️
-      </button>
-    </div>
-  </>
-)}
-      {/* {showTooltip && !isDeleting && (
-        <>
 
-
-        
-          <div className="fixed inset-0 z-[2147483646] bg-transparent" onClick={() => setShowTooltip(false)} />
+      {/* TOOLTIP SYSTEM */}
+      {showTooltip && !isDeleting && (
+        <div 
+          ref={tooltipRef} // ATTACH REF HERE
+          className="absolute top-2 left-1/2 -translate-x-1/2 bg-white border border-gray-100 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center select-none"
+          style={{ zIndex: 2147483643 }}
+        >
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsEditing(true); 
+              setShowTooltip(false); 
+            }}
+            className="px-4 py-2 bg-black text-white rounded-xl text-sm font-bold shadow-lg active:scale-95 transition-all"
+          >
+            Edit Note
+          </button>
           
-          <div className="absolute -top-4 left-1/2 -translate-x-1/2  bg-white border border-gray-100 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in slide-in-from-bottom-2 duration-200 min-w-[180px] justify-center">
-            <button onClick={() => { setIsEditing(true); setShowTooltip(false); }}
-              className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg hover:bg-blue-700 active:scale-95 transition-all">
-              Edit
-            </button>
-            <div className="h-6 w-[1px] bg-gray-200 mx-1" />
-            <button onClick={(e) => { e.stopPropagation(); setIsDeleting(true); setCountdown(5); setShowTooltip(false); }}
-              className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors">🗑️</button>
-          </div>
-        </>
-      )} */}
+          <div className="h-6 w-[1px] bg-gray-200 mx-1" />
+          
+          <button 
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              setIsDeleting(true); 
+              setCountdown(5); 
+              setShowTooltip(false); 
+            }}
+            className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+          >
+            🗑️
+          </button>
+        </div>
+      )}
     </div>
   );
 };
