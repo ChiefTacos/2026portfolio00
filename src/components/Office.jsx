@@ -41,7 +41,7 @@ const OverlayItem = ({
 }) => {
   const { camera, gl } = useThree();
 const groupRef = useRef(); // Ref for the THREE.Group
-const initialCameraState = useRef({ position: null, quaternion: null });
+// const initialCameraState = useRef({ position: null, quaternion: null });
 const [showContent, setShowContent] = useState(false); // State to control visibility
 const [isClickable, setIsClickable] = useState(true); //prevent bug when going reseting while animation runs
 const [windowPos, setWindowPos] = useState({ x: 0, y: 0 });
@@ -50,7 +50,7 @@ const overlayRef = useRef(null);
  const isMobileOrTablet = device === "mobile" || device === "tablet";
 
 const isActive = activeOverlay.includes(id);
-const isAnyOpen = activeOverlay.length > 0;
+// const isAnyOpen = activeOverlay.length > 0;
 const [isFullscreen, setIsFullscreen] = useState(false);
 const [isEnlarged, setIsEnlarged] = useState(false);
 
@@ -60,7 +60,10 @@ const isDragging = useRef(false);
 const lastPos = useRef({ x: 0, y: 0 });
 const velocity = useRef({ x: 0, y: 0 });
 const lastTimestamp = useRef(0);
-const isVisible = section !== 3;
+// const isVisible = section !== 3;
+const isVisible = id === "freeQ" 
+  ? (section === 0 || section === 1) // FreeQ stays visible through sections 0 and 1
+  : (section !== 0 && section !== 3); 
 const friction = 0.92; // momentum decay
 const user = useStore((state) => state.user);
 
@@ -333,6 +336,12 @@ const handleButtonClick = (e) => {
   if (!isClickable) return;
   e.stopPropagation();
 
+  
+// NEW: If this is the Free Quote button, send user to section 1
+  if (id === "freeQ") {
+                             jumpToSection(goToSection);
+  }
+
   setActiveOverlay(prev => {
     // If already open, just ensure it's at the end of the array (top of stack)
     if (prev.includes(id)) {
@@ -446,11 +455,16 @@ useEffect(() => {
 }, [showContent]);
 
 
-const showViewButton = hideTriggerButton 
-    ? false 
-    // : (isMobileOrTablet ? !isAnyOpen : !isActive);
-    : !isActive; // Now it only checks if THIS specific window is open, regardless of device
+// const showViewButton = hideTriggerButton 
+//     ? false 
+//     // : (isMobileOrTablet ? !isAnyOpen : !isActive);
+//     : !isActive; // Now it only checks if THIS specific window is open, regardless of device
 
+const showViewButton = section === 0 
+    ? (id === "freeQ" && !isActive) // Only show on section 0 if it's FreeQ AND not already open
+    : (hideTriggerButton ? false : !isActive);
+
+    
 const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
     <div className="relative group scale-100 lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
@@ -1727,7 +1741,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
       },
     },
     driveway: {
-      distanceFactor: { desktop: 0.5, tablet: 0.6, mobile: 0.6 },
+      distanceFactor: { desktop: 0.32, tablet: 0.4, mobile: 0.4 },
       position: {
         
         // desktop: [-610.128, 328.8, 172],
@@ -1751,7 +1765,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
     },
     // music
     contact: {
-      distanceFactor: { desktop: 0.5, tablet: 0.6, mobile: 0.6 },
+      distanceFactor: { desktop: 0.32, tablet: 0.4, mobile: 0.4 },
       position: {
         // desktop: [103.2, 600.1, 1077.2],
         desktop: [-2.2 ,2, 0],
@@ -1764,13 +1778,13 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 1, tablet: 1, mobile: 1 },
+      distanceFactor: { desktop: 0.25, tablet: 0.35, mobile: 0.35  },
       position: {
-        desktop: [0, 5, 0],
+        desktop: [0, 2, 0],
         // tablet: [461.2, 880.1, 707.2],
 
-        tablet: [0, 5, 0],
-        mobile: [0, 5, 0],
+        tablet: [0, 2, 0],
+        mobile: [0, 2, 0],
       },
     },
   };
@@ -2171,7 +2185,6 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
                                           bgColor="bg-yellow-500"
                                 src="/textures/sexyCleaning.jpeg"
                                         /></mesh> */}
-{section === 0 && (
   <mesh 
     position={freeQ.position} 
     visible={true}  // Now controlled by the condition
@@ -2211,7 +2224,6 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
       src="/textures/sexyCleaning.jpeg"
     />
   </mesh>
-)}
                                     <mesh
                                         position={driveway.position}  
                                         visible={false} 
@@ -2373,7 +2385,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
                                                               src="/textures/sexyCleaning.jpeg"
                                                                       /></mesh>
                                                                       
-                                                                      <mesh position={freeQ.position} visible={false}   name="freeQ-overlay-anchor"
+                                                                      <mesh position={freeQ.position} visible={false}  name="freeQ-overlay-anchor"
                                                                 onClick={() => {
                                                                   if (fullyOpen) {
                                                                     setClickedFree(false);
