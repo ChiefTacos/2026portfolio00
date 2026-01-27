@@ -629,7 +629,7 @@ width: isFullscreen
 
 // HEIGHT LOGIC
 height: isFullscreen 
-  ? "auto" 
+  ? "12vh"  
   : isEnlarged 
     ? "95vh"  // Enlarged size
     : (isMobileOrTablet ? "120vh" : "110vh"),
@@ -643,7 +643,7 @@ maxWidth: isFullscreen
 
 // MAX HEIGHT LOGIC
 maxHeight: isFullscreen 
-  ? "none" 
+  ? "auto" 
   : isEnlarged 
     ? "98vh" 
     : (isMobileOrTablet ? "120vh" : "120vh"),
@@ -710,7 +710,7 @@ style={{
     handleResetClick(e);
   }}onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down 
   style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
-            <span className="bg-red-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
+            <span className="bg-red-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-700 transition"></span>
           
           </button>
           <button onClick={(e) => {
@@ -720,7 +720,7 @@ style={{
     setTimeout(() => snapBackIntoBounds(), 50);
   }} onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down
   style={{ pointerEvents: "auto" }} alt="MINIMIZE" title="MINIMIZE">
-            <span className="bg-yellow-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-600 transition"></span>
+            <span className="bg-yellow-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-orange-400 transition"></span>
           
           </button>
           <button
@@ -740,7 +740,7 @@ style={{
           {!isScrolled && (
                         <h1 className={`font-bold transition-all duration-300 whitespace-nowrap  text-white
                 ${isFullscreen 
-                  ? 'lg:text-5xl md:text-3xl text-xl  pb-1 px-4' 
+                  ? 'lg:text-5xl md:text-3xl text-xl  pb-1 px-5  ' 
                   : 'lg:text-5xl md:text-3xl text-xl md:ml-10 ml-5 mt-1 pb-2 pr-2'
                 }`}>
                 {title}
@@ -755,10 +755,11 @@ style={{
                  
           
         </div>
+        <div className="p-10 flex flex-col items-center justify-center gap-10 pt-1"
+        onPointerDown={isFullscreen && isVisible ? handleDragStart : undefined}>
 {/* MAIN CONTENT: Only show if NOT fullscreen */}
-  {!isFullscreen && (
-        <div className="p-10 flex flex-col items-center justify-center gap-10 pt-1">
           
+  {!isFullscreen && (
 
 
           <div className="card__content w-full">
@@ -1470,10 +1471,10 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
 
          
         </div>
+        )}
 
           
         </div>
-        )}
       </div>
   )}
  
