@@ -235,23 +235,23 @@ export const Experience = (props) => {
                 // rotateY={0}
                 animate={{
                   // X Logic: Section 3 is 2, Sections 1 & 2 are -4.59, Section 0 is 6
-                  x: section === 3 ? 6.4 : (section === 1 || section === 2 ? 6.304  : (isMobile ? 6.3 : 6.3)),
+                  x: section === 3 ? 6.4 : (section === 1 || section === 2 ? 6.305  : (isMobile ? 6.3 : 6.3)),
 
-                  // Y Logic: Section 1, 2, and 3 are all 1 unit higher than Section 0 (1 + 1 = 2)
-                  // y: section === 0 ? 3.2 : 4.1,
                   y: section === 3 
                     ? 9.4
                     : (section === 1 || section === 2 
-                        ? (isMobile ? 3.28 : 3.32) 
-                        : 3.52),
+                        ? (isMobile ? 3.28 : 3.1) 
+                        :  3.38),
                   // Z Logic
                   z: section === 3 
                     ? -20.4
                     : (section === 1 || section === 2 
-                        ? (isMobile ? -3.39 : -3.25) 
-                        : -3.4),
+                        ? (isMobile ? -3.39 : -3.3) 
+                        : (isMobile ? -3.39 : -3.25)),
 
-                
+                        // (6.3)
+                        // 3.52
+                // -3.4
                 }}
                 transition={{
                   duration: 1.1,

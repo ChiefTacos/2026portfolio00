@@ -11,7 +11,6 @@ import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../store/useStore.jsx'; // Adjust path to your useStore file
 
-
 const StyledWrapper01 = styled.div`
   .keycap {
     position: relative;
@@ -222,6 +221,11 @@ const [activeIndex, setActiveIndex] = useState(-1);
 const [rounds, setRounds] = useState(0);
 
 useEffect(() => {
+  if (section === 1 || section === 2) {
+    setMenuOpened(true);
+  }
+}, [section, setMenuOpened]);
+useEffect(() => {
   if (window.innerWidth <= 1280) return;
 
   const startTimer = setTimeout(() => {
@@ -305,22 +309,41 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
       <div
         className={`
-            z-[2147483641]
-
+            
+            z-[2147483640]
             fixed inset-y-0  right-[0px] xl:right-[0px] transition-all overflow-y-auto
           flex flex-col bg-blue
-        `}
-        
-        style={{
-  width:
-       menuOpened
-        ? "100%"         // Mobile/tablet: open
-        : "0px",         // Mobile/tablet: closed
-        opacity: menuOpened ? 1 : 0,        // Optional: adds a fade
-    pointerEvents: menuOpened ? "auto" : "none"
-}}
-      >
+          w-[400px] opacity-100 pointer-events-auto        `}
 
+    //  style={{
+    //       width: (typeof window !== 'undefined' && window.innerWidth >= 1280)
+    //         ? "400px" 
+    //         : (menuOpened || section === 1 || section === 2) 
+    //           ? "100%" 
+    //           : "0px",
+          
+    //       /* Force visibility if toggled OR in special sections */
+    //       opacity: (menuOpened || section === 1 || section === 2 || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? 1 : 0,
+          
+    //       /* Critical: allow clicks only when menu is actually shown */
+    //       pointerEvents: (menuOpened || section === 1 || section === 2 || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? "auto" : "none"
+    //     }}
+    //   >
+          style={{
+              /* On mobile/tablet, if menuOpened is true (forced by our useEffect), it's 100% */
+              width: menuOpened 
+                ? "100%" 
+                : (typeof window !== 'undefined' && window.innerWidth >= 1280) 
+                  ? "400px" 
+                  : "0px",
+
+              /* Always visible on desktop OR if menuOpened is true */
+              opacity: (menuOpened || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? 1 : 0,
+              
+              /* Allow clicks if menu is open or on desktop */
+              pointerEvents: (menuOpened || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? "auto" : "none"
+            }}
+          >
        
         {/* <div 
           className="flex-1 flex flex-col items-center justify-center lg:gap-4 mt-4 gap-1 lg:mt-[0px]"
@@ -334,7 +357,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
 
 
-   <div className="xl:fixed xl:bottom-4 xl:right-4 z-[2147483642] pointer-events-auto">
+   <div className="xl:fixed xl:bottom-4 xl:right-4 z-[2147483640] pointer-events-auto">
   <div className="w-full max-w-sm xl:max-w-md p-4">
     <div className="relative overflow-hidden rounded-lg transition-all duration-300 group bg-background/20 hover:scale-[1.02] text-foreground backdrop-blur-[2px] p-6 bg-black hover:shadow-lg hover:shadow-primary/20">
       
@@ -690,13 +713,18 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
         </div>
       </div> 
 
+{/* MOBILE WRAPPER BUTTON LOGIC */}
+      {/* Hide this entire block if:
+          1. Menu is already opened
+          2. It's an XL screen (Desktop)
+          3. We are in section 1 or 2 (where menu is forced open)
+      */}
 
-               <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32  px-4  block z-[2147483643] mobile-fade-in 
-                ${menuOpened ? 'hidden' : 'block'}
-                `}
-                >
+           
+            <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32 px-4 z-[2147483643] mobile-fade-in 
+          ${(menuOpened ||  (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? 'hidden' : 'block'}
+      `}>
                 {/* ${menuOpened ? 'hidden' : 'block'} */}
-            
             
                {(section === 0 && !menuOpened) && (
               <div
@@ -720,16 +748,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       <MobileWrapper >
       <div className="social-buttons ">
         
-        {/* <a href="#" className="social-button facebook" onClick={(event) => {
-    spawnCoin(event);
-  }}>
-<svg class="w-[80px] h-[80px] fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
-  <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path>
-
-</svg>        
-</a> */}
-        {/* <a href="#" className="social-button github" onClick={(event) => { */}
         <a href="#" className="h-[60px] " onClick={(event) => {
 event.preventDefault();
     spawnCoin(event);
@@ -737,24 +756,12 @@ event.preventDefault();
     
     
   }}
-  // onTouchStart={(e) => e.currentTarget.classList.add('tapped')}
-  // onTouchEnd={(e) => {
-  //   e.currentTarget.classList.remove('tapped');
-  //   // Optional: trigger click programmatically if you want the onClick to fire on touch too
-  //   e.currentTarget.click();
-  // }}
+
   >
-          {/* <svg class="w-[80px] h-[80px] fill-[#000000]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-
-  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"></path>
-
-</svg> */}
+       
 <svg xmlns="http://www.w3.org/2000/svg" width="80px"  className='' >
   <clipPath id="top-clip" clipPathUnits="objectBoundingBox">
-    {/* <path
-      d="m 0,0 v 0.04496528 0.35210937 a 0.16917447,0.23564182 0 0 0 0.11164713,0.0599002 0.16917447,0.23564182 0 0 0 0.12351562,-0.0751997 h 9.3967e-4 A 0.32874868,0.28074741 0 0 1 0.507398,0.25882161 0.32874868,0.28074741 0 0 1 0.8074935,0.42504775 0.13619505,0.18305407 0 0 0 0.91526908,0.49652342 0.13619505,0.18305407 0 0 0 1,0.45674263 V 0.17021485 0 H 0.16957248 0.05458116 Z"
-    ></path>
-     */}
+  
        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"></path>
 
   </clipPath>
@@ -817,19 +824,7 @@ event.preventDefault();
 
         </a>
         
-        {/* <a href="#" className="social-button instagram" onClick={(e) => {
-    e.preventDefault();
-    spawnCoin(e);
-
-    const next = (section + 1) % 4;  
-    onSectionChange(next);
-  }}>
-          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-
-  <path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM241 377c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l87-87-87-87c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L345 239c9.4 9.4 9.4 24.6 0 33.9L241 377z"></path>
-
-</svg>
-        </a> */}
+    
       </div>
     </MobileWrapper>
          

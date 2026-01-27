@@ -1727,7 +1727,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
       },
     },
     driveway: {
-      distanceFactor: { desktop: 0.4, tablet: 0.4, mobile: 0.4 },
+      distanceFactor: { desktop: 0.5, tablet: 0.6, mobile: 0.6 },
       position: {
         
         // desktop: [-610.128, 328.8, 172],
@@ -1751,7 +1751,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
     },
     // music
     contact: {
-      distanceFactor: { desktop: 0.4, tablet: 0.4, mobile: 0.4 },
+      distanceFactor: { desktop: 0.5, tablet: 0.6, mobile: 0.6 },
       position: {
         // desktop: [103.2, 600.1, 1077.2],
         desktop: [-2.2 ,2, 0],
@@ -1808,11 +1808,11 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
 
   const modelPosition =
   device === "mobile" || device === "tablet"
-    ? [-6.5,  -7,  17.5]   // mobile + tablet
-     : [-6.5, -7, 17.5];     // desktop
+    ? [-6.5,  -6.77,  18.4]   // mobile + tablet
+     : [-6.5, -6.6, 18];     // desktop
     // : [-9, -3, 0];    
 
-const currentXRotation = (section === 3) ? 0.29 : (section === 0) ? -0.29 : -0.2;
+const currentXRotation = (section === 3) ? 0.29 : (section === 0) ? -0.33 : -0.25;
 const modelRotation = (section === 3) 
     ? [currentXRotation, 4.2, 0.0]   // Unique Y and Z for Section 3
     : [currentXRotation, 0.00, 0.003];
@@ -2665,17 +2665,17 @@ const setNoteSize = useStore((state) => state.setNoteSize); // Get the new actio
         )}
 
         {!isDeleting && (
-          <div className="absolute flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity right-2 top-2 z-10">
+          <div className="absolute flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity right-2 top-2 lg:top-1 z-10 select-none">
           <button onClick={(e) => { 
                 e.stopPropagation(); 
                 if(noteSize < 3) setNoteSize(boardId, noteIdx, noteSize + 1); 
               }}
-              className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-black hover:text-white transition-colors font-bold">+</button>
+              className="w-14 h-14 lg:w-10 lg:h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-black hover:text-white transition-colors font-bold">+</button>
             <button onClick={(e) => { 
                 e.stopPropagation(); 
                 if(noteSize > 0) setNoteSize(boardId, noteIdx, noteSize - 1); 
               }}
-              className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-black hover:text-white transition-colors font-bold">−</button>
+              className="w-14 h-14 lg:w-10 lg:h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-black hover:text-white transition-colors font-bold">−</button>
           </div>
         )}
       </div>
