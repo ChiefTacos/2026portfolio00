@@ -464,10 +464,10 @@ const showViewButton = section === 0
     ? (id === "freeQ" && !isActive) // Only show on section 0 if it's FreeQ AND not already open
     : (hideTriggerButton ? false : !isActive);
 
-    
+
 const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
-    <div className="relative group scale-100 lg:scale-90" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
+    <div className="relative group scale-150 xl:scale-200" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out lg:hover:scale-105 lg:active:scale-100
         hover:scale-110 active:scale-105 
@@ -485,19 +485,42 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
                    hover:from-neutral-500 hover:via-neutral-400 hover:to-neutral-500
                    shadow-neutral-700 hover:shadow-neutral-500">
           <div className="flex items-center justify-center space-x-4">
-            <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
                     className="transition-all duration-500 group-hover:fill-nuetral- group-hover:scale-110"/>
               <path d="M20 44C22 40, 26 40, 28 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
               <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
-            </svg>
+            </svg> */}
+             {section === 0 && (
+         <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
+                    fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
+                    className="transition-all duration-500 group-hover:fill-nuetral- group-hover:scale-110"/>
+              <path d="M20 44C22 40, 26 40, 28 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
+            </svg> 
+)}
+             {section !== 0 && (
 
+<svg class="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48 fill-[#000000]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+
+  <path d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"></path>
+
+</svg>
+)}
+
+            {section === 0 && (
+  <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-2 pt-1 px-1 tracking-wider text-white">
+    Explore
+  </span>
+)}
+{/* old text
             <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-2 pt-1  px-1 tracking-wider text-white
            
                             ">
-             Explore
-            </span>
+            
+            </span> */}
           </div>
         </span>
       </button>
@@ -509,7 +532,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
     <div
       className="
              
-              relative group scale-100 lg:scale-90  "
+              relative group scale-200 xl:scale-100  "
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
     >
       <button
@@ -627,7 +650,7 @@ const handleScroll = (e) => {
                   
                   `}
                   onScroll={handleScroll} 
-                  // onPointerDown={isVisible ? handleDragStart : undefined}
+                  onPointerDown={isVisible ? handleDragStart : undefined}
 
 
                     style={{
@@ -645,8 +668,8 @@ width: isFullscreen
 height: isFullscreen 
   ? "12vh"  
   : isEnlarged 
-    ? "95vh"  // Enlarged size
-    : (isMobileOrTablet ? "120vh" : "110vh"),
+    ? "85vh"  // Enlarged size
+    : (isMobileOrTablet ? "90vh" : "110vh"),
 
 // MAX WIDTH LOGIC
 maxWidth: isFullscreen 
@@ -659,8 +682,8 @@ maxWidth: isFullscreen
 maxHeight: isFullscreen 
   ? "auto" 
   : isEnlarged 
-    ? "98vh" 
-    : (isMobileOrTablet ? "120vh" : "120vh"),
+    ? "85vh" 
+    : (isMobileOrTablet ? "90vh" : "120vh"),
 
   // width: isFullscreen 
   //   ? "600px" // Fullscreen size
@@ -770,7 +793,8 @@ style={{
           
         </div>
         <div className="p-10 flex flex-col items-center justify-center gap-10 pt-1"
-        onPointerDown={isFullscreen && isVisible ? handleDragStart : undefined}>
+        // onPointerDown={isFullscreen && isVisible ? handleDragStart : undefined}
+        >
 {/* MAIN CONTENT: Only show if NOT fullscreen */}
           
   {!isFullscreen && (
@@ -1519,7 +1543,7 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
        <div
       className="
              
-              relative group scale-100 lg:scale-90  "
+              relative group scale-200 xl:scale-100  "
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
     >
       <button
@@ -1740,14 +1764,16 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
 
       },
     },
+
+    //notes
     driveway: {
-      distanceFactor: { desktop: 0.32, tablet: 0.4, mobile: 0.4 },
+      distanceFactor: { desktop: 0.24, tablet: 0.56, mobile: 0.56 },
       position: {
         
         // desktop: [-610.128, 328.8, 172],
-        desktop: [0.128, 0.8, 0],
-        tablet: [0.128, 0.8, 0],
-        mobile: [0.128, 0.8, 0],
+        desktop: [0.128, 2.5, 0],
+        tablet: [0.128, 4, 0],
+        mobile: [0.128, 4, 0],
 
 
       },
@@ -1765,26 +1791,26 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
     },
     // music
     contact: {
-      distanceFactor: { desktop: 0.32, tablet: 0.4, mobile: 0.4 },
+      distanceFactor: { desktop: 0.29, tablet: 0.56, mobile: 0.56 },
       position: {
         // desktop: [103.2, 600.1, 1077.2],
-        desktop: [-2.2 ,2, 0],
+        desktop: [-2 ,2.52, 0],
 
-        tablet: [-2.2 ,2, 0],
+        tablet: [-2.4 ,4, 0],
         // tablet: [461.2, 200.1, 507.2],
         
         //  mobile:  [-40.128, 0, 805.314],
-        mobile: [-2.2 ,2, 0],
+        mobile: [-2.4 ,4, 0],
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 0.25, tablet: 0.35, mobile: 0.35  },
+      distanceFactor: { desktop: 0.36, tablet: 0.6, mobile: 0.6  },
       position: {
-        desktop: [0, 2, 0],
-        // tablet: [461.2, 880.1, 707.2],
+      desktop: section === 0 ? [0, 2, 0] : [-2.909, 2.52, 0],
+              // tablet: [461.2, 880.1, 707.2],
 
-        tablet: [0, 2, 0],
-        mobile: [0, 2, 0],
+        tablet:section === 0 ? [0, 2, 0] : [0, 7, 0] ,
+        mobile:section === 0 ? [0, 2, 0] : [0, 7, 0] ,
       },
     },
   };
@@ -1822,7 +1848,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
 
   const modelPosition =
   device === "mobile" || device === "tablet"
-    ? [-6.5,  -6.77,  18.4]   // mobile + tablet
+    ? [-6.5,  -6.56,  18.3]   // mobile + tablet
      : [-6.5, -6.6, 18];     // desktop
     // : [-9, -3, 0];    
 

@@ -580,7 +580,7 @@ const SkillsSection = () => {
 return (
     <Section className="xl:mt-10">
     
-      <div
+      {/* <div
         className="form-container
           relative
           lg:w-[950px] 
@@ -824,13 +824,11 @@ opacity-5
                             </div>
             <div className="grid  grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 md:gap-2 items-start text-center">
               
-              {/* COLUMN 1 */}
               <div className="flex flex-col text-white">
                 <span className=" font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
                  What Badger Surface Solutions Does in Winter
                 </span>
                 <div className="flex flex-col gap-2 mt-6">
-                   {/* Item 1 */}
                     <div className="flex items-baseline gap-4">
                       <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                       <p className="text-lg leading-relaxed font-semibold">
@@ -839,7 +837,6 @@ opacity-5
                       </p>
                     </div>
 
-                    {/* Item 2 */}
                     <div className="flex items-baseline gap-4">
                       <span className="text-blue-400 font-black text-2xl italic opacity-50 "></span>
                       <p className="text-lg leading-relaxed font-semibold">
@@ -847,14 +844,12 @@ opacity-5
 Clears buildup before it forces water under shingles.                      </p>
                     </div>
 
-                    {/* Item 3 */}
                     <div className="flex items-baseline gap-4">
                       <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                       <p className="text-lg leading-relaxed font-semibold">
                         <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Walkway & Driveway Snow Shoveling:</span> 
  Keeps your property safe and accessible by shoveling and salting.                      </p>
                     </div>
-                    {/* Item 4 */}
                     <div className="flex  items-baseline gap-4">
                       <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                       <p className="text-lg leading-relaxed font-semibold">
@@ -862,7 +857,6 @@ Clears buildup before it forces water under shingles.                      </p>
                         Providing rapid mobilization for emergency surface solutions treatment during extreme cold.
                       </p>
                     </div>
-                    {/* Item 5 */}
                     <div className="flex items-baseline gap-4 border-slate-950 border-b-4 pb-4">
                       <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                       <p className="text-lg leading-relaxed font-semibold">
@@ -872,7 +866,6 @@ Clears buildup before it forces water under shingles.                      </p>
                     </div>
 
 
-                    {/* Item 6 */}
 
                     <div className="flex items-baseline gap-4">
                             <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
@@ -933,11 +926,7 @@ Clears buildup before it forces water under shingles.                      </p>
                   </div>
               </div>
 
-              {/* COLUMN 2 */}
-            {/* <div className="lg:col-span-2 2xl:col-span-1 flex justify-center">
-                <img className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" src="/about/ice-dam-diagram.png" alt="Counties Map" />
-
-              </div> */}
+          
                     <div className="lg:col-span-2 2xl:col-span-1 flex flex-col items-center justify-start gap-4">
                         <img 
                           className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
@@ -951,14 +940,12 @@ Clears buildup before it forces water under shingles.                      </p>
                         />
                     </div>
 
-              {/* COLUMN 3 */}
               
                   <div className="flex flex-col text-white">
                       <span className="font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
                   Dealing with and preventing Ice Dams
                       </span>
                       <div className="flex flex-col gap-2 mt-6">
-                        {/* Item 1 */}
                           <div className="flex items-baseline gap-4">
                             <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                             <p className="text-lg leading-relaxed">
@@ -988,7 +975,6 @@ Clears buildup before it forces water under shingles.                      </p>
                             </p>
                           </div>
 
-                          {/* Item 2 */}
                           <div className="flex items-baseline gap-4">
                             <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                             <p className="text-lg leading-relaxed">
@@ -1018,11 +1004,6 @@ Clears buildup before it forces water under shingles.                      </p>
                             </p>
                           </div>
 
-                          {/* Item 3 */}
-                          
-                          {/* Item 4 */}
-                          
-                          {/* Item 5 */}
                           <div className="flex items-baseline gap-4">
                             <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
                             <p className="leading-relaxed font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
@@ -1059,7 +1040,6 @@ Anyone on the roof during the winter or performing work on the roof from below r
             ${showArrow ? 'opacity-100' : 'opacity-0'}
           `}
         >
-          {/* Fading Text Hint */}
           <span 
             className={`text-[#ffffff] text-sm uppercase tracking-widest mb-2 transition-opacity duration-1000
               ${showText ? 'opacity-100' : 'opacity-0'}
@@ -1068,14 +1048,13 @@ Anyone on the roof during the winter or performing work on the roof from below r
             Scroll Down
           </span>
 
-          {/* Bobbing Arrow */}
           <div className="animate-bounce text-[#00eeff]">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-10 h-10">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>
           </div>
         </div>
-      </div>
+      </div> */}
     </Section>
   );
 };

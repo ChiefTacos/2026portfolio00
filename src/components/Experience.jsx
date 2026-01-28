@@ -240,13 +240,13 @@ export const Experience = (props) => {
                   y: section === 3 
                     ? 9.4
                     : (section === 1 || section === 2 
-                        ? (isMobile ? 3.28 : 3.1) 
+                        ? (isMobile ? 2.63 : 3.1) 
                         :  3.38),
                   // Z Logic
                   z: section === 3 
                     ? -20.4
                     : (section === 1 || section === 2 
-                        ? (isMobile ? -3.39 : -3.3) 
+                        ? (isMobile ? -3.89 : -3.3) 
                         : (isMobile ? -3.39 : -3.25)),
 
                         // (6.3)

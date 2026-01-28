@@ -483,7 +483,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
          
 <div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-6 lg:gap-12">
                 
-        <button
+        {/* <button
     class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
   >
    
@@ -525,7 +525,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
         ></div>
       </div>
     </div>
-  </button>
+  </button> */}
 
 
 
@@ -595,10 +595,19 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
     className='zIndex[99980]'>
         <article className="keycap">
           <aside className="letter">
-            <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
 
+            
+            <svg class="w-[55px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+{section === 0 ? (
+      /* SVG for Section 0 (The Power Icon) */
+      <path transform="translate(25, 0)" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.6c13.6-11.3 15.4-31.5 4.1-45.1s-31.5-15.4-45.1-4.1C49.7 115.4 16 181.8 16 256c0 132.5 107.5 240 240 240s240-107.5 240-240c0-74.2-33.8-140.6-86.6-184.6c-13.6-11.3-33.8-9.4-45.1 4.1s-9.4 33.8 4.1 45.1c38.9 32.3 63.5 81 63.5 135.4c0 97.2-78.8 176-176 176s-176-78.8-176-176c0-54.4 24.7-103.1 63.5-135.4z"></path>
+
+) : (
+  /* SVG for NOT Section 0 (Home ICON) */
     <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z"></path>
 
+      /* ^ Replace that second path with whatever icon you want for Home */
+    )}
   </svg>
             </aside>
         </article>
@@ -653,11 +662,12 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
     
         <article className="keycap">
           <aside className="letter">
-          <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
 
-          <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"></path>
+            <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
 
-        </svg>
+  <path d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"></path>
+
+</svg>
 
             </aside>
         </article>
@@ -683,7 +693,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
       <div className="rounded-sm bg-black py-1 px-2 text-md">
         <p className="whitespace-nowrap text-white">
-  Zoom In   </p>
+  Full Screen  </p>
       </div>
       </div>
     </div>
