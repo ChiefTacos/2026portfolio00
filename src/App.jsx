@@ -88,7 +88,7 @@ const jumpToSection = (index) => {
   return (
     <>
       <LoadingScreen started={started} setStarted={setStarted} />
-<div 
+{/* <div 
   id="overlay-portals-root" 
   style={{ 
     position: "fixed",
@@ -115,7 +115,10 @@ const jumpToSection = (index) => {
      zIndex: "2147483637",
     pointerEvents: "none",
     
-  }}></div>
+  }}></div> */}
+  <div id="overlay-portals-root" style={{ position: "fixed", inset: 0, zIndex: 9999, pointerEvents: "none" }}></div>
+<div id="contact-portals-root" style={{ position: "fixed", inset: 0, zIndex: 9998, pointerEvents: "none" }}></div>
+<div id="freeq-portal-root" style={{ position: "fixed", inset: 0, zIndex: 10000, pointerEvents: "none" }}></div>
   <MotionConfig transition={{ ...framerMotionConfig }}>
         <Canvas
           key={canvasKey}

@@ -467,24 +467,29 @@ const showViewButton = section === 0
 
 const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
-    <div className="relative group scale-150 xl:scale-200" style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}>
+       <div
+      className="
+             
+              relative group scale-180 xl:scale-90  "
+      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
+    >
       <button
-        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out lg:hover:scale-105 lg:active:scale-100
-        hover:scale-110 active:scale-105 
-                   bg-gradient-to-r  from-cyan-400 via-blue-500 to-teal-600
-                   hover:from-cyan-500 hover:via-blue-400 hover:to-teal-500
-                   shadow-blue-700 hover:shadow-teal-500"
+        className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90
+                bg-transparent
+                   "
+                     //  bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600
+                  //  hover:from-blue-500 hover:via-cyan-400 hover:to-teal-500
+                  //  shadow-cyan-700 hover:shadow-cyan-500
         onClick={onClick}
-        onPointerDown={(e) => e.stopPropagation() }
-        
+        onPointerDown={(e) => e.stopPropagation()}
         style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
       >
-        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r  from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
+        {/* Glow effect (kept exactly the same) */}
+        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
-        <span className="relative  block px-3 lg:px-3 py-3 pb-5 lg:py-3 lg:pb-5 rounded-2xlbg-gradient-to-r from-orange-600 via-neutral-500 to-neutral-600
-                   hover:from-neutral-500 hover:via-neutral-400 hover:to-neutral-500
-                   shadow-neutral-700 hover:shadow-neutral-500">
-          <div className="flex items-center justify-center space-x-4">
+        {/* Inner button content container */}
+        <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
+          <div className="relative w-[420px] h-[350px] flex items-center justify-center">
             {/* <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
@@ -503,7 +508,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 )}
              {section !== 0 && (
 
-<svg class="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48 fill-white mix-blend-overlay" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<svg class="w-64 h-64 fill-white mix-blend-overlay" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"></path>
 
@@ -533,13 +538,15 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
       className="
              
               relative group scale-200 xl:scale-100  "
-      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
+      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
     >
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90
-                   bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600
-                   hover:from-blue-500 hover:via-cyan-400 hover:to-teal-500
-                   shadow-cyan-700 hover:shadow-cyan-500"
+                bg-transparent
+                   "
+                     //  bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600
+                  //  hover:from-blue-500 hover:via-cyan-400 hover:to-teal-500
+                  //  shadow-cyan-700 hover:shadow-cyan-500
         onClick={onClick}
         onPointerDown={(e) => e.stopPropagation()}
         style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
@@ -548,13 +555,11 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
         {/* Inner button content container */}
-        <span className="relative block px-1 lg:px-3 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
-          <div className="relative lg:w-[600px] lg:h-[370px] w-[370px] h-[230px]  flex items-center justify-center">
+        <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
+          <div className="relative w-[420px] h-[350px] flex items-center justify-center">
             {/* Full-cover video */}
-            <img src="./textures/turntable.png" alt="" srcset="" />
+            <img src="./textures/music.svg" alt="Music Icon" className="w-4/5 h-auto object-contain" />
 
-            {/* Optional subtle dark overlay to improve contrast if needed */}
-            <div className="absolute inset-0 bg-black opacity-20 rounded-2xl pointer-events-none"></div>
           </div>
         </span>
       </button>
@@ -815,8 +820,8 @@ style={{
             {[
               { name: "Cloud", icon: "☁️", url: "https://drive.google.com" },
               { name: "Email", icon: "📧", url: "https://gmail.com" },
-              { name: "Streaming", icon: "📺", url: "https://youtube.com" },
-              { name: "Social", icon: "🌐", url: "https://twitter.com" }
+              { name: "Video Streaming", icon: "📺", url: "https://youtube.com" },
+              { name: "Google Gemeni", icon: "AI", url: "https://gemini.google.com/" }
             ].map((site) => (
               <a 
                 key={site.name}
@@ -1673,17 +1678,19 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
         <ServiceWindowButton onClick={handleButtonClick} isClickable={isClickable} />
       ) : (
 
-       <div
+   <div
       className="
              
               relative group scale-200 xl:scale-100  "
-      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5 }}
+      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
     >
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90
-                   bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600
-                   hover:from-blue-500 hover:via-cyan-400 hover:to-teal-500
-                   shadow-cyan-700 hover:shadow-cyan-500"
+                bg-transparent
+                   "
+                     //  bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600
+                  //  hover:from-blue-500 hover:via-cyan-400 hover:to-teal-500
+                  //  shadow-cyan-700 hover:shadow-cyan-500
         onClick={handleButtonClick}
         onPointerDown={(e) => e.stopPropagation()}
         style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
@@ -1692,13 +1699,13 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
         {/* Inner button content container */}
-        <span className="relative block px-1 lg:px-3 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
-          <div className="relative lg:w-[600px] lg:h-[370px] w-[370px] h-[230px]  flex items-center justify-center">
-            {/* Full-cover video */}
-            {/* <img src={src} alt="" srcset="" /> */}
-            <svg width="400" height="400" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
+          <div className="relative w-[420px] h-[350px] flex items-center justify-center">
+
+            <svg  viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-5/5 h-auto object-contain"
+            >
               {/* <!-- Notebook body --> */}
-              <rect x="25" y="20" width="50" height="60" rx="4" fill="#ffffff" stroke="#667eea" stroke-width="3"/>
+              <rect x="25" y="20" width="50" height="60" rx="4" fill="none" stroke="#667eea" stroke-width="3"/>
               
               {/* <!-- Spiral binding dots --> */}
               <circle cx="25" cy="35" r="3" fill="#667eea"/>
@@ -1922,11 +1929,11 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
 
     //notes
     driveway: {
-      distanceFactor: { desktop: 0.24, tablet: 0.56, mobile: 0.56 },
+      distanceFactor: { desktop: 0.29, tablet: 0.56, mobile: 0.56 },
       position: {
         
         // desktop: [-610.128, 328.8, 172],
-        desktop: [0.128, 2.49, 0],
+        desktop: [-2.91, 2.17, 0],
         tablet: [0.128, 4, 0],
         mobile: [0.128, 4, 0],
 
@@ -1949,7 +1956,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
       distanceFactor: { desktop: 0.29, tablet: 0.6, mobile: 0.6 },
       position: {
         // desktop: [103.2, 600.1, 1077.2],
-        desktop: [-1.7 , 2.49, 0],
+        desktop: [-2.93 , 1.83, 0],
 
         tablet: [-2.4 , 4, 0],
         // tablet: [461.2, 200.1, 507.2],
@@ -1961,7 +1968,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
     freeQ: {
       distanceFactor: { desktop: 0.36, tablet: 0.6, mobile: 0.6  },
       position: {
-      desktop: section === 0 ? [0, 2, 0] : [-2.909, 2.52, 0],
+      desktop: section === 0 ? [0, 2, 0] : [-2.9, 2.514, 0],
               // tablet: [461.2, 880.1, 707.2],
 
         tablet:section === 0 ? [0, 2, 0] : [0, 7, 0] ,
