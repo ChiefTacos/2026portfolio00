@@ -661,29 +661,29 @@ const handleScroll = (e) => {
 width: isFullscreen 
   ? "600px" 
   : isEnlarged 
-    ? "95vw"  // Enlarged size
-    : (isMobileOrTablet ? "230vw" : "100vw"), // Normal size
+    ? (isMobileOrTablet ? "150vw" : "95vw")  // Enlarged size
+    : (isMobileOrTablet ? "210vw" : "122vw"), // Normal size
 
 // HEIGHT LOGIC
 height: isFullscreen 
   ? "12vh"  
   : isEnlarged 
-    ? "85vh"  // Enlarged size
-    : (isMobileOrTablet ? "90vh" : "110vh"),
+    ? "75vh"  // Enlarged size
+    : (isMobileOrTablet ? "80vh" : "110vh"),
 
 // MAX WIDTH LOGIC
 maxWidth: isFullscreen 
   ? "90vw" 
   : isEnlarged 
-    ? "98vw" 
-    : (isMobileOrTablet ? "240vw" : "120vw"),
+    ?(isMobileOrTablet ? "150vw" : "80vw") 
+    : (isMobileOrTablet ? "220vw" : "122vw"),
 
 // MAX HEIGHT LOGIC
 maxHeight: isFullscreen 
   ? "auto" 
   : isEnlarged 
-    ? "85vh" 
-    : (isMobileOrTablet ? "90vh" : "120vh"),
+    ? "75vh" 
+    : (isMobileOrTablet ? "80vh" : "120vh"),
 
   // width: isFullscreen 
   //   ? "600px" // Fullscreen size
