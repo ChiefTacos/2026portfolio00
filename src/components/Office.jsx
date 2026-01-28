@@ -50,7 +50,7 @@ const overlayRef = useRef(null);
  const isMobileOrTablet = device === "mobile" || device === "tablet";
 
 const isActive = activeOverlay.includes(id);
-// const isAnyOpen = activeOverlay.length > 0;
+const isAnyOpen = activeOverlay.length > 0;
 const [isFullscreen, setIsFullscreen] = useState(false);
 const [isEnlarged, setIsEnlarged] = useState(false);
 
@@ -331,26 +331,47 @@ useEffect(() => {
   }
 }, [props.registerOverlayReset]);
 
-
 const handleButtonClick = (e) => {
   if (!isClickable) return;
   e.stopPropagation();
 
-  
-// NEW: If this is the Free Quote button, send user to section 1
+  // NEW: If this is the Free Quote button, send user to section 1
   if (id === "freeQ") {
-                             jumpToSection(goToSection);
+    jumpToSection(goToSection);
   }
 
   setActiveOverlay(prev => {
-    // If already open, just ensure it's at the end of the array (top of stack)
+    // MOBILE/TABLET LOGIC: Close everything else and only open this one
+    if (isMobileOrTablet) {
+      return [id]; 
+    }
+
+    // DESKTOP LOGIC: Keep the stacking behavior
     if (prev.includes(id)) {
       return [...prev.filter(item => item !== id), id];
     }
-    // Otherwise add it to the stack
     return [...prev, id];
   });
 };
+// const handleButtonClick = (e) => {
+//   if (!isClickable) return;
+//   e.stopPropagation();
+
+  
+// // NEW: If this is the Free Quote button, send user to section 1
+//   if (id === "freeQ") {
+//                              jumpToSection(goToSection);
+//   }
+
+//   setActiveOverlay(prev => {
+//     // If already open, just ensure it's at the end of the array (top of stack)
+//     if (prev.includes(id)) {
+//       return [...prev.filter(item => item !== id), id];
+//     }
+//     // Otherwise add it to the stack
+//     return [...prev, id];
+//   });
+// };
 
 
 const handleResetClick = (e) => {
@@ -455,15 +476,14 @@ useEffect(() => {
 }, [showContent]);
 
 
-// const showViewButton = hideTriggerButton 
-//     ? false 
-//     // : (isMobileOrTablet ? !isAnyOpen : !isActive);
-//     : !isActive; // Now it only checks if THIS specific window is open, regardless of device
 
 const showViewButton = section === 0 
-    ? (id === "freeQ" && !isActive) // Only show on section 0 if it's FreeQ AND not already open
-    : (hideTriggerButton ? false : !isActive);
-
+  ? (id === "freeQ" && !isActive) 
+  : (hideTriggerButton 
+      ? false 
+      // NEW: If mobile/tablet AND something is open, hide ALL trigger buttons
+      : (isMobileOrTablet && isAnyOpen ? false : !isActive)
+    );
 
 const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
