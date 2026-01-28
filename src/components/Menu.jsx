@@ -310,7 +310,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       <div
         className={`
             
-            z-[2147483640]
+            z-[2147483636]
             fixed inset-y-0  right-[0px] xl:right-[0px] transition-all overflow-y-auto
           flex flex-col bg-blue
           w-[400px] opacity-100 pointer-events-auto        `}
@@ -359,6 +359,8 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
    <div className="xl:fixed xl:bottom-4 xl:right-4 z-[2147483640] pointer-events-auto">
   <div className="w-full max-w-sm xl:max-w-md p-4">
+
+    {/* music miniplayer */}
     <div className="relative overflow-hidden rounded-lg transition-all duration-300 group bg-background/20 hover:scale-[1.02] text-foreground backdrop-blur-[2px] p-6 bg-black hover:shadow-lg hover:shadow-primary/20">
       
       {/* Background Effects */}
@@ -531,10 +533,10 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
 
             <button
-    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
+    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-white to-gray-100 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
   >
     <span
-      class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950 rounded-md group-hover:bg-opacity-0"
+      class="relative  px-4 py-2 transition-all ease-in duration-75  bg-gradient-to-br from-purple-200 to-blue-50  group-hover:from-pink-800 group-hover:to-pink-500 rounded-md group-hover:bg-opacity-0"
     >
             <StyledWrapper01  onClick={(event) => {
       spawnCoin(event);
@@ -560,15 +562,13 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
           ${hasFadedIn ? 'animate-blink' : ''}
           transition-opacity duration-1000 ease-in-out
 
-          absolute -top-[13px] left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
+          absolute  top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
       >
-        
+        <div class="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black"></div>
         <div class="rounded-sm text-md bg-black py-1 px-2">
           <p class="whitespace-nowrap">Change Background</p>
         </div>
-        <div
-          class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
-        ></div>
+      
       </div>
     </div>
   </button>
@@ -576,10 +576,10 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
 
       <button
-    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-[rgb(0,200,255)] via-[#00aacc] to-[rgb(0,170,255)] group-hover:from-black-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
+    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br  from-white to-gray-100  hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
   >
     <span
-      class="relative  px-4 py-2 transition-all ease-in duration-75  rounded-md bg-opacity-0"
+      class="relative  px-4 py-2 transition-all ease-in duration-75  rounded-md bg-opacity-100 bg-gradient-to-br from-[rgb(0,200,255)] via-[#00aacc] to-[rgb(0,170,255)]"
     >
       <StyledWrapper01  onClick={() => {
       setMenuOpened(false);
@@ -654,10 +654,10 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
     }}
     className='zIndex[99980]'>
         <button
-    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-500 to-green-700  group-hover:from-black-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-800 dark:focus:ring-green-800"
+    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-white to-gray-100 group-hover:from-black-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-800 dark:focus:ring-green-800"
   >
     <span
-      class="relative  px-4 py-2 transition-all ease-in duration-75rounded-md group-hover:bg-opacity-0"
+      class="relative  px-4 py-2 transition-all ease-in duration-75rounded-md group-hover:bg-opacity-100 bg-gradient-to-br from-green-500 to-green-700 "
     >
     
         <article className="keycap">

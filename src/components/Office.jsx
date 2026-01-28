@@ -1367,7 +1367,7 @@ style={{
                     contentEditable
                     spellCheck="false" 
                     suppressContentEditableWarning
-                    className={` text-2xl font-bold text-black outline-none rounded px-1 transition-all ${newlyCreatedId === boardId ? 'bg-blue-50 ring-2 ring-blue-400' : 'hover:bg-gray-100'}`}
+                    className={` text-4xl font-bold text-black outline-none rounded px-1 transition-all ${newlyCreatedId === boardId ? 'bg-blue-50 ring-2 ring-blue-400' : 'hover:bg-gray-100'}`}
                     onFocus={(e) => {
                       const range = document.createRange();
                       range.selectNodeContents(e.target);
@@ -1413,8 +1413,8 @@ style={{
 
               <div className="flex gap-2">
                 <input type="file" id={`file-${boardId}`} className="hidden" accept=".txt" onChange={(e) => handleFileNotesUpload(e, boardId)} />
-                <button onClick={() => document.getElementById(`file-${boardId}`).click()} className="text-[9px] bg-gray-100 p-2 rounded-lg hover:bg-blue-50 transition-colors">IMPORT TXT</button>
-                <button onClick={() => window.confirm("Delete Board?") && removeBoard(boardId)} className="text-[9px] bg-gray-100 p-2 rounded-lg hover:bg-red-50 text-red-500 transition-colors">DELETE</button>
+                <button onClick={() => document.getElementById(`file-${boardId}`).click()} className="text-[16px] bg-gray-100 p-2 rounded-lg hover:bg-blue-50 transition-colors">IMPORT TXT</button>
+                <button onClick={() => window.confirm("Delete Board?") && removeBoard(boardId)} className="text-[16px] bg-gray-100 p-2 rounded-lg hover:bg-red-50 text-red-500 transition-colors">DELETE</button>
               </div>
             </div>
 
