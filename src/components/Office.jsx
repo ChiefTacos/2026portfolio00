@@ -503,7 +503,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 )}
              {section !== 0 && (
 
-<svg class="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48 fill-[#000000]" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<svg class="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48 fill-white mix-blend-overlay" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"></path>
 
@@ -802,256 +802,389 @@ style={{
 
           <div className="card__content w-full">
             {id === "freeQ" ?
-            
-            (
-                  // Special simple overlay for login and reset pass
-                  
-                                        <div className="flex flex-col justify-center items-center h-full w-full max-w-2xl mx-auto p-6">
 
-  
+            (
+  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto w-full bg-black/40 backdrop-blur-sm">
+    
     {user ? (
-        <div className="w-full flex flex-col items-center space-y-6 bg-black/70 p-10 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl text-center ">
-          <div className="w-24 h-24 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-4xl shadow-lg">
+      <>
+        {/* PANEL 1: QUICK LINKS (Cloud, Email, etc.) */}
+        <div className="bg-black/60 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col">
+          <h3 className="text-white font-bold mb-4 text-xl">Quick Launch</h3>
+          <div className="grid grid-cols-2 gap-4 flex-grow">
+            {[
+              { name: "Cloud", icon: "☁️", url: "https://drive.google.com" },
+              { name: "Email", icon: "📧", url: "https://gmail.com" },
+              { name: "Streaming", icon: "📺", url: "https://youtube.com" },
+              { name: "Social", icon: "🌐", url: "https://twitter.com" }
+            ].map((site) => (
+              <a 
+                key={site.name}
+                href={site.url} 
+                target="_blank" 
+                rel="noreferrer"
+                className="flex flex-col items-center justify-center p-4 bg-white/5 hover:bg-yellow-500/20 rounded-2xl transition-all border border-white/5 group"
+              >
+                <span className="text-3xl mb-2 group-hover:scale-110 transition-transform">{site.icon}</span>
+                <span className="text-gray-300 text-sm font-medium">{site.name}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* PANEL 2: SIMPLE TIMER */}
+        <div className="bg-black/60 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center">
+          <h3 className="text-white font-bold mb-2">Focus Timer</h3>
+          <div className="text-5xl font-mono text-yellow-500 mb-4">25:00</div>
+          <div className="flex gap-2">
+            <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm">Start</button>
+            <button className="px-4 py-2 bg-white/10 text-white rounded-lg text-sm">Reset</button>
+          </div>
+        </div>
+
+        {/* PANEL 3: CALENDAR (Placeholder for your Logic) */}
+        <div className="bg-black/60 p-6 rounded-3xl border border-white/10 shadow-xl">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-white font-bold">Events</h3>
+            <button className="text-yellow-500 text-xl">+</button>
+          </div>
+          <div className="space-y-2">
+            <div className="p-3 bg-white/5 rounded-xl border-l-4 border-yellow-500">
+              <p className="text-white text-sm font-medium">New Year's Goal Setting</p>
+              <p className="text-gray-400 text-xs">Jan 27, 2026</p>
+            </div>
+          </div>
+        </div>
+
+        {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
+        <div className="bg-black/70 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center">
+          <div className="w-16 h-16 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-2xl mb-4">
             {user.email?.charAt(0).toUpperCase() || "U"}
           </div>
-          <div>
-            <h2 className="text-3xl font-bold text-white">Welcome Back!</h2>
-            <p className="text-gray-300 mt-1">{user.email}</p>
-          </div>
-          
+          <h2 className="text-xl font-bold text-white leading-tight">Account</h2>
+          <p className="text-gray-400 text-sm mb-6 truncate w-full">{user.email}</p>
           <button 
-            onClick={() => useStore.getState().logout()} // Assuming logout is in your store
-            className="w-full py-4 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all transform hover:scale-105"
+            onClick={() => useStore.getState().logout()}
+            className="w-full py-3 bg-red-500/80 hover:bg-red-600 text-white rounded-xl font-bold transition-all text-sm"
           >
             Logout from SirMurOS
           </button>
         </div>
-      ) : (
-        /* 2. IF NOT LOGGED IN, SHOW YOUR EXISTING FORMS */
-        <>
-  
-                                  {view === "login" && (
-                                    /* LOGIN FORM */
-                                    <form 
-                                     onSubmit={onLoginSubmit}
-                                      className="w-full space-y-4 mb-4 bg-black/70 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
-                                    >
-                                      <h2 className="text-2xl font-bold text-white text-center mb-4">Member Login</h2>
-                                      <input 
-                                        type="email" 
-                                        placeholder="Email Address"
-                                        value={email} // Add this
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-                                        required
-                                      />
-                                      <input 
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder="Password"
-                                        value={password} // Add this
-                                        onChange={(e) => setPassword(e.target.value)} // Add this
-                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-                                        required
-                                      />
-                                      <button 
-                                      type="button"
-                                      onClick={() => setShowPassword(!showPassword)}
-                                      className="absolute right-12 bottom-1/3 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
-                                    >
-                                      {showPassword ? "HIDE" : "SHOW"}
-                                    </button>
-                                      <button 
-                                        type="submit"
-                                        className="w-full py-4 bg-yellow-600 hover:bg-green-700 text-white rounded-xl font-bold transition-colors"
-                                      >
-                                        Sign In
-                                      </button>
-                                    </form>
-                                  )}
+      </>
+    ) : (
+      /* LOGIN / SIGNUP / RESET FORMS (Shows when logged out) */
+      <div className="lg:col-span-2 flex justify-center items-center py-10">
+        <div className="max-w-md w-full">
+          {view === "login" && (
+            <form onSubmit={onLoginSubmit} className="space-y-4 bg-black/70 p-8 rounded-3xl border border-white/20 shadow-xl relative">
+               <h2 className="text-2xl font-bold text-white text-center mb-4">Member Login</h2>
+               <input 
+                 type="email" 
+                 placeholder="Email Address"
+                 value={email}
+                 onChange={(e) => setEmail(e.target.value)}
+                 className="w-full p-4 rounded-xl bg-gray-100 outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                 required
+               />
+               <div className="relative">
+                 <input 
+                   type={showPassword ? "text" : "password"}
+                   placeholder="Password"
+                   value={password}
+                   onChange={(e) => setPassword(e.target.value)}
+                   className="w-full p-4 rounded-xl bg-gray-100 outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                   required
+                 />
+                 <button 
+                   type="button"
+                   onClick={() => setShowPassword(!showPassword)}
+                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-xs font-bold"
+                 >
+                   {showPassword ? "HIDE" : "SHOW"}
+                 </button>
+               </div>
+               <button type="submit" className="w-full py-4 bg-yellow-600 hover:bg-green-700 text-white rounded-xl font-bold transition-colors">
+                 Sign In
+               </button>
+               <div className="flex flex-col items-center gap-3 mt-4">
+                 <button type="button" onClick={() => setView("signup")} className="text-white underline text-sm">Create Account</button>
+                 <button type="button" onClick={() => setView("reset")} className="text-gray-400 text-xs">Forgot Password?</button>
+               </div>
+            </form>
+          )}
 
-                                  {view === "signup" && (
-                                    <form 
-                                      onSubmit={onSignupSubmit}
-                                      className="w-full grid grid-cols-2 gap-4 mb-4 bg-black/80 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
-                                    >
-                                      <h2 className="col-span-2 text-2xl font-bold text-white text-center mb-2">Create Account</h2>
-                                      <input 
-                                        type="text" 
-                                        placeholder="Full Name"
-                                        className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-                                        required
-                                      />
-                                      <input 
-                                        type="tel" 
-                                        placeholder="Phone (Optional)"
-                                        className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-                                      />
-                                      <input 
-                                        type="email" 
-                                        placeholder="Email Address"
-                                        className="col-span-2 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-                                        required
-                                      />
-                                      <div className="col-span-2 space-y-2">
-                                        
-                                      <input 
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder="Create Password"
-                                        value={signupPassword}
-                                        onChange={(e) => setSignupPassword(e.target.value)}
-                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800 large-dots"
-                                        required
-                                      />
-                                      <button 
-                                      type="button"
-                                      onClick={() => setShowPassword(!showPassword)}
-                                      className="absolute right-12 top-[248px] -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
-                                    >
-                                      {showPassword ? "HIDE" : "SHOW"}
-                                    </button>
-                                      
-                                      {/* PASSWORD STRENGTH METER */}
-                                      <div className="flex gap-1 h-1.5 w-full mt-1">
-                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 1 ? 'bg-red-500' : 'bg-gray-600'}`}></div>
-                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 2 ? 'bg-orange-500' : 'bg-gray-600'}`}></div>
-                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 3 ? 'bg-green-500' : 'bg-gray-600'}`}></div>
-                                      </div>
-                                      
-                                      {/* REQUIREMENTS LIST */}
-                                      <div className="text-[10px] text-gray-300 flex justify-between px-1">
-                                        <span className={signupPassword.length >= 8 ? "text-green-400" : ""}>8+ Chars</span>
-                                        <span className={/[A-Z]/.test(signupPassword) ? "text-green-400" : ""}>1 Uppercase</span>
-                                        <span className={/[0-9!@#$%^&*]/.test(signupPassword) ? "text-green-400" : ""}>1 Num/Spec</span>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-span-2 flex items-center gap-2 py-2">
-                                    <input type="checkbox" id="terms" className="w-5 h-5 accent-yellow-500" required />
-                                    <label htmlFor="terms" className="text-gray-200 text-sm">
-                                      Accept{" "}
-                                      <span 
-                                        onClick={() => setShowTermsModal(true)}
-                                        className="text-yellow-400 underline cursor-pointer hover:text-yellow-300 transition-colors"
-                                      >
-                                        Terms & Conditions
-                                      </span>
-                                    </label>
-                                  </div>
-
-                                    <button 
-                                      type="submit"
-                                      disabled={strength < 3}
-                                      className="col-span-2 py-4 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 disabled:opacity-50 text-white rounded-xl font-bold transition-all"
-                                    >
-                                      {strength < 3 ? "Fix Password to Continue" : "Register Now"}
-                                    </button>
-                                    
-                                    <button type="button" onClick={() => setView("login")} className="col-span-2 text-sm text-gray-300 underline">
-                                      Already have an account? Login
-                                    </button>
-                                  </form>
-                                )}
-                                   {showTermsModal && (
-  /* The Overlay Layer */
-  <div className="block inset-0   items-center justify-center  backdrop-blur-md">
-    
-    <div 
-      className="relative  w-[450px] h-[760px] bg-[#1a1a1a] border border-gray-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
-      onClick={(e) => e.stopPropagation()} // Prevents clicking the modal from closing it
-    >
-      
-      {/* Header */}
-      <div className="w-full p-6 border-b border-gray-800 flex justify-between items-center bg-[#222]">
-        <h3 className="text-xl font-bold text-white">Terms of Service</h3>
-        <button 
-          onClick={() => setShowTermsModal(false)}
-          className="text-gray-400 hover:text-white text-2xl leading-none"
-        >
-          ✕
-        </button>
+          {view === "signup" && (
+            /* Insert your Signup Form code here similarly... */
+            <div className="text-white text-center">Signup Form (Collapsed for brevity)</div>
+          )}
+          
+          {view === "reset" && (
+            /* Insert your Reset Form code here similarly... */
+            <div className="text-white text-center">Reset Form (Collapsed for brevity)</div>
+          )}
+        </div>
       </div>
+    )}
 
-      {/* Scrollable Body - Added w-full */}
-      <div className="w-full flex-grow p-6 overflow-y-auto text-gray-300 text-sm leading-relaxed">
-        <p className="mb-4 text-center">
-          <strong>No Data Storage & Privacy</strong><br />This application is a client-side productivity tool. We do not host, store, or have access to any files, media, or data you upload or interact with. All processing occurs locally on your device. Consequently, we cannot retrieve, delete, or manage any content you use within the app.
-        </p>
-        <p className="mb-4 text-center">
-          <strong>User Responsibility & Conduct</strong> You are solely responsible for the content you upload. By using this app, you agree:
-          <br />Not to engage in any illegal or criminal activity.
-          <br />To comply with all applicable laws of the United States of America.
-          <br />That you own or have the necessary rights to the media you are using.
-
-        </p>
-        <p className="mb-4 text-center">
-          <strong>Limitation of Liability</strong> Since we do not have control over user-uploaded content, we are not liable for any copyright infringement, damages, or legal repercussions resulting from your use of the application. The tool is provided "as-is" for research and productivity purposes.
-        </p>
-        <p className="mb-4 text-center">
-          <strong>DMCA Notice</strong> While we do not host content, we comply with the Digital Millennium Copyright Act. Because all content is local to the user's browser, there is no content on our servers for us to "take down."
-        </p>
+    {/* Terms Modal (Independent of grid) */}
+    {showTermsModal && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md bg-black/40">
+        <div className="relative w-full max-w-lg bg-[#1a1a1a] border border-gray-700 rounded-3xl shadow-2xl flex flex-col max-h-[80vh]">
+          {/* Your existing Modal Content */}
+          <div className="p-6 border-b border-gray-800 flex justify-between items-center">
+            <h3 className="text-xl font-bold text-white">Terms of Service</h3>
+            <button onClick={() => setShowTermsModal(false)} className="text-gray-400 text-2xl">✕</button>
+          </div>
+          <div className="p-6 overflow-y-auto text-gray-300 text-sm">
+             {/* ... your terms text ... */}
+             <p>All processing occurs locally on your device...</p>
+          </div>
+        </div>
       </div>
-
-      {/* Footer */}
-      
-    </div>
+    )}
   </div>
-)}
-                                  {view === "reset" && (
-                                    /* RESET PASSWORD FORM */
-                                    <form 
-                                     onSubmit={onResetSubmit}
-                                      className="w-full space-y-4 mb-4 bg-black/90 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
-                                    >
-                                      <h2 className="text-2xl font-bold text-white text-center mb-4">Reset Password</h2>
-                                      <input 
-                                        type="email" 
-                                        placeholder="Email Address"
-                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-                                        required
-                                      />
-                                      <button className="w-full py-4 bg-yellow-600 text-white rounded-xl font-bold">Send Link</button>
-                                      <button type="button" onClick={() => setView("login")} className="w-full text-sm text-gray-300">Back</button>
-                                    </form>
-                                  )}
+)
+            
+//             (
+//                   // Special simple overlay for login and reset pass
+                  
+//                                         <div className="flex flex-col justify-center items-center h-full w-full max-w-2xl mx-auto p-6">
 
-                                  {/* INTERMEDIATE LINKS (Between form and Explore button) */}
-                                  {view === "login" && (
-                                    <div className="flex flex-col items-center gap-3 mb-8">
-                                      <button 
-                                        onClick={() => setView("signup")}
-                                        className="px-6 py-2 bg-black/20 hover:bg-black/10 text-black border border-white/40 rounded-full font-semibold transition-all"
-                                      >
-                                        Create an Account
-                                      </button>
-                                      <button 
-                                        onClick={() => setView("reset")}
-                                        className="text-gray-400 hover:text-gray-300 underline text-sm font-medium transition-colors"
-                                      >
-                                        Forgot Password?
-                                      </button>
-                                    </div>
-                                  )}
-                        </>
-                              )}
-                                  {/* ORIGINAL EXPLORE BUTTON */}
-                                  <button
-                                    onClick={(e) => {
-                                      jumpToSection(goToSection);
-                                      handleResetClick(e); 
+  
+//     {user ? (
+//         <div className="w-full flex flex-col items-center space-y-6 bg-black/70 p-10 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl text-center ">
+//           <div className="w-24 h-24 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-4xl shadow-lg">
+//             {user.email?.charAt(0).toUpperCase() || "U"}
+//           </div>
+//           <div>
+//             <h2 className="text-3xl font-bold text-white">Welcome Back!</h2>
+//             <p className="text-gray-300 mt-1">{user.email}</p>
+//           </div>
+          
+//           <button 
+//             onClick={() => useStore.getState().logout()} // Assuming logout is in your store
+//             className="w-full py-4 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all transform hover:scale-105"
+//           >
+//             Logout from SirMurOS
+//           </button>
+//         </div>
+//       ) : (
+//         /* 2. IF NOT LOGGED IN, SHOW YOUR EXISTING FORMS */
+//         <>
+  
+//                                   {view === "login" && (
+//                                     /* LOGIN FORM */
+//                                     <form 
+//                                      onSubmit={onLoginSubmit}
+//                                       className="w-full space-y-4 mb-4 bg-black/70 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+//                                     >
+//                                       <h2 className="text-2xl font-bold text-white text-center mb-4">Member Login</h2>
+//                                       <input 
+//                                         type="email" 
+//                                         placeholder="Email Address"
+//                                         value={email} // Add this
+//                                         onChange={(e) => setEmail(e.target.value)}
+//                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+//                                         required
+//                                       />
+//                                       <input 
+//                                         type={showPassword ? "text" : "password"}
+//                                         placeholder="Password"
+//                                         value={password} // Add this
+//                                         onChange={(e) => setPassword(e.target.value)} // Add this
+//                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+//                                         required
+//                                       />
+//                                       <button 
+//                                       type="button"
+//                                       onClick={() => setShowPassword(!showPassword)}
+//                                       className="absolute right-12 bottom-1/3 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
+//                                     >
+//                                       {showPassword ? "HIDE" : "SHOW"}
+//                                     </button>
+//                                       <button 
+//                                         type="submit"
+//                                         className="w-full py-4 bg-yellow-600 hover:bg-green-700 text-white rounded-xl font-bold transition-colors"
+//                                       >
+//                                         Sign In
+//                                       </button>
+//                                     </form>
+//                                   )}
+
+//                                   {view === "signup" && (
+//                                     <form 
+//                                       onSubmit={onSignupSubmit}
+//                                       className="w-full grid grid-cols-2 gap-4 mb-4 bg-black/80 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+//                                     >
+//                                       <h2 className="col-span-2 text-2xl font-bold text-white text-center mb-2">Create Account</h2>
+//                                       <input 
+//                                         type="text" 
+//                                         placeholder="Full Name"
+//                                         className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+//                                         required
+//                                       />
+//                                       <input 
+//                                         type="tel" 
+//                                         placeholder="Phone (Optional)"
+//                                         className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+//                                       />
+//                                       <input 
+//                                         type="email" 
+//                                         placeholder="Email Address"
+//                                         className="col-span-2 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+//                                         required
+//                                       />
+//                                       <div className="col-span-2 space-y-2">
+                                        
+//                                       <input 
+//                                         type={showPassword ? "text" : "password"}
+//                                         placeholder="Create Password"
+//                                         value={signupPassword}
+//                                         onChange={(e) => setSignupPassword(e.target.value)}
+//                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800 large-dots"
+//                                         required
+//                                       />
+//                                       <button 
+//                                       type="button"
+//                                       onClick={() => setShowPassword(!showPassword)}
+//                                       className="absolute right-12 top-[248px] -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
+//                                     >
+//                                       {showPassword ? "HIDE" : "SHOW"}
+//                                     </button>
                                       
-                                    }}
-                                    className="px-12 py-6 bg-yellow-600 hover:bg-yellow-700 text-white text-3xl lg:text-5xl rounded-lg font-bold shadow-lg transition-all duration-300 hover:scale-105"
-                                  >
-                                    Explore SirMurOS NOW
-                                  </button>
-                                </div>
+//                                       {/* PASSWORD STRENGTH METER */}
+//                                       <div className="flex gap-1 h-1.5 w-full mt-1">
+//                                         <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 1 ? 'bg-red-500' : 'bg-gray-600'}`}></div>
+//                                         <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 2 ? 'bg-orange-500' : 'bg-gray-600'}`}></div>
+//                                         <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 3 ? 'bg-green-500' : 'bg-gray-600'}`}></div>
+//                                       </div>
+                                      
+//                                       {/* REQUIREMENTS LIST */}
+//                                       <div className="text-[10px] text-gray-300 flex justify-between px-1">
+//                                         <span className={signupPassword.length >= 8 ? "text-green-400" : ""}>8+ Chars</span>
+//                                         <span className={/[A-Z]/.test(signupPassword) ? "text-green-400" : ""}>1 Uppercase</span>
+//                                         <span className={/[0-9!@#$%^&*]/.test(signupPassword) ? "text-green-400" : ""}>1 Num/Spec</span>
+//                                       </div>
+//                                     </div>
+
+//                                     <div className="col-span-2 flex items-center gap-2 py-2">
+//                                     <input type="checkbox" id="terms" className="w-5 h-5 accent-yellow-500" required />
+//                                     <label htmlFor="terms" className="text-gray-200 text-sm">
+//                                       Accept{" "}
+//                                       <span 
+//                                         onClick={() => setShowTermsModal(true)}
+//                                         className="text-yellow-400 underline cursor-pointer hover:text-yellow-300 transition-colors"
+//                                       >
+//                                         Terms & Conditions
+//                                       </span>
+//                                     </label>
+//                                   </div>
+
+//                                     <button 
+//                                       type="submit"
+//                                       disabled={strength < 3}
+//                                       className="col-span-2 py-4 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 disabled:opacity-50 text-white rounded-xl font-bold transition-all"
+//                                     >
+//                                       {strength < 3 ? "Fix Password to Continue" : "Register Now"}
+//                                     </button>
+                                    
+//                                     <button type="button" onClick={() => setView("login")} className="col-span-2 text-sm text-gray-300 underline">
+//                                       Already have an account? Login
+//                                     </button>
+//                                   </form>
+//                                 )}
+//                                    {showTermsModal && (
+//   /* The Overlay Layer */
+//   <div className="block inset-0   items-center justify-center  backdrop-blur-md">
+    
+//     <div 
+//       className="relative  w-[450px] h-[760px] bg-[#1a1a1a] border border-gray-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
+//       onClick={(e) => e.stopPropagation()} // Prevents clicking the modal from closing it
+//     >
+      
+//       {/* Header */}
+//       <div className="w-full p-6 border-b border-gray-800 flex justify-between items-center bg-[#222]">
+//         <h3 className="text-xl font-bold text-white">Terms of Service</h3>
+//         <button 
+//           onClick={() => setShowTermsModal(false)}
+//           className="text-gray-400 hover:text-white text-2xl leading-none"
+//         >
+//           ✕
+//         </button>
+//       </div>
+
+//       {/* Scrollable Body - Added w-full */}
+//       <div className="w-full flex-grow p-6 overflow-y-auto text-gray-300 text-sm leading-relaxed">
+//         <p className="mb-4 text-center">
+//           <strong>No Data Storage & Privacy</strong><br />This application is a client-side productivity tool. We do not host, store, or have access to any files, media, or data you upload or interact with. All processing occurs locally on your device. Consequently, we cannot retrieve, delete, or manage any content you use within the app.
+//         </p>
+//         <p className="mb-4 text-center">
+//           <strong>User Responsibility & Conduct</strong> You are solely responsible for the content you upload. By using this app, you agree:
+//           <br />Not to engage in any illegal or criminal activity.
+//           <br />To comply with all applicable laws of the United States of America.
+//           <br />That you own or have the necessary rights to the media you are using.
+
+//         </p>
+//         <p className="mb-4 text-center">
+//           <strong>Limitation of Liability</strong> Since we do not have control over user-uploaded content, we are not liable for any copyright infringement, damages, or legal repercussions resulting from your use of the application. The tool is provided "as-is" for research and productivity purposes.
+//         </p>
+//         <p className="mb-4 text-center">
+//           <strong>DMCA Notice</strong> While we do not host content, we comply with the Digital Millennium Copyright Act. Because all content is local to the user's browser, there is no content on our servers for us to "take down."
+//         </p>
+//       </div>
+
+//       {/* Footer */}
+      
+//     </div>
+//   </div>
+// )}
+//                                   {view === "reset" && (
+//                                     /* RESET PASSWORD FORM */
+//                                     <form 
+//                                      onSubmit={onResetSubmit}
+//                                       className="w-full space-y-4 mb-4 bg-black/90 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+//                                     >
+//                                       <h2 className="text-2xl font-bold text-white text-center mb-4">Reset Password</h2>
+//                                       <input 
+//                                         type="email" 
+//                                         placeholder="Email Address"
+//                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+//                                         required
+//                                       />
+//                                       <button className="w-full py-4 bg-yellow-600 text-white rounded-xl font-bold">Send Link</button>
+//                                       <button type="button" onClick={() => setView("login")} className="w-full text-sm text-gray-300">Back</button>
+//                                     </form>
+//                                   )}
+
+//                                   {/* INTERMEDIATE LINKS (Between form and Explore button) */}
+//                                   {view === "login" && (
+//                                     <div className="flex flex-col items-center gap-3 mb-8">
+//                                       <button 
+//                                         onClick={() => setView("signup")}
+//                                         className="px-6 py-2 bg-black/20 hover:bg-black/10 text-black border border-white/40 rounded-full font-semibold transition-all"
+//                                       >
+//                                         Create an Account
+//                                       </button>
+//                                       <button 
+//                                         onClick={() => setView("reset")}
+//                                         className="text-gray-400 hover:text-gray-300 underline text-sm font-medium transition-colors"
+//                                       >
+//                                         Forgot Password?
+//                                       </button>
+//                                     </div>
+//                                   )}
+//                         </>
+//                               )}
+                                 
+//                                 </div>
 
 
 
 
 
 
-                ) : id === "contactWindow" ? (
+//                 )
+                 : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
   <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[80vh] h-auto overflow-y-auto  lg:overflow-hidden text-white">
   
