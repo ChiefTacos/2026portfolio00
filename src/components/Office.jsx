@@ -741,13 +741,13 @@ style={{
     top: "-1.5px",
   }}
   >
-          <div className="flex gap-2 flex-shrink-0">
+          <div className="flex gap-3  xl:gap-2 flex-shrink-0">
           <button onClick={(e) => {
     e.stopPropagation(); // Prevents dragging from triggering when closing
     handleResetClick(e);
   }}onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down 
   style={{ pointerEvents: "auto" }} alt="CLOSE" title="CLOSE">
-            <span className="bg-red-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-red-700 transition"></span>
+            <span className="bg-red-500 inline-block w-14 h-14 xl:w-10 xl:h-10 rounded-full hover:bg-red-700 transition"></span>
           
           </button>
           <button onClick={(e) => {
@@ -757,7 +757,7 @@ style={{
     setTimeout(() => snapBackIntoBounds(), 50);
   }} onPointerDown={(e) => e.stopPropagation()} // Prevents drag start on mouse down
   style={{ pointerEvents: "auto" }} alt="MINIMIZE" title="MINIMIZE">
-            <span className="bg-yellow-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-orange-400 transition"></span>
+            <span className="bg-yellow-500 inline-block w-14 h-14 xl:w-10 xl:h-10 rounded-full hover:bg-orange-400 transition"></span>
           
           </button>
           <button
@@ -767,7 +767,7 @@ style={{
     setIsFullscreen(false); // Ensure it's not in "Minimized" mode so content shows
     setTimeout(() => snapBackIntoBounds(), 50);
   }} onPointerDown={(e) => e.stopPropagation()} style={{ pointerEvents: "auto" }} title="Enlarge Window">
-            <span className="bg-green-500 inline-block lg:w-9 lg:h-9 w-11 h-11 rounded-full hover:bg-green-600 transition"></span>
+            <span className="bg-green-500 inline-block w-14 h-14 xl:w-10 xl:h-10 rounded-full hover:bg-green-600 transition"></span>
           </button>
           </div>
 
@@ -1562,10 +1562,32 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
         <span className="relative block px-1 lg:px-3 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
           <div className="relative lg:w-[600px] lg:h-[370px] w-[370px] h-[230px]  flex items-center justify-center">
             {/* Full-cover video */}
-            <img src={src} alt="" srcset="" />
-
+            {/* <img src={src} alt="" srcset="" /> */}
+            <svg width="400" height="400" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              {/* <!-- Notebook body --> */}
+              <rect x="25" y="20" width="50" height="60" rx="4" fill="#ffffff" stroke="#667eea" stroke-width="3"/>
+              
+              {/* <!-- Spiral binding dots --> */}
+              <circle cx="25" cy="35" r="3" fill="#667eea"/>
+              <circle cx="25" cy="50" r="3" fill="#667eea"/>
+              <circle cx="25" cy="65" r="3" fill="#667eea"/>
+              
+              {/* <!-- Pen --> */}
+              {/* <line x1="78" y1="48" x2="92" y2="62" stroke="#ffd700" stroke-width="6" stroke-linecap="round"/> */}
+              <line 
+  x1="78" y1="48" x2="92" y2="62" 
+  stroke="#ffd700" 
+  strokeWidth="6" 
+  strokeLinecap="round"
+  transform="translate(157, 2) scale(-1, 1)" 
+/>
+              {/* <!-- Text lines --> */}
+              <line x1="32" y1="35" x2="68" y2="35" stroke="#e2e8ff" stroke-width="4"/>
+              <line x1="32" y1="50" x2="68" y2="50" stroke="#d0d9ff" stroke-width="4"/>
+              <line x1="32" y1="65" x2="55" y2="65" stroke="#c0ccff" stroke-width="4"/>
+            </svg>
             {/* Optional subtle dark overlay to improve contrast if needed */}
-            <div className="absolute inset-0 bg-black opacity-20 rounded-2xl pointer-events-none"></div>
+            {/* <div className="absolute inset-0 bg-black opacity-20 rounded-2xl pointer-events-none"></div> */}
           </div>
         </span>
       </button>
@@ -1771,7 +1793,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
       position: {
         
         // desktop: [-610.128, 328.8, 172],
-        desktop: [0.128, 2.5, 0],
+        desktop: [0.128, 2.49, 0],
         tablet: [0.128, 4, 0],
         mobile: [0.128, 4, 0],
 
@@ -1791,12 +1813,12 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
     },
     // music
     contact: {
-      distanceFactor: { desktop: 0.29, tablet: 0.56, mobile: 0.56 },
+      distanceFactor: { desktop: 0.29, tablet: 0.6, mobile: 0.6 },
       position: {
         // desktop: [103.2, 600.1, 1077.2],
-        desktop: [-2 ,2.52, 0],
+        desktop: [-1.7 , 2.49, 0],
 
-        tablet: [-2.4 ,4, 0],
+        tablet: [-2.4 , 4, 0],
         // tablet: [461.2, 200.1, 507.2],
         
         //  mobile:  [-40.128, 0, 805.314],
