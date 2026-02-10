@@ -628,8 +628,9 @@ const handleScroll = (e) => {
     ? document.getElementById("freeq-portal-root") 
     : id === "contactWindow" 
       ? document.getElementById("contact-portals-root") 
-      : document.getElementById("overlay-portals-root") 
-}}
+    : id === "notes" // ADD THIS SPECIFIC CHECK
+              ? document.getElementById("notes-portal-root") 
+              : document.getElementById("overlay-portals-root")}}
         > 
 
 
@@ -829,13 +830,41 @@ style={{
             {id === "freeQ" ?
 
             (
-  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 p-2 h-full overflow-y-auto w-full bg-black/70 backdrop-blur-sm">
+  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70 backdrop-blur-sm">
     
     {user ? (
       <>
-        {/* PANEL 1: QUICK LINKS (Cloud, Email, etc.) */}
+      {/* PANEL 3: CALENDAR (Placeholder for your Logic) */}
+        <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl  min-h-[240px] lg:min-h-[320px]">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-white font-bold">Events</h3>
+            <button className="text-yellow-500 text-xl">+</button>
+          </div>
+          <div className="space-y-2">
+            <div className="p-3 bg-white/5 rounded-xl border-l-4 border-yellow-500">
+              <p className="text-white text-sm font-medium">New Year's Goal Setting</p>
+              <p className="text-gray-400 text-xs">Jan 27, 2026</p>
+            </div>
+          </div>
+        </div>
+       
+
+        {/* PANEL 2: SIMPLE TIMER */}
+        <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center  min-h-[260px] lg:min-h-[260px]" >
+          <h3 className="text-white font-bold mb-2">Focus Timer</h3>
+          <div className="text-5xl font-mono text-yellow-500 mb-4">25:00</div>
+          <div className="flex gap-2">
+            <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm">Start</button>
+            <button className="px-4 py-2 bg-white/10 text-white rounded-lg text-sm">Reset</button>
+          </div>
+        </div>
+
+        
+
+       
+         {/* PANEL 5: QUICK LINKS (Cloud, Email, etc.) */}
         <div className="bg-black/70 p-8 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
-          <h3 className="text-white font-bold mb-4 text-xl">Quick Launch</h3>
+          <h3 className="text-white font-bold mb-3 text-2xl text-center">External Links</h3>
           <div className="grid grid-cols-2 gap-4 flex-grow">
             {[
               { name: "Cloud", icon: "☁️", url: "https://drive.google.com" },
@@ -850,38 +879,14 @@ style={{
                 rel="noreferrer"
                 className="flex flex-col items-center justify-center p-4 bg-white/5 hover:bg-yellow-500/20 rounded-2xl transition-all border border-white/5 group"
               >
-                <span className="text-3xl mb-2 group-hover:scale-110 transition-transform">{site.icon}</span>
-                <span className="text-gray-300 text-sm font-medium">{site.name}</span>
+                <span className="text-7xl mb-2 group-hover:scale-110 transition-transform">{site.icon}</span>
+                <span className="text-gray-300 text-xl font-medium">{site.name}</span>
               </a>
             ))}
           </div>
         </div>
-
-        {/* PANEL 2: SIMPLE TIMER */}
-        <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]" >
-          <h3 className="text-white font-bold mb-2">Focus Timer</h3>
-          <div className="text-5xl font-mono text-yellow-500 mb-4">25:00</div>
-          <div className="flex gap-2">
-            <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm">Start</button>
-            <button className="px-4 py-2 bg-white/10 text-white rounded-lg text-sm">Reset</button>
-          </div>
-        </div>
-
-        {/* PANEL 3: CALENDAR (Placeholder for your Logic) */}
-        <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl  min-h-[240px] lg:min-h-[320px]">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-white font-bold">Events</h3>
-            <button className="text-yellow-500 text-xl">+</button>
-          </div>
-          <div className="space-y-2">
-            <div className="p-3 bg-white/5 rounded-xl border-l-4 border-yellow-500">
-              <p className="text-white text-sm font-medium">New Year's Goal Setting</p>
-              <p className="text-gray-400 text-xs">Jan 27, 2026</p>
-            </div>
-          </div>
-        </div>
-
-        {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
+        
+         {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
         <div className="bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]">
           <div className="w-16 h-16 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-2xl mb-4">
             {user.email?.charAt(0).toUpperCase() || "U"}
@@ -894,6 +899,38 @@ style={{
           >
             Logout from SirMurOS
           </button>
+        </div>
+         {/* PANEL 1: QUICK LINKS (Cloud, Email, etc.) */}
+         
+        <div className="bg-black/70 px-3 pb-2 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[320px] lg:min-h-[320px]">
+          <h3 className="text-white font-bold m-1 text-2xl text-center">Your Apps</h3>
+
+          <div className="grid grid-cols-2 gap-4 flex-grow">
+            {[
+              { name: "Music", icon: "🎵", 
+                targetId: "contactWindow" },
+              { name: "Notes", icon: "📋", targetId: "notes" },
+            ].map((site) => (
+                  <button 
+              key={site.name}
+              onClick={(e) => {
+                e.stopPropagation();
+                // This calls your existing logic to add the ID to the active overlay state
+                setActiveOverlay(prev => {
+                  if (isMobileOrTablet) return [site.targetId]; 
+                  if (prev.includes(site.targetId)) {
+                    return [...prev.filter(item => item !== site.targetId), site.targetId];
+                  }
+                  return [...prev, site.targetId];
+                });
+              }}
+              className="flex flex-col items-center justify-center p-4 bg-white/5 hover:bg-yellow-500/20 rounded-2xl transition-all border border-white/5 group"
+            >
+                <span className="text-8xl mb-2 group-hover:scale-110 transition-transform">{site.icon}</span>
+                <span className="text-gray-300 text-2xl font-medium">{site.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </>
     ) : (
@@ -1494,8 +1531,7 @@ style={{
 
   </div>
 </div>
-                ) : (
-                 
+        ) : id === "notes" ? (  // CHANGE THE FALLBACK TO AN EXPLICIT ID CHECK                 
               <div className="text-center">
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
                   
@@ -1663,7 +1699,12 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
                
                 </div>
               </div>
-                )}
+                )
+              : (
+    // REAL FALLBACK (In case ID is something else)
+    <div className="text-white p-10">Select an app to begin</div>
+)
+              }
 
          
         </div>
@@ -2443,8 +2484,8 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
                                                 projectIndex={3}
                                               goToSection={1.3}
 
-                                          id="driveway"
-                                          key="driveway"
+                                          id="notes"
+                                          key="notes"
                                           position={[0, 0, 0]}       
                                           rotation={[Math.PI / 2, -Math.PI / 2, 0]}
                                           setActiveOverlay={setActiveOverlay}
@@ -2477,7 +2518,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
                                         rotation={[Math.PI / 2, -Math.PI / 2, 0]}
                                         position={[0, 0, 0]}
                                         distanceFactor={contact.distanceFactor}
-                                        title="Introseduction"
+                                        title="Music App"
                                         description="Michael Murray"
                                         price="ssn 3938 2938 298"
                                         bgColor="bg-yellow-500"

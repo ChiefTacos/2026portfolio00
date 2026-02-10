@@ -117,8 +117,10 @@ const jumpToSection = (index) => {
     
   }}></div> */}
   <div id="overlay-portals-root" style={{ position: "fixed", inset: 0, zIndex: 9999, pointerEvents: "none" }}></div>
-<div id="contact-portals-root" style={{ position: "fixed", inset: 0, zIndex: 9998, pointerEvents: "none" }}></div>
+<div id="contact-portals-root" style={{ position: "fixed", inset: 0, zIndex: 10002, pointerEvents: "none" }}></div>
 <div id="freeq-portal-root" style={{ position: "fixed", inset: 0, zIndex: 10000, pointerEvents: "none" }}></div>
+  <div id="notes-portal-root" style={{ position: "fixed", inset: 0, zIndex: 10001, pointerEvents: "none" }}></div>
+
   <MotionConfig transition={{ ...framerMotionConfig }}>
         <Canvas
           key={canvasKey}
