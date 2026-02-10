@@ -313,22 +313,9 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
             z-[2147483636]
             fixed inset-y-0  right-[0px] xl:right-[0px] transition-all overflow-y-auto
           flex flex-col bg-blue
-          w-[400px] opacity-100 pointer-events-auto        `}
+          w-[400px] opacity-100 pointer-events-none        `}
 
-    //  style={{
-    //       width: (typeof window !== 'undefined' && window.innerWidth >= 1280)
-    //         ? "400px" 
-    //         : (menuOpened || section === 1 || section === 2) 
-    //           ? "100%" 
-    //           : "0px",
-          
-    //       /* Force visibility if toggled OR in special sections */
-    //       opacity: (menuOpened || section === 1 || section === 2 || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? 1 : 0,
-          
-    //       /* Critical: allow clicks only when menu is actually shown */
-    //       pointerEvents: (menuOpened || section === 1 || section === 2 || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? "auto" : "none"
-    //     }}
-    //   >
+  
           style={{
               /* On mobile/tablet, if menuOpened is true (forced by our useEffect), it's 100% */
               width: menuOpened 
@@ -341,7 +328,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
               opacity: (menuOpened || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? 1 : 0,
               
               /* Allow clicks if menu is open or on desktop */
-              pointerEvents: (menuOpened || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? "auto" : "none"
+              pointerEvents:  "none",
             }}
           >
        
@@ -349,7 +336,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
           className="flex-1 flex flex-col items-center justify-center lg:gap-4 mt-4 gap-1 lg:mt-[0px]"
             
         > */}
-   <div className="flex-1 flex flex-col justify-end pb-2 items-center">
+   <div className="flex-1 flex flex-col justify-end pb-2 items-center pointer-events-none">
 
 
 
@@ -477,7 +464,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
         
      
 
-   <div className="xl:fixed xl:bottom-4 xl:left-1/3 relative drop-shadow-xl w-[300px] h-64 md:w-[670px] md:h-36 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[0]" >
+   <div className="xl:fixed xl:bottom-4 xl:left-1/3 relative drop-shadow-xl w-[300px] h-64 md:w-[670px] md:h-36 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[0] pointer-events-auto" >
       <div className="absolute flex items-center justify-center dark:text-white text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 ">
 
 
@@ -485,51 +472,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
          
 <div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-6 lg:gap-12">
                 
-        {/* <button
-    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-black to-grey-900 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
-  >
-   
-        <span
-      class="relative  px-4 py-2 transition-all ease-in duration-75 bg-neutral-950  rounded-md group-hover:bg-opacity-0"
-    >
-      <StyledWrapper01  onClick={(event) => {
-      spawnCoin(event);
-          onSectionChange(4); 
-              setMenuOpened(false);
-
-
-    }}>
-        <article className="keycap">
-          <aside className="letter">
-            <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
-
-    <path d="M512 80c8.8 0 16 7.2 16 16V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V96c0-8.8 7.2-16 16-16H512zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM208 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128zm-32 32c-44.2 0-80 35.8-80 80c0 8.8 7.2 16 16 16H304c8.8 0 16-7.2 16-16c0-44.2-35.8-80-80-80H176zM376 144c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24h80c13.3 0 24-10.7 24-24s-10.7-24-24-24H376z"></path>
-
-  </svg>
-            </aside>
-        </article>
-      </StyledWrapper01>
-              </span>
-    <div class="block">
-      <div
-        class={`group
-          ${isVisible ? 'opacity-100' : 'opacity-0'}
-          ${hasFadedIn ? 'animate-blink' : ''}
-          transition-opacity duration-1000 ease-in-out
-
-          absolute -top-[13px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
-      >
-        <div class="rounded-sm text-md bg-black py-1 px-2">
-          <p class="whitespace-nowrap">Contact Page</p>
-        </div>
-        <div
-          class="h-0 w-fit border-l-8 border-r-8 border-t-4 border-transparent border-t-black"
-        ></div>
-      </div>
-    </div>
-  </button> */}
-
-
+      
 
 
             <button
