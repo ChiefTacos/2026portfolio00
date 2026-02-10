@@ -348,24 +348,56 @@ addNote: async (containerId, text) => {
     await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
   }
 },
-
 editNote: async (containerId, noteIndex, newText) => {
   const { user, notes } = get();
+  
+  // Create a fresh copy of the array for this specific board
   const containerNotes = [...(notes[containerId] || [])];
   
-  // Update the text property, keeping the existing size
+  if (!containerNotes[noteIndex]) return;
+
   const currentNote = containerNotes[noteIndex];
+
+  // Logic: Maintain the size, only update the text
   containerNotes[noteIndex] = typeof currentNote === 'string' 
     ? { text: newText, size: 0 } 
     : { ...currentNote, text: newText };
 
-  const updatedNotes = { ...notes, [containerId]: containerNotes };
+  const updatedNotes = { 
+    ...notes, 
+    [containerId]: containerNotes 
+  };
+
+  // Update Local State
   set({ notes: updatedNotes });
 
+  // Update Firebase
   if (user) {
-    await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      await setDoc(userDocRef, { notes: updatedNotes }, { merge: true });
+    } catch (error) {
+      console.error("Cloud edit failed:", error);
+    }
   }
 },
+// editNote: async (containerId, noteIndex, newText) => {
+//   const { user, notes } = get();
+//   const containerNotes = [...(notes[containerId] || [])];
+  
+//   // Update the text property, keeping the existing size
+//   const currentNote = containerNotes[noteIndex];
+//   containerNotes[noteIndex] = typeof currentNote === 'string' 
+//     ? { text: newText, size: 0 } 
+//     : { ...currentNote, text: newText };
+
+//   const updatedNotes = { ...notes, [containerId]: containerNotes };
+//   set({ notes: updatedNotes });
+
+//   if (user) {
+//     await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+//   }
+// },
   // REMOVE NOTE + CLOUD SYNC
   removeNote: async (containerId, noteIndex) => {
     const { user, notes } = get();

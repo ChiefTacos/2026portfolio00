@@ -490,7 +490,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
        <div
       className="
              
-              relative group scale-180 xl:scale-90  "
+              relative group scale-110 xl:scale-50  "
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
     >
       <button
@@ -508,8 +508,8 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
         <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
         {/* Inner button content container */}
-        <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
-          <div className="relative w-[420px] h-[350px] flex items-center justify-center">
+        <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden xl:scale-110">
+          <div className="relative w-[420px] h-[350px]  xl:w-[570px] xl:h-[400px] flex items-center justify-center">
             {/* <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
@@ -517,7 +517,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
               <path d="M20 44C22 40, 26 40, 28 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
               <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
             </svg> */}
-             {section === 0 && (
+             {/* {section === 0 && (
          <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
@@ -525,7 +525,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
               <path d="M20 44C22 40, 26 40, 28 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
               <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
             </svg> 
-)}
+)} */}
              {section !== 0 && (
 
 <svg class="w-64 h-64 fill-white mix-blend-overlay" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -536,7 +536,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 )}
 
             {section === 0 && (
-  <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-2 pt-1 px-1 tracking-wider text-white">
+  <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-2 pt-1 pl-3 tracking-wider text-white">
     Explore
   </span>
 )}
@@ -557,7 +557,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
     <div
       className="
              
-              relative group scale-200 xl:scale-100  "
+              relative group scale-100 xl:scale-75  "
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
     >
       <button
@@ -1742,7 +1742,7 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
    <div
       className="
              
-              relative group scale-200 xl:scale-100  "
+              relative group  scale-100 xl:scale-75  "
       style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
     >
       <button
@@ -2556,7 +2556,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
                                                                       />
                                                                       </mesh>
 
-                                                                      {/* INVISIBLE ANCHOR FOR DRIVEWAY OVERLAY — this is the magic */}
+                                                                      {/* INVISIBLE ANCHOR FOR Notes OVERLAY — this is the magic */}
                                                               <mesh
                                                                 position={driveway.position}  
                                                                 visible={false} 
@@ -2826,9 +2826,10 @@ const NoteItem = ({ note, noteIdx, boardId, theme }) => {
   const noteText = typeof note === 'string' ? note : note.text;
   const noteSize = typeof note === 'string' ? 0 : (note.size || 0);
 
-  const editNote = useStore((state) => state.editNote);
+  // const editNote = useStore((state) => state.editNote);
   const removeNote = useStore((state) => state.removeNote);
 const setNoteSize = useStore((state) => state.setNoteSize); // Get the new action
+const editNoteAction = useStore((state) => state.editNote); // Rename to avoid confusion
 
   const sizeClasses = ["text-2xl", "text-3xl", "text-4xl", "text-6xl"];
 
@@ -2873,13 +2874,21 @@ const setNoteSize = useStore((state) => state.setNoteSize); // Get the new actio
   };
   const handleTouchEnd = () => clearTimeout(touchTimerRef.current);
 
+  // const handleSave = () => {
+  //   if (editValue.trim()) {
+  //     editNote(boardId, noteIdx, editValue);
+  //     setIsEditing(false);
+  //     setShowTooltip(false);
+  //   }
+  // };
   const handleSave = () => {
-    if (editValue.trim()) {
-      editNote(boardId, noteIdx, editValue);
-      setIsEditing(false);
-      setShowTooltip(false);
-    }
-  };
+  if (editValue.trim()) {
+    // Call the renamed action
+    editNoteAction(boardId, noteIdx, editValue); 
+    setIsEditing(false);
+    setShowTooltip(false);
+  }
+};
 
   if (isEditing) {
     return (
