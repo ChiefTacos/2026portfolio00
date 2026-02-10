@@ -670,7 +670,7 @@ const handleScroll = (e) => {
                 className={`overlay-window ${className} custom-scrollbar 
            ${isFullscreen 
       ? 'overflow-hidden' // Remove huge sizing when minimized
-      : 'bg-white shadow-2xl border border-gray-700 overflow-y-auto min-h-[220vh] lg:min-h-[90vh] lg:max-h-[100vh] w-[240vw] h-[240vw] md:h-[200vw] max-w-[1000px] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1800px]' 
+      : 'bg-white shadow-2xl border border-gray-700 overflow-y-auto min-h-[210vh] lg:min-h-[90vh] lg:max-h-[100vh] w-[240vw] h-[205vw] md:h-[220vw] max-w-[1000px] md:max-w-[1200px] lg:w-[70vw] lg:max-w-[1800px]' 
     }
                   
                   `}
@@ -693,8 +693,8 @@ width: isFullscreen
 height: isFullscreen 
   ? "12vh"  
   : isEnlarged 
-    ? "75vh"  // Enlarged size
-    : (isMobileOrTablet ? "80vh" : "110vh"),
+    ? "60vh"  // Enlarged size
+    : (isMobileOrTablet ? "60vh" : "110vh"),
 
 // MAX WIDTH LOGIC
 maxWidth: isFullscreen 
@@ -707,8 +707,8 @@ maxWidth: isFullscreen
 maxHeight: isFullscreen 
   ? "auto" 
   : isEnlarged 
-    ? "75vh" 
-    : (isMobileOrTablet ? "80vh" : "120vh"),
+    ? "60vh" 
+    : (isMobileOrTablet ? "60vh" : "110vh"),
 
   // width: isFullscreen 
   //   ? "600px" // Fullscreen size
@@ -817,7 +817,7 @@ style={{
                  
           
         </div>
-        <div className="p-10 flex flex-col items-center justify-center gap-10 pt-1"
+        <div className="flex flex-col items-center justify-center gap-10"
         // onPointerDown={isFullscreen && isVisible ? handleDragStart : undefined}
         >
 {/* MAIN CONTENT: Only show if NOT fullscreen */}
@@ -829,12 +829,12 @@ style={{
             {id === "freeQ" ?
 
             (
-  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto w-full bg-black/40 backdrop-blur-sm">
+  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 p-2 h-full overflow-y-auto w-full bg-black/70 backdrop-blur-sm">
     
     {user ? (
       <>
         {/* PANEL 1: QUICK LINKS (Cloud, Email, etc.) */}
-        <div className="bg-black/60 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col">
+        <div className="bg-black/70 p-8 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
           <h3 className="text-white font-bold mb-4 text-xl">Quick Launch</h3>
           <div className="grid grid-cols-2 gap-4 flex-grow">
             {[
@@ -858,7 +858,7 @@ style={{
         </div>
 
         {/* PANEL 2: SIMPLE TIMER */}
-        <div className="bg-black/60 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center">
+        <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]" >
           <h3 className="text-white font-bold mb-2">Focus Timer</h3>
           <div className="text-5xl font-mono text-yellow-500 mb-4">25:00</div>
           <div className="flex gap-2">
@@ -868,7 +868,7 @@ style={{
         </div>
 
         {/* PANEL 3: CALENDAR (Placeholder for your Logic) */}
-        <div className="bg-black/60 p-6 rounded-3xl border border-white/10 shadow-xl">
+        <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl  min-h-[240px] lg:min-h-[320px]">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-white font-bold">Events</h3>
             <button className="text-yellow-500 text-xl">+</button>
@@ -882,7 +882,7 @@ style={{
         </div>
 
         {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
-        <div className="bg-black/70 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center">
+        <div className="bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]">
           <div className="w-16 h-16 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-2xl mb-4">
             {user.email?.charAt(0).toUpperCase() || "U"}
           </div>
@@ -1949,7 +1949,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
 
     //notes
     driveway: {
-      distanceFactor: { desktop: 0.29, tablet: 0.56, mobile: 0.56 },
+      distanceFactor: { desktop: 0.32, tablet: 0.56, mobile: 0.56 },
       position: {
         
         // desktop: [-610.128, 328.8, 172],
@@ -1973,7 +1973,7 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
     },
     // music
     contact: {
-      distanceFactor: { desktop: 0.29, tablet: 0.6, mobile: 0.6 },
+      distanceFactor: { desktop: 0.32, tablet: 0.6, mobile: 0.6 },
       position: {
         // desktop: [103.2, 600.1, 1077.2],
         desktop: [-2.93 , 1.83, 0],
@@ -1986,9 +1986,9 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 0.36, tablet: 0.6, mobile: 0.6  },
+      distanceFactor: { desktop: 0.36, tablet: 0.62, mobile: 0.72  },
       position: {
-      desktop: section === 0 ? [0, 2, 0] : [-2.9, 2.514, 0],
+      desktop: section === 0 ? [0, 2, 0] : [-2.85, 2.512, 0],
               // tablet: [461.2, 880.1, 707.2],
 
         tablet:section === 0 ? [0, 2, 0] : [0, 7, 0] ,
