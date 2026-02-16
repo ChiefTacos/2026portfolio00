@@ -383,6 +383,8 @@ const handleResetClick = (e) => {
   setTimeout(() => setIsClickable(true), 300); // re-enable after animation
 };
 const handleDragStart = (e) => {
+  console.log(e.target);
+
   e.stopPropagation();
   isDragging.current = true;
 
@@ -621,7 +623,7 @@ const handleScroll = (e) => {
           center
           distanceFactor={distanceFactor}
           occlude={false}
-            className={className}   
+          className={className}   
 
           portal={{ 
   current: id === "freeQ" 
@@ -819,7 +821,7 @@ style={{
           
         </div>
         <div className="flex flex-col items-center justify-center gap-10"
-        // onPointerDown={isFullscreen && isVisible ? handleDragStart : undefined}
+        onPointerDown={isFullscreen && isVisible ? handleDragStart : undefined}
         >
 {/* MAIN CONTENT: Only show if NOT fullscreen */}
           
@@ -1532,7 +1534,9 @@ style={{
   </div>
 </div>
         ) : id === "notes" ? (  // CHANGE THE FALLBACK TO AN EXPLICIT ID CHECK                 
-              <div className="text-center">
+              <div className="text-center"
+               
+              >
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
                   
 
@@ -1548,14 +1552,22 @@ style={{
 
 
         return (
-          <div key={boardId} className="bg-slate-300 p-6 rounded-3xl border border-black flex flex-col shadow-lg h-full">
+          <div key={boardId} className="bg-slate-300 p-6 rounded-3xl border border-black flex flex-col shadow-lg h-full"
+             
+          >
             <div className="flex justify-between items-start mb-4 border-b pb-2">
               <div className="relative group flex-1">
                 <span className="text-[12px] uppercase text-gray-500 font-bold tracking-widest block mb-1">
                   {displayName}'s Workspace
                 </span>
                 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2"
+                draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+
+                >
                   <h2 
                     id={`title-${boardId}`}
                     contentEditable
@@ -1605,7 +1617,13 @@ style={{
                 )}
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 "
+              draggable={false}
+              onPointerDownCapture={(e) => e.stopPropagation()}
+              onMouseDownCapture={(e) => e.stopPropagation()}
+              onTouchStartCapture={(e) => e.stopPropagation()}
+
+              >
                 <input type="file" id={`file-${boardId}`} className="hidden" accept=".txt" onChange={(e) => handleFileNotesUpload(e, boardId)} />
                 <button onClick={() => document.getElementById(`file-${boardId}`).click()} className="text-[16px] bg-gray-100 p-2 rounded-lg hover:bg-blue-50 transition-colors">IMPORT TXT</button>
                 <button onClick={() => window.confirm("Delete Board?") && removeBoard(boardId)} className="text-[16px] bg-gray-100 p-2 rounded-lg hover:bg-red-50 text-red-500 transition-colors">DELETE</button>
@@ -1615,7 +1633,13 @@ style={{
             
              
 
-                          <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar ">
+                          <div className="flex-grow overflow-y-auto min-h-[250px] max-h-[350px] mb-4 space-y-3 pr-2 select-text custom-scrollbar "
+                          draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+
+                          >
                             {currentNotes.map((note, noteIdx) => (
                               <NoteItem 
 
@@ -1633,7 +1657,13 @@ style={{
 
 
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2"
+            draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+
+            >
               
               <textarea 
           ref={el => inputRef.current[boardId] = el}
