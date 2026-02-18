@@ -832,11 +832,11 @@ style={{
             {id === "freeQ" ?
 
             (
-  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70 backdrop-blur-sm">
+  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70">
     
     {user ? (
       <>
-      {/* PANEL 3: CALENDAR (Placeholder for your Logic) */}
+      {/* PANEL 1: CALENDAR (Placeholder for your Logic) */}
         <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl  min-h-[240px] lg:min-h-[320px]">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-white font-bold">Events</h3>
@@ -864,8 +864,8 @@ style={{
         
 
        
-         {/* PANEL 5: QUICK LINKS (Cloud, Email, etc.) */}
-        <div className="bg-black/70 p-8 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
+         {/* PANEL 3: QUICK LINKS (Cloud, Email, etc.) */}
+        <div className="relative bg-black/70 p-8 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
           <h3 className="text-white font-bold mb-3 text-2xl text-center">External Links</h3>
           <div className="grid grid-cols-2 gap-4 flex-grow">
             {[
@@ -889,7 +889,7 @@ style={{
         </div>
         
          {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
-        <div className="bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]">
+        <div className="relative bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]">
           <div className="w-16 h-16 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-2xl mb-4">
             {user.email?.charAt(0).toUpperCase() || "U"}
           </div>
@@ -902,9 +902,9 @@ style={{
             Logout from SirMurOS
           </button>
         </div>
-         {/* PANEL 1: QUICK LINKS (Cloud, Email, etc.) */}
+         {/* PANEL 5: QUICK LINKS (Cloud, Email, etc.) */}
          
-        <div className="bg-black/70 px-3 pb-2 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[320px] lg:min-h-[320px]">
+        <div className="relative bg-black/70 px-3 pb-2 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[320px] lg:min-h-[320px]">
           <h3 className="text-white font-bold m-1 text-2xl text-center">Your Apps</h3>
 
           <div className="grid grid-cols-2 gap-4 flex-grow">
@@ -1323,7 +1323,12 @@ style={{
     </svg>
   </div>
   
-  <div className="w-full flex flex-col gap-6">
+  <div className="w-full flex flex-col gap-6"
+   draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+>
     
     {/* 3. POSITION BAR */}
     <div className="w-full flex flex-col gap-2">
@@ -1475,7 +1480,13 @@ style={{
                       </p>
                 </div>
                 
-      <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar"
+      
+       draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+>
         {useStore.getState().playlists[useStore.getState().activePlaylist]?.length === 0 && (
           <div className="flex flex-col items-center justify-center h-40 text-gray-600 border-2 border-dashed border-gray-800 rounded-2xl">
             <p className="text-sm">Playlist is empty</p>
