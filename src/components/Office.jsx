@@ -590,6 +590,220 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
 };
 
 
+
+//timer for nav app  ----          
+
+
+// Initial state: 5 minutes in seconds (5 * 60)
+// const [timeLeft, setTimeLeft] = React.useState(300); 
+// const [isActive, setIsActive] = React.useState(false);
+
+// React.useEffect(() => {
+//   let interval = null;
+//   if (isActive && timeLeft > 0) {
+//     interval = setInterval(() => {
+//       setTimeLeft((prev) => prev - 1);
+//     }, 1000);
+//   } else if (timeLeft === 0) {
+//     setIsActive(false);
+//     clearInterval(interval);
+//   }
+//   return () => clearInterval(interval);
+// }, [isActive, timeLeft]);
+
+// // Helper to format seconds into MM:SS
+// const formatTime = (seconds) => {
+//   const mins = Math.floor(seconds / 60);
+//   const secs = seconds % 60;
+//   return `${mins}:${secs.toString().padStart(2, '0')}`;
+// };
+
+// // Handlers
+// const toggleTimer = () => setIsActive(!isActive);
+// const resetTimer = () => {
+//   setIsActive(false);
+//   setTimeLeft(300);
+// };
+// const addMinute = () => setTimeLeft(prev => prev + 60);
+// // const subMinute = () => setTimeLeft(prev => Math.max(0, prev - 60));
+// const [timerSeconds, setTimerSeconds] = React.useState(300); // 5 mins in seconds
+// const [timerIsRunning, setTimerIsRunning] = React.useState(false);
+
+// React.useEffect(() => {
+//   let interval = null;
+//   if (timerIsRunning && timerSeconds > 0) {
+//     interval = setInterval(() => {
+//       setTimerSeconds((prev) => prev - 1);
+//     }, 1000);
+//   } else if (timerSeconds === 0) {
+//     setTimerIsRunning(false);
+//     clearInterval(interval);
+//   }
+//   return () => clearInterval(interval);
+// }, [timerIsRunning, timerSeconds]);
+
+// const formatTimerDisplay = (totalSeconds) => {
+//   const mins = Math.floor(totalSeconds / 60);
+//   const secs = totalSeconds % 60;
+//   return `${mins}:${secs.toString().padStart(2, '0')}`;
+// };
+
+// --- FOCUS TIMER & CLOCK LOGIC ---
+
+
+  
+const [timerSeconds, setTimerSeconds] = useState(300); // 5 mins in seconds
+const [timerIsRunning, setTimerIsRunning] = useState(false);
+const [currentSystemTime, setCurrentSystemTime] = useState(new Date());
+
+// A. Digital Clock Effect (Updates every second)
+useEffect(() => {
+  const clockInterval = setInterval(() => setCurrentSystemTime(new Date()), 1000);
+  return () => clearInterval(clockInterval);
+}, []);
+
+// B. Accurate Focus Timer (Calculates delta to avoid tab-throttling drift)
+useEffect(() => {
+  let interval;
+  if (timerIsRunning && timerSeconds > 0) {
+    const startTime = Date.now();
+    const initialSeconds = timerSeconds;
+
+    interval = setInterval(() => {
+      const delta = Math.floor((Date.now() - startTime) / 1000);
+      const nextSeconds = Math.max(0, initialSeconds - delta);
+      setTimerSeconds(nextSeconds);
+
+      if (nextSeconds === 0) {
+        setTimerIsRunning(false);
+        clearInterval(interval);
+      }
+    }, 100); 
+  }
+  return () => clearInterval(interval);
+}, [timerIsRunning]);
+
+// C. Helper to format seconds into MM:SS
+const formatTimerDisplay = (totalSeconds) => {
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+// D. Browser Tab Title Update
+useEffect(() => {
+  if (timerIsRunning && timerSeconds > 0) {
+    document.title = `(${formatTimerDisplay(timerSeconds)}) Focus Timer`;
+  } else {
+    document.title = "SirMurOS"; // Reverts to default when stopped
+  }
+}, [timerSeconds, timerIsRunning]);
+
+
+
+// --- CLOCK FORMAT & HOLD LOGIC ---
+const [is24Hour, setIs24Hour] = useState(true); 
+const [showMainClockMenu, setShowMainClockMenu] = useState(false);
+const mainClockHoldTimerRef = useRef(null);
+
+// Unique handler for the center digital clock
+const handleMainClockHoldStart = () => {
+  mainClockHoldTimerRef.current = setTimeout(() => {
+    setShowMainClockMenu( true);
+  }, 700);
+};
+
+const handleMainClockHoldEnd = () => {
+  clearTimeout(mainClockHoldTimerRef.current);
+};
+
+
+
+// working timezones
+// --- ANALOG CLOCK & TIMEZONE STATE ---
+// --- UNIQUE CLOCK HOLD LOGIC ---
+const [tzLeft, setTzLeft] = useState('America/Chicago'); // CST
+const [tzRight, setTzRight] = useState('Europe/Paris');   // CET
+const [activeClockSide, setActiveClockSide] = useState(null); // 'left' or 'right'
+const [isChangingTz, setIsChangingTz] = useState(false);  
+const clockHoldTimerRef = useRef(null);
+const TIMEZONES = [
+  // --- NORTH AMERICA ---
+  { label: "MST (Denver)", value: "America/Denver" },
+  { label: "CST (Chicago)", value: "America/Chicago" },
+  { label: "EST (New York)", value: "America/New_York" },
+  { label: "PST (Los Angeles)", value: "America/Los_Angeles" },
+
+  // --- EUROPE ---
+  { label: "GMT (London)", value: "Europe/London" },
+  { label: "CET (Berlin)", value: "Europe/Paris" },
+  { label: "MSK (Moscow)", value: "Europe/Moscow" },
+
+  // --- AFRICA ---
+  { label: "EET (Cairo)", value: "Europe/Athens" },
+  { label: "WAT (Lagos)", value: "Africa/Lagos" },
+  { label: "SAST (Johannesburg)", value: "Africa/Johannesburg" },
+  { label: "EAT (Nairobi)", value: "Africa/Nairobi" },
+
+  // --- ASIA & OCEANIA ---
+  { label: "GST (Dubai)", value: "Asia/Dubai" },
+  { label: "IST (Mumbai)", value: "Asia/Kolkata" },
+  { label: "SGT (Singapore)", value: "Asia/Singapore" },
+  { label: "JST (Tokyo)", value: "Asia/Tokyo" },
+  { label: "AEST (Sydney)", value: "Australia/Sydney" }
+];
+// const TIMEZONES = [
+//   { label: "CST (Chicago)", value: "America/Chicago" },
+//   { label: "CET (Paris)", value: "Europe/Paris" },
+//   { label: "EST (New York)", value: "America/New_York" },
+//   { label: "PST (L.A.)", value: "America/Los_Angeles" },
+//   { label: "GMT (London)", value: "Europe/London" },
+//   { label: "JST (Tokyo)", value: "Asia/Tokyo" }
+// ];
+
+// Unique handlers to avoid conflict with your window dragging
+const handleClockHoldStart = (side) => {
+  clockHoldTimerRef.current = setTimeout(() => {
+    setActiveClockSide(side);
+  }, 300); // 0.5s hold to trigger
+};
+
+const handleClockHoldEnd = () => {
+  clearTimeout(clockHoldTimerRef.current);
+};
+
+// Analog Hand Helper
+const AnalogClock = ({ tz, label }) => {
+  const time = new Date(new Date().toLocaleString("en-US", { timeZone: tz }));
+  const s = time.getSeconds();
+  const m = time.getMinutes();
+  const h = time.getHours();
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative w-14 h-14 rounded-full border border-white/20 bg-white/5 shadow-inner">
+        {/* Hour Hand */}
+        <div className="absolute bottom-1/2 left-1/2 w-1 h-3 bg-white/80 rounded-full origin-bottom -translate-x-1/2"
+             style={{ transform: `translateX(-50%) rotate(${(h % 12) * 30 + m * 0.5}deg)` }} />
+        {/* Minute Hand */}
+        <div className="absolute bottom-1/2 left-1/2 w-0.5 h-5 bg-white/90 rounded-full origin-bottom -translate-x-1/2"
+             style={{ transform: `translateX(-50%) rotate(${m * 6}deg)` }} />
+             {/* Second Hand */}
+        <div className="absolute bottom-1/2 left-1/2 w-[1px] h-6 bg-yellow-500 origin-bottom -translate-x-1/2"
+             style={{ transform: `translateX(-50%) rotate(${s * 6}deg)`, zIndex: 10 }} />
+        {/* Center Dot */}
+        <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-yellow-500 rounded-full -translate-x-1/2 -translate-y-1/2" />
+      </div>
+      <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">{label.split('/')[1]}</span>
+    </div>
+  );
+};
+
+
+
+
+
+
+
 const [isScrolled, setIsScrolled] = React.useState(false);
 
 const handleScroll = (e) => {
@@ -661,15 +875,7 @@ const handleScroll = (e) => {
               {isActive && (
                 <div
                 ref={overlayRef}
-                // className="bg-white  rounded-lg shadow-2xl border border-gray-200 overflow-hidden
-                //   min-h[130vh] max-h-[130vh]
-                //    lg:min-h[80vh]lg:max-h-[110vh]
-
-                //     w-[100vw] max-w-[1000px]
-                //     md:w-[90vw] md:max-w-[1200px]
-                //     lg:w-[70vw] lg:max-w-[1400px]
-
-                // "
+             
                 className={`overlay-window ${className} custom-scrollbar 
            ${isFullscreen 
       ? 'overflow-hidden' // Remove huge sizing when minimized
@@ -743,7 +949,7 @@ maxHeight: isFullscreen
         {/* <div className="flex p-4 lg:p-3 gap-2 bg-[#2a2a2a] overflow-hidden"> */}
         <div 
     className={`sticky top-0 z-[2147483639] flex items-center bg-[#2a2a2a] transition-all duration-300 ease-in-out
-      ${isScrolled ? 'h-12 px-2 pt-2' : 'p-2 lg:p-2'} 
+      ${isScrolled ? 'h-12 px-2 pt-2' : 'h-14 p-2 lg:p-2'} 
       `}
                   onPointerDown={isVisible ? handleDragStart : undefined}
 
@@ -837,7 +1043,7 @@ style={{
     {user ? (
       <>
       {/* PANEL 1: CALENDAR (Placeholder for your Logic) */}
-        <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl  min-h-[240px] lg:min-h-[320px]">
+        {/* <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl  min-h-[240px] lg:min-h-[320px]">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-white font-bold">Events</h3>
             <button className="text-yellow-500 text-xl">+</button>
@@ -848,25 +1054,293 @@ style={{
               <p className="text-gray-400 text-xs">Jan 27, 2026</p>
             </div>
           </div>
-        </div>
+        </div> */}
        
 
         {/* PANEL 2: SIMPLE TIMER */}
-        <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center  min-h-[260px] lg:min-h-[260px]" >
-          <h3 className="text-white font-bold mb-2">Focus Timer</h3>
-          <div className="text-5xl font-mono text-yellow-500 mb-4">25:00</div>
-          <div className="flex gap-2">
-            <button className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm">Start</button>
-            <button className="px-4 py-2 bg-white/10 text-white rounded-lg text-sm">Reset</button>
-          </div>
-        </div>
+      
+          {/* <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
+            <h3 className="text-white font-bold mb-2">Focus Timer</h3>
+            
+            <div className="flex items-center justify-center gap-6 mb-4">
+              <button 
+                onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))}
+                className="text-gray-500 hover:text-yellow-500 text-3xl font-bold transition-colors"
+              >
+                –
+              </button>
 
+              <div className="text-5xl font-mono text-yellow-500 min-w-[140px]">
+                {formatTimerDisplay(timerSeconds)}
+              </div>
+
+              <button 
+                onClick={() => setTimerSeconds(prev => prev + 60)}
+                className="text-gray-500 hover:text-yellow-500 text-3xl font-bold transition-colors"
+              >
+                +
+              </button>
+            </div>
+
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setTimerIsRunning(!timerIsRunning)} 
+                className={`px-6 py-2 rounded-xl font-bold transition-all ${
+                  timerIsRunning 
+                    ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' 
+                    : 'bg-green-600 text-white'
+                }`}
+              >
+                {timerIsRunning ? 'Pause' : 'Start'}
+              </button>
+              
+              <button 
+                onClick={() => {
+                  setTimerIsRunning(false);
+                  setTimerSeconds(300);
+                }} 
+                className="px-6 py-2 bg-white/5 text-gray-300 rounded-xl border border-white/10 hover:bg-white/10 transition-all"
+              >
+                Reset
+              </button>
+            </div>
+          </div> */}
         
+
+        {/* PANEL 1: ACCURATE DIGITAL CLOCK */}
+        {/* <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
+          <h3 className="text-white font-bold mb-2 uppercase tracking-widest text-xs opacity-50">System Time</h3>
+          <div className="text-6xl font-mono text-white tracking-tighter">
+            {currentSystemTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+            <span className="text-2xl text-yellow-500 ml-1">
+              {currentSystemTime.toLocaleTimeString([], { second: '2-digit' })}
+            </span>
+          </div>
+          <p className="text-gray-500 text-sm mt-2">
+            {currentSystemTime.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
+          </p>
+        </div> */}
+{/* PANEL 1: SYSTEM TIME + DUAL ANALOG
+<div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden">
+  <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3>
+  
+  <div className="flex items-center justify-around w-full gap-2">
+    <div 
+      className="cursor-pointer transition-transform active:scale-90"
+      onPointerDown={() => handleClockHoldStart('left')}
+      onPointerUp={handleClockHoldEnd}
+      onPointerLeave={handleClockHoldEnd}
+    >
+      <AnalogClock tz={tzLeft} label={tzLeft} />
+    </div>
+
+    <div className="flex-1">
+      <div className="text-5xl font-mono text-white tracking-tighter">
+        {currentSystemTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+        <span className="text-xl text-yellow-500 ml-1">
+          {currentSystemTime.toLocaleTimeString([], { second: '2-digit' })}
+        </span>
+      </div>
+      <p className="text-gray-500 text-[10px] mt-1 uppercase">
+        {currentSystemTime.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+      </p>
+    </div>
+
+    <div 
+      className="cursor-pointer transition-transform active:scale-90"
+      onPointerDown={() => handleClockHoldStart('right')}
+      onPointerUp={handleClockHoldEnd}
+      onPointerLeave={handleClockHoldEnd}
+    >
+      <AnalogClock tz={tzRight} label={tzRight} />
+    </div>
+  </div> */}
+
+
+
+{/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
+<div className="bg-black/70 p-24 mx-16 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden">
+  {/* <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3> */}
+  
+  <div className="flex items-center justify-around w-full gap-2">
+    {/* LEFT ANALOG (With Second Hand) */}
+    <div 
+      className="cursor-pointer transition-transform active:scale-110 scale-150"
+      onPointerDown={() => handleClockHoldStart('left')}
+      onPointerUp={handleClockHoldEnd}
+      onPointerLeave={handleClockHoldEnd}
+    >
+      <AnalogClock tz={tzLeft} label={tzLeft} />
+    </div>
+
+    {/* CENTER DIGITAL (Hold to toggle 12/24h) */}
+    <div 
+      className="flex-1 cursor-pointer select-none py-4"
+      onPointerDown={handleMainClockHoldStart}
+      onPointerUp={handleMainClockHoldEnd}
+      onPointerLeave={handleMainClockHoldEnd}
+    >
+      <div className="text-8xl font-mono text-white tracking-tighter">
+        {currentSystemTime.toLocaleTimeString([], { 
+          hour: '2-digit', 
+          minute: '2-digit',
+           
+          hour12: !is24Hour 
+        })}
+        <span className="text-6xl text-yellow-500 ml-1">
+          {currentSystemTime.toLocaleTimeString([], { second: '2-digit' })}
+        </span>
+      </div>
+      <p className="text-gray-500 text-[10px] mt-1 uppercase">
+        {currentSystemTime.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+      </p>
+    </div>
+
+    {/* RIGHT ANALOG (With Second Hand) */}
+    <div 
+      className="cursor-pointer transition-transform active:scale-110 scale-150"
+      onPointerDown={() => handleClockHoldStart('right')}
+      onPointerUp={handleClockHoldEnd}
+      onPointerLeave={handleClockHoldEnd}
+    >
+      <AnalogClock tz={tzRight} label={tzRight} />
+    </div>
+  </div>
+
+  {/* MAIN CLOCK FORMAT TOGGLE MENU */}
+  {showMainClockMenu && (
+    <div 
+      className="absolute top-64 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[200px] justify-center select-none"
+      style={{ zIndex: 100 }}
+    >
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          setIs24Hour(!is24Hour);
+          setShowMainClockMenu(false);
+        }}
+        className="px-4 py-2 bg-yellow-500 text-black rounded-xl text-xs font-bold shadow-lg active:scale-95 transition-all"
+      >
+        Switch to {is24Hour ? '12-Hour' : '24-Hour'}
+      </button>
+      <div className="h-6 w-[1px] bg-white/20 mx-1" />
+      <button 
+        onClick={() => setShowMainClockMenu(false)}
+        className="p-2 text-white hover:bg-white/10 rounded-xl transition-colors"
+      >✕</button>
+    </div>
+  )}
+
+
+  {/* GLASSMORPHISM TOOLTIP (Triggered by Hold) */}
+  {activeClockSide && !isChangingTz && (
+    <div 
+      className="absolute  top-20 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center select-none"
+      style={{ zIndex: 100 }}
+    >
+      <button 
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsChangingTz(true);
+        }}
+        className="px-4 py-2 bg-yellow-500 text-black rounded-xl text-xs font-bold shadow-lg active:scale-95 transition-all"
+      >
+        Change Time Zone
+      </button>
+      
+      <div className="h-6 w-[1px] bg-white/20 mx-1" />
+      
+      <button 
+        onClick={() => setActiveClockSide(null)}
+        className="p-2 text-white hover:bg-white/10 rounded-xl transition-colors"
+      >
+        ✕
+      </button>
+    </div>
+  )}
+
+  {/* TIMEZONE SELECTION SCREEN */}
+  {isChangingTz && (
+    <div className="absolute inset-0 z-[110] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
+      <div className="bg-white/10 backdrop-blur-2xl border border-white/20 p-5 rounded-3xl w-full max-w-[220px] shadow-2xl">
+        <h4 className="text-white text-[10px] font-bold mb-4 uppercase opacity-50 tracking-widest text-center">Select Timezone</h4>
+        <div className="grid gap-2 max-h-[160px] overflow-y-auto pr-2 custom-tz-scrollbar">
+          {TIMEZONES.map((zone) => (
+            <button
+              key={zone.value}
+              onClick={() => {
+                if (activeClockSide === 'left') setTzLeft(zone.value);
+                else setTzRight(zone.value);
+                setIsChangingTz(false);
+                setActiveClockSide(null);
+              }}
+              className="text-left px-4 py-2 rounded-xl text-lg text-white hover:bg-yellow-500 hover:text-black transition-all font-medium border border-white/5"
+            >
+              {zone.label}
+            </button>
+          ))}
+        </div>
+        <button 
+          onClick={() => setIsChangingTz(false)}
+          className="w-full mt-4 py-2 text-[10px] text-gray-400 hover:text-white uppercase font-black"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  )}
+</div>
+{/* PANEL 2: FOCUS TIMER */}
+<div className="bg-black/70 mx-24  rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
+  <h3 className="text-white font-bold mb-2">Focus Timer</h3>
+  
+  <div className="flex items-center justify-center gap-6 mb-4">
+    {/* Sub 1 Min */}
+    <button 
+      onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))}
+      className="text-gray-500 hover:text-yellow-500 text-5xl font-bold transition-colors"
+    >–</button>
+
+    <div className="text-8xl font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
+      {formatTimerDisplay(timerSeconds)}
+    </div>
+
+    {/* Add 1 Min */}
+    <button 
+      onClick={() => setTimerSeconds(prev => prev + 60)}
+      className="text-gray-500 hover:text-yellow-500 text-5xl font-bold transition-colors"
+    >+</button>
+  </div>
+
+  <div className="flex gap-3">
+    <button 
+      onClick={() => setTimerIsRunning(!timerIsRunning)} 
+      className={`px-6 py-2 rounded-xl font-bold transition-all ${
+        timerIsRunning 
+          ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' 
+          : 'bg-green-600 text-white shadow-lg'
+      }`}
+    >
+      {timerIsRunning ? 'Pause' : 'Start'}
+    </button>
+    
+    <button 
+      onClick={() => {
+        setTimerIsRunning(false);
+        setTimerSeconds(300);
+      }} 
+      className="px-6 py-2 bg-white/5 text-gray-300 rounded-xl border border-white/10 hover:bg-white/10 transition-all"
+    >
+      Reset
+    </button>
+  </div>
+</div>
+
 
        
          {/* PANEL 3: QUICK LINKS (Cloud, Email, etc.) */}
-        <div className="relative bg-black/70 p-8 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
-          <h3 className="text-white font-bold mb-3 text-2xl text-center">External Links</h3>
+        <div className="relative bg-black/70 p-0 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
+          {/* <h3 className="text-white font-bold mb-3 text-2xl text-center">External Links - HOLD Button to change the Link</h3>
           <div className="grid grid-cols-2 gap-4 flex-grow">
             {[
               { name: "Cloud", icon: "☁️", url: "https://drive.google.com" },
@@ -885,27 +1359,9 @@ style={{
                 <span className="text-gray-300 text-xl font-medium">{site.name}</span>
               </a>
             ))}
-          </div>
-        </div>
-        
-         {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
-        <div className="relative bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]">
-          <div className="w-16 h-16 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-2xl mb-4">
-            {user.email?.charAt(0).toUpperCase() || "U"}
-          </div>
-          <h2 className="text-xl font-bold text-white leading-tight">Account</h2>
-          <p className="text-gray-400 text-sm mb-6 truncate w-full">{user.email}</p>
-          <button 
-            onClick={() => useStore.getState().logout()}
-            className="w-full py-3 bg-red-500/80 hover:bg-red-600 text-white rounded-xl font-bold transition-all text-sm"
-          >
-            Logout from SirMurOS
-          </button>
-        </div>
-         {/* PANEL 5: QUICK LINKS (Cloud, Email, etc.) */}
-         
-        <div className="relative bg-black/70 px-3 pb-2 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[320px] lg:min-h-[320px]">
-          <h3 className="text-white font-bold m-1 text-2xl text-center">Your Apps</h3>
+          </div> */}
+          <div className="relative bg-black/70 px-8 pt-2 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[320px] lg:min-h-[320px]">
+          <h3 className="text-white font-bold m-1 p-4 text-2xl text-center">Your Apps</h3>
 
           <div className="grid grid-cols-2 gap-4 flex-grow">
             {[
@@ -933,7 +1389,45 @@ style={{
               </button>
             ))}
           </div>
+          <h3 className="text-white font-bold p-6 mb-3 text-2xl text-center">External Links - HOLD Button to change the Link</h3>
+          <div className="grid grid-cols-2 gap-4 flex-grow">
+            {[
+            
+              { name: "Video Streaming", icon: "📺", url: "https://youtube.com" },
+              { name: "Google Gemeni", icon: "AI", url: "https://gemini.google.com/" }
+            ].map((site) => (
+              <a 
+                key={site.name}
+                href={site.url} 
+                target="_blank" 
+                rel="noreferrer"
+                className="flex flex-col items-center justify-center p-4 bg-white/5 hover:bg-yellow-500/20 rounded-2xl transition-all border border-white/5 group"
+              >
+                <span className="text-7xl mb-2 group-hover:scale-110 transition-transform">{site.icon}</span>
+                <span className="text-gray-300 text-xl font-medium">{site.name}</span>
+              </a>
+            ))}
+          </div> 
         </div>
+        </div>
+        
+         {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
+        <div className="relative bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]">
+          <div className="w-16 h-16 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-2xl mb-4">
+            {user.email?.charAt(0).toUpperCase() || "U"}
+          </div>
+          <h2 className="text-xl font-bold text-white leading-tight">Account</h2>
+          <p className="text-gray-400 text-sm mb-6 truncate w-full">{user.email}</p>
+          <button 
+            onClick={() => useStore.getState().logout()}
+            className="w-full py-3 bg-red-500/80 hover:bg-red-600 text-white rounded-xl font-bold transition-all text-sm"
+          >
+            Logout from SirMurOS
+          </button>
+        </div>
+         {/* PANEL 5: QUICK LINKS (Cloud, Email, etc.) */}
+         
+       
       </>
     ) : (
       /* LOGIN / SIGNUP / RESET FORMS (Shows when logged out) */
@@ -2507,8 +3001,8 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
       rotation={[Math.PI / 2, -Math.PI / 2, 0]}
       position={[0, 0, 0]}
       distanceFactor={freeQ.distanceFactor}
-      title="Free Boopy  Suck"
-      description="Customize your sucking and recieve a call or email from us!"
+      title="timeisjustaconstruct"
+              description="Customize your working clocks by holding down!"
       price="150-300"
       bgColor="bg-yellow-500"
       src="/textures/sexyCleaning.jpeg"
@@ -2536,7 +3030,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
                                           closeOverlay={closeOverlay}
                                           device={device} 
                                           title="Notetaking App"
-                                          description="Double click on desktop / Tap and Hold on mobile, each note to EDIT or DELETE"
+                                          description="Double click/tap on each note to EDIT or DELETE"
                                           price="300-600"
                                           bgColor="bg-blue-500"
                                       src="/textures/sexyCleaning.jpeg"
@@ -2872,7 +3366,7 @@ const NoteItem = ({ note, noteIdx, boardId, theme }) => {
 const setNoteSize = useStore((state) => state.setNoteSize); // Get the new action
 const editNoteAction = useStore((state) => state.editNote); // Rename to avoid confusion
 
-  const sizeClasses = ["text-2xl", "text-3xl", "text-4xl", "text-6xl"];
+  const sizeClasses = ["text-3xl", "text-5xl", "text-7xl", "text-9xl"];
 
 // Sync editValue when the note text changes from the cloud
   useEffect(() => {
@@ -2910,11 +3404,30 @@ const editNoteAction = useStore((state) => state.editNote); // Rename to avoid c
     return () => clearTimeout(deleteTimerRef.current);
   }, [isDeleting, countdown, boardId, noteIdx, removeNote]);
 
-  const handleTouchStart = () => {
-    touchTimerRef.current = setTimeout(() => setShowTooltip(true), 600);
+const handleHoldStart = (e) => {
+    // Prevent default context menu on long-press for mobile
+    // e.preventDefault(); 
+    
+    // Clear any existing timer just in case
+    if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+    
+    touchTimerRef.current = setTimeout(() => {
+      setShowTooltip(true);
+    }, 400); // 600ms hold time
   };
-  const handleTouchEnd = () => clearTimeout(touchTimerRef.current);
 
+const handleHoldEnd = (e) => {
+    if (touchTimerRef.current) {
+      clearTimeout(touchTimerRef.current);
+      
+      // If the tooltip just opened, we want to prevent the 
+      // 'click' or 'mouseup' from reaching the document and closing it.
+      if (showTooltip) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }
+  };
   // const handleSave = () => {
   //   if (editValue.trim()) {
   //     editNote(boardId, noteIdx, editValue);
@@ -2952,12 +3465,20 @@ const editNoteAction = useStore((state) => state.editNote); // Rename to avoid c
     <div className="relative group">
       {/* THE NOTE CARD */}
       <div 
-        onDoubleClick={(e) => {
-           e.stopPropagation(); // Prevents the click from reaching the document immediately
+      onDoubleClick={(e) => {
+           e.stopPropagation();
            setShowTooltip(true);
         }}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
+     // Mouse Events
+        onMouseDown={handleHoldStart}
+        onMouseUp={(e) => handleHoldEnd(e)}
+        onMouseLeave={(e) => handleHoldEnd(e)} 
+        
+        // Touch Events
+        onTouchStart={handleHoldStart}
+        onTouchEnd={(e) => handleHoldEnd(e)}
+        onContextMenu={(e) => e.preventDefault()} // <-- Add this to stop mobile system menus
+
         className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:ring-1 hover:ring-black active:scale-[0.98] text-left relative
           ${theme?.bg || 'bg-gray-100'} ${theme?.text || 'text-gray-800'} border-l-4 ${theme?.border || 'border-gray-300'}`}
       >

@@ -854,3 +854,23 @@ overflow: hidden;
   font-size: 1rem;
   letter-spacing: normal;
 }
+
+/* custom scroll for timezone change for clock */
+.clock-tz-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.clock-tz-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03); /* Subtle glass track */
+  border-radius: 10px;
+}
+
+.clock-tz-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(234, 179, 8, 0.4); /* Transparent Yellow-500 */
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Slight glint */
+}
+
+.clock-tz-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(234, 179, 8, 0.8); /* Glows on hover */
+}
