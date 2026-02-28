@@ -1394,7 +1394,7 @@ style={{
             {[
             
               { name: "Video Streaming", icon: "📺", url: "https://youtube.com" },
-              { name: "Google Gemeni", icon: "AI", url: "https://gemini.google.com/" }
+              { name: "Google Gemeni", icon: "/textures/AI.png", url: "https://gemini.google.com/" }
             ].map((site) => (
               <a 
                 key={site.name}
@@ -1403,7 +1403,21 @@ style={{
                 rel="noreferrer"
                 className="flex flex-col items-center justify-center p-4 bg-white/5 hover:bg-yellow-500/20 rounded-2xl transition-all border border-white/5 group"
               >
-                <span className="text-7xl mb-2 group-hover:scale-110 transition-transform">{site.icon}</span>
+                {/* <span className="text-7xl mb-2 group-hover:scale-110 transition-transform">{site.icon}</span> */}
+                {/* --- ICON RENDERER --- */}
+                <div className="text-7xl mb-2 group-hover:scale-110 transition-transform h-20 w-20 flex items-center justify-center">
+                  {site.icon.includes("/") ? (
+                    /* If it contains a slash, it's a PNG/SVG path */
+                    <img 
+                      src={site.icon} 
+                      alt={site.name} 
+                      className="w-full h-full object-contain" 
+                    />
+                  ) : (
+                    /* Otherwise, it's just an Emoji/Text */
+                    <span>{site.icon}</span>
+                  )}
+                </div>
                 <span className="text-gray-300 text-xl font-medium">{site.name}</span>
               </a>
             ))}
