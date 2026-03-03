@@ -1037,129 +1037,27 @@ style={{
           <div className="card__content w-full">
             {id === "freeQ" ?
 
+
+
             (
   <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70">
+
+{/* 
+                /////
+            /////
+// simple timer boi and clock little boi 
+            /////
+            /////
+            ///// */}
+
+
+
+      {/* ============================================================
+        GLOBAL WIDGETS SECTION (Visible to ALL users)
+        ============================================================ */}
     
-    {user ? (
-      <>
-      {/* PANEL 1: CALENDAR (Placeholder for your Logic) */}
-        {/* <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl  min-h-[240px] lg:min-h-[320px]">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-white font-bold">Events</h3>
-            <button className="text-yellow-500 text-xl">+</button>
-          </div>
-          <div className="space-y-2">
-            <div className="p-3 bg-white/5 rounded-xl border-l-4 border-yellow-500">
-              <p className="text-white text-sm font-medium">New Year's Goal Setting</p>
-              <p className="text-gray-400 text-xs">Jan 27, 2026</p>
-            </div>
-          </div>
-        </div> */}
-       
-
-        {/* PANEL 2: SIMPLE TIMER */}
-      
-          {/* <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
-            <h3 className="text-white font-bold mb-2">Focus Timer</h3>
-            
-            <div className="flex items-center justify-center gap-6 mb-4">
-              <button 
-                onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))}
-                className="text-gray-500 hover:text-yellow-500 text-3xl font-bold transition-colors"
-              >
-                –
-              </button>
-
-              <div className="text-5xl font-mono text-yellow-500 min-w-[140px]">
-                {formatTimerDisplay(timerSeconds)}
-              </div>
-
-              <button 
-                onClick={() => setTimerSeconds(prev => prev + 60)}
-                className="text-gray-500 hover:text-yellow-500 text-3xl font-bold transition-colors"
-              >
-                +
-              </button>
-            </div>
-
-            <div className="flex gap-3">
-              <button 
-                onClick={() => setTimerIsRunning(!timerIsRunning)} 
-                className={`px-6 py-2 rounded-xl font-bold transition-all ${
-                  timerIsRunning 
-                    ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' 
-                    : 'bg-green-600 text-white'
-                }`}
-              >
-                {timerIsRunning ? 'Pause' : 'Start'}
-              </button>
-              
-              <button 
-                onClick={() => {
-                  setTimerIsRunning(false);
-                  setTimerSeconds(300);
-                }} 
-                className="px-6 py-2 bg-white/5 text-gray-300 rounded-xl border border-white/10 hover:bg-white/10 transition-all"
-              >
-                Reset
-              </button>
-            </div>
-          </div> */}
-        
-
-        {/* PANEL 1: ACCURATE DIGITAL CLOCK */}
-        {/* <div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
-          <h3 className="text-white font-bold mb-2 uppercase tracking-widest text-xs opacity-50">System Time</h3>
-          <div className="text-6xl font-mono text-white tracking-tighter">
-            {currentSystemTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
-            <span className="text-2xl text-yellow-500 ml-1">
-              {currentSystemTime.toLocaleTimeString([], { second: '2-digit' })}
-            </span>
-          </div>
-          <p className="text-gray-500 text-sm mt-2">
-            {currentSystemTime.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
-          </p>
-        </div> */}
-{/* PANEL 1: SYSTEM TIME + DUAL ANALOG
-<div className="bg-black/70 p-6 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden">
-  <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3>
-  
-  <div className="flex items-center justify-around w-full gap-2">
-    <div 
-      className="cursor-pointer transition-transform active:scale-90"
-      onPointerDown={() => handleClockHoldStart('left')}
-      onPointerUp={handleClockHoldEnd}
-      onPointerLeave={handleClockHoldEnd}
-    >
-      <AnalogClock tz={tzLeft} label={tzLeft} />
-    </div>
-
-    <div className="flex-1">
-      <div className="text-5xl font-mono text-white tracking-tighter">
-        {currentSystemTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
-        <span className="text-xl text-yellow-500 ml-1">
-          {currentSystemTime.toLocaleTimeString([], { second: '2-digit' })}
-        </span>
-      </div>
-      <p className="text-gray-500 text-[10px] mt-1 uppercase">
-        {currentSystemTime.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
-      </p>
-    </div>
-
-    <div 
-      className="cursor-pointer transition-transform active:scale-90"
-      onPointerDown={() => handleClockHoldStart('right')}
-      onPointerUp={handleClockHoldEnd}
-      onPointerLeave={handleClockHoldEnd}
-    >
-      <AnalogClock tz={tzRight} label={tzRight} />
-    </div>
-  </div> */}
-
-
-
-{/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
-<div className="bg-black/70 p-24 mx-16 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden">
+    {/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
+<div className="bg-black/70 p-24 mx-16 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden  col-span-2">
   {/* <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3> */}
   
   <div className="flex items-center justify-around w-full gap-2">
@@ -1290,53 +1188,42 @@ style={{
     </div>
   )}
 </div>
-{/* PANEL 2: FOCUS TIMER */}
-<div className="bg-black/70 mx-24  rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
-  <h3 className="text-white font-bold mb-2">Focus Timer</h3>
-  
-  <div className="flex items-center justify-center gap-6 mb-4">
-    {/* Sub 1 Min */}
-    <button 
-      onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))}
-      className="text-gray-500 hover:text-yellow-500 text-5xl font-bold transition-colors"
-    >–</button>
+    <hr className="border-white/10 mx-16 my-4  col-span-2" />
 
-    <div className="text-8xl font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
-      {formatTimerDisplay(timerSeconds)}
-    </div>
-
-    {/* Add 1 Min */}
-    <button 
-      onClick={() => setTimerSeconds(prev => prev + 60)}
-      className="text-gray-500 hover:text-yellow-500 text-5xl font-bold transition-colors"
-    >+</button>
-  </div>
-
-  <div className="flex gap-3">
-    <button 
-      onClick={() => setTimerIsRunning(!timerIsRunning)} 
-      className={`px-6 py-2 rounded-xl font-bold transition-all ${
-        timerIsRunning 
-          ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' 
-          : 'bg-green-600 text-white shadow-lg'
-      }`}
-    >
-      {timerIsRunning ? 'Pause' : 'Start'}
-    </button>
     
-    <button 
-      onClick={() => {
-        setTimerIsRunning(false);
-        setTimerSeconds(300);
-      }} 
-      className="px-6 py-2 bg-white/5 text-gray-300 rounded-xl border border-white/10 hover:bg-white/10 transition-all"
-    >
-      Reset
-    </button>
-  </div>
-</div>
 
 
+
+
+
+    {user ? (
+      <>
+
+
+
+
+
+
+{/* PANEL 2: FOCUS TIMER */}
+    <div className="bg-black/70 mx-4 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
+      <h3 className="text-white font-bold mb-2 opacity-50 text-xs uppercase tracking-widest">Focus Timer</h3>
+      <div className="flex items-center justify-center gap-6 mb-4">
+        <button onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">–</button>
+        <div className="text-7xl lg:text-8xl font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
+          {formatTimerDisplay(timerSeconds)}
+        </div>
+        <button onClick={() => setTimerSeconds(prev => prev + 60)} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">+</button>
+      </div>
+      <div className="flex gap-3">
+        <button 
+          onClick={() => setTimerIsRunning(!timerIsRunning)} 
+          className={`px-6 py-2 rounded-xl font-bold transition-all ${timerIsRunning ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' : 'bg-green-600 text-white'}`}
+        >
+          {timerIsRunning ? 'Pause' : 'Start'}
+        </button>
+        <button onClick={() => { setTimerIsRunning(false); setTimerSeconds(300); }} className="px-6 py-2 bg-white/5 text-gray-300 rounded-xl border border-white/10">Reset</button>
+      </div>
+    </div>
        
          {/* PANEL 3: QUICK LINKS (Cloud, Email, etc.) */}
         <div className="relative bg-black/70 p-0 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
@@ -1482,18 +1369,119 @@ style={{
                  <button type="button" onClick={() => setView("signup")} className="text-white underline text-sm">Create Account</button>
                  <button type="button" onClick={() => setView("reset")} className="text-gray-400 text-xs">Forgot Password?</button>
                </div>
+               
             </form>
           )}
 
-          {view === "signup" && (
-            /* Insert your Signup Form code here similarly... */
-            <div className="text-white text-center">Signup Form (Collapsed for brevity)</div>
-          )}
           
-          {view === "reset" && (
-            /* Insert your Reset Form code here similarly... */
-            <div className="text-white text-center">Reset Form (Collapsed for brevity)</div>
-          )}
+                                  {view === "signup" && (
+                                    <form 
+                                      onSubmit={onSignupSubmit}
+                                      className="w-full grid grid-cols-2 gap-4 mb-4 bg-black/80 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+                                    >
+                                      <h2 className="col-span-2 text-2xl font-bold text-white text-center mb-2">Create Account</h2>
+                                      <input 
+                                        type="text" 
+                                        placeholder="Full Name"
+                                        className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                        required
+                                      />
+                                      <input 
+                                        type="tel" 
+                                        placeholder="Phone (Optional)"
+                                        className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                      />
+                                      <input 
+                                        type="email" 
+                                        placeholder="Email Address"
+                                        className="col-span-2 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                        required
+                                      />
+                                      <div className="col-span-2 space-y-2">
+                                        
+                                      <input 
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="Create Password"
+                                        value={signupPassword}
+                                        onChange={(e) => setSignupPassword(e.target.value)}
+                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800 large-dots"
+                                        required
+                                      />
+                                      <button 
+                                      type="button"
+                                      onClick={() => setShowPassword(!showPassword)}
+                                      className="absolute right-12 top-[248px] -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
+                                    >
+                                      {showPassword ? "HIDE" : "SHOW"}
+                                    </button>
+                                      
+                                      {/* PASSWORD STRENGTH METER */}
+                                      <div className="flex gap-1 h-1.5 w-full mt-1">
+                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 1 ? 'bg-red-500' : 'bg-gray-600'}`}></div>
+                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 2 ? 'bg-orange-500' : 'bg-gray-600'}`}></div>
+                                        <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 3 ? 'bg-green-500' : 'bg-gray-600'}`}></div>
+                                      </div>
+                                      
+                                      {/* REQUIREMENTS LIST */}
+                                      <div className="text-[10px] text-gray-300 flex justify-between px-1">
+                                        <span className={signupPassword.length >= 8 ? "text-green-400" : ""}>8+ Chars</span>
+                                        <span className={/[A-Z]/.test(signupPassword) ? "text-green-400" : ""}>1 Uppercase</span>
+                                        <span className={/[0-9!@#$%^&*]/.test(signupPassword) ? "text-green-400" : ""}>1 Num/Spec</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="col-span-2 flex items-center gap-2 py-2">
+                                    <input type="checkbox" id="terms" className="w-5 h-5 accent-yellow-500" required />
+                                    <label htmlFor="terms" className="text-gray-200 text-sm">
+                                      Accept{" "}
+                                      <span 
+                                        onClick={() => setShowTermsModal(true)}
+                                        className="text-yellow-400 underline cursor-pointer hover:text-yellow-300 transition-colors"
+                                      >
+                                        Terms & Conditions
+                                      </span>
+                                    </label>
+                                  </div>
+
+                                    <button 
+                                      type="submit"
+                                      disabled={strength < 3}
+                                      className="col-span-2 py-4 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 disabled:opacity-50 text-white rounded-xl font-bold transition-all"
+                                    >
+                                      {strength < 3 ? "Fix Password to Continue" : "Register Now"}
+                                    </button>
+                                    
+                                    <button type="button" onClick={() => setView("login")} className="col-span-2 text-sm text-gray-300 underline">
+                                      Already have an account? Login
+                                    </button>
+                                  </form>
+                                )}
+          
+           {view === "reset" && (
+                                    /* RESET PASSWORD FORM */
+                                    <form 
+                                     onSubmit={onResetSubmit}
+                                      className="w-full space-y-4 mb-4 bg-black/90 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
+                                    >
+                                      <h2 className="text-2xl font-bold text-white text-center mb-4">Reset Password</h2>
+                                      <input 
+                                        type="email" 
+                                        placeholder="Email Address"
+                                        className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
+                                        required
+                                      />
+                                      <button className="w-full py-4 bg-yellow-600 text-white rounded-xl font-bold">Send Link</button>
+                                      <button type="button" onClick={() => setView("login")} className="w-full text-sm text-gray-300">Back</button>
+                                    </form>
+                                  )}
+
+                                  {/* Bottom SPACE (UNDERNEATH THE LOGIN VIEW) */}
+                                  {view === "login" && (
+                                    <div className="flex flex-col items-center gap-3 mb-24">
+                                   </div>
+                                  )}
+                        
+                              
         </div>
       </div>
     )}
