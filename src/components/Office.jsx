@@ -703,19 +703,20 @@ useEffect(() => {
 // --- CLOCK FORMAT & HOLD LOGIC ---
 const [is24Hour, setIs24Hour] = useState(true); 
 const [showMainClockMenu, setShowMainClockMenu] = useState(false);
-const mainClockHoldTimerRef = useRef(null);
 
 // Unique handler for the center digital clock
-const handleMainClockHoldStart = () => {
-  mainClockHoldTimerRef.current = setTimeout(() => {
-    setShowMainClockMenu( true);
-  }, 700);
-};
+// const handleMainClockHoldStart = () => {
+//   mainClockHoldTimerRef.current = setTimeout(() => {
+//     setShowMainClockMenu( true);
+//   }, 500);
+// };
 
-const handleMainClockHoldEnd = () => {
-  clearTimeout(mainClockHoldTimerRef.current);
+// const handleMainClockHoldEnd = () => {
+//   clearTimeout(mainClockHoldTimerRef.current);
+// };
+const handleMainClockDoubleClick = () => {
+  setShowMainClockMenu(!showMainClockMenu);
 };
-
 
 
 // working timezones
@@ -725,7 +726,6 @@ const [tzLeft, setTzLeft] = useState('America/Chicago'); // CST
 const [tzRight, setTzRight] = useState('Europe/Paris');   // CET
 const [activeClockSide, setActiveClockSide] = useState(null); // 'left' or 'right'
 const [isChangingTz, setIsChangingTz] = useState(false);  
-const clockHoldTimerRef = useRef(null);
 const TIMEZONES = [
   // --- NORTH AMERICA ---
   { label: "MST (Denver)", value: "America/Denver" },
@@ -751,26 +751,21 @@ const TIMEZONES = [
   { label: "JST (Tokyo)", value: "Asia/Tokyo" },
   { label: "AEST (Sydney)", value: "Australia/Sydney" }
 ];
-// const TIMEZONES = [
-//   { label: "CST (Chicago)", value: "America/Chicago" },
-//   { label: "CET (Paris)", value: "Europe/Paris" },
-//   { label: "EST (New York)", value: "America/New_York" },
-//   { label: "PST (L.A.)", value: "America/Los_Angeles" },
-//   { label: "GMT (London)", value: "Europe/London" },
-//   { label: "JST (Tokyo)", value: "Asia/Tokyo" }
-// ];
+
 
 // Unique handlers to avoid conflict with your window dragging
-const handleClockHoldStart = (side) => {
-  clockHoldTimerRef.current = setTimeout(() => {
-    setActiveClockSide(side);
-  }, 300); // 0.5s hold to trigger
-};
+// const handleClockHoldStart = (side) => {
+//   clockHoldTimerRef.current = setTimeout(() => {
+//     setActiveClockSide(side);
+//   }, 300); // 0.5s hold to trigger
+// };
 
-const handleClockHoldEnd = () => {
-  clearTimeout(clockHoldTimerRef.current);
+// const handleClockHoldEnd = () => {
+//   clearTimeout(clockHoldTimerRef.current);
+// };
+const handleClockDoubleClick = (side) => {
+  setActiveClockSide(side);
 };
-
 // Analog Hand Helper
 const AnalogClock = ({ tz, label }) => {
   const time = new Date(new Date().toLocaleString("en-US", { timeZone: tz }));
@@ -1057,16 +1052,20 @@ style={{
         ============================================================ */}
     
     {/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
-<div className="bg-black/70 p-24 mx-16 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden  col-span-2">
+<div className="bg-black/70 p-24 mx-16 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden  col-span-2"
+>
   {/* <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3> */}
   
-  <div className="flex items-center justify-around w-full gap-2">
+  <div className="flex items-center justify-around w-full gap-2"
+  draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+  >
     {/* LEFT ANALOG (With Second Hand) */}
     <div 
       className="cursor-pointer transition-transform active:scale-110 scale-150"
-      onPointerDown={() => handleClockHoldStart('left')}
-      onPointerUp={handleClockHoldEnd}
-      onPointerLeave={handleClockHoldEnd}
+      onDoubleClick={() => handleClockDoubleClick('left')}
     >
       <AnalogClock tz={tzLeft} label={tzLeft} />
     </div>
@@ -1074,9 +1073,11 @@ style={{
     {/* CENTER DIGITAL (Hold to toggle 12/24h) */}
     <div 
       className="flex-1 cursor-pointer select-none py-4"
-      onPointerDown={handleMainClockHoldStart}
-      onPointerUp={handleMainClockHoldEnd}
-      onPointerLeave={handleMainClockHoldEnd}
+      onDoubleClick={handleMainClockDoubleClick}
+      draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
     >
       <div className="text-8xl font-mono text-white tracking-tighter">
         {currentSystemTime.toLocaleTimeString([], { 
@@ -1097,9 +1098,11 @@ style={{
     {/* RIGHT ANALOG (With Second Hand) */}
     <div 
       className="cursor-pointer transition-transform active:scale-110 scale-150"
-      onPointerDown={() => handleClockHoldStart('right')}
-      onPointerUp={handleClockHoldEnd}
-      onPointerLeave={handleClockHoldEnd}
+     onDoubleClick={() => handleClockDoubleClick('right')}
+     draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
     >
       <AnalogClock tz={tzRight} label={tzRight} />
     </div>
@@ -1110,6 +1113,10 @@ style={{
     <div 
       className="absolute top-64 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[200px] justify-center select-none"
       style={{ zIndex: 100 }}
+      draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
     >
       <button 
         onClick={(e) => {
@@ -1130,11 +1137,15 @@ style={{
   )}
 
 
-  {/* GLASSMORPHISM TOOLTIP (Triggered by Hold) */}
+  {/* GLASSMORPHISM TOOLTIP (Triggered by doubleclick) */}
   {activeClockSide && !isChangingTz && (
     <div 
       className="absolute  top-20 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center select-none"
       style={{ zIndex: 100 }}
+      draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
     >
       <button 
         onClick={(e) => {
@@ -1159,7 +1170,11 @@ style={{
 
   {/* TIMEZONE SELECTION SCREEN */}
   {isChangingTz && (
-    <div className="absolute inset-0 z-[110] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
+    <div className="absolute inset-0 z-[110] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+    draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}>
       <div className="bg-white/10 backdrop-blur-2xl border border-white/20 p-5 rounded-3xl w-full max-w-[220px] shadow-2xl">
         <h4 className="text-white text-[10px] font-bold mb-4 uppercase opacity-50 tracking-widest text-center">Select Timezone</h4>
         <div className="grid gap-2 max-h-[160px] overflow-y-auto pr-2 custom-tz-scrollbar">
@@ -1207,14 +1222,22 @@ style={{
 {/* PANEL 2: FOCUS TIMER */}
     <div className="bg-black/70 mx-4 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
       <h3 className="text-white font-bold mb-2 opacity-50 text-xs uppercase tracking-widest">Focus Timer</h3>
-      <div className="flex items-center justify-center gap-6 mb-4">
+      <div className="flex items-center justify-center gap-6 mb-4"
+      draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}>
         <button onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">–</button>
         <div className="text-7xl lg:text-8xl font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
           {formatTimerDisplay(timerSeconds)}
         </div>
         <button onClick={() => setTimerSeconds(prev => prev + 60)} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">+</button>
       </div>
-      <div className="flex gap-3">
+      <div className="flex gap-3"
+      draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}>
         <button 
           onClick={() => setTimerIsRunning(!timerIsRunning)} 
           className={`px-6 py-2 rounded-xl font-bold transition-all ${timerIsRunning ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' : 'bg-green-600 text-white'}`}
@@ -1247,7 +1270,12 @@ style={{
               </a>
             ))}
           </div> */}
-          <div className="relative bg-black/70 px-8 pt-2 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[320px] lg:min-h-[320px]">
+          <div className="relative bg-black/70 px-8 pt-2 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[320px] lg:min-h-[320px]"
+          draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+          >
           <h3 className="text-white font-bold m-1 p-4 text-2xl text-center">Your Apps</h3>
 
           <div className="grid grid-cols-2 gap-4 flex-grow">
@@ -1313,7 +1341,8 @@ style={{
         </div>
         
          {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
-        <div className="relative bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]">
+        <div className="relative bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]"
+        >
           <div className="w-16 h-16 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-2xl mb-4">
             {user.email?.charAt(0).toUpperCase() || "U"}
           </div>
@@ -1322,6 +1351,10 @@ style={{
           <button 
             onClick={() => useStore.getState().logout()}
             className="w-full py-3 bg-red-500/80 hover:bg-red-600 text-white rounded-xl font-bold transition-all text-sm"
+            draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
           >
             Logout from SirMurOS
           </button>
@@ -1332,11 +1365,15 @@ style={{
       </>
     ) : (
       /* LOGIN / SIGNUP / RESET FORMS (Shows when logged out) */
-      <div className="lg:col-span-2 flex justify-center items-center py-10">
-        <div className="max-w-md w-full">
+      <div className="lg:col-span-2 flex justify-center items-center py-10 lg:py-12  scale-100">
+        <div className="max-w-2xl lg:max-w-lg w-full text-5xl lg:text-2xl" 
+        draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}>
           {view === "login" && (
             <form onSubmit={onLoginSubmit} className="space-y-4 bg-black/70 p-8 rounded-3xl border border-white/20 shadow-xl relative">
-               <h2 className="text-2xl font-bold text-white text-center mb-4">Member Login</h2>
+               <h2 className="text-3xl font-bold text-white text-center mb-4">Member Login</h2>
                <input 
                  type="email" 
                  placeholder="Email Address"
@@ -1357,7 +1394,7 @@ style={{
                  <button 
                    type="button"
                    onClick={() => setShowPassword(!showPassword)}
-                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-xs font-bold"
+                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
                  >
                    {showPassword ? "HIDE" : "SHOW"}
                  </button>
@@ -1366,8 +1403,8 @@ style={{
                  Sign In
                </button>
                <div className="flex flex-col items-center gap-3 mt-4">
-                 <button type="button" onClick={() => setView("signup")} className="text-white underline text-sm">Create Account</button>
-                 <button type="button" onClick={() => setView("reset")} className="text-gray-400 text-xs">Forgot Password?</button>
+                 <button type="button" onClick={() => setView("signup")} className="text-white underline text-lg">Create Account</button>
+                 <button type="button" onClick={() => setView("reset")} className="text-gray-400 text-sm">Forgot Password?</button>
                </div>
                
             </form>
@@ -1487,21 +1524,51 @@ style={{
     )}
 
     {/* Terms Modal (Independent of grid) */}
-    {showTermsModal && (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md bg-black/40">
-        <div className="relative w-full max-w-lg bg-[#1a1a1a] border border-gray-700 rounded-3xl shadow-2xl flex flex-col max-h-[80vh]">
-          {/* Your existing Modal Content */}
-          <div className="p-6 border-b border-gray-800 flex justify-between items-center">
-            <h3 className="text-xl font-bold text-white">Terms of Service</h3>
-            <button onClick={() => setShowTermsModal(false)} className="text-gray-400 text-2xl">✕</button>
-          </div>
-          <div className="p-6 overflow-y-auto text-gray-300 text-sm">
-             {/* ... your terms text ... */}
-             <p>All processing occurs locally on your device...</p>
-          </div>
-        </div>
+      {showTermsModal && (
+  /* The Overlay Layer */
+  <div className=" inset-0  flex items-center justify-center  backdrop-blur-md">
+    
+    <div 
+      className="relative  w-[450px] h-[760px] bg-[#1a1a1a] border border-gray-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
+      onClick={(e) => e.stopPropagation()} // Prevents clicking the modal from closing it
+    >
+      
+      {/* Header */}
+      <div className="w-full p-6 border-b border-gray-800 flex justify-between items-center bg-[#222]">
+        <h3 className="text-xl font-bold text-white">Terms of Service</h3>
+        <button 
+          onClick={() => setShowTermsModal(false)}
+          className="text-gray-400 hover:text-white text-2xl leading-none"
+        >
+          ✕
+        </button>
       </div>
-    )}
+
+      {/* Scrollable Body - Added w-full */}
+      <div className="w-full flex-grow p-6 overflow-y-auto text-gray-300 text-sm leading-relaxed">
+        <p className="mb-4 text-center">
+          <strong>No Data Storage & Privacy</strong><br />This application is a client-side productivity tool. We do not host, store, or have access to any files, media, or data you upload or interact with. All processing occurs locally on your device. Consequently, we cannot retrieve, delete, or manage any content you use within the app.
+        </p>
+        <p className="mb-4 text-center">
+          <strong>User Responsibility & Conduct</strong> You are solely responsible for the content you upload. By using this app, you agree:
+          <br />Not to engage in any illegal or criminal activity.
+          <br />To comply with all applicable laws of the United States of America.
+          <br />That you own or have the necessary rights to the media you are using.
+
+        </p>
+        <p className="mb-4 text-center">
+          <strong>Limitation of Liability</strong> Since we do not have control over user-uploaded content, we are not liable for any copyright infringement, damages, or legal repercussions resulting from your use of the application. The tool is provided "as-is" for research and productivity purposes.
+        </p>
+        <p className="mb-4 text-center">
+          <strong>DMCA Notice</strong> While we do not host content, we comply with the Digital Millennium Copyright Act. Because all content is local to the user's browser, there is no content on our servers for us to "take down."
+        </p>
+      </div>
+
+      {/* Footer */}
+      
+    </div>
+  </div>
+)}
   </div>
 )
             
@@ -1751,17 +1818,19 @@ style={{
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
   <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4  min-h-[220px] overflow-y-visible lg:overflow-hidden">
     <div className="flex items-center justify-between px-2"
-    
-     draggable={false}
-  onPointerDownCapture={(e) => e.stopPropagation()}
-  onMouseDownCapture={(e) => e.stopPropagation()}
-  onTouchStartCapture={(e) => e.stopPropagation()}
+  
   >
       <h3 className="text-xs font-bold uppercase text-gray-500 tracking-widest">Library</h3>
       <span className="text-[10px] text-gray-600">{Object.keys(useStore.getState().playlists).length} / 10</span>
     </div>
 
-    <div className="flex flex-col gap-2 overflow-y-auto custom-scrollbar flex-1">
+    <div className="flex flex-col gap-2 overflow-y-auto custom-scrollbar flex-1"
+    
+    draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+  >
       {Object.keys(useStore.getState().playlists).map((name) => {
         const isBrowsing = useStore.getState().activePlaylist === name;
         const isCurrentlyPlayingList = useStore.getState().playingPlaylist === name;
