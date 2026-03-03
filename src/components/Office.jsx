@@ -1750,7 +1750,13 @@ style={{
   
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
   <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4  min-h-[220px] overflow-y-visible lg:overflow-hidden">
-    <div className="flex items-center justify-between px-2">
+    <div className="flex items-center justify-between px-2"
+    
+     draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+  >
       <h3 className="text-xs font-bold uppercase text-gray-500 tracking-widest">Library</h3>
       <span className="text-[10px] text-gray-600">{Object.keys(useStore.getState().playlists).length} / 10</span>
     </div>
