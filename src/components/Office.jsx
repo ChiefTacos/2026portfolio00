@@ -1813,7 +1813,7 @@ style={{
 //                 )
                  : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
-  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[80vh] h-auto overflow-y-auto  lg:overflow-hidden text-white">
+  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[80vh] h-auto overflow-y-auto  lg:overflow-hidden text-white text-4xl">
   
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
   <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4  min-h-[220px] overflow-y-visible lg:overflow-hidden">
@@ -1882,17 +1882,19 @@ style={{
 <div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-8 shadow-inner relative overflow-hidden h-full">
   
   {/* 1. RESTORED: TOP BADGE */}
-  <div className="absolute top-4 left-4 flex items-center gap-2 text-[10px] text-gray-500 font-mono uppercase tracking-widest">
+  <div className="absolute top-4 left-4 flex items-center gap-2 text-[30px] text-gray-500 font-mono uppercase tracking-widest">
     <span className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-blue-500 animate-pulse' : 'bg-gray-600'}`}></span>
     Playing from: {playingPlaylist}
   </div>
 
   {/* 2. RESTORED: DYNAMIC VINYL / MUSIC ICON */}
-  <div className={`w-44 h-44 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl transition-transform duration-500 ${isPlaying ? 'animate-spin-slow scale-105' : 'scale-100'}`}>
-    <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-    </svg>
-  </div>
+
+    <div className={` mt-2 bottom-0 3 w-44 h-44 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl transition-transform duration-500 ${isPlaying ? 'animate-spin-slow scale-105' : 'scale-100'}`}>
+      <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+      </svg>
+    </div>
+
   
   <div className="w-full flex flex-col gap-6"
    draggable={false}
@@ -1911,7 +1913,7 @@ style={{
         onInput={(e) => window.__AUDIO_ENGINE__?.seek(Number(e.target.value))}
         className="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
       />
-      <div className="flex justify-between text-[10px] text-gray-500 font-mono">
+      <div className="flex justify-between text-[30px] text-gray-500 font-mono">
         <span>{formatTime(currentTime)}</span>
         <span>{formatTime(duration)}</span>
       </div>
@@ -2030,7 +2032,7 @@ style={{
                       <button 
                         disabled={isUploading || isProcessing}
                         onClick={() => fileInputRef.current.click()}
-                        className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-xs text-white ${
+                        className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-2xl text-white ${
                           isProcessing ? "bg-amber-600 animate-pulse" : "bg-blue-600 hover:bg-blue-500"
                         }`}
                       >
@@ -2060,7 +2062,7 @@ style={{
 >
         {useStore.getState().playlists[useStore.getState().activePlaylist]?.length === 0 && (
           <div className="flex flex-col items-center justify-center h-40 text-gray-600 border-2 border-dashed border-gray-800 rounded-2xl">
-            <p className="text-sm">Playlist is empty</p>
+            <p className="text-4xl">Playlist is empty</p>
           </div>
         )}
 
@@ -2082,10 +2084,10 @@ style={{
                   {String(index + 1).padStart(2, '0')}
                 </span>
                 <div>
-                  <h3 className={`font-medium text-sm ${isActuallyPlaying ? 'text-white' : 'text-gray-300'}`}>
+                  <h3 className={`font-bold text-3xl ${isActuallyPlaying ? 'text-white' : 'text-gray-300'}`}>
                     {track.title}
                   </h3>
-                  <p className="text-[10px] text-gray-500 uppercase tracking-tighter">{track.artist}</p>
+                  <p className="text-[20px] text-gray-500 uppercase tracking-tighter">{track.artist}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 ml-auto">
