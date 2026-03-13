@@ -342,9 +342,9 @@ const handleButtonClick = (e) => {
 
   setActiveOverlay(prev => {
     // MOBILE/TABLET LOGIC: Close everything else and only open this one
-    if (isMobileOrTablet) {
-      return [id]; 
-    }
+    // if (isMobileOrTablet) {
+    //   return [id]; 
+    // }
 
     // DESKTOP LOGIC: Keep the stacking behavior
     if (prev.includes(id)) {
@@ -484,7 +484,9 @@ const showViewButton = section === 0
   : (hideTriggerButton 
       ? false 
       // NEW: If mobile/tablet AND something is open, hide ALL trigger buttons
-      : (isMobileOrTablet && isAnyOpen ? false : !isActive)
+      // : (isMobileOrTablet && isAnyOpen ? false : !isActive)
+      // NEW: Simply check if this specific overlay is active
+      : !isActive
     );
 
 const FreeQuoteButton = ({ onClick, isClickable }) => {
