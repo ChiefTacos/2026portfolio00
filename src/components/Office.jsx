@@ -776,7 +776,7 @@ const AnalogClock = ({ tz, label }) => {
   const h = time.getHours();
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="scale-125 lg:scale-150 flex flex-col items-center gap-2">
       <div className="relative w-14 h-14 rounded-full border border-white/20 bg-white/5 shadow-inner">
         {/* Hour Hand */}
         <div className="absolute bottom-1/2 left-1/2 w-1 h-3 bg-white/80 rounded-full origin-bottom -translate-x-1/2"
@@ -795,9 +795,22 @@ const AnalogClock = ({ tz, label }) => {
   );
 };
 
+const hourMinute = currentSystemTime.toLocaleTimeString([], {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: !is24Hour,
+});
 
-
-
+const amPm = !is24Hour
+  ? currentSystemTime
+      .toLocaleTimeString([], {
+        hour: 'numeric',
+        hour12: true,
+      })
+      .replace(/\d/g, '')
+      .trim()
+  : '';
+const cleanHourMinute = hourMinute.replace(/\s?(AM|PM)$/i, '');
 
 
 
@@ -1082,12 +1095,13 @@ style={{
   onTouchStartCapture={(e) => e.stopPropagation()}
     >
       <div className="pt-4 text-[8rem] lg:text-[12rem] font-mono text-white tracking-tighter">
-        {currentSystemTime.toLocaleTimeString([], { 
-          hour: '2-digit', 
-          minute: '2-digit',
-           
-          hour12: !is24Hour 
-        })}
+        {cleanHourMinute}
+
+        {!is24Hour && (
+    <span className="text-5xl ml-3">
+      {amPm}
+    </span>
+  )}
         <span className="text-8xl text-yellow-500 ml-3">
           {currentSystemTime.toLocaleTimeString([], { second: '2-digit' })}
         </span>
@@ -1113,7 +1127,7 @@ style={{
   {/* MAIN CLOCK FORMAT TOGGLE MENU */}
   {showMainClockMenu && (
     <div 
-      className="scale-150 absolute top-56 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[200px] justify-center select-none"
+      className="scale-150 absolute top-64 lg:top-56 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[200px] justify-center select-none"
       style={{ zIndex: 100 }}
       draggable={false}
   onPointerDownCapture={(e) => e.stopPropagation()}
@@ -1130,7 +1144,7 @@ style={{
       >
         Switch to {is24Hour ? '12-Hour' : '24-Hour'}
       </button>
-      <div className="h-12 w-[1px] bg-white/20 mx-1" />
+      <div className="h-2 lg:h-12 w-[1px] bg-white/20 mx-1" />
       <button 
         onClick={() => setShowMainClockMenu(false)}
         className="p-2 text-white hover:bg-white/10 rounded-xl transition-colors"
@@ -1142,7 +1156,7 @@ style={{
   {/* GLASSMORPHISM TOOLTIP (Triggered by doubleclick) */}
   {activeClockSide && !isChangingTz && (
     <div 
-      className="scale-150 absolute  top-20 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center select-none"
+      className="scale-150 absolute  top-12 lg:top-20 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center select-none"
       style={{ zIndex: 100 }}
       draggable={false}
   onPointerDownCapture={(e) => e.stopPropagation()}
@@ -1156,7 +1170,7 @@ style={{
         }}
         className="px-4 py-2 bg-yellow-500 text-black rounded-xl text-xs font-bold shadow-lg active:scale-95 transition-all"
       >
-        Change Analog Clock Time Zone
+        Change Analog Clock Timezone
       </button>
       
       <div className="h-6 w-[1px] bg-white/20 mx-1" />
@@ -1230,7 +1244,7 @@ style={{
   onMouseDownCapture={(e) => e.stopPropagation()}
   onTouchStartCapture={(e) => e.stopPropagation()}>
         <button onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">–</button>
-        <div className="text-9xl lg:text-8xl font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
+        <div className="text-9xl lg:text-[200px] font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
           {formatTimerDisplay(timerSeconds)}
         </div>
         <button onClick={() => setTimerSeconds(prev => prev + 60)} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">+</button>
@@ -3083,7 +3097,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
       position={[0, 0, 0]}
       distanceFactor={freeQ.distanceFactor}
       title="timeisjustaconstruct"
-              description="Customize your working clocks by DOUBLE TAPPING or holding down on Mobile Devices"
+              description="Customize all your working clocks by DOUBLE TAPPING"
       price="150-300"
       bgColor="bg-yellow-500"
       src="/textures/sexyCleaning.jpeg"
