@@ -1033,7 +1033,7 @@ style={{
 
           <div className="card__content w-full">
             {id === "freeQ" ?
-
+// this is the window that is titled timeisjustaconstruct and what i would say is my dashboard
 
 
             (
@@ -1054,7 +1054,7 @@ style={{
         ============================================================ */}
     
     {/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
-<div className="bg-black/70 p-24 mx-16 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden  col-span-2"
+<div className="bg-black/70 p-36 mx-2 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden  col-span-2"
 >
   {/* <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3> */}
   
@@ -1113,7 +1113,7 @@ style={{
   {/* MAIN CLOCK FORMAT TOGGLE MENU */}
   {showMainClockMenu && (
     <div 
-      className="absolute top-64 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[200px] justify-center select-none"
+      className="scale-150 absolute top-56 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[200px] justify-center select-none"
       style={{ zIndex: 100 }}
       draggable={false}
   onPointerDownCapture={(e) => e.stopPropagation()}
@@ -1126,11 +1126,11 @@ style={{
           setIs24Hour(!is24Hour);
           setShowMainClockMenu(false);
         }}
-        className="px-4 py-2 bg-yellow-500 text-black rounded-xl text-xs font-bold shadow-lg active:scale-95 transition-all"
+        className="px-4 py-2 bg-yellow-500 text-black rounded-xl text-xs font-bold shadow-lg active:scale-110   transition-all"
       >
         Switch to {is24Hour ? '12-Hour' : '24-Hour'}
       </button>
-      <div className="h-6 w-[1px] bg-white/20 mx-1" />
+      <div className="h-12 w-[1px] bg-white/20 mx-1" />
       <button 
         onClick={() => setShowMainClockMenu(false)}
         className="p-2 text-white hover:bg-white/10 rounded-xl transition-colors"
@@ -1142,7 +1142,7 @@ style={{
   {/* GLASSMORPHISM TOOLTIP (Triggered by doubleclick) */}
   {activeClockSide && !isChangingTz && (
     <div 
-      className="absolute  top-20 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center select-none"
+      className="scale-150 absolute  top-20 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[180px] justify-center select-none"
       style={{ zIndex: 100 }}
       draggable={false}
   onPointerDownCapture={(e) => e.stopPropagation()}
@@ -1156,7 +1156,7 @@ style={{
         }}
         className="px-4 py-2 bg-yellow-500 text-black rounded-xl text-xs font-bold shadow-lg active:scale-95 transition-all"
       >
-        Change Time Zone
+        Change Analog Clock Time Zone
       </button>
       
       <div className="h-6 w-[1px] bg-white/20 mx-1" />
@@ -1881,7 +1881,7 @@ style={{
     
     
     
-<div className="bg-neutral-900 p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-8 shadow-inner relative overflow-hidden h-full">
+<div className="bg-neutral-900 pt-24  p-8 rounded-3xl border border-gray-700 flex flex-col items-center justify-center gap-8 shadow-inner relative overflow-hidden h-full">
   
   {/* 1. RESTORED: TOP BADGE */}
   <div className="absolute top-4 left-4 flex items-center gap-2 text-[30px] text-gray-500 font-mono uppercase tracking-widest">
@@ -3083,7 +3083,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
       position={[0, 0, 0]}
       distanceFactor={freeQ.distanceFactor}
       title="timeisjustaconstruct"
-              description="Customize your working clocks by holding down!"
+              description="Customize your working clocks by DOUBLE TAPPING or holding down on Mobile Devices"
       price="150-300"
       bgColor="bg-yellow-500"
       src="/textures/sexyCleaning.jpeg"
