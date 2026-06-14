@@ -1037,7 +1037,7 @@ style={{
 
 
             (
-  <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70">
+  <div className="scale-110 lg:scale-100 flex flex-col lg:grid lg:grid-cols-2 gap-0 lg:gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70">
 
 {/* 
                 /////
@@ -1054,7 +1054,7 @@ style={{
         ============================================================ */}
     
     {/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
-<div className="bg-black/70 p-36 mx-2 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden  col-span-2"
+<div className="bg-black/70 p-20 lg:p-36 mx-2 lg:mx-24  mt-[5rem] lg:mt-0 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden  col-span-2"
 >
   {/* <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3> */}
   
@@ -1081,18 +1081,18 @@ style={{
   onMouseDownCapture={(e) => e.stopPropagation()}
   onTouchStartCapture={(e) => e.stopPropagation()}
     >
-      <div className="text-8xl font-mono text-white tracking-tighter">
+      <div className="pt-4 text-[8rem] lg:text-[12rem] font-mono text-white tracking-tighter">
         {currentSystemTime.toLocaleTimeString([], { 
           hour: '2-digit', 
           minute: '2-digit',
            
           hour12: !is24Hour 
         })}
-        <span className="text-6xl text-yellow-500 ml-1">
+        <span className="text-8xl text-yellow-500 ml-3">
           {currentSystemTime.toLocaleTimeString([], { second: '2-digit' })}
         </span>
       </div>
-      <p className="text-gray-500 text-[10px] mt-1 uppercase">
+      <p className="text-gray-500 text-[40px] lg:text-[50px] mt-2 uppercase transform translate-y-[50px] ">
         {currentSystemTime.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
       </p>
     </div>
@@ -1230,7 +1230,7 @@ style={{
   onMouseDownCapture={(e) => e.stopPropagation()}
   onTouchStartCapture={(e) => e.stopPropagation()}>
         <button onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">–</button>
-        <div className="text-7xl lg:text-8xl font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
+        <div className="text-9xl lg:text-8xl font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
           {formatTimerDisplay(timerSeconds)}
         </div>
         <button onClick={() => setTimerSeconds(prev => prev + 60)} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">+</button>
