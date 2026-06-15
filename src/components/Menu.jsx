@@ -351,13 +351,13 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
    <div className="z-[2147483640] pointer-events-auto">
 
-  <div className="w-full max-w-sm xl:max-w-md p-4">
+  <div className="w-full min-w-[350px] max-w-[350px] p-4">
 
     {/* music miniplayer */}
     <div className="relative overflow-hidden rounded-lg transition-all duration-300 group bg-background/20 hover:scale-[1.02] text-foreground backdrop-blur-[2px] p-6 bg-black hover:shadow-lg hover:shadow-primary/20">
       
       {/* Background Effects */}
-      <div className="absolute inset-0 z-0 h-full w-full rounded-lg shadow-[...your_existing_complex_shadow_classes]" />
+      <div className="absolute inset-0 z-0 h-full w-full rounded-lg" />
       <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden rounded-lg glass-effect" />
 
       <div className="relative z-10">
@@ -382,7 +382,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
                     {playingPlaylist}
                   </span>
                 </p>
-                <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[180px] pl-1 mr-12">
+                <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[220px] pl-1 mr-12">
                   {currentTrack ? `${currentTrack.title} - ${currentTrack.artist}` : "No Track Selected"}
                 </p>
               </div>
@@ -476,39 +476,38 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       <div className="absolute flex items-center justify-center dark:text-white text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 ">
 
           {/* copy of music to test/try for new menu */}
-          <div className="hidden md:block">
+          <div className="hidden md:block ">
 
 
           <div className="z-[2147483640] pointer-events-auto">
 
-            <div className="w-full max-w-sm xl:max-w-md p-4">
+            <div className="w-full min-w-[250px] max-w-[250px] mx-10 ml-[-25px]">
 
-              <div className="relative overflow-hidden rounded-lg transition-all duration-300 group bg-background/20 hover:scale-[1.02] text-foreground backdrop-blur-[2px] p-6 bg-black hover:shadow-lg hover:shadow-primary/20">
+              <div className="relative overflow-hidden rounded-lg transition-all duration-300 group bg-background/20  text-foreground backdrop-blur-[2px] p-2 bg-[#212121] hover:shadow-lg hover:shadow-primary/20">
                 
-                <div className="absolute inset-0 z-0 h-full w-full rounded-lg shadow-[...your_existing_complex_shadow_classes]" />
+                <div className="absolute inset-0 z-0 h-full w-full rounded-lg " />
                 <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden rounded-lg glass-effect" />
 
-                <div className="relative z-10">
                   <div className="flex items-start gap-2">
-                    <div className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl flex items-center justify-center bg-zinc-200 dark:bg-zinc-800 -mt-1.5 transition-transform ${isPlaying ? 'scale-110' : 'scale-100'}`}>
+                    {/* <div className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl flex items-center justify-center bg-zinc-200 dark:bg-zinc-800 -mt-1.5 transition-transform ${isPlaying ? 'scale-110' : 'scale-100'}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={`${isPlaying ? 'text-primary animate-pulse' : 'text-zinc-500'}`}>
                         <path d="M9 18V5l12-2v13" />
                         <circle cx={6} cy={18} r={3} />
                         <circle cx={18} cy={16} r={3} />
                       </svg>
                       <div className="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl" />
-                    </div>
+                    </div> */}
 
                     <div className="flex-1">
                       <div className="flex items-start justify-between gap-4">
-                        <div className="space-y-1.5">
+                        <div className="space-y-0.5">
                           <p className="font-semibold leading-none tracking-tight text-foreground dark:text-white flex items-center gap-2 pl-1">
                             {isPlaying ? "Now Playing" : "Paused"}
                             <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-zinc-500 font-mono italic ">
                               {playingPlaylist}
                             </span>
                           </p>
-                          <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[180px] pl-1 mr-12">
+                          <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[250px] pl-1 mr-12">
                             {currentTrack ? `${currentTrack.title} - ${currentTrack.artist}` : "No Track Selected"}
                           </p>
                         </div>
@@ -516,7 +515,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
                     </div>
                   </div>
 
-                  <div className="pt-6 text-foreground dark:text-white">
+                  <div className="pt-3 text-foreground dark:text-white">
                     <div className="space-y-2">
                       <div 
                         className="relative h-1.5 w-full overflow-hidden rounded-full bg-zinc-200/50 dark:bg-zinc-800/50 cursor-pointer" 
@@ -542,7 +541,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
                       </div>
                     </div>
 
-                    <div className="mt-6 flex items-center justify-center gap-6">
+                    <div className="mt-[-10px] flex items-center justify-center gap-6">
                       <button 
                         onClick={prevTrack}
                         className="relative inline-flex items-center transition-all justify-center cursor-pointer h-9 w-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:scale-110" 
@@ -585,7 +584,6 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
                       </button>
                     </div>
                   </div>
-                </div>
               </div>
             </div>
           </div>
