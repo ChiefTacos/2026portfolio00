@@ -344,7 +344,9 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
 
 
-   <div className="xl:fixed xl:bottom-4 xl:right-4 z-[2147483640] pointer-events-auto">
+   {/* <div className="xl:fixed xl:bottom-4 xl:right-4 z-[2147483640] pointer-events-auto"> */}
+   <div className="z-[2147483640] pointer-events-auto">
+
   <div className="w-full max-w-sm xl:max-w-md p-4">
 
     {/* music miniplayer */}
@@ -464,9 +466,122 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
         
      
 
-   <div className="xl:fixed xl:bottom-4 xl:left-1/3 relative drop-shadow-xl w-[300px] h-64 md:w-[670px] md:h-36 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[0] pointer-events-auto" >
+   <div className="xl:fixed xl:bottom-4 xl:left-1/3 relative drop-shadow-xl w-[300px] h-64 md:w-[800px] md:h-36 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[0] pointer-events-auto" >
+
+   
       <div className="absolute flex items-center justify-center dark:text-white text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 ">
 
+          {/* copy of music to test/try for new menu */}
+          <div className="z-[2147483640] pointer-events-auto">
+
+            <div className="w-full max-w-sm xl:max-w-md p-4">
+
+              <div className="relative overflow-hidden rounded-lg transition-all duration-300 group bg-background/20 hover:scale-[1.02] text-foreground backdrop-blur-[2px] p-6 bg-black hover:shadow-lg hover:shadow-primary/20">
+                
+                <div className="absolute inset-0 z-0 h-full w-full rounded-lg shadow-[...your_existing_complex_shadow_classes]" />
+                <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden rounded-lg glass-effect" />
+
+                <div className="relative z-10">
+                  <div className="flex items-start gap-2">
+                    <div className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl flex items-center justify-center bg-zinc-200 dark:bg-zinc-800 -mt-1.5 transition-transform ${isPlaying ? 'scale-110' : 'scale-100'}`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={`${isPlaying ? 'text-primary animate-pulse' : 'text-zinc-500'}`}>
+                        <path d="M9 18V5l12-2v13" />
+                        <circle cx={6} cy={18} r={3} />
+                        <circle cx={18} cy={16} r={3} />
+                      </svg>
+                      <div className="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl" />
+                    </div>
+
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="space-y-1.5">
+                          <p className="font-semibold leading-none tracking-tight text-foreground dark:text-white flex items-center gap-2 pl-1">
+                            {isPlaying ? "Now Playing" : "Paused"}
+                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-zinc-500 font-mono italic ">
+                              {playingPlaylist}
+                            </span>
+                          </p>
+                          <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[180px] pl-1 mr-12">
+                            {currentTrack ? `${currentTrack.title} - ${currentTrack.artist}` : "No Track Selected"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 text-foreground dark:text-white">
+                    <div className="space-y-2">
+                      <div 
+                        className="relative h-1.5 w-full overflow-hidden rounded-full bg-zinc-200/50 dark:bg-zinc-800/50 cursor-pointer" 
+                        role="presentation"
+                        onClick={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const x = e.clientX - rect.left;
+                          const clickedValue = (x / rect.width) * duration;
+                          window.__AUDIO_ENGINE__?.seek(clickedValue);
+                        }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-zinc-300/20 via-zinc-300/30 to-zinc-300/20 dark:from-white/5 dark:via-white/10 dark:to-white/5" />
+                        <div 
+                          className="absolute inset-y-0 left-0 flex bg-foreground dark:bg-white transition-all duration-200 ease-out" 
+                          style={{ width: `${progressPercentage}%` }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-white/5" />
+                        </div>
+                      </div>
+                      <div className="flex justify-between text-xs font-medium">
+                        <span className="tabular-nums text-zinc-600 dark:text-zinc-400">{formatTime(currentTime)}</span>
+                        <span className="tabular-nums text-zinc-600 dark:text-zinc-400">{formatTime(duration)}</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 flex items-center justify-center gap-6">
+                      <button 
+                        onClick={prevTrack}
+                        className="relative inline-flex items-center transition-all justify-center cursor-pointer h-9 w-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:scale-110" 
+                        aria-label="Previous track"
+                      >
+                        <div className="absolute inset-0 z-0 rounded-full border border-white/10 bg-white/5" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="z-10">
+                          <path d="m15 18-6-6 6-6" />
+                        </svg>
+                      </button>
+
+                      <button 
+                        onClick={togglePlay}
+                        className="relative inline-flex items-center transition-all justify-center cursor-pointer h-12 w-12 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:scale-110" 
+                      >
+                        <div className="absolute inset-0 z-0 rounded-full border border-white/20 bg-white/10 shadow-lg" />
+                        <div className="z-10">
+                          {isPlaying ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                              <rect width={4} height={16} x={6} y={4} />
+                              <rect width={4} height={16} x={14} y={4} />
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="ml-1">
+                              <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                          )}
+                        </div>
+                      </button>
+
+                      <button 
+                        onClick={nextTrack}
+                        className="relative inline-flex items-center transition-all justify-center cursor-pointer h-9 w-9 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:scale-110" 
+                        aria-label="Next track"
+                      >
+                        <div className="absolute inset-0 z-0 rounded-full border border-white/10 bg-white/5" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="z-10">
+                          <path d="m9 18 6-6-6-6" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
          
