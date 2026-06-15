@@ -1221,21 +1221,7 @@ style={{
 </div>
     <hr className="border-white/10 mx-16 my-4  col-span-2" />
 
-    
-
-
-
-
-
-    {user ? (
-      <>
-
-
-
-
-
-
-{/* PANEL 2: FOCUS TIMER */}
+    {/* PANEL 2: FOCUS TIMER */}
     <div className="bg-black/70 mx-4 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
       <h3 className="text-white font-bold mb-2 opacity-50 text-xs uppercase tracking-widest">Focus Timer</h3>
       <div className="flex items-center justify-center gap-6 mb-4"
@@ -1263,6 +1249,20 @@ style={{
         <button onClick={() => { setTimerIsRunning(false); setTimerSeconds(300); }} className="px-6 py-2 bg-white/5 text-gray-300 rounded-xl border border-white/10">Reset</button>
       </div>
     </div>
+
+
+
+
+
+    {user ? (
+      <>
+
+
+
+
+
+
+
        
          {/* PANEL 3: QUICK LINKS (Cloud, Email, etc.) */}
         <div className="relative bg-black/70 p-0 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
