@@ -345,6 +345,10 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
 
    {/* <div className="xl:fixed xl:bottom-4 xl:right-4 z-[2147483640] pointer-events-auto"> */}
+
+   {/* music for mobile */}
+   <div className="block md:hidden">
+
    <div className="z-[2147483640] pointer-events-auto">
 
   <div className="w-full max-w-sm xl:max-w-md p-4">
@@ -460,9 +464,9 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       </div>
     </div>
   </div>
-</div>
+  </div>
 
-     
+  </div>
         
      
 
@@ -472,6 +476,9 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       <div className="absolute flex items-center justify-center dark:text-white text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 ">
 
           {/* copy of music to test/try for new menu */}
+          <div className="hidden md:block">
+
+
           <div className="z-[2147483640] pointer-events-auto">
 
             <div className="w-full max-w-sm xl:max-w-md p-4">
@@ -583,6 +590,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
             </div>
           </div>
 
+          </div>
 
          
 <div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-6 lg:gap-12">
