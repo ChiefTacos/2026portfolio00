@@ -54,8 +54,7 @@ import { deleteObject, ref as storageRef } from "firebase/storage";
       }
     });
   },
-
- fetchUserData: async (user) => {
+fetchUserData: async (user) => {
   if (!user) return;
   try {
     const docRef = doc(db, "users", user.uid);
@@ -63,23 +62,54 @@ import { deleteObject, ref as storageRef } from "firebase/storage";
 
     if (docSnap.exists()) {
       const data = docSnap.data();
+      
       set({ 
         playlists: data.playlists || { "Songs": [] },
         notes: data.notes || { "default": [] },
-        // FIX: Ensure we fall back to an object, not a string
         boardList: data.boardList || [{ id: "default", name: "Board 1" }],
       });
+      
+      console.log("✅ Loaded user data successfully");
     } else {
+      // First time user - create document
       await setDoc(docRef, {
         playlists: { "Songs": [] },
         notes: { "default": [] },
-        boardList: [{ id: "default", name: "Board 1" }], // FIX: Object format
+        boardList: [{ id: "default", name: "Board 1" }],
+        createdAt: new Date().toISOString()
       });
+      console.log("✅ New user document created");
     }
   } catch (error) {
-    console.error("Error loading user data:", error);
+    console.error("❌ Error loading user data:", error);
+    alert("Failed to load your saved data. Please refresh.");
   }
 },
+// old
+//  fetchUserData: async (user) => {
+//   if (!user) return;
+//   try {
+//     const docRef = doc(db, "users", user.uid);
+//     const docSnap = await getDoc(docRef);
+
+//     if (docSnap.exists()) {
+//       const data = docSnap.data();
+//       set({ 
+//         playlists: data.playlists || { "Songs": [] },
+//         notes: data.notes || { "default": [] },
+//         boardList: data.boardList || [{ id: "default", name: "Board 1" }],
+//       });
+//     } else {
+//       await setDoc(docRef, {
+//         playlists: { "Songs": [] },
+//         notes: { "default": [] },
+//         boardList: [{ id: "default", name: "Board 1" }], // FIX: Object format
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error loading user data:", error);
+//   }
+// },
   addTrackToPlaylist: async (playlistName, track) => {
     const { user, playlists } = get(); // get() now works!
     
@@ -523,13 +553,29 @@ removeBoard: async (containerId) => {
     }
   },
 
-    signup: async (email, password) => {
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        alert(error.message);
-      }
-    },
+  signup: async (email, password) => {
+  // Add this debug check:
+  console.log("Zustand signup received:", { email, password });
+
+  if (!email) {
+    alert("Signup failed: Email is missing or undefined in the form submission.");
+    return;
+  }
+
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    alert(error.message);
+  }
+},
+// old
+    // signup: async (email, password) => {
+    //   try {
+    //     await createUserWithEmailAndPassword(auth, email, password);
+    //   } catch (error) {
+    //     alert(error.message);
+    //   }
+    // },
 
   resetPassword: async (email) => {
     try {

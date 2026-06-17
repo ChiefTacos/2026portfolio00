@@ -278,9 +278,17 @@ const onLoginSubmit = async (e) => {
 
 const onSignupSubmit = async (e) => {
   e.preventDefault();
+
+  const finalEmail = email.trim();
+  const finalPassword = signupPassword.trim();
+
+  if (!finalEmail) return alert("Please enter your email address");
+  if (!finalPassword) return alert("Please enter a password");
   if (strength < 3) return alert("Please meet all password requirements");
-  await signup(email, signupPassword);
+
+  await signup(finalEmail, finalPassword);
 };
+
 
 const onResetSubmit = async (e) => {
   e.preventDefault();
@@ -1447,6 +1455,8 @@ style={{
                                       <input 
                                         type="email" 
                                         placeholder="Email Address"
+                                        value={email}                    // ← Add this
+                                        onChange={(e) => setEmail(e.target.value)}  // ← Add this
                                         className="col-span-2 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
                                         required
                                       />
