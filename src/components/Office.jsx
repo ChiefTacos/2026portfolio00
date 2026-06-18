@@ -521,7 +521,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 
         {/* Inner button content container */}
         <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden xl:scale-110">
-          <div className="relative w-[420px] h-[350px]  xl:w-[570px] xl:h-[400px] flex items-center justify-center">
+          <div className="relative w-[450px] h-[450px]  xl:w-[1000px] xl:h-[720px] flex items-center justify-center">
             {/* <svg className="w-24 h-24 md:h-36 md:w-36 lg:w-48 lg:h-48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M32 8L38 24H54L40 34L46 50L32 40L18 50L24 34L10 24H26L32 8Z" 
                     fill="#fbbf24" stroke="#f59e0b" strokeWidth="3"
@@ -540,11 +540,13 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 )} */}
              {section !== 0 && (
 
-<svg class="w-64 h-64 fill-white mix-blend-overlay" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
+          <div className="relative w-[420px] h-[500px] lg:w-[620px] lg:h-[750px] flex items-center justify-center">
+            {/* Full-cover video */}
+            <img src="./textures/teddyBear.png" alt="Teddy Icon" className="w-[100vw] h-auto object-contain" />
 
-  <path d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"></path>
-
-</svg>
+          </div>
+        </span>
 )}
 
             {section === 0 && (
@@ -570,7 +572,10 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
       className="
              
               relative group scale-100 xl:scale-75  "
-      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
+// og      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0,  zIndex: "10",}}
+      style={{ pointerEvents: isClickable ? "none" : "none", opacity: isClickable ? 0 : 0,  zIndex: "10",}}
+    
+    
     >
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90
@@ -584,7 +589,7 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
         style={{ cursor: isClickable ? "pointer" : "not-allowed" }}
       >
         {/* Glow effect (kept exactly the same) */}
-        <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
+        <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-600 p-[3px] -m-px opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></span>
 
         {/* Inner button content container */}
         <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
@@ -1839,8 +1844,7 @@ style={{
 //                 )
                  : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
-  <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[80vh] h-auto overflow-y-auto  lg:overflow-hidden text-white text-4xl">
-  
+<div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[120vh] h-auto overflow-y-auto lg:overflow-hidden text-white text-4xl animate-rainbow-flow bg-gradient-to-r from-pink-500/20 via-indigo-500/20 to-emerald-500/20 bg-[length:400%_400%]">  
   {/* SIDEBAR: LIBRARY & PLAYLIST NAV (Col 1-3) */}
   <div className="col-span-12 lg:col-span-3 flex flex-col gap-4 border-r border-gray-800 pr-4  min-h-[220px] overflow-y-visible lg:overflow-hidden">
     <div className="flex items-center justify-between px-2"
@@ -1901,7 +1905,7 @@ style={{
   </div>
 
   {/* MAIN CONTENT AREA (Col 4-12) */}
-  <div className=" lg:col-span-9 grid lg:grid-cols-2 gap-8 h-[160vh] lg:h-auto overflow-hidden">
+  <div className=" lg:col-span-9 grid lg:grid-cols-2 gap-8 h-[160vh] lg:h-[90vh] overflow-hidden">
     
     
     
@@ -1915,7 +1919,8 @@ style={{
 
   {/* 2. RESTORED: DYNAMIC VINYL / MUSIC ICON */}
 
-    <div className={` mt-2 bottom-0 3 w-44 h-44 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl transition-transform duration-500 ${isPlaying ? 'animate-spin-slow scale-105' : 'scale-100'}`}>
+    <div           onClick={togglePlay}
+ className={` mt-2 bottom-0 3 w-44 h-44 lg:w-72 lg:h-72 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-xl transition-transform duration-500 ${isPlaying ? 'animate-spin-slow scale-105' : 'scale-100'}`}>
       <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
       </svg>
@@ -2421,7 +2426,7 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
       className="
              
               relative group  scale-100 xl:scale-75  "
-      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
+      style={{ pointerEvents: isClickable ? "none" : "none", opacity: isClickable ? 0 : 0,  zIndex: "10",}}
     >
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90

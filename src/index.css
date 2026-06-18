@@ -874,3 +874,21 @@ overflow: hidden;
 .clock-tz-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(234, 179, 8, 0.8); /* Glows on hover */
 }
+
+/* //music background */
+
+@keyframes rainbowFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-rainbow-flow {
+  animation: rainbowFlow 25s ease infinite;
+}
