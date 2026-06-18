@@ -69,7 +69,7 @@ const user = useStore((state) => state.user);
 
 
 //notes
-const { notes: notesMap, boardList, addBoard, removeBoard, addNote, removeNote, renameBoard } = useStore();
+const { notes: notesMap, boardList, addBoard, removeBoard, addNote, removeNote, renameBoard, lastUpdated   } = useStore();
   const [inputs, setInputs] = useState({});
 const [newlyCreatedId, setNewlyCreatedId] = useState(null);
   const handleInputChange = (id, value) => {
@@ -2148,7 +2148,41 @@ style={{
                
               >
                 <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 p-6 h-full overflow-y-auto">
-                  
+                  {/* ==================== TOOLBAR ==================== */}
+                        <div className="col-span-2 flex flex-wrap justify-between items-center gap-4  border-b pb-2">
+                          
+                          {/* Last Updated */}
+                          {lastUpdated && (
+                            <div className="text-sm text-white">
+                              Last saved: <span className="font-medium">{new Date(lastUpdated).toLocaleString()}</span>
+                            </div>
+                          )}
+
+                          {/* Backup & Restore Buttons */}
+                          <div className="flex gap-3">
+                            <button 
+                              onClick={() => useStore.getState().exportBackup()}
+                              className="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-2xl text-sm flex items-center gap-2 transition-all active:scale-95"
+                            >
+                              💾 Backup All Notes
+                            </button>
+
+                            <label className="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white rounded-2xl text-sm flex items-center gap-2 transition-all active:scale-95 cursor-pointer">
+                              📤 Restore Backup
+                              <input 
+                                type="file" 
+                                accept=".json" 
+                                onChange={(e) => {
+                                  if (e.target.files[0]) {
+                                    useStore.getState().importBackup(file);
+                                    e.target.value = ''; // Reset input
+                                  }
+                                }}
+                                className="hidden" 
+                              />
+                            </label>
+                          </div>
+                          </div>
 
 {boardList.map((board, index) => {
         const boardId = board.id || board;
@@ -2165,9 +2199,10 @@ style={{
           <div key={boardId} className="bg-slate-300 p-6 rounded-3xl border border-black flex flex-col shadow-lg h-full"
              
           >
-            <div className="flex justify-between items-start mb-4 border-b pb-2">
-              <div className="relative group flex-1">
-                <span className="text-[12px] uppercase text-gray-500 font-bold tracking-widest block mb-1">
+            <div className="flex justify-between items-start mb-3 border-b pb-2">
+              <div className="relative group flex-2">
+                 
+                <span className="text-[14px] uppercase text-gray-500 font-bold tracking-widest block mb-1">
                   {displayName}'s Workspace
                 </span>
                 
@@ -2178,6 +2213,7 @@ style={{
   onTouchStartCapture={(e) => e.stopPropagation()}
 
                 >
+                  
                   <h2 
                     id={`title-${boardId}`}
                     contentEditable
@@ -2225,8 +2261,10 @@ style={{
                     Click to rename
                   </p>
                 )}
-              </div>
 
+              
+              </div>
+              
               <div className="flex gap-2 "
               draggable={false}
               onPointerDownCapture={(e) => e.stopPropagation()}

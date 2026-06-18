@@ -35,6 +35,9 @@ import { deleteObject, ref as storageRef } from "firebase/storage";
       "default": [] 
     },
     boardList: [{ id: "default", name: "Board 1" }],
+// Add this in the initial state (near notes and boardList)
+lastUpdated: null,
+
 
     // --- ACTIONS ---
 
@@ -49,7 +52,8 @@ import { deleteObject, ref as storageRef } from "firebase/storage";
         // Clear data on logout
         set({ 
           playlists: { "Songs": [] }, 
-          notes: { "default": [] } 
+          notes: { "default": [] } ,
+          lastUpdated: null   // ← Add this
         });
       }
     });
@@ -62,27 +66,28 @@ fetchUserData: async (user) => {
 
     if (docSnap.exists()) {
       const data = docSnap.data();
-      
       set({ 
         playlists: data.playlists || { "Songs": [] },
         notes: data.notes || { "default": [] },
         boardList: data.boardList || [{ id: "default", name: "Board 1" }],
+        lastUpdated: data.lastUpdated || null
       });
-      
-      console.log("✅ Loaded user data successfully");
+      console.log("✅ Loaded existing user data");
     } else {
-      // First time user - create document
-      await setDoc(docRef, {
+      // Create document for completely new users
+      const initialData = {
         playlists: { "Songs": [] },
         notes: { "default": [] },
         boardList: [{ id: "default", name: "Board 1" }],
-        createdAt: new Date().toISOString()
-      });
+        createdAt: new Date().toISOString(),
+        lastUpdated: new Date().toISOString()
+      };
+      await setDoc(docRef, initialData);
+      set(initialData);
       console.log("✅ New user document created");
     }
   } catch (error) {
-    console.error("❌ Error loading user data:", error);
-    alert("Failed to load your saved data. Please refresh.");
+    console.error("❌ Error in fetchUserData:", error);
   }
 },
 // old
@@ -363,84 +368,110 @@ deleteTrack: async (playlistName, track) => {
   //     await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
   //   }
   // },
+
+  // 2nd VERSION
+// addNote: async (containerId, text) => {
+//   const { user, notes } = get();
+//   if (!text?.trim()) return;
+
+//   const newNoteObj = { 
+//     text: text.trim(), 
+//     size: 0,
+//     createdAt: new Date().toISOString()
+//   };
+  
+//   const updatedNotes = {
+//     ...notes,
+//     [containerId]: [...(notes[containerId] || []), newNoteObj]
+//   };
+  
+//   set({ notes: updatedNotes });
+
+//   if (user) {
+//     try {
+//       const userDocRef = doc(db, "users", user.uid);
+//       const now = new Date().toISOString();
+      
+//       await setDoc(userDocRef, { 
+//         notes: updatedNotes,
+//         lastUpdated: now 
+//       }, { merge: true });
+      
+//       console.log(`✅ Note added to board ${containerId}`);
+//     } catch (error) {
+//       console.error("❌ Failed to save note:", error);
+//     }
+//   }
+// },
 addNote: async (containerId, text) => {
   const { user, notes } = get();
-  // Store as an object instead of a string
-  const newNoteObj = { text: text, size: 0 }; 
-  
-  const updatedNotes = {
-    ...notes,
-    [containerId]: [...(notes[containerId] || []), newNoteObj]
-  };
-  
-  set({ notes: updatedNotes });
-  if (user) {
-    await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+  if (!text?.trim() || !user) return;
+
+  const newNoteObj = { text: text.trim(), size: 0, createdAt: new Date().toISOString() };
+  const updatedNotes = { ...notes, [containerId]: [...(notes[containerId] || []), newNoteObj] };
+
+  const now = new Date().toISOString();
+
+  set({ notes: updatedNotes, lastUpdated: now });
+
+  try {
+    const userDocRef = doc(db, "users", user.uid);
+    await setDoc(userDocRef, { 
+      notes: updatedNotes, 
+      lastUpdated: now 
+    }, { merge: true });
+  } catch (error) {
+    console.error("Failed to save note:", error);
   }
 },
 editNote: async (containerId, noteIndex, newText) => {
   const { user, notes } = get();
-  
-  // Create a fresh copy of the array for this specific board
   const containerNotes = [...(notes[containerId] || [])];
-  
   if (!containerNotes[noteIndex]) return;
 
-  const currentNote = containerNotes[noteIndex];
+  containerNotes[noteIndex] = typeof containerNotes[noteIndex] === 'string' 
+    ? { text: newText.trim(), size: 0 } 
+    : { ...containerNotes[noteIndex], text: newText.trim() };
 
-  // Logic: Maintain the size, only update the text
-  containerNotes[noteIndex] = typeof currentNote === 'string' 
-    ? { text: newText, size: 0 } 
-    : { ...currentNote, text: newText };
+  const updatedNotes = { ...notes, [containerId]: containerNotes };
+  const now = new Date().toISOString();
 
-  const updatedNotes = { 
-    ...notes, 
-    [containerId]: containerNotes 
-  };
+  set({ notes: updatedNotes, lastUpdated: now });
 
-  // Update Local State
-  set({ notes: updatedNotes });
-
-  // Update Firebase
   if (user) {
     try {
-      const userDocRef = doc(db, "users", user.uid);
-      await setDoc(userDocRef, { notes: updatedNotes }, { merge: true });
+      await setDoc(doc(db, "users", user.uid), { 
+        notes: updatedNotes, 
+        lastUpdated: now 
+      }, { merge: true });
     } catch (error) {
-      console.error("Cloud edit failed:", error);
+      console.error("Failed to edit note:", error);
     }
   }
 },
-// editNote: async (containerId, noteIndex, newText) => {
-//   const { user, notes } = get();
-//   const containerNotes = [...(notes[containerId] || [])];
-  
-//   // Update the text property, keeping the existing size
-//   const currentNote = containerNotes[noteIndex];
-//   containerNotes[noteIndex] = typeof currentNote === 'string' 
-//     ? { text: newText, size: 0 } 
-//     : { ...currentNote, text: newText };
 
-//   const updatedNotes = { ...notes, [containerId]: containerNotes };
-//   set({ notes: updatedNotes });
+removeNote: async (containerId, noteIndex) => {
+  const { user, notes } = get();
+  const updatedNotes = {
+    ...notes,
+    [containerId]: notes[containerId].filter((_, i) => i !== noteIndex)
+  };
+  const now = new Date().toISOString();
 
-//   if (user) {
-//     await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
-//   }
-// },
-  // REMOVE NOTE + CLOUD SYNC
-  removeNote: async (containerId, noteIndex) => {
-    const { user, notes } = get();
-    const updatedNotes = {
-      ...notes,
-      [containerId]: notes[containerId].filter((_, i) => i !== noteIndex)
-    };
-    set({ notes: updatedNotes });
-    if (user) {
-      await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+  set({ notes: updatedNotes, lastUpdated: now });
+
+  if (user) {
+    try {
+      await setDoc(doc(db, "users", user.uid), { 
+        notes: updatedNotes, 
+        lastUpdated: now 
+      }, { merge: true });
+    } catch (error) {
+      console.error("Failed to remove note:", error);
     }
-  },
-  // NEW ACTION: Update only the size
+  }
+},
+
 setNoteSize: async (containerId, noteIndex, newSize) => {
   const { user, notes } = get();
   const containerNotes = [...(notes[containerId] || [])];
@@ -454,53 +485,72 @@ setNoteSize: async (containerId, noteIndex, newSize) => {
   set({ notes: updatedNotes });
 
   if (user) {
-    await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      const now = new Date().toISOString();
+      
+      await setDoc(userDocRef, { 
+        notes: updatedNotes,
+        lastUpdated: now 
+      }, { merge: true });
+    } catch (error) {
+      console.error("❌ Failed to update note size:", error);
+    }
   }
 },
-    // editNote: async (containerId, noteIndex, newText) => {
-    //   const { user, notes } = get();
-    //   const containerNotes = [...(notes[containerId] || [])];
+
+// addBoard: async (customId) => {
+//   const { user, boardList } = get();
+//   const id = customId || `board-${Date.now()}`;
+  
+//   const randomColorIndex = Math.floor(Math.random() * 5);
+
+//   const newBoard = { 
+//     id, 
+//     name: `Board ${boardList.length + 1}`,
+//     colorIndex: randomColorIndex 
+//   };
+  
+//   const updatedBoards = [...boardList, newBoard];
+  
+//   set({ boardList: updatedBoards });
+
+//   if (user) {
+//     try {
+//       const userDocRef = doc(db, "users", user.uid);
+//       const now = new Date().toISOString();
       
-    //   // Update the specific note at the index
-    //   containerNotes[noteIndex] = newText;
-
-    //   const updatedNotes = {
-    //     ...notes,
-    //     [containerId]: containerNotes
-    //   };
-
-    //   set({ notes: updatedNotes });
-
-    //   if (user) {
-    //     try {
-    //       await setDoc(doc(db, "users", user.uid), { notes: updatedNotes }, { merge: true });
-    //     } catch (error) {
-    //       console.error("Failed to edit note in cloud:", error);
-    //     }
-    //   }
-    // },
-
+//       await setDoc(userDocRef, { 
+//         boardList: updatedBoards,
+//         lastUpdated: now 
+//       }, { merge: true });
+//     } catch (error) {
+//       console.error("❌ Failed to add board:", error);
+//     }
+//   }
+// },
 addBoard: async (customId) => {
   const { user, boardList } = get();
   const id = customId || `board-${Date.now()}`;
-  
-  // Pick a random number between 0 and 4
   const randomColorIndex = Math.floor(Math.random() * 5);
 
-  const newBoard = { 
-    id, 
-    name: `Board ${boardList.length + 1}`,
-    colorIndex: randomColorIndex // Store the color preference
-  };
-  
+  const newBoard = { id, name: `Board ${boardList.length + 1}`, colorIndex: randomColorIndex };
   const updatedBoards = [...boardList, newBoard];
-  
-  set({ boardList: updatedBoards });
+  const now = new Date().toISOString();
+
+  set({ boardList: updatedBoards, lastUpdated: now });
+
   if (user) {
-    await setDoc(doc(db, "users", user.uid), { boardList: updatedBoards }, { merge: true });
+    try {
+      await setDoc(doc(db, "users", user.uid), { 
+        boardList: updatedBoards, 
+        lastUpdated: now 
+      }, { merge: true });
+    } catch (error) {
+      console.error("Failed to add board:", error);
+    }
   }
 },
-//new rename board
 renameBoard: async (id, newName) => {
   const { user, boardList } = get();
   const updatedBoards = boardList.map(board => 
@@ -508,32 +558,66 @@ renameBoard: async (id, newName) => {
   );
 
   set({ boardList: updatedBoards });
-  if (user) {
-    await setDoc(doc(db, "users", user.uid), { boardList: updatedBoards }, { merge: true });
-  }
-},
-// NEW: REMOVE BOARD + CLOUD SYNC (FIXED)
-removeBoard: async (containerId) => {
-  const { user, boardList, notes } = get();
-  
-  // FIX: Filter by board.id because board is now an object
-  const updatedBoards = boardList.filter(board => board.id !== containerId);
-  
-  const updatedNotes = { ...notes };
-  delete updatedNotes[containerId];
 
-  set({ boardList: updatedBoards, notes: updatedNotes });
-  
   if (user) {
     try {
       const userDocRef = doc(db, "users", user.uid);
-      // We send the new board list and updated notes to Firebase
+      const now = new Date().toISOString();
+      
       await setDoc(userDocRef, { 
-        boardList: updatedBoards, 
-        notes: updatedNotes 
+        boardList: updatedBoards,
+        lastUpdated: now 
       }, { merge: true });
     } catch (error) {
-      console.error("Failed to delete board from cloud:", error);
+      console.error("❌ Failed to rename board:", error);
+    }
+  }
+},
+
+// removeBoard: async (containerId) => {
+//   const { user, boardList, notes } = get();
+  
+//   const updatedBoards = boardList.filter(board => board.id !== containerId);
+//   const updatedNotes = { ...notes };
+//   delete updatedNotes[containerId];
+
+//   set({ boardList: updatedBoards, notes: updatedNotes });
+  
+//   if (user) {
+//     try {
+//       const userDocRef = doc(db, "users", user.uid);
+//       const now = new Date().toISOString();
+      
+//       await setDoc(userDocRef, { 
+//         boardList: updatedBoards, 
+//         notes: updatedNotes,
+//         lastUpdated: now 
+//       }, { merge: true });
+      
+//       console.log(`✅ Board ${containerId} deleted`);
+//     } catch (error) {
+//       console.error("❌ Failed to delete board:", error);
+//     }
+//   }
+// },
+removeBoard: async (containerId) => {
+  const { user, boardList, notes } = get();
+  const updatedBoards = boardList.filter(board => board.id !== containerId);
+  const updatedNotes = { ...notes };
+  delete updatedNotes[containerId];
+  const now = new Date().toISOString();
+
+  set({ boardList: updatedBoards, notes: updatedNotes, lastUpdated: now });
+
+  if (user) {
+    try {
+      await setDoc(doc(db, "users", user.uid), { 
+        boardList: updatedBoards, 
+        notes: updatedNotes,
+        lastUpdated: now 
+      }, { merge: true });
+    } catch (error) {
+      console.error("Failed to remove board:", error);
     }
   }
 },
@@ -588,6 +672,63 @@ removeBoard: async (containerId) => {
   },
 
   logout: () => signOut(auth),
+// ==================== BACKUP & RESTORE ====================
+exportBackup: () => {
+  const state = get();
+  const backup = {
+    notes: state.notes,
+    boardList: state.boardList,
+    playlists: state.playlists,
+    exportedAt: new Date().toISOString(),
+    version: "1.1"
+  };
 
-  }))
+  const dataStr = JSON.stringify(backup, null, 2);
+  const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+  
+  const link = document.createElement('a');
+  link.setAttribute('href', dataUri);
+  link.setAttribute('download', `my-notes-backup-${new Date().toISOString().slice(0,10)}.json`);
+  link.click();
+
+  alert("✅ Backup downloaded! Save this file somewhere safe.");
+},
+
+importBackup: async (file) => {
+  try {
+    const text = await file.text();
+    const backup = JSON.parse(text);
+
+    if (!backup.notes || !backup.boardList) {
+      throw new Error("Invalid backup file format");
+    }
+
+    const { user } = get();
+
+    set({ 
+      notes: backup.notes,
+      boardList: backup.boardList,
+      playlists: backup.playlists || get().playlists,
+      lastUpdated: backup.exportedAt || new Date().toISOString()
+    });
+
+    if (user) {
+      await setDoc(doc(db, "users", user.uid), {
+        notes: backup.notes,
+        boardList: backup.boardList,
+        playlists: backup.playlists || get().playlists,
+        lastUpdated: new Date().toISOString()
+      }, { merge: true });
+    }
+
+    alert("✅ Backup restored successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("❌ Failed to restore backup: " + err.message);
+  }
+},
+  }
+
+  
+))
 
