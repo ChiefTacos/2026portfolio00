@@ -1577,9 +1577,7 @@ style={{
 
       {/* Scrollable Body - Added w-full */}
       <div className="w-full flex-grow p-6 overflow-y-auto text-gray-300 text-sm leading-relaxed">
-        <p className="mb-4 text-center">
-          <strong>No Data Storage & Privacy</strong><br />This application is a client-side productivity tool. We do not host, store, or have access to any files, media, or data you upload or interact with. All processing occurs locally on your device. Consequently, we cannot retrieve, delete, or manage any content you use within the app.
-        </p>
+        
         <p className="mb-4 text-center">
           <strong>User Responsibility & Conduct</strong> You are solely responsible for the content you upload. By using this app, you agree:
           <br />Not to engage in any illegal or criminal activity.
@@ -3598,7 +3596,7 @@ const handleHoldEnd = (e) => {
         <textarea 
           value={editValue}
           onChange={(e) => setEditValue(e.target.value)}
-          className="w-full bg-transparent outline-none text-gray-800 min-h-[120px] resize-none leading-relaxed"
+          className="w-full bg-transparent outline-none text-gray-800 min-h-[250px] lg:min-h-[254px] text-[50px] lg:text-[31px] resize-none leading-relaxed"
           autoFocus
         />
         <div className="flex justify-end gap-2 mt-2">
