@@ -789,7 +789,9 @@ const AnalogClock = ({ tz, label }) => {
   const h = time.getHours();
 
   return (
-    <div className="scale-125 lg:scale-150 flex flex-col items-center gap-2">
+    <div className="scale-125 lg:scale-150">
+    
+    <div className="scale-150 lg:scale-150 flex flex-col items-center gap-2">
       <div className="relative w-14 h-14 rounded-full border border-white/20 bg-white/5 shadow-inner">
         {/* Hour Hand */}
         <div className="absolute bottom-1/2 left-1/2 w-1 h-3 bg-white/80 rounded-full origin-bottom -translate-x-1/2"
@@ -805,6 +807,7 @@ const AnalogClock = ({ tz, label }) => {
       </div>
       <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">{label.split('/')[1]}</span>
     </div>
+  </div>
   );
 };
 
@@ -918,7 +921,7 @@ const handleScroll = (e) => {
 width: isFullscreen 
   ? "600px" 
   : isEnlarged 
-    ? (isMobileOrTablet ? "150vw" : "95vw")  // Enlarged size
+    ? (isMobileOrTablet ? "160vw" : "95vw")  // Enlarged size
     : (isMobileOrTablet ? "210vw" : "122vw"), // Normal size
 
 // HEIGHT LOGIC
@@ -932,8 +935,8 @@ height: isFullscreen
 maxWidth: isFullscreen 
   ? "90vw" 
   : isEnlarged 
-    ?(isMobileOrTablet ? "150vw" : "80vw") 
-    : (isMobileOrTablet ? "220vw" : "122vw"),
+    ?(isMobileOrTablet ? "180vw" : "80vw") 
+    : (isMobileOrTablet ? "240vw" : "122vw"),
 
 // MAX HEIGHT LOGIC
 maxHeight: isFullscreen 
@@ -1063,24 +1066,13 @@ style={{
 
 
             (
-  <div className="scale-110 lg:scale-100 flex flex-col lg:grid lg:grid-cols-2 gap-0 lg:gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70">
-
-{/* 
-                /////
-            /////
-// simple timer boi and clock little boi 
-            /////
-            /////
-            ///// */}
-
-
-
+  <div className="scale-100 lg:scale-110 flex flex-col lg:grid lg:grid-cols-2 gap-0 lg:gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70">
       {/* ============================================================
         GLOBAL WIDGETS SECTION (Visible to ALL users)
         ============================================================ */}
     
     {/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
-<div className="bg-black/70 p-20 lg:p-36 mx-2 lg:mx-24  mt-[5rem] lg:mt-0 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px] relative overflow-hidden  col-span-2"
+<div className="bg-black/70 p-20 lg:p-36 mx-2 lg:mx-24  mt-[2rem] md:mt-[1rem] lg:mt-5 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[250px] relative overflow-hidden  col-span-2"
 >
   {/* <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3> */}
   
@@ -1115,9 +1107,9 @@ style={{
       {amPm}
     </span>
   )}
-        <span className="text-8xl text-yellow-500 ml-3">
+        {/* <span className="text-8xl text-yellow-500 ml-3">
           {currentSystemTime.toLocaleTimeString([], { second: '2-digit' })}
-        </span>
+        </span> */}
       </div>
       <p className="text-gray-500 text-[40px] lg:text-[50px] mt-2 uppercase transform translate-y-[50px] ">
         {currentSystemTime.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
@@ -1140,7 +1132,7 @@ style={{
   {/* MAIN CLOCK FORMAT TOGGLE MENU */}
   {showMainClockMenu && (
     <div 
-      className="scale-150 absolute top-64 lg:top-56 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[200px] justify-center select-none"
+      className="scale-150 absolute top-56 lg:top-56 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-2 flex items-center gap-2 animate-in zoom-in-90 duration-200 min-w-[200px] justify-center select-none"
       style={{ zIndex: 100 }}
       draggable={false}
   onPointerDownCapture={(e) => e.stopPropagation()}
@@ -1589,7 +1581,7 @@ style={{
           <strong>Limitation of Liability</strong> Since we do not have control over user-uploaded content, we are not liable for any copyright infringement, damages, or legal repercussions resulting from your use of the application. The tool is provided "as-is" for research and productivity purposes.
         </p>
         <p className="mb-4 text-center">
-          <strong>DMCA Notice</strong> While we do not host content, we comply with the Digital Millennium Copyright Act. Because all content is local to the user's browser, there is no content on our servers for us to "take down."
+          <strong>DMCA Notice</strong> We comply with the Digital Millennium Copyright Act. 
         </p>
       </div>
 
@@ -1600,246 +1592,7 @@ style={{
 )}
   </div>
 )
-            
-//             (
-//                   // Special simple overlay for login and reset pass
-                  
-//                                         <div className="flex flex-col justify-center items-center h-full w-full max-w-2xl mx-auto p-6">
-
-  
-//     {user ? (
-//         <div className="w-full flex flex-col items-center space-y-6 bg-black/70 p-10 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl text-center ">
-//           <div className="w-24 h-24 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-4xl shadow-lg">
-//             {user.email?.charAt(0).toUpperCase() || "U"}
-//           </div>
-//           <div>
-//             <h2 className="text-3xl font-bold text-white">Welcome Back!</h2>
-//             <p className="text-gray-300 mt-1">{user.email}</p>
-//           </div>
-          
-//           <button 
-//             onClick={() => useStore.getState().logout()} // Assuming logout is in your store
-//             className="w-full py-4 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all transform hover:scale-105"
-//           >
-//             Logout from SirMurOS
-//           </button>
-//         </div>
-//       ) : (
-//         /* 2. IF NOT LOGGED IN, SHOW YOUR EXISTING FORMS */
-//         <>
-  
-//                                   {view === "login" && (
-//                                     /* LOGIN FORM */
-//                                     <form 
-//                                      onSubmit={onLoginSubmit}
-//                                       className="w-full space-y-4 mb-4 bg-black/70 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
-//                                     >
-//                                       <h2 className="text-2xl font-bold text-white text-center mb-4">Member Login</h2>
-//                                       <input 
-//                                         type="email" 
-//                                         placeholder="Email Address"
-//                                         value={email} // Add this
-//                                         onChange={(e) => setEmail(e.target.value)}
-//                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-//                                         required
-//                                       />
-//                                       <input 
-//                                         type={showPassword ? "text" : "password"}
-//                                         placeholder="Password"
-//                                         value={password} // Add this
-//                                         onChange={(e) => setPassword(e.target.value)} // Add this
-//                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-//                                         required
-//                                       />
-//                                       <button 
-//                                       type="button"
-//                                       onClick={() => setShowPassword(!showPassword)}
-//                                       className="absolute right-12 bottom-1/3 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
-//                                     >
-//                                       {showPassword ? "HIDE" : "SHOW"}
-//                                     </button>
-//                                       <button 
-//                                         type="submit"
-//                                         className="w-full py-4 bg-yellow-600 hover:bg-green-700 text-white rounded-xl font-bold transition-colors"
-//                                       >
-//                                         Sign In
-//                                       </button>
-//                                     </form>
-//                                   )}
-
-//                                   {view === "signup" && (
-//                                     <form 
-//                                       onSubmit={onSignupSubmit}
-//                                       className="w-full grid grid-cols-2 gap-4 mb-4 bg-black/80 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
-//                                     >
-//                                       <h2 className="col-span-2 text-2xl font-bold text-white text-center mb-2">Create Account</h2>
-//                                       <input 
-//                                         type="text" 
-//                                         placeholder="Full Name"
-//                                         className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-//                                         required
-//                                       />
-//                                       <input 
-//                                         type="tel" 
-//                                         placeholder="Phone (Optional)"
-//                                         className="col-span-1 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-//                                       />
-//                                       <input 
-//                                         type="email" 
-//                                         placeholder="Email Address"
-//                                         className="col-span-2 p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-//                                         required
-//                                       />
-//                                       <div className="col-span-2 space-y-2">
-                                        
-//                                       <input 
-//                                         type={showPassword ? "text" : "password"}
-//                                         placeholder="Create Password"
-//                                         value={signupPassword}
-//                                         onChange={(e) => setSignupPassword(e.target.value)}
-//                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800 large-dots"
-//                                         required
-//                                       />
-//                                       <button 
-//                                       type="button"
-//                                       onClick={() => setShowPassword(!showPassword)}
-//                                       className="absolute right-12 top-[248px] -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm font-bold"
-//                                     >
-//                                       {showPassword ? "HIDE" : "SHOW"}
-//                                     </button>
-                                      
-//                                       {/* PASSWORD STRENGTH METER */}
-//                                       <div className="flex gap-1 h-1.5 w-full mt-1">
-//                                         <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 1 ? 'bg-red-500' : 'bg-gray-600'}`}></div>
-//                                         <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 2 ? 'bg-orange-500' : 'bg-gray-600'}`}></div>
-//                                         <div className={`h-full flex-1 rounded-full transition-all duration-500 ${strength >= 3 ? 'bg-green-500' : 'bg-gray-600'}`}></div>
-//                                       </div>
-                                      
-//                                       {/* REQUIREMENTS LIST */}
-//                                       <div className="text-[10px] text-gray-300 flex justify-between px-1">
-//                                         <span className={signupPassword.length >= 8 ? "text-green-400" : ""}>8+ Chars</span>
-//                                         <span className={/[A-Z]/.test(signupPassword) ? "text-green-400" : ""}>1 Uppercase</span>
-//                                         <span className={/[0-9!@#$%^&*]/.test(signupPassword) ? "text-green-400" : ""}>1 Num/Spec</span>
-//                                       </div>
-//                                     </div>
-
-//                                     <div className="col-span-2 flex items-center gap-2 py-2">
-//                                     <input type="checkbox" id="terms" className="w-5 h-5 accent-yellow-500" required />
-//                                     <label htmlFor="terms" className="text-gray-200 text-sm">
-//                                       Accept{" "}
-//                                       <span 
-//                                         onClick={() => setShowTermsModal(true)}
-//                                         className="text-yellow-400 underline cursor-pointer hover:text-yellow-300 transition-colors"
-//                                       >
-//                                         Terms & Conditions
-//                                       </span>
-//                                     </label>
-//                                   </div>
-
-//                                     <button 
-//                                       type="submit"
-//                                       disabled={strength < 3}
-//                                       className="col-span-2 py-4 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 disabled:opacity-50 text-white rounded-xl font-bold transition-all"
-//                                     >
-//                                       {strength < 3 ? "Fix Password to Continue" : "Register Now"}
-//                                     </button>
-                                    
-//                                     <button type="button" onClick={() => setView("login")} className="col-span-2 text-sm text-gray-300 underline">
-//                                       Already have an account? Login
-//                                     </button>
-//                                   </form>
-//                                 )}
-//                                    {showTermsModal && (
-//   /* The Overlay Layer */
-//   <div className="block inset-0   items-center justify-center  backdrop-blur-md">
-    
-//     <div 
-//       className="relative  w-[450px] h-[760px] bg-[#1a1a1a] border border-gray-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
-//       onClick={(e) => e.stopPropagation()} // Prevents clicking the modal from closing it
-//     >
-      
-//       {/* Header */}
-//       <div className="w-full p-6 border-b border-gray-800 flex justify-between items-center bg-[#222]">
-//         <h3 className="text-xl font-bold text-white">Terms of Service</h3>
-//         <button 
-//           onClick={() => setShowTermsModal(false)}
-//           className="text-gray-400 hover:text-white text-2xl leading-none"
-//         >
-//           ✕
-//         </button>
-//       </div>
-
-//       {/* Scrollable Body - Added w-full */}
-//       <div className="w-full flex-grow p-6 overflow-y-auto text-gray-300 text-sm leading-relaxed">
-//         <p className="mb-4 text-center">
-//           <strong>No Data Storage & Privacy</strong><br />This application is a client-side productivity tool. We do not host, store, or have access to any files, media, or data you upload or interact with. All processing occurs locally on your device. Consequently, we cannot retrieve, delete, or manage any content you use within the app.
-//         </p>
-//         <p className="mb-4 text-center">
-//           <strong>User Responsibility & Conduct</strong> You are solely responsible for the content you upload. By using this app, you agree:
-//           <br />Not to engage in any illegal or criminal activity.
-//           <br />To comply with all applicable laws of the United States of America.
-//           <br />That you own or have the necessary rights to the media you are using.
-
-//         </p>
-//         <p className="mb-4 text-center">
-//           <strong>Limitation of Liability</strong> Since we do not have control over user-uploaded content, we are not liable for any copyright infringement, damages, or legal repercussions resulting from your use of the application. The tool is provided "as-is" for research and productivity purposes.
-//         </p>
-//         <p className="mb-4 text-center">
-//           <strong>DMCA Notice</strong> While we do not host content, we comply with the Digital Millennium Copyright Act. Because all content is local to the user's browser, there is no content on our servers for us to "take down."
-//         </p>
-//       </div>
-
-//       {/* Footer */}
-      
-//     </div>
-//   </div>
-// )}
-//                                   {view === "reset" && (
-//                                     /* RESET PASSWORD FORM */
-//                                     <form 
-//                                      onSubmit={onResetSubmit}
-//                                       className="w-full space-y-4 mb-4 bg-black/90 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl"
-//                                     >
-//                                       <h2 className="text-2xl font-bold text-white text-center mb-4">Reset Password</h2>
-//                                       <input 
-//                                         type="email" 
-//                                         placeholder="Email Address"
-//                                         className="w-full p-4 rounded-xl bg-gray-100 border-none outline-none focus:ring-2 focus:ring-yellow-500 text-gray-800"
-//                                         required
-//                                       />
-//                                       <button className="w-full py-4 bg-yellow-600 text-white rounded-xl font-bold">Send Link</button>
-//                                       <button type="button" onClick={() => setView("login")} className="w-full text-sm text-gray-300">Back</button>
-//                                     </form>
-//                                   )}
-
-//                                   {/* INTERMEDIATE LINKS (Between form and Explore button) */}
-//                                   {view === "login" && (
-//                                     <div className="flex flex-col items-center gap-3 mb-8">
-//                                       <button 
-//                                         onClick={() => setView("signup")}
-//                                         className="px-6 py-2 bg-black/20 hover:bg-black/10 text-black border border-white/40 rounded-full font-semibold transition-all"
-//                                       >
-//                                         Create an Account
-//                                       </button>
-//                                       <button 
-//                                         onClick={() => setView("reset")}
-//                                         className="text-gray-400 hover:text-gray-300 underline text-sm font-medium transition-colors"
-//                                       >
-//                                         Forgot Password?
-//                                       </button>
-//                                     </div>
-//                                   )}
-//                         </>
-//                               )}
-                                 
-//                                 </div>
-
-
-
-
-
-
-//                 )
+ 
                  : id === "contactWindow" ? (
                   // NEW SPECIAL OVERLAY FOR NEWmusicWINDOW
 <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 p-6 lg:h-[120vh] h-auto overflow-y-auto lg:overflow-hidden text-white text-4xl animate-rainbow-flow bg-gradient-to-r from-pink-500/20 via-indigo-500/20 to-emerald-500/20 bg-[length:400%_400%]">  
