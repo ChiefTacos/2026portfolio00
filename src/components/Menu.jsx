@@ -640,7 +640,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
     class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-white to-gray-100 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
   >
     <span
-      class="relative  px-4 py-2 transition-all ease-in duration-75  bg-gradient-to-br from-purple-200 to-blue-50  group-hover:from-pink-800 group-hover:to-pink-500 rounded-md group-hover:bg-opacity-0"
+      class="relative  px-4 py-2 transition-all ease-in duration-75 bg-gradient-to-br from-[rgb(176,0,0)] via-[#16c6e5] to-[rgb(0,185,86)]  group-hover:from-blue-800 group-hover:to-blue-950 rounded-md group-hover:bg-opacity-0"
     >
             <StyledWrapper01  onClick={(event) => {
       spawnCoin(event);
@@ -677,13 +677,68 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
     </div>
   </button>
 
+ <button
+    class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-white to-gray-100 group-hover:from-black group-hover:to-black hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-neutral-700"
+  >
+    <span
+      class="relative  px-4 py-2 transition-all ease-in duration-75  bg-gradient-to-br from-purple-600 to-blue-500  group-hover:from-purple-800 group-hover:to-purple-700 rounded-md group-hover:bg-opacity-0"
+    >
+            <StyledWrapper01  onClick={(e) => {
+                e.stopPropagation();
+                      spawnCoin(e);
 
+                setMenuOpened(false); // Closes navigation menu dropdown
+
+                // 1. Force state to Section 1 if not already there
+                if (section !== 1) {
+                  onSectionChange(1);
+                }
+
+                // 2. Inject "contactWindow" into active overlays array securely
+                if (typeof setActiveOverlay === 'function') {
+                  setActiveOverlay((prev) => {
+                    if (Array.isArray(prev)) {
+                      return prev.includes("notes") ? prev : [...prev, "notes"];
+                    }
+                    return ["notes"];
+                  });
+                }
+              }} >
+        <article className="keycap">
+          <aside className="letter">
+            <svg className="w-[56px] h-[55px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5M9 3v4a1 1 0 0 1-1 1H4m11.383.772 2.745 2.746m1.215-3.906a2.089 2.089 0 0 1 0 2.953l-6.65 6.646L9 17.95l.739-3.692 6.646-6.646a2.087 2.087 0 0 1 2.958 0Z"/>
+</svg>
+
+
+            </aside>
+        </article>
+        
+      </StyledWrapper01>
+      </span>
+    <div class="block">
+      <div
+        class={`group 
+          ${isVisible ? 'opacity-100' : 'opacity-0'}
+          ${hasFadedIn ? 'animate-blink' : ''}
+          transition-opacity duration-1000 ease-in-out
+
+          absolute  top-[90px] left-[58px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2`}
+      >
+        <div class="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black"></div>
+        <div class="rounded-sm text-md bg-black py-1 px-2">
+          <p class="whitespace-nowrap">NOTES App</p>
+        </div>
+      
+      </div>
+    </div>
+  </button>
 
       <button
     class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br  from-white to-gray-100  hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
   >
     <span
-      class="relative  px-4 py-2 transition-all ease-in duration-75  rounded-md bg-opacity-100 bg-gradient-to-br from-[rgb(0,200,255)] via-[#00aacc] to-[rgb(0,170,255)]"
+      class="relative  px-4 py-2 transition-all ease-in duration-75  rounded-md bg-opacity-100 bg-gradient-to-br from-[rgb(176,0,0)] via-[#e71212] to-[rgb(185,34,0)]"
     >
       <StyledWrapper01  onClick={() => {
       setMenuOpened(false);
@@ -761,7 +816,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
     class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-white to-gray-100 group-hover:from-black-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-800 dark:focus:ring-green-800"
   >
     <span
-      class="relative  px-4 py-2 transition-all ease-in duration-75rounded-md group-hover:bg-opacity-100 bg-gradient-to-br from-green-500 to-green-700 "
+      class="relative  px-4 py-2 transition-all ease-in duration-75rounded-md group-hover:bg-opacity-100 bg-gradient-to-br from-green-600 to-green-700 "
     >
     
         <article className="keycap">
