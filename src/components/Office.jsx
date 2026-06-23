@@ -361,26 +361,6 @@ const handleButtonClick = (e) => {
     return [...prev, id];
   });
 };
-// const handleButtonClick = (e) => {
-//   if (!isClickable) return;
-//   e.stopPropagation();
-
-  
-// // NEW: If this is the Free Quote button, send user to section 1
-//   if (id === "freeQ") {
-//                              jumpToSection(goToSection);
-//   }
-
-//   setActiveOverlay(prev => {
-//     // If already open, just ensure it's at the end of the array (top of stack)
-//     if (prev.includes(id)) {
-//       return [...prev.filter(item => item !== id), id];
-//     }
-//     // Otherwise add it to the stack
-//     return [...prev, id];
-//   });
-// };
-
 
 const handleResetClick = (e) => {
   e.stopPropagation();

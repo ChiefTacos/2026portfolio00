@@ -194,6 +194,7 @@ export const Menu = (props) => {
     setIsDay,
     reset3D,
     section,
+    setActiveOverlay,
   } = props;
 // 2. Pull Music State directly from Zustand
 const { 
@@ -363,7 +364,28 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       <div className="relative z-10">
         <div className="flex items-start gap-2">
           {/* Animated Icon */}
-          <div className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl flex items-center justify-center bg-zinc-200 dark:bg-zinc-800 -mt-1.5 transition-transform ${isPlaying ? 'scale-110' : 'scale-100'}`}>
+          <div  
+                  onClick={(e) => {
+                e.stopPropagation();
+                setMenuOpened(false); // Closes navigation menu dropdown
+
+                // 1. Force state to Section 1 if not already there
+                if (section !== 1) {
+                  onSectionChange(1);
+                }
+
+                // 2. Inject "contactWindow" into active overlays array securely
+                if (typeof setActiveOverlay === 'function') {
+                  setActiveOverlay((prev) => {
+                    if (Array.isArray(prev)) {
+                      return prev.includes("contactWindow") ? prev : [...prev, "contactWindow"];
+                    }
+                    return ["contactWindow"];
+                  });
+                }
+              }}
+          className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl flex items-center pointer-events-auto justify-center bg-zinc-200 dark:bg-zinc-800 -mt-1.5 transition-transform ${isPlaying ? 'scale-110' : 'scale-100'}`}
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={`${isPlaying ? 'text-primary animate-pulse' : 'text-zinc-500'}`}>
               <path d="M9 18V5l12-2v13" />
               <circle cx={6} cy={18} r={3} />
@@ -489,27 +511,45 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
                 <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden rounded-lg glass-effect" />
 
                   <div className="flex items-start gap-2">
-                    {/* <div className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl flex items-center justify-center bg-zinc-200 dark:bg-zinc-800 -mt-1.5 transition-transform ${isPlaying ? 'scale-110' : 'scale-100'}`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={`${isPlaying ? 'text-primary animate-pulse' : 'text-zinc-500'}`}>
-                        <path d="M9 18V5l12-2v13" />
-                        <circle cx={6} cy={18} r={3} />
-                        <circle cx={18} cy={16} r={3} />
-                      </svg>
-                      <div className="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl" />
-                    </div> */}
+                  
 
                     <div className="flex-1">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="space-y-0.5">
-                          <p className="font-semibold leading-none tracking-tight text-foreground dark:text-white flex items-center gap-2 pl-1">
+                      <div
+                      className="flex items-start justify-between gap-4">
+                        <div
+                         className="space-y-0.5">
+                          {/* <p className="font-semibold leading-none tracking-tight text-foreground dark:text-white flex items-center gap-2 pl-1">
                             {isPlaying ? "Now Playing" : "Paused"}
                             <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-zinc-500 font-mono italic ">
                               {playingPlaylist}
                             </span>
-                          </p>
-                          <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[250px] pl-1 mr-12">
-                            {currentTrack ? `${currentTrack.title} - ${currentTrack.artist}` : "No Track Selected"}
-                          </p>
+                          </p> */}
+                          
+                          <div onClick={(e) => {
+                e.stopPropagation();
+                setMenuOpened(false); // Closes navigation menu dropdown
+
+                // 1. Force state to Section 1 if not already there
+                if (section !== 1) {
+                  onSectionChange(1);
+                }
+
+                // 2. Inject "contactWindow" into active overlays array securely
+                if (typeof setActiveOverlay === 'function') {
+                  setActiveOverlay((prev) => {
+                    if (Array.isArray(prev)) {
+                      return prev.includes("contactWindow") ? prev : [...prev, "contactWindow"];
+                    }
+                    return ["contactWindow"];
+                  });
+                }
+              }} className='relative pointer-events-auto cursor-pointer  
+             hover:bg-zinc-100 dark:hover:bg-zinc-800 
+             hover:text-foreground dark:hover:text-white transition-colors rounded px-1 -mx-1'>
+                              <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[250px] pl-1 mr-12">
+                                {currentTrack ? `${currentTrack.title} - ${currentTrack.artist}` : "No Track Selected"}
+                              </p>
+                          </div>
                         </div>
                       </div>
                     </div>

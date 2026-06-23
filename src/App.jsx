@@ -177,7 +177,7 @@ const jumpToSection = (index) => {
           resetOverlays={resetOverlaysRef.current}   
               openOverlay={openOverlay}  
               triggerFreeQuote={triggerFreeQuote}   
-
+              setActiveOverlay={setActiveOverlay} // ◄ ADD THIS PROP HERE for menu music app link and notes app link
         />
         <Cursor />
       </MotionConfig>
