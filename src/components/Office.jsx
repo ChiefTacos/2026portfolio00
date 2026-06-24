@@ -2489,9 +2489,10 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
      : [-6.5, -6.6, 18];     // desktop
     // : [-9, -3, 0];    
 
-const currentXRotation = (section === 3) ? 0.29 : (section === 0) ? -0.33 : -0.25;
+const currentXRotation = (section === 3) ? -0.35 : (section === 0) ? -0.33 : -0.25;
 const modelRotation = (section === 3) 
-    ? [currentXRotation, 4.2, 0.0]   // Unique Y and Z for Section 3
+    // ? [currentXRotation, 4.2, 0.0]   // Unique Y and Z for Section 3
+    ? [currentXRotation, 1.00, 0.003]   // Unique Y and Z for Section 3
     : [currentXRotation, 0.00, 0.003];
 
   const openOverlay = (id) => {
