@@ -718,7 +718,7 @@ overflow: hidden;
 }
 
 .animate-blink {
-  animation: blink 4s ease-in-out infinite;
+  animation: blink 9s ease-out infinite;
 }
 
 /* animation for service buttons section 0 */

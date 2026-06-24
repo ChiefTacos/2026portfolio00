@@ -360,9 +360,43 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
       {/* Background Effects */}
       <div className="absolute inset-0 z-0 h-full w-full rounded-lg" />
       <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden rounded-lg glass-effect" />
+          
+          {/* tooltip ///// */}
 
-      <div className="relative z-10">
-        <div className="flex items-start gap-2">
+          <div className='scale-75'>
+            <div className="block ">
+                  <div 
+                    className="group absolute -top-[33px] left-[54px] lg:-top-[50px] lg:left-[52px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+                  >
+                  
+                    <div
+                      class="h-0 w-fit border-l-8 border-r-8 border-b-0 border-transparent border-t-black"
+                    ></div>
+                  </div>
+                </div>
+                <div className="block">
+                <div className={`group 
+                  ${isVisible ? 'opacity-100' : 'opacity-0'}
+                      ${hasFadedIn ? 'animate-blink' : ''}
+                      transition-opacity duration-1000 ease-in-out
+
+                  absolute top-[70px] left-[0px] z-50 flex -translate-x-1/2 flex-col items-center`}>
+                
+                  <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
+
+                  <div className="rounded-sm bg-black py-1 px-2 text-md">
+                    <p className="whitespace-nowrap text-white">
+                        Music App
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+               {/* tooltip end */}
+        
+        
+        <div className="relative z-10">
+          <div className="flex items-start gap-2">
           {/* Animated Icon */}
           <div  
                   onClick={(e) => {
@@ -374,7 +408,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
                   onSectionChange(1);
                 }
 
-                // 2. Inject "contactWindow" into active overlays array securely
+                // 2. Inject "contactWindow" into active overlays array securely aka music app
                 if (typeof setActiveOverlay === 'function') {
                   setActiveOverlay((prev) => {
                     if (Array.isArray(prev)) {
@@ -386,11 +420,23 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
               }}
           className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl flex items-center pointer-events-auto justify-center bg-zinc-200 dark:bg-zinc-800 -mt-1.5 transition-transform ${isPlaying ? 'scale-110' : 'scale-100'}`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={`${isPlaying ? 'text-primary animate-pulse' : 'text-zinc-500'}`}>
-              <path d="M9 18V5l12-2v13" />
-              <circle cx={6} cy={18} r={3} />
-              <circle cx={18} cy={16} r={3} />
-            </svg>
+      
+            
+<svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" fill="none" className={`${isPlaying ? 'text-primary animate-pulse' : 'text-purple-500'}`}>
+  <defs>
+    <radialGradient id="rainbow" cx="50%" cy="50%" r="80%" fx="40%" fy="40%">
+      <stop offset="0%" stopColor="#3b82f6">
+        <animate attributeName="stopColor" values="#3b82f6;#8b5cf6;#ec4899;#f43f5e;#eab308;#22c55e;#3b82f6" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stopColor="#1e3a8a">
+        <animate attributeName="stopColor" values="#1e3a8a;#6b21a8;#be185d;#9f1239;#ca8a04;#15803d;#1e3a8a" dur="3s" repeatCount="indefinite"/>
+      </stop>
+    </radialGradient>
+  </defs>
+  <path d="M9 18V5l12-2v13" stroke="url(#rainbow)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <circle cx="6" cy="18" r="3" stroke="url(#rainbow)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <circle cx="18" cy="16" r="3" stroke="url(#rainbow)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
             <div className="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl" />
           </div>
 
@@ -492,7 +538,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
         
      
 
-   <div className="xl:fixed xl:bottom-4 xl:left-1/3 relative drop-shadow-xl w-[300px] h-64 md:w-[800px] md:h-36 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[0] pointer-events-auto" >
+   <div className="xl:fixed xl:bottom-4 xl:left-1/3 relative drop-shadow-xl w-[300px] h-64 md:w-[920px] md:h-36 overflow-hidden rounded-xl dark:bg-[#3d3c3d] bg-[#3d3c3d] lg:mb-0 mb-[0] pointer-events-auto" >
 
    
       <div className="absolute flex items-center justify-center dark:text-white text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-neutral-950 dark:bg-neutral-950 ">
@@ -503,7 +549,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
           <div className="z-[2147483640] pointer-events-auto">
 
-            <div className="w-full min-w-[250px] max-w-[250px] mx-10 ml-[-25px]">
+            <div className="w-full min-w-[250px] max-w-[250px] mx-5 ml-[-25px]">
 
               <div className="relative overflow-hidden rounded-lg transition-all duration-300 group bg-background/20  text-foreground backdrop-blur-[2px] p-2 bg-[#212121] hover:shadow-lg hover:shadow-primary/20">
                 
@@ -512,18 +558,43 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
                   <div className="flex items-start gap-2">
                   
+ {/* tooltip ///// */}
 
+          <div className='scale-75'>
+            <div className="block ">
+                  <div 
+                    className="group absolute -top-[33px] left-[54px] lg:-top-[40px] lg:left-[42px] z-50 flex -translate-x-1/2 flex-col items-center rounded-sm text-center text-sm text-slate-300 before:-top-2 overflow-visible"
+                  >
+                  
+                    <div
+                      class="h-0 w-fit border-l-8 border-r-8 border-b-0 border-transparent border-t-black"
+                    ></div>
+                  </div>
+                </div>
+                <div className="block">
+                <div className={`group 
+                  ${isVisible ? 'opacity-50' : 'opacity-0'}
+                      ${hasFadedIn ? 'animate-blink' : ''}
+                      transition-opacity duration-900 ease-out
+
+                  absolute top-[118px] left-[155px] z-50 flex -translate-x-1/2 flex-col items-center`}>
+                
+                  <div className="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black" />
+
+                  <div className="rounded-sm bg-black py-1 px-2 text-md">
+                    <p className="whitespace-nowrap text-white">
+Click on Song Title for Music App                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+               {/* tooltip end */}
                     <div className="flex-1">
                       <div
                       className="flex items-start justify-between gap-4">
                         <div
                          className="space-y-0.5">
-                          {/* <p className="font-semibold leading-none tracking-tight text-foreground dark:text-white flex items-center gap-2 pl-1">
-                            {isPlaying ? "Now Playing" : "Paused"}
-                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-zinc-500 font-mono italic ">
-                              {playingPlaylist}
-                            </span>
-                          </p> */}
+                        
                           
                           <div onClick={(e) => {
                 e.stopPropagation();
@@ -549,6 +620,8 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
                               <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[250px] pl-1 mr-12">
                                 {currentTrack ? `${currentTrack.title} - ${currentTrack.artist}` : "No Track Selected"}
                               </p>
+
+                              
                           </div>
                         </div>
                       </div>
@@ -645,7 +718,9 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
             <StyledWrapper01  onClick={(event) => {
       spawnCoin(event);
           setIsDay((prev) => !prev);  
-
+        if (section !== 3 ) {
+                          onSectionChange(4);
+                        }
     }}>
         <article className="keycap">
           <aside className="letter">
