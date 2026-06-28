@@ -1046,7 +1046,7 @@ style={{
 
 
             (
-  <div className="scale-100 lg:scale-110 flex flex-col lg:grid lg:grid-cols-2 gap-0 lg:gap-4 pb-2 h-full overflow-y-auto w-full bg-black/70">
+  <div className="scale-100 lg:scale-110 flex flex-col lg:grid lg:grid-cols-2 gap-0 lg:gap-4 pb-2 h-full overflow-y-auto overscroll-x-none max-w-full box-border overflow-x-hidden w-full bg-black/70">
       {/* ============================================================
         GLOBAL WIDGETS SECTION (Visible to ALL users)
         ============================================================ */}
