@@ -1335,6 +1335,13 @@ return (
 const ContactSection = () => {
   const [showArrow, setShowArrow] = useState(true);
   const [showText, setShowText] = useState(false); // New state for the text
+
+const [showSecondSet, setShowSecondSet] = useState(false);
+const [animationPhase, setAnimationPhase] = useState("idle");
+const [slideDirection, setSlideDirection] = useState("right");
+
+const isAnimating = animationPhase !== "idle";
+
   const scrollRef = useRef(null);
 
   const checkScroll = () => {
@@ -1364,6 +1371,34 @@ const ContactSection = () => {
       clearTimeout(textTimer);
     };
   }, []);
+
+const handleCardSwitch = () => {
+  if (animationPhase !== "idle") return;
+
+  // Direction the current cards should exit
+  setSlideDirection(showSecondSet ? "left" : "right");
+
+  // Start fading out the CURRENT cards
+  setAnimationPhase("exit");
+};
+const handleGridAnimationEnd = (event) => {
+  // Ignore animation events bubbling up from child elements
+  if (event.target !== event.currentTarget) return;
+
+  if (animationPhase === "exit") {
+    // Only switch the cards AFTER the old cards have exited
+    setShowSecondSet((prev) => !prev);
+
+    // New cards enter from the opposite direction
+    setSlideDirection((prev) =>
+      prev === "right" ? "left" : "right"
+    );
+
+    setAnimationPhase("enter");
+  } else if (animationPhase === "enter") {
+    setAnimationPhase("idle");
+  }
+};
 return (
     <Section className="xl:mt-30 ">
       <div
@@ -1375,12 +1410,10 @@ return (
           xl:h-[800px]
           2xl:w-[1300px]
           2xl:h-[800px]
-          xl:-ml-[300px]
-          2xl:-ml-[255px]
           overflow-hidden
           w-full 
           max-h-[85vh]
-          opacity-5
+          opacity-95
         "
       >
         <div 
@@ -1388,72 +1421,131 @@ return (
           onScroll={checkScroll}
           className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth"
         >
-          <div className="form h-full">
-            <span className="heading block text-center text-3xl md:text-4xl lg:text-5xl mb-6 pb-2">
-              Emphasis on <span className="text-[#00eeff]">Quality</span> and <br /><span className="text-[#00eeff]">100% Customer Satisfaction</span> 
-            </span>
 
-            {/* Grid is often cleaner for "locked" column counts.
-               - default: 1 col
-               - lg (1024px+): 2 cols
-               - 2xl (or your widest breakpoint): 3 cols
-            */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 md:gap-4 items-start text-center">
-              
-              {/* COLUMN 1 */}
-              <div className="flex flex-col text-white">
-                <span className="pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-t-4">
-                  Hours of Operation to Call and Schedule an Appointment are
-                </span>
-                <span className="pt-3 py-5 c2 text-2xl md:text-3xl lg:text-4xl border-slate-950 border-t-2 border-b-2">
-                  <span className="text-[#00eeff]">9</span>:<span className="text-[#00eeff]">00</span>am-<span className="text-[#00eeff]">5</span>:<span className="text-[#00eeff]">00</span>pm CST
-                  <br />
-                  <span className="text-[#00eeff]">Monday</span> thru <span className="text-[#00eeff]">Friday</span>
-                </span>
-                <span className="c2 pt-3 md:pb-3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4">
-                  Our Number to <span className="text-[#00eeff]">Call</span> is <br />
-                  <span className="text-3xl md:text-3xl lg:text-4xl font-bold">
-                    +1-<span className="text-[#00eeff]">262</span>-
-                    <span className="text-[#00eeff]">230</span>-
-                    <span className="text-[#00eeff]">5182</span>
-                  </span>
-                </span>
-              </div>
+{/* Feature Cards */}
+<div className="mx-auto mt-12 w-full max-w-5xl">
 
-              {/* COLUMN 2 */}
-              <div className="flex flex-col text-white">
-                <span className="pb-2.5 pt-2 c3 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-4">
-                  <span className="text-[#00eeff] font-semibold">Badger Surface Solutions </span>
-                  provides Quality Service and Customer Satisfaction from people rooted in the <span className="text-[#C5050C] font-semibold">Badger</span> State.
-                </span>
-                <span className="pt-2.5 py-3.5 c2 text-lg md:text-xl lg:text-2xl border-slate-950 border-t-2 border-b-2">
-                  We Proudly Serve These Counties!
-                </span>
-                <span className="c2 pb-6 text-base md:text-lg lg:text-xl border-slate-950 border-b-4">
-                  Kenosha, Racine, Walworth, Waukesha, Jefferson, Washington, Ozaukee and Milwaukee.
-                </span>
-              </div>
+  {/* Card Grid */}
+            <div
+        key={showSecondSet ? "second-set" : "first-set"}
+        onAnimationEnd={handleGridAnimationEnd}
+        className={`grid grid-cols-1 gap-6 md:grid-cols-3 ${
+          animationPhase === "exit"
+            ? slideDirection === "right"
+              ? "animate-[cardsExitRight_350ms_ease-in_both]"
+              : "animate-[cardsExitLeft_350ms_ease-in_both]"
+            : animationPhase === "enter"
+              ? slideDirection === "left"
+                ? "animate-[cardsEnterLeft_500ms_ease-out_both]"
+                : "animate-[cardsEnterRight_500ms_ease-out_both]"
+              : ""
+        }`}
+      >
+    {(!showSecondSet
+      ? [
+          {
+            number: "01",
+            title: "Experience",
+            description: "Crafting an effortless journey with a user-first approach.",
+            image: "https://i.pinimg.com/736x/2b/74/7b/2b747b71b782a8833f2b3ad9b0e37cd1.jpg",
+            color: "group-hover:text-orange-500",
+          },
+          {
+            number: "02",
+            title: "Interaction",
+            description: "Our platform is designed for simplicity and ease.",
+            image: "https://i.pinimg.com/564x/3c/c2/6c/3cc26c0140c2f0dc70d8aa48416c41dc.jpg",
+            color: "group-hover:text-indigo-400",
+          },
+          {
+            number: "03",
+            title: "Design",
+            description: "Our design philosophy centers around the user.",
+            image: "https://i.pinimg.com/564x/fa/4f/cf/fa4fcfd2db636f98eb0f2b5aecce0c28.jpg",
+            color: "group-hover:text-cyan-400",
+          },
+        ]
+      : [
+          {
+            number: "04",
+            title: "Innovation",
+            description: "Exploring new possibilities through creative thinking.",
+            image: "https://i.pinimg.com/736x/2b/74/7b/2b747b71b782a8833f2b3ad9b0e37cd1.jpg",
+            color: "group-hover:text-emerald-400",
+          },
+          {
+            number: "05",
+            title: "Development",
+            description: "Turning ambitious ideas into thoughtful solutions.",
+            image: "https://i.pinimg.com/564x/3c/c2/6c/3cc26c0140c2f0dc70d8aa48416c41dc.jpg",
+            color: "group-hover:text-purple-400",
+          },
+          {
+            number: "06",
+            title: "Creativity",
+            description: "Bringing bold ideas to life through design.",
+            image: "https://i.pinimg.com/564x/fa/4f/cf/fa4fcfd2db636f98eb0f2b5aecce0c28.jpg",
+            color: "group-hover:text-pink-400",
+          },
+        ]
+    ).map((card) => (
+      <article
+        key={card.number}
+        className="group relative mx-auto min-h-[500px] w-full overflow-hidden border-4 border-black bg-cover bg-center shadow-xl animate-[cardReveal_700ms_ease-out_both] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_0_25px_rgba(0,238,255,0.12)]"
+        style={{ backgroundImage: `url('${card.image}')` }}
+      >
+        <div className="flex min-h-[500px] flex-col justify-end bg-black/70 transition-colors duration-500 group-hover:bg-black/20">
+          <div className="flex flex-1 flex-col justify-end bg-black/50 p-6">
+            <h2
+              className={`mb-4 mt-2 translate-y-8 text-xl font-bold uppercase text-white transition-all duration-300 group-hover:translate-y-0 ${card.color}`}
+            >
+              {card.number} — {card.title}
+            </h2>
 
-              {/* COLUMN 3 
-                  - lg:col-span-2 makes it take full width of the 2-col layout 
-                  - 2xl:col-span-1 puts it back into its own slot in 3-col layout
-              */}
-              <div className="lg:col-span-2 2xl:col-span-1 flex justify-center">
-                <img className="w-full max-w-[400px] 2xl:max-w-full h-auto object-contain" src="/textures/counties.png" alt="Counties Map" />
-              </div>
-            </div>
-
-            <div className="button-container mt-8">
-              <div className="send-button">Customize a Quote</div>
-              <div className="reset-button-container">
-                <div className="reset-button" id="reset-btn">
-                  Contact Us
-                </div>
-              </div>
-            </div>
+            <p className="translate-y-2 text-base text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+              {card.description}
+            </p>
           </div>
         </div>
+      </article>
+    ))}
 
+  </div>
+
+  {/* Small Toggle Button */}
+  <div className="mt-8 flex justify-center">
+    <button
+      type="button"
+      onClick={handleCardSwitch}
+      aria-label={showSecondSet ? "Show cards 1 through 3" : "Show cards 4 through 6"}
+      className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-black/40 text-[#00eeff] transition-all duration-300 hover:border-[#00eeff] hover:bg-[#00eeff]/10 hover:shadow-[0_0_15px_rgba(0,238,255,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00eeff]"
+    >
+      
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  viewBox="0 0 24 24"
+  strokeWidth={1.8}
+  stroke="currentColor"
+  className={`h-5 w-5 transition-transform duration-500 ease-in-out ${
+    showSecondSet ? "rotate-180" : "rotate-0"
+  }`}
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+  />
+</svg>
+
+    </button>
+  </div>
+
+</div>
+
+
+        </div>
+          {/* Fading Text Hint */}
         <div 
           className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-4 
             bg-gradient-to-t from-black/80 to-transparent 
@@ -1462,7 +1554,6 @@ return (
             ${showArrow ? 'opacity-100' : 'opacity-0'}
           `}
         >
-          {/* Fading Text Hint */}
           <span 
             className={`text-[#ffffff] text-sm uppercase tracking-widest mb-2 transition-opacity duration-1000
               ${showText ? 'opacity-100' : 'opacity-0'}

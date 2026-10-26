@@ -892,3 +892,91 @@ overflow: hidden;
 .animate-rainbow-flow {
   animation: rainbowFlow 25s ease infinite;
 }
+
+/* contact page cards */
+
+@keyframes cardsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[cardsFadeIn_600ms_ease-out_both\],
+  .animate-\[cardReveal_700ms_ease-out_both\] {
+    animation: none;
+  }
+}
+
+/* Current cards slide out to the right */
+@keyframes cardsExitRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(45px);
+  }
+}
+
+/* Current cards slide out to the left */
+@keyframes cardsExitLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-45px);
+  }
+}
+
+/* New cards enter from the left */
+@keyframes cardsEnterLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-45px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* New cards enter from the right */
+@keyframes cardsEnterRight {
+  from {
+    opacity: 0;
+    transform: translateX(45px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[cardsExitRight_350ms_ease-in_both\],
+  .animate-\[cardsExitLeft_350ms_ease-in_both\],
+  .animate-\[cardsEnterLeft_500ms_ease-out_both\],
+  .animate-\[cardsEnterRight_500ms_ease-out_both\] {
+    animation: none;
+  }
+}

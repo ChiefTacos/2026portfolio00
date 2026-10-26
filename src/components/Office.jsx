@@ -785,7 +785,10 @@ const AnalogClock = ({ tz, label }) => {
         {/* Center Dot */}
         <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-yellow-500 rounded-full -translate-x-1/2 -translate-y-1/2" />
       </div>
-      <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">{label.split('/')[1]}</span>
+      <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">
+          {label.split('/')[1].replace(/_/g, ' ')}
+
+      </span>
     </div>
   </div>
   );
@@ -1051,6 +1054,16 @@ style={{
         GLOBAL WIDGETS SECTION (Visible to ALL users)
         ============================================================ */}
     
+
+
+
+
+
+
+    {user ? (
+      <>
+
+
     {/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
 <div className="bg-black/70 p-20 lg:p-36 mx-2 lg:mx-24  mt-[2rem] md:mt-[1rem] lg:mt-5 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[250px] relative overflow-hidden  col-span-2"
 >
@@ -1238,16 +1251,6 @@ style={{
 
 
 
-
-    {user ? (
-      <>
-
-
-
-
-
-
-
        
          {/* PANEL 3: QUICK LINKS (Cloud, Email, etc.) */}
         <div className="relative bg-black/70 p-0 rounded-3xl border border-white/10 shadow-xl flex flex-col min-h-[520px] lg:min-h-[620px]">
@@ -1305,12 +1308,12 @@ style={{
               </button>
             ))}
           </div>
-          <h3 className="text-white font-bold p-6 mb-3 text-2xl text-center">External Links - HOLD Button to change the Link</h3>
+          <h3 className="text-white font-bold p-6 mb-3 text-2xl text-center">External Links - Youtube & Google Gemeni</h3>
           <div className="grid grid-cols-2 gap-4 flex-grow">
             {[
             
               { name: "Video Streaming", icon: "📺", url: "https://youtube.com" },
-              { name: "Google Gemeni", icon: "/textures/AI.png", url: "https://gemini.google.com/" }
+              { name: "Google AI", icon: "/textures/AI.png", url: "https://gemini.google.com/" }
             ].map((site) => (
               <a 
                 key={site.name}
