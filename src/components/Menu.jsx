@@ -724,11 +724,12 @@ Click on Song Title for Music App                    </p>
     }}>
         <article className="keycap">
           <aside className="letter">
-            <svg class="w-[50px] h-[50px] fill-[#FFFFFF]" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
-
-    <path d="M495.8 0c5.5 0 10.9 .2 16.3 .7c7 .6 12.8 5.7 14.3 12.5s-1.6 13.9-7.7 17.3c-44.4 25.2-74.4 73-74.4 127.8c0 81 65.5 146.6 146.2 146.6c8.6 0 17-.7 25.1-2.1c6.9-1.2 13.8 2.2 17 8.5s1.9 13.8-3.1 18.7c-34.5 33.6-81.7 54.4-133.6 54.4c-9.3 0-18.4-.7-27.4-1.9c-11.2-22.6-29.8-40.9-52.6-51.7c-2.7-58.5-50.3-105.3-109.2-106.7c-1.7-10.4-2.6-21-2.6-31.8C304 86.1 389.8 0 495.8 0zM447.9 431.9c0 44.2-35.8 80-80 80H96c-53 0-96-43-96-96c0-47.6 34.6-87 80-94.6l0-1.3c0-53 43-96 96-96c34.9 0 65.4 18.6 82.2 46.4c13-9.1 28.8-14.4 45.8-14.4c44.2 0 80 35.8 80 80c0 5.9-.6 11.7-1.9 17.2c37.4 6.7 65.8 39.4 65.8 78.7z"></path>
-
-  </svg>
+            <svg className="w-[85px] h-[90px] fill-[#ffffff]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 512">
+  <g transform="translate(30.08 -20.08) scale(12.16)">
+    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" fill="none" stroke="#fafafa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0z" fill="none" stroke="#fafafa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>
             </aside>
         </article>
         
@@ -781,7 +782,7 @@ Click on Song Title for Music App                    </p>
               }} >
         <article className="keycap">
           <aside className="letter">
-            <svg className="w-[56px] h-[55px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg className="w-[56px] h-[55px] text-gray-800 dark:text-white translate-x-[0px] -translate-y-[4px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5M9 3v4a1 1 0 0 1-1 1H4m11.383.772 2.745 2.746m1.215-3.906a2.089 2.089 0 0 1 0 2.953l-6.65 6.646L9 17.95l.739-3.692 6.646-6.646a2.087 2.087 0 0 1 2.958 0Z"/>
 </svg>
 
@@ -831,7 +832,7 @@ Click on Song Title for Music App                    </p>
           <aside className="letter">
 
             
-            <svg class="w-[55px] h-[50px] fill-[#ffffff]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+            <svg class="w-[51px] h-[50px] fill-[#ffffff]" viewBox="0 0 556 512" xmlns="http://www.w3.org/2000/svg">
 {section === 0 ? (
       /* SVG for Section 0 (The Power Icon) */
       <path transform="translate(25, 0)" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.6c13.6-11.3 15.4-31.5 4.1-45.1s-31.5-15.4-45.1-4.1C49.7 115.4 16 181.8 16 256c0 132.5 107.5 240 240 240s240-107.5 240-240c0-74.2-33.8-140.6-86.6-184.6c-13.6-11.3-33.8-9.4-45.1 4.1s-9.4 33.8 4.1 45.1c38.9 32.3 63.5 81 63.5 135.4c0 97.2-78.8 176-176 176s-176-78.8-176-176c0-54.4 24.7-103.1 63.5-135.4z"></path>
@@ -897,7 +898,7 @@ Click on Song Title for Music App                    </p>
         <article className="keycap">
           <aside className="letter">
 
-            <svg class="w-[50px] h-[50px] fill-[#ffffff]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+            <svg class="w-[50px] h-[50px] fill-[#ffffff] translate-x-[2px] -translate-y-[0px]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"></path>
 

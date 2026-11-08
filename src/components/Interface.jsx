@@ -1414,14 +1414,45 @@ return (
           w-full 
           max-h-[85vh]
           opacity-95
+          bg-cover
+          bg-center
+          bg-no-repeat
         "
+      style={{ backgroundImage: `url('/textures/contactBanner.jpg')` }}
       >
         <div 
           ref={scrollRef}
           onScroll={checkScroll}
           className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth"
         >
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<h4>
+  I am a 24 year old male from the Chicago area
+Work experience is 6 years in hospitality mainly
+as a line cook for various types of places
+Went to Culinary School and have a few 
+culinary certifcations. I always appreciated 
+learning new recipes and learning different
+cultures.
+Although I enjoy my life as a cook and I'd like
+to move up in the culinary world, I am
+currently looking for a entry level IT position.
+My IT background was cultivated from years of
+passion projects learning graphic design and 
+web development with a heavy interest in
+networking and the Internet.
 
+
+</h4>
+<br />
+<br />
 {/* Feature Cards */}
 <div className="mx-auto mt-12 w-full max-w-5xl">
 
