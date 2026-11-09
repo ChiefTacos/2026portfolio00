@@ -24,6 +24,9 @@ function App() {
    const reset3D = () => setCanvasKey(k => k + 1);
 
 
+ 
+
+
 const resetCameraRef =  useRef(() => {});//home button camera reset
 const resetOverlaysRef = useRef(() => {});   // ← NEW with other one
 const [activeOverlay, setActiveOverlay] = useState([]); // ← always array

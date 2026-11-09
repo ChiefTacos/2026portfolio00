@@ -1226,7 +1226,7 @@ const ContactSection = () => {
           2xl:w-[1300px]
           2xl:h-[800px]
           overflow-hidden
-          w-[375px] 
+          w-[405px] 
           md:w-auto
           max-h-[85vh]
          bg-transparent
@@ -1444,7 +1444,7 @@ networking and the Internet.
 <br />
 <br />
 <span className="block text-center w-full">
-  <a href="/">
+  <a href="public/resume.pdf" target="_blank" >
 Here is my formal resume</a>
 </span>
 
