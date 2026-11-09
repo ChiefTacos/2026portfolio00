@@ -580,481 +580,6 @@ const SkillsSection = () => {
 return (
     <Section className="xl:mt-10">
     
-      {/* <div
-        className="form-container
-          relative
-          lg:w-[950px] 
-          lg:h-[1050px]
-           xl:w-[1100px]
-          xl:h-[800px]
-          2xl:w-[1300px]
-          2xl:h-[800px]
-          xl:-ml-[300px]
-          2xl:-ml-[255px]
-          
-          overflow-hidden
-          
-opacity-5
-          w-full 
-          max-h-[85vh]
-        "
-      >
-        <div 
-          ref={scrollRef}
-          onScroll={checkScroll}
-          className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth "
-        >
-          <div className="form h-full">
-                 <div className="grid pb-5 grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 md:gap-2 items-start text-center">
-                        
-                        <div className="flex flex-col text-white">
-                          <span className=" font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-red-400">
-                          What Badger Surface Solutions Does in the Spring, Summer, and Fall
-                          </span>
-                          <div className="flex flex-col gap-2 mt-6">
-                            
-                              <div className="flex items-baseline gap-4">
-                                <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                <p className="text-lg leading-relaxed font-semibold">
-                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-100">Gutter Cleaning:</span> 
-                                  Removes heavy snow loads before they turn into ice dams without damaging your shingles. 
-                                </p>
-                              </div>
-                              <div className="flex items-baseline gap-4">
-                                <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                <p className="text-lg leading-relaxed font-semibold">
-                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-100">Home Exterior Soft Washing:</span> 
-                                  Removes heavy snow loads before they turn into ice dams without damaging your shingles. 
-                                </p>
-                              </div>
-                              <div className="flex items-baseline gap-4">
-                                <span className="text-red-400 font-black text-2xl italic opacity-50 "></span>
-                                <p className="text-lg leading-relaxed font-semibold">
-                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-200">Roof Soft Wash & Rejuvination:</span> 
-          Clears buildup before it forces water under shingles.                      </p>
-                              </div>
-
-                              <div className="flex items-baseline gap-4">
-                                <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                <p className="text-lg leading-relaxed font-semibold">
-                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-100">Deck Cleaning Soft Wash & Rejuvination:</span> 
-          Keeps your property safe and accessible by shoveling and salting.                      </p>
-                              </div>
-                              
-                              <div className="flex items-baseline gap-4 border-slate-950 border-b-4 pb-4">
-                                <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                <p className="text-lg leading-relaxed font-semibold">
-                                  <span className="font-bold text-2xl md:text-3xl mr-2 block text-red-100">Gutter & Roofline Visual Checks:</span> 
-                                  Identify damage early so repairs stay manageable.
-                                </p>
-                              </div>
-
-
-
-                              <div className="flex items-baseline gap-4">
-                                      <span className="text-redred-400 font-black text-2xl italic opacity-50"></span>
-                                      <p className="text-lg leading-relaxed">
-                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-400">The Cost of Not Taking Action
-          </span> 
-                                                  <div className="flex items-baseline gap-4">
-                                                  <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    
-                                                  <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                          $1,000–$5,000+ in roof repairs
-                                      </span> 
-                                                  </p>
-                                                  <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                                        Mold remediation costs
-
-                                      </span> 
-                                      
-                                                  </p>
-                                                            <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                          Gutter replacement
-
-
-                                      </span> 
-                                                  </p>
-                                                  <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                                      Water-damaged drywall and insulation
-
-
-
-                                      </span> 
-                                      
-                                                  </p>
-                                                    <span className="text-red-400 font-black text-2xl italic opacity-50"></span>
-                                                    <p className="text-lg leading-relaxed">
-                                                      <span className="font-bold text-lg md:text-xl mr-2 block pt-4 text-red-100">
-                                                        A simple winter maintenance visit can prevent almost all of these problems.
-
-
-
-                                                  </span> 
-                                        
-                                                    </p>
-                                                  </p>
-                                                </div>
-                                              
-                                      </p>
-                                    </div>
-                            </div>
-                        </div>
-
-                        
-                              <div className="lg:col-span-2 2xl:col-span-1 flex flex-col items-center justify-start gap-4">
-                                
-                                  <img 
-                                    className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
-                                    src="/about/roofWashbeforeafter00.jpeg" 
-                                    alt="Ice Dam Diagram" 
-                                  />
-                                  <img 
-                                    className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
-                                    src="/about/deckRestoration.jpg" 
-                                    alt="Ice Dam Buildup" 
-                                  />
-
-                                  <div className="lg:col-span-2 2xl:col-span-1 flex flex-col items-center justify-start gap-4">
-                                
-                                  <img 
-                                    className="w-full min-h-[400px] 2xl:max-w-full h-auto object-contain" 
-                                    src="/about/theWorldIsYours.jpeg" 
-                                    alt="Ice Dam Diagram" 
-                                  />
-                                <div className="flex items-baseline gap-4">
-                                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-300 pb-2">Choose us to clean and restore your home, so you can enjoy your time c'mon the world is yours</span> 
-                                              
-                                                </div>
-
-                              </div>
-                              </div>
-
-                        
-                            <div className="flex flex-col text-white">
-                                <span className="font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
-                            Sucking bootty All day
-                                </span>
-                                <div className="flex flex-col gap-2 mt-6">
-                                    <div className="flex items-baseline gap-4">
-                                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                                      <p className="text-lg leading-relaxed">
-                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">How to Take Immediate Action</span> 
-                                                  <div className="flex items-baseline gap-4">
-                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">Remove snow from the roof. This eliminates one of the ingredients necessary for the formation of an ice dam.
-                                      </span> 
-                                                  </p>
-                                                </div>
-                                                <div className="flex items-baseline gap-4">
-                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">2.</span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">A "roof rake" and push broom can be used to remove snow, but may damage the roofing materials.
-                                      </span> 
-                                                  </p>
-                                                </div>
-                                                <div className="flex items-baseline gap-4">
-                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">3.</span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">In an emergency situation where water is flowing into the house structure, making channels through the ice dam allows the water behind the dam to drain off the roof.
-
-                                      </span> 
-                                                  </p>
-                                                </div>
-                                      </p>
-                                    </div>
-
-                                    <div className="flex items-baseline gap-4">
-                                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                                      <p className="text-lg leading-relaxed">
-                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">How to Take Long-Term Action</span> 
-                                                  <div className="flex items-baseline gap-4">
-                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">First, make the ceiling air tight so no warm, moist air can flow from the house into the attic space.
-                                      </span> 
-                                                  </p>
-                                                </div>
-                                                <div className="flex items-baseline gap-4">
-                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">2.</span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">After sealing air leakage paths between the house and attic space, consider increasing the ceiling or roof insulation to cut down on heat loss by conduction.
-                                      </span> 
-                                                  </p>
-                                                </div>
-                                                <div className="flex items-baseline gap-4">
-                                                  <span className="text-teal-400 font-black text-2xl italic opacity-50">3.</span>
-                                                  <p className="text-lg leading-relaxed">
-                                                    <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">In an emergency situation where water is flowing into the house structure, making channels through the ice dam allows the water behind the dam to drain off the roof.
-
-                                      </span> 
-                                                  </p>
-                                                </div>
-                                      </p>
-                                    </div>
-
-                                    
-                                    
-                                    
-                                    <div className="flex items-baseline gap-4">
-                                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                                      <p className="leading-relaxed font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">Warning
-          !</span> 
-          Anyone on the roof during the winter or performing work on the roof from below risks injury and may cause damage to the roof and house. <br /> <br />   <span className=" font-bold text-xl lg:text-2xl 2xl:text-3xl">     It is important to contact professionals.</span>
-                            </p>
-                            
-                                    </div>
-                                  
-                                  </div>
-                                  
-                              </div>
-                              
-                            </div>
-            <div className="grid  grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 md:gap-2 items-start text-center">
-              
-              <div className="flex flex-col text-white">
-                <span className=" font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
-                 What Badger Surface Solutions Does in Winter
-                </span>
-                <div className="flex flex-col gap-2 mt-6">
-                    <div className="flex items-baseline gap-4">
-                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                      <p className="text-lg leading-relaxed font-semibold">
-                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Roof Snow Raking:</span> 
-                        Removes heavy snow loads before they turn into ice dams without damaging your shingles. 
-                      </p>
-                    </div>
-
-                    <div className="flex items-baseline gap-4">
-                      <span className="text-blue-400 font-black text-2xl italic opacity-50 "></span>
-                      <p className="text-lg leading-relaxed font-semibold">
-                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-200">Ice Dam Prevention & Mitigation:</span> 
-Clears buildup before it forces water under shingles.                      </p>
-                    </div>
-
-                    <div className="flex items-baseline gap-4">
-                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                      <p className="text-lg leading-relaxed font-semibold">
-                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Walkway & Driveway Snow Shoveling:</span> 
- Keeps your property safe and accessible by shoveling and salting.                      </p>
-                    </div>
-                    <div className="flex  items-baseline gap-4">
-                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                      <p className="text-lg leading-relaxed font-semibold">
-                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-200  ">24/7 Response:</span> 
-                        Providing rapid mobilization for emergency surface solutions treatment during extreme cold.
-                      </p>
-                    </div>
-                    <div className="flex items-baseline gap-4 border-slate-950 border-b-4 pb-4">
-                      <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                      <p className="text-lg leading-relaxed font-semibold">
-                        <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100">Gutter & Roofline Visual Checks:</span> 
-                        Identify damage early so repairs stay manageable.
-                      </p>
-                    </div>
-
-
-
-                    <div className="flex items-baseline gap-4">
-                            <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                            <p className="text-lg leading-relaxed">
-                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-400">The Cost of Not Taking Action in the Winter
-</span> 
-                                        <div className="flex items-baseline gap-4">
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
-                                        <p className="text-lg leading-relaxed">
-                                          
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                $1,000–$5,000+ in roof repairs
-                             </span> 
-                                        </p>
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                              Mold remediation costs
-
-                             </span> 
-                             
-                                        </p>
-                                                   <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                Gutter replacement
-
-
-                             </span> 
-                                        </p>
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                                             Water-damaged drywall and insulation
-
-
-
-                             </span> 
-                             
-                                        </p>
-                                          <span className="text-teal-400 font-black text-2xl italic opacity-50"></span>
-                                          <p className="text-lg leading-relaxed">
-                                            <span className="font-bold text-lg md:text-xl mr-2 block pt-4 text-teal-100">
-                                              A simple winter maintenance visit can prevent almost all of these problems.
-
-
-
-                                        </span> 
-                              
-                                          </p>
-                                        </p>
-                                      </div>
-                                    
-                            </p>
-                          </div>
-                  </div>
-              </div>
-
-          
-                    <div className="lg:col-span-2 2xl:col-span-1 flex flex-col items-center justify-start gap-4">
-                        <img 
-                          className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
-                          src="/about/ice-dam-diagram.png" 
-                          alt="Ice Dam Diagram" 
-                        />
-                        <img 
-                          className="w-full max-w-[500px] 2xl:max-w-full h-auto object-contain" 
-                          src="/about/damBuildup.jpg" 
-                          alt="Ice Dam Buildup" 
-                        />
-                    </div>
-
-              
-                  <div className="flex flex-col text-white">
-                      <span className="font-bold pb-3 pt-2 c3 text-xl md:text-2xl lg:text-3xl border-slate-950 border-b-4 border-t-4 text-teal-300">
-                  Dealing with and preventing Ice Dams
-                      </span>
-                      <div className="flex flex-col gap-2 mt-6">
-                          <div className="flex items-baseline gap-4">
-                            <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                            <p className="text-lg leading-relaxed">
-                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">How to Take Immediate Action</span> 
-                                        <div className="flex items-baseline gap-4">
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">Remove snow from the roof. This eliminates one of the ingredients necessary for the formation of an ice dam.
-                             </span> 
-                                        </p>
-                                      </div>
-                                      <div className="flex items-baseline gap-4">
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">2.</span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">A "roof rake" and push broom can be used to remove snow, but may damage the roofing materials.
-                             </span> 
-                                        </p>
-                                      </div>
-                                       <div className="flex items-baseline gap-4">
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">3.</span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">In an emergency situation where water is flowing into the house structure, making channels through the ice dam allows the water behind the dam to drain off the roof.
-
-                             </span> 
-                                        </p>
-                                      </div>
-                            </p>
-                          </div>
-
-                          <div className="flex items-baseline gap-4">
-                            <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                            <p className="text-lg leading-relaxed">
-                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">How to Take Long-Term Action</span> 
-                                        <div className="flex items-baseline gap-4">
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">1.</span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">First, make the ceiling air tight so no warm, moist air can flow from the house into the attic space.
-                             </span> 
-                                        </p>
-                                      </div>
-                                      <div className="flex items-baseline gap-4">
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">2.</span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">After sealing air leakage paths between the house and attic space, consider increasing the ceiling or roof insulation to cut down on heat loss by conduction.
-                             </span> 
-                                        </p>
-                                      </div>
-                                       <div className="flex items-baseline gap-4">
-                                        <span className="text-teal-400 font-black text-2xl italic opacity-50">3.</span>
-                                        <p className="text-lg leading-relaxed">
-                                          <span className="font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">In an emergency situation where water is flowing into the house structure, making channels through the ice dam allows the water behind the dam to drain off the roof.
-
-                             </span> 
-                                        </p>
-                                      </div>
-                            </p>
-                          </div>
-
-                          <div className="flex items-baseline gap-4">
-                            <span className="text-blue-400 font-black text-2xl italic opacity-50"></span>
-                            <p className="leading-relaxed font-bold text-lg md:text-xl mr-2 block pt-2 text-teal-50">
-                              <span className="font-bold text-2xl md:text-3xl mr-2 block text-teal-100 pb-2">Warning
-!</span> 
-Anyone on the roof during the winter or performing work on the roof from below risks injury and may cause damage to the roof and house. <br /> <br />   <span className=" font-bold text-xl lg:text-2xl 2xl:text-3xl">     It is important to contact professionals.</span>
-                   </p>
-                  
-                          </div>
-                          <div className="button-container mt-8">
-              <div className="send-button">Customize a Quote</div>
-              <div className="reset-button-container">
-                <div className="reset-button" id="reset-btn">
-                  Contact Us
-                </div>
-              </div>
-            </div>
-                        </div>
-                        
-                    </div>
-                    
-                  </div>
-            
-
-           
-          </div>
-        </div>
-
-        <div 
-          className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-4 
-            bg-gradient-to-t from-black/80 to-transparent 
-            pointer-events-none 
-            transition-opacity duration-500 
-            ${showArrow ? 'opacity-100' : 'opacity-0'}
-          `}
-        >
-          <span 
-            className={`text-[#ffffff] text-sm uppercase tracking-widest mb-2 transition-opacity duration-1000
-              ${showText ? 'opacity-100' : 'opacity-0'}
-            `}
-          >
-            Scroll Down
-          </span>
-
-          <div className="animate-bounce text-[#00eeff]">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-10 h-10">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-          </div>
-        </div>
-      </div> */}
     </Section>
   );
 };
@@ -1332,15 +857,296 @@ return (
 //   );
 // };
 
+// const ContactSection = () => {
+//   const [showArrow, setShowArrow] = useState(true);
+//   const [showText, setShowText] = useState(false); // New state for the text
+// // State for the new introductory owner screen
+//   const [showOwnerIntro, setShowOwnerIntro] = useState(true);
+//   const [isFadingOut, setIsFadingOut] = useState(false);
+// const [showSecondSet, setShowSecondSet] = useState(false);
+// const [animationPhase, setAnimationPhase] = useState("idle");
+// const [slideDirection, setSlideDirection] = useState("right");
+
+
+//   const scrollRef = useRef(null);
+
+//   const checkScroll = () => {
+//     if (scrollRef.current) {
+//       const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+//       const hasMoreToScroll = scrollHeight > clientHeight + scrollTop + 10;
+//       setShowArrow(hasMoreToScroll);
+      
+//       // If the user starts scrolling, we can also hide the text hint immediately
+//       if (scrollTop > 10) setShowText(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     // Check initial scroll state
+//     const scrollTimer = setTimeout(() => {
+//       checkScroll();
+//     }, 1000);
+
+//     // Show "Scroll Down" text after 5 seconds
+//     const textTimer = setTimeout(() => {
+//       setShowText(true);
+//     }, 4000);
+
+//     return () => {
+//       clearTimeout(scrollTimer);
+//       clearTimeout(textTimer);
+//     };
+//   }, []);
+
+// const handleCardSwitch = () => {
+//   if (animationPhase !== "idle") return;
+
+//   // Direction the current cards should exit
+//   setSlideDirection(showSecondSet ? "left" : "right");
+
+//   // Start fading out the CURRENT cards
+//   setAnimationPhase("exit");
+// };
+// const handleGridAnimationEnd = (event) => {
+//   // Ignore animation events bubbling up from child elements
+//   if (event.target !== event.currentTarget) return;
+
+//   if (animationPhase === "exit") {
+//     // Only switch the cards AFTER the old cards have exited
+//     setShowSecondSet((prev) => !prev);
+
+//     // New cards enter from the opposite direction
+//     setSlideDirection((prev) =>
+//       prev === "right" ? "left" : "right"
+//     );
+
+//     setAnimationPhase("enter");
+//   } else if (animationPhase === "enter") {
+//     setAnimationPhase("idle");
+//   }
+// };
+// return (
+//     <Section className="xl:mt-30 ">
+//       <div
+//         className="form-container
+//           relative
+//           lg:w-[950px] 
+//           lg:h-[1050px]
+//            xl:w-[1100px]
+//           xl:h-[800px]
+//           2xl:w-[1300px]
+//           2xl:h-[800px]
+//           overflow-hidden
+//           w-full 
+//           max-h-[85vh]
+//           opacity-95
+//           bg-cover
+//           bg-center
+//           bg-no-repeat
+//         "
+//       style={{ backgroundImage: `url('/textures/contactBanner.jpg')`,
+//         opacity:`10%`
+//        }}
+//       >
+
+        
+//         <div 
+//           ref={scrollRef}
+//           onScroll={checkScroll}
+//           className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth"
+//         >
+// <br />
+// <br />
+// <br />
+// <br />
+// <br />
+// <br />
+// <br />
+// <br />
+// <h4>
+//   I am a 24 year old male from the Chicago area
+// Work experience is 6 years in hospitality mainly
+// as a line cook for various types of places
+// Went to Culinary School and have a few 
+// culinary certifcations. I always appreciated 
+// learning new recipes and learning different
+// cultures.
+// Although I enjoy my life as a cook and I'd like
+// to move up in the culinary world, I am
+// currently looking for a entry level IT position.
+// My IT background was cultivated from years of
+// passion projects learning graphic design and 
+// web development with a heavy interest in
+// networking and the Internet.
+
+
+// </h4>
+// <br />
+// <br />
+// {/* Feature Cards */}
+// <div className="mx-auto mt-12 w-full max-w-5xl">
+
+//   {/* Card Grid */}
+//             <div
+//         key={showSecondSet ? "second-set" : "first-set"}
+//         onAnimationEnd={handleGridAnimationEnd}
+//         className={`grid grid-cols-1 gap-6 md:grid-cols-3 ${
+//           animationPhase === "exit"
+//             ? slideDirection === "right"
+//               ? "animate-[cardsExitRight_350ms_ease-in_both]"
+//               : "animate-[cardsExitLeft_350ms_ease-in_both]"
+//             : animationPhase === "enter"
+//               ? slideDirection === "left"
+//                 ? "animate-[cardsEnterLeft_500ms_ease-out_both]"
+//                 : "animate-[cardsEnterRight_500ms_ease-out_both]"
+//               : ""
+//         }`}
+//       >
+//     {(!showSecondSet
+//       ? [
+//           {
+//             number: "01",
+//             title: "Experience",
+//             description: "Crafting an effortless journey with a user-first approach.",
+//             image: "https://i.pinimg.com/736x/2b/74/7b/2b747b71b782a8833f2b3ad9b0e37cd1.jpg",
+//             color: "group-hover:text-orange-500",
+//           },
+//           {
+//             number: "02",
+//             title: "Interaction",
+//             description: "Our platform is designed for simplicity and ease.",
+//             image: "https://i.pinimg.com/564x/3c/c2/6c/3cc26c0140c2f0dc70d8aa48416c41dc.jpg",
+//             color: "group-hover:text-indigo-400",
+//           },
+//           {
+//             number: "03",
+//             title: "Design",
+//             description: "Our design philosophy centers around the user.",
+//             image: "https://i.pinimg.com/564x/fa/4f/cf/fa4fcfd2db636f98eb0f2b5aecce0c28.jpg",
+//             color: "group-hover:text-cyan-400",
+//           },
+//         ]
+//       : [
+//           {
+//             number: "04",
+//             title: "Innovation",
+//             description: "Exploring new possibilities through creative thinking.",
+//             image: "https://i.pinimg.com/736x/2b/74/7b/2b747b71b782a8833f2b3ad9b0e37cd1.jpg",
+//             color: "group-hover:text-emerald-400",
+//           },
+//           {
+//             number: "05",
+//             title: "Development",
+//             description: "Turning ambitious ideas into thoughtful solutions.",
+//             image: "https://i.pinimg.com/564x/3c/c2/6c/3cc26c0140c2f0dc70d8aa48416c41dc.jpg",
+//             color: "group-hover:text-purple-400",
+//           },
+//           {
+//             number: "06",
+//             title: "Creativity",
+//             description: "Bringing bold ideas to life through design.",
+//             image: "https://i.pinimg.com/564x/fa/4f/cf/fa4fcfd2db636f98eb0f2b5aecce0c28.jpg",
+//             color: "group-hover:text-pink-400",
+//           },
+//         ]
+//     ).map((card) => (
+//       <article
+//         key={card.number}
+//         className="group relative mx-auto min-h-[500px] w-full overflow-hidden border-4 border-black bg-cover bg-center shadow-xl animate-[cardReveal_700ms_ease-out_both] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_0_25px_rgba(0,238,255,0.12)]"
+//         style={{ backgroundImage: `url('${card.image}')` }}
+//       >
+//         <div className="flex min-h-[500px] flex-col justify-end bg-black/70 transition-colors duration-500 group-hover:bg-black/20">
+//           <div className="flex flex-1 flex-col justify-end bg-black/50 p-6">
+//             <h2
+//               className={`mb-4 mt-2 translate-y-8 text-xl font-bold uppercase text-white transition-all duration-300 group-hover:translate-y-0 ${card.color}`}
+//             >
+//               {card.number} — {card.title}
+//             </h2>
+
+//             <p className="translate-y-2 text-base text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+//               {card.description}
+//             </p>
+//           </div>
+//         </div>
+//       </article>
+//     ))}
+
+//   </div>
+
+//   {/* Small Toggle Button */}
+//   <div className="mt-8 flex justify-center">
+//     <button
+//       type="button"
+//       onClick={handleCardSwitch}
+//       aria-label={showSecondSet ? "Show cards 1 through 3" : "Show cards 4 through 6"}
+//       className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-black/40 text-[#00eeff] transition-all duration-300 hover:border-[#00eeff] hover:bg-[#00eeff]/10 hover:shadow-[0_0_15px_rgba(0,238,255,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00eeff]"
+//     >
+      
+// <svg
+//   xmlns="http://www.w3.org/2000/svg"
+//   fill="none"
+//   viewBox="0 0 24 24"
+//   strokeWidth={1.8}
+//   stroke="currentColor"
+//   className={`h-5 w-5 transition-transform duration-500 ease-in-out ${
+//     showSecondSet ? "rotate-180" : "rotate-0"
+//   }`}
+// >
+//   <path
+//     strokeLinecap="round"
+//     strokeLinejoin="round"
+//     d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+//   />
+// </svg>
+
+//     </button>
+//   </div>
+
+// </div>
+
+
+//         </div>
+//           {/* Fading Text Hint */}
+//         <div 
+//           className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-4 
+//             bg-gradient-to-t from-black/80 to-transparent 
+//             pointer-events-none 
+//             transition-opacity duration-500 
+//             ${showArrow ? 'opacity-100' : 'opacity-0'}
+//           `}
+//         >
+//           <span 
+//             className={`text-[#ffffff] text-sm uppercase tracking-widest mb-2 transition-opacity duration-1000
+//               ${showText ? 'opacity-100' : 'opacity-0'}
+//             `}
+//           >
+//             Scroll Down
+//           </span>
+
+//           {/* Bobbing Arrow */}
+//           <div className="animate-bounce text-[#00eeff]">
+//             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-10 h-10">
+//               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+//             </svg>
+//           </div>
+//         </div>
+//       </div>
+//     </Section>
+//   );
+// };
 const ContactSection = () => {
   const [showArrow, setShowArrow] = useState(true);
   const [showText, setShowText] = useState(false); // New state for the text
 
-const [showSecondSet, setShowSecondSet] = useState(false);
-const [animationPhase, setAnimationPhase] = useState("idle");
-const [slideDirection, setSlideDirection] = useState("right");
+  const [showSecondSet, setShowSecondSet] = useState(false);
+  const [animationPhase, setAnimationPhase] = useState("idle");
+  const [slideDirection, setSlideDirection] = useState("right");
 
-const isAnimating = animationPhase !== "idle";
+  // State for the new introductory owner screen
+  const [showOwnerIntro, setShowOwnerIntro] = useState(true);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+
+  const isAnimating = animationPhase !== "idle";
 
   const scrollRef = useRef(null);
 
@@ -1372,85 +1178,112 @@ const isAnimating = animationPhase !== "idle";
     };
   }, []);
 
-const handleCardSwitch = () => {
-  if (animationPhase !== "idle") return;
+  const handleCardSwitch = () => {
+    if (animationPhase !== "idle") return;
 
-  // Direction the current cards should exit
-  setSlideDirection(showSecondSet ? "left" : "right");
+    // Direction the current cards should exit
+    setSlideDirection(showSecondSet ? "left" : "right");
 
-  // Start fading out the CURRENT cards
-  setAnimationPhase("exit");
-};
-const handleGridAnimationEnd = (event) => {
-  // Ignore animation events bubbling up from child elements
-  if (event.target !== event.currentTarget) return;
+    // Start fading out the CURRENT cards
+    setAnimationPhase("exit");
+  };
 
-  if (animationPhase === "exit") {
-    // Only switch the cards AFTER the old cards have exited
-    setShowSecondSet((prev) => !prev);
+  const handleGridAnimationEnd = (event) => {
+    // Ignore animation events bubbling up from child elements
+    if (event.target !== event.currentTarget) return;
 
-    // New cards enter from the opposite direction
-    setSlideDirection((prev) =>
-      prev === "right" ? "left" : "right"
-    );
+    if (animationPhase === "exit") {
+      // Only switch the cards AFTER the old cards have exited
+      setShowSecondSet((prev) => !prev);
 
-    setAnimationPhase("enter");
-  } else if (animationPhase === "enter") {
-    setAnimationPhase("idle");
-  }
-};
-return (
+      // New cards enter from the opposite direction
+      setSlideDirection((prev) =>
+        prev === "right" ? "left" : "right"
+      );
+
+      setAnimationPhase("enter");
+    } else if (animationPhase === "enter") {
+      setAnimationPhase("idle");
+    }
+  };
+
+  const handleLearnMore = () => {
+    setIsFadingOut(true);
+    setTimeout(() => {
+      setShowOwnerIntro(false);
+    }, 500); // Matches the 500ms transition duration
+  };
+
+  return (
     <Section className="xl:mt-30 ">
       <div
         className="form-container
           relative
           lg:w-[950px] 
           lg:h-[1050px]
-           xl:w-[1100px]
+          xl:w-[1100px]
           xl:h-[800px]
           2xl:w-[1300px]
           2xl:h-[800px]
           overflow-hidden
-          w-full 
+          w-[375px] 
           max-h-[85vh]
-          opacity-95
+          opacity-90
           bg-cover
           bg-center
           bg-no-repeat
         "
-      style={{ backgroundImage: `url('/textures/contactBanner.jpg')` }}
+        style={{ backgroundImage: `url('/textures/contactBanner.jpg')`,
+          
+         }}
       >
+        {/* New Owner Intro Splash Page Overlay */}
+        {/* New Owner Intro Splash Page Overlay */}
+        {showOwnerIntro && (
+          <div
+            className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-black  p-8 text-center transition-opacity duration-500 ${
+              isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`}
+          >
+            <div className="max-w-xl space-y-6 text-white">
+              <h2 className="text-2xl md:text-3xl font-bold leading-snug">
+                If you have any questions my contact info is
+              </h2>
+              <div className="text-xl font-medium space-y-1">
+                <p>Michael Murray</p>
+                <p>+1 (262) 230-5182</p>
+                <p>murraymichael004@gmail.com</p>
+              </div>
+              <div className="pt-4">
+                <button
+                  type="button"
+                  onClick={handleLearnMore}
+                  className="rounded-lg bg-[#00eeff] px-6 py-3 text-lg font-semibold text-black shadow-lg transition-all duration-300 hover:bg-[#00eeff]/80 hover:shadow-[0_0_20px_rgba(0,238,255,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div 
           ref={scrollRef}
           onScroll={checkScroll}
-          className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth"
+          className="h-full w-full overflow-y-auto p-4 pb-24 scroll-smooth "
         >
 <br />
 <br />
+<div className=" xl:left-0 bg-black/60 p-6 md:p-8 rounded-l-2xl">
+<h2 className="text-fuchsia-50 text-right text-2xl "> 
+  My Portfolio</h2>
+</div>
 <br />
 <br />
 <br />
 <br />
 <br />
 <br />
-<h4>
-  I am a 24 year old male from the Chicago area
-Work experience is 6 years in hospitality mainly
-as a line cook for various types of places
-Went to Culinary School and have a few 
-culinary certifcations. I always appreciated 
-learning new recipes and learning different
-cultures.
-Although I enjoy my life as a cook and I'd like
-to move up in the culinary world, I am
-currently looking for a entry level IT position.
-My IT background was cultivated from years of
-passion projects learning graphic design and 
-web development with a heavy interest in
-networking and the Internet.
-
-
-</h4>
 <br />
 <br />
 {/* Feature Cards */}
@@ -1573,12 +1406,41 @@ networking and the Internet.
   </div>
 
 </div>
+<br /><br /><br />
+<h4 className=" text-white bg-black/80  text-3xl lg:text-2xl  lg:mx-20   p-1 md:p-2 lg:p-4 rounded-l-2xl" >
+  I am a 24 year old male from Chicago, IL.
+8+ years in hospitality mainly
+as a Line Cook for various types of restaurants.
+Went to Culinary School and have a few 
+culinary certifcations. I always appreciated 
+learning new recipes and learning different
+cultures.
+<br />
+<br />
+Although I enjoy my life as a cook and I'd like
+to move up in the culinary world, I am
+currently looking for a entry level IT position.
+<br />
+My IT background was cultivated from years of
+passion projects learning graphic design and 
+web development with a heavy interest in
+networking and the Internet.
+
+<br />
+<br />
+<span className="block text-center w-full">
+  <a href="/">
+Here is my formal resume</a>
+</span>
+
+</h4>
 
 
         </div>
+        
           {/* Fading Text Hint */}
         <div 
-          className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-4 
+          className={`absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-8 
             bg-gradient-to-t from-black/80 to-transparent 
             pointer-events-none 
             transition-opacity duration-500 
@@ -1592,6 +1454,8 @@ networking and the Internet.
           >
             Scroll Down
           </span>
+
+
 
           {/* Bobbing Arrow */}
           <div className="animate-bounce text-[#00eeff]">

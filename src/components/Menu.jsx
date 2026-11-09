@@ -746,7 +746,7 @@ Click on Song Title for Music App                    </p>
       >
         <div class="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black"></div>
         <div class="rounded-sm text-md bg-black py-1 px-2">
-          <p class="whitespace-nowrap">Change Background</p>
+          <p class="whitespace-nowrap">Contact</p>
         </div>
       
       </div>
@@ -954,7 +954,7 @@ Click on Song Title for Music App                    </p>
         <div className="mb-2 pb-0 text-center flex flex-col items-center">
                
 
-          <h3 className="pb-1 pt-1 text-base text-center">SURMUR LLC © 2025</h3>
+          <h3 className="pb-1 pt-1 text-base text-center">SURMUR LLC © 2026</h3>
         </div>
       </div> 
 

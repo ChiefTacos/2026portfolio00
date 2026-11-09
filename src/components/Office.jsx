@@ -2488,14 +2488,14 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
 
   const modelPosition =
   device === "mobile" || device === "tablet"
-    ? [-6.5,  -6.56,  18.3]   // mobile + tablet
-     : [-6.5, -6.6, 18];     // desktop
+    ? [-6.5, section === 3 ? -6.56 - 3: -6.56,  18.3]   // mobile + tablet
+     : [-6.5, section === 3 ? -6.6 + 3: -6.6, 18];     // desktop
     // : [-9, -3, 0];    
 
 const currentXRotation = (section === 3) ? -0.35 : (section === 0) ? -0.33 : -0.25;
 const modelRotation = (section === 3) 
     // ? [currentXRotation, 4.2, 0.0]   // Unique Y and Z for Section 3
-    ? [currentXRotation, 1.00, 0.003]   // Unique Y and Z for Section 3
+    ? [currentXRotation, Math.PI + 1.59, 0.003]   // Unique Y and Z for Section 3
     : [currentXRotation, 0.00, 0.003];
 
   const openOverlay = (id) => {
