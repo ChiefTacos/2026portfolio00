@@ -1010,3 +1010,12 @@ overflow: hidden;
         background-position: 100% 50%;
     }
 }
+
+/* contactFirst Page copyable text */
+@keyframes sparkle {
+  0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -40px) scale(1.4); }
+}
+.animate-sparkle {
+  animation: sparkle 0.8s ease-out forwards;
+}

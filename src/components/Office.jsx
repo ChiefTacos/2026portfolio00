@@ -467,15 +467,22 @@ useEffect(() => {
 
 
 
+// const showViewButton = section === 0 
+//   ? (id === "freeQ" && !isActive) 
+//   : (hideTriggerButton 
+//       ? false 
+//       // NEW: If mobile/tablet AND something is open, hide ALL trigger buttons
+//       // : (isMobileOrTablet && isAnyOpen ? false : !isActive)
+//       // NEW: Simply check if this specific overlay is active
+//       : !isActive
+//     );
 const showViewButton = section === 0 
   ? (id === "freeQ" && !isActive) 
-  : (hideTriggerButton 
+  : (isAnyOpen 
       ? false 
-      // NEW: If mobile/tablet AND something is open, hide ALL trigger buttons
-      // : (isMobileOrTablet && isAnyOpen ? false : !isActive)
-      // NEW: Simply check if this specific overlay is active
       : !isActive
     );
+
 
 const FreeQuoteButton = ({ onClick, isClickable }) => {
   return (
@@ -483,7 +490,7 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
       className="
              
               relative group scale-110 xl:scale-50  "
-      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "10",}}
+      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0.5,  zIndex: "1",}}
     >
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90
@@ -518,6 +525,8 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
               <path d="M36 44C38 40, 42 40, 44 44" stroke="#fcd34d" strokeWidth="4" strokeLinecap="round"/>
             </svg> 
 )} */}
+
+{/* teddy bear  */}
              {section !== 0 && (
 
         <span className="relative block px-1 py-1 pb-1 lg:py-3 lg:pb-3 rounded-2xl bg-transparent overflow-hidden ">
@@ -531,15 +540,10 @@ const FreeQuoteButton = ({ onClick, isClickable }) => {
 
             {section === 0 && (
   <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-2 pt-1 pl-3 tracking-wider text-white">
-    Explore
+    {user ? "Explore" : "Login"}
   </span>
 )}
-{/* old text
-            <span className="text-6xl md:text-7xl lg:text-8xl font-bold lg:pb-4 lg:pt-1 md:pb-5 md:pt-2 pb-2 pt-1  px-1 tracking-wider text-white
-           
-                            ">
-            
-            </span> */}
+
           </div>
         </span>
       </button>
@@ -552,9 +556,11 @@ const ServiceWindowButton = ({ onClick, isClickable }) => {
       className="
              
               relative group scale-100 xl:scale-75  "
-// og      style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0,  zIndex: "10",}}
-      style={{ pointerEvents: isClickable ? "none" : "none", opacity: isClickable ? 0 : 0,  zIndex: "10",}}
-    
+// og 
+    //  style={{ pointerEvents: isClickable ? "auto" : "none", opacity: isClickable ? 1 : 0,  zIndex: "10",}}
+  //  2nd
+    //  style={{ pointerEvents: isClickable ? "none" : "none", opacity: isClickable ? 0 : 0,  zIndex: "0",}}
+    style={{ pointerEvents: "none", opacity: 0, zIndex: 0 }}
     
     >
       <button
@@ -2150,6 +2156,26 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
       }}
     >
 
+{/* new updated code so only the freeQ window can be clicked on so the stackable windows dont be affected by th ebuttons when interacting in the window ui */}
+{/* {!hideTriggerButton && showViewButton && (
+  <div className="flex items-center justify-center" 
+  style={{
+  pointerEvents: id === "freeQ" && isVisible && isClickable && !isActive ? "auto" : "none",
+  opacity: id === "freeQ" && !isActive ? (isClickable ? 1 : 0.4) : 0,
+  transition: "opacity 0.4s ease",
+  position: "relative",
+  zIndex: "auto",
+}}>
+    <div 
+      className="relative group"
+      style={{
+      pointerEvents: id === "freeQ" && isVisible && isClickable ? "auto" : "none",
+      opacity: id === "freeQ" ? (isClickable ? 1 : 0.4) : 0,
+      transition: "opacity 0.4s ease",
+      position: "relative",
+      zIndex: "auto",
+    }}
+    > */}
      {id === "freeQ" ? (
         <FreeQuoteButton onClick={handleButtonClick} isClickable={isClickable} />
       ) : id === "contactWindow" ? (
@@ -2160,7 +2186,12 @@ This is where you write your goals, diaries, and thoughts.    (Shift+Enter for n
       className="
              
               relative group  scale-100 xl:scale-75  "
-      style={{ pointerEvents: isClickable ? "none" : "none", opacity: isClickable ? 0 : 0,  zIndex: "10",}}
+      style={
+        // og
+        // { pointerEvents: isClickable ? "none" : "none", opacity: isClickable ? 0 : 0,  zIndex: "10",}
+    { pointerEvents: "none", opacity: 0, zIndex: 0 }
+    
+    }
     >
       <button
         className="relative inline-block p-px font-bold text-white rounded-2xl shadow-2xl cursor-pointer transition-all duration-300 ease-in-out hover:scale-100 active:scale-90
@@ -2365,8 +2396,8 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
   useEffect(() => {
     const check = () => {
       const w = window.innerWidth;
-      if (w <= 768) setDevice("mobile");
-      else if (w <= 1024) setDevice("tablet");
+      if (w <= 767) setDevice("mobile");
+      else if (w <= 1023) setDevice("tablet");
       else setDevice("desktop");
     };
     check();
@@ -2407,14 +2438,15 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
 
     //notes
     driveway: {
-      distanceFactor: { desktop: 0.32, tablet: 0.56, mobile: 0.56 },
+      distanceFactor: { desktop: 0.36, tablet: 0.9, mobile: 0.79 },
       position: {
         
-        // desktop: [-610.128, 328.8, 172],
-        desktop: [-2.91, 2.17, 0],
-        tablet: [0.128, 4, 0],
-        mobile: [0.128, 4, 0],
-
+        // desktop: [-2.91, 2.17, 0],
+        // tablet: [0.128, 4, 0],
+        // mobile: [0.128, 4, 0],
+          desktop: section === 0 ? [0, 2, 0] : [-3.39, 2.512, 0],
+        tablet:section === 0 ? [0, 2, 0] : [-7.3, 7.3, 0] ,
+        mobile:section === 0 ? [0, 2, 0] : [-3.19, 7.2, 0] ,
 
       },
     },
@@ -2431,22 +2463,20 @@ const textureGlassMaterial = new THREE.MeshStandardMaterial({
     },
     // music
     contact: {
-      distanceFactor: { desktop: 0.32, tablet: 0.6, mobile: 0.6 },
+      distanceFactor: { desktop: 0.36, tablet: 0.9, mobile: 0.79 },
       position: {
-        // desktop: [103.2, 600.1, 1077.2],
-        desktop: [-2.93 , 1.83, 0],
-
-        tablet: [-2.4 , 4, 0],
-        // tablet: [461.2, 200.1, 507.2],
-        
-        //  mobile:  [-40.128, 0, 805.314],
-        mobile: [-2.4 ,4, 0],
+        // desktop: [-2.93 , 1.83, 0],
+        // tablet: [-2.4 , 4, 0],
+        // mobile: [-2.4 ,4, 0],
+         desktop: section === 0 ? [0, 2, 0] : [-3.39, 2.512, 0],
+        tablet:section === 0 ? [0, 2, 0] : [-7.3, 7.3, 0] ,
+        mobile:section === 0 ? [0, 2, 0] : [-3.19, 7.2, 0] ,
       },
     },
     freeQ: {
-      distanceFactor: { desktop: 0.36, tablet: 0.62, mobile: 0.72  },
+      distanceFactor: { desktop: 0.34, tablet: 0.62, mobile: 0.72  },
       position: {
-      desktop: section === 0 ? [0, 2, 0] : [-2.85, 2.512, 0],
+      desktop: section === 0 ? [0, 2, 0] : [-2.5, 2.512, 0],
               // tablet: [461.2, 880.1, 707.2],
 
         tablet:section === 0 ? [0, 2, 0] : [0, 7, 0] ,

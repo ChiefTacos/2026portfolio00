@@ -598,6 +598,7 @@ Click on Song Title for Music App                    </p>
                           
                           <div onClick={(e) => {
                 e.stopPropagation();
+                    spawnCoin(e);
                 setMenuOpened(false); // Closes navigation menu dropdown
 
                 // 1. Force state to Section 1 if not already there

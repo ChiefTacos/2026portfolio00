@@ -1213,7 +1213,35 @@ const ContactSection = () => {
       setShowOwnerIntro(false);
     }, 500); // Matches the 500ms transition duration
   };
+function CopyableText({ text }) {
+  const [sparkle, setSparkle] = useState(false);
 
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text);
+    setSparkle(true);
+    setTimeout(() => setSparkle(false), 800);
+  };
+
+  return (
+    <div className="relative inline-block">
+      <button
+        type="button"
+        onClick={handleCopy}
+        className="group relative px-3 py-1 rounded transition-all duration-500 hover:shadow-[0_8px_20px_rgba(0,238,255,0.35)] hover:-translate-y-1 active:translate-y-0"
+      >
+        {text}
+        {sparkle && (
+          <span className="absolute left-1/2 -translate-x-1/2 bottom-full pointer-events-none animate-sparkle">
+            📝
+          </span>
+        )}
+      </button>
+    </div>
+  );
+}
+
+
+  
   return (
     <Section className="xl:mt-30 ">
       <div
@@ -1245,9 +1273,10 @@ const ContactSection = () => {
                 If you have any questions my contact info is
               </h2>
               <div className="text-xl font-medium space-y-1">
-                <p>Michael Murray</p>
-                <p>+1 (262) 230-5182</p>
-                <p>murraymichael004@gmail.com</p>
+                <p className="pb-1">Michael Murray</p>
+               <CopyableText text="+1 (262) 230-5182" />
+               <br />
+               <CopyableText text="murraymichael004@gmail.com" />
               </div>
               <div className="pt-4">
                 <button
@@ -1263,7 +1292,7 @@ const ContactSection = () => {
         )}
 
 <div 
-    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 -z-10"
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-75 -z-10"
     style={{ backgroundImage: `url('/textures/contactBanner.jpg')` }}
   />
         <div 
