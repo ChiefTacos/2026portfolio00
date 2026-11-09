@@ -1227,15 +1227,10 @@ const ContactSection = () => {
           2xl:h-[800px]
           overflow-hidden
           w-[375px] 
+          md:w-auto
           max-h-[85vh]
-          opacity-90
-          bg-cover
-          bg-center
-          bg-no-repeat
+         bg-transparent
         "
-        style={{ backgroundImage: `url('/textures/contactBanner.jpg')`,
-          
-         }}
       >
         {/* New Owner Intro Splash Page Overlay */}
         {/* New Owner Intro Splash Page Overlay */}
@@ -1267,6 +1262,10 @@ const ContactSection = () => {
           </div>
         )}
 
+<div 
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 -z-10"
+    style={{ backgroundImage: `url('/textures/contactBanner.jpg')` }}
+  />
         <div 
           ref={scrollRef}
           onScroll={checkScroll}
@@ -1274,16 +1273,16 @@ const ContactSection = () => {
         >
 <br />
 <br />
-<div className=" xl:left-0 bg-black/60 p-6 md:p-8 rounded-l-2xl">
+<div className="w-full overflow-visible">
+    <h1 className="masked-text  xl:text-right"> 
+        Portfolio
+    </h1>
+</div>
+{/* <div className=" xl:left-0 bg-black/60 p-6 md:p-8 rounded-l-2xl">
 <h2 className="text-fuchsia-50 text-right text-2xl "> 
   My Portfolio</h2>
-</div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+</div> */}
+
 <br />
 <br />
 {/* Feature Cards */}
@@ -1309,50 +1308,64 @@ const ContactSection = () => {
       ? [
           {
             number: "01",
-            title: "Experience",
-            description: "Crafting an effortless journey with a user-first approach.",
-            image: "https://i.pinimg.com/736x/2b/74/7b/2b747b71b782a8833f2b3ad9b0e37cd1.jpg",
+            title: "Startup Business Template",
+            description: "Exciting and polished website for real professionals.",
+            image: "/textures/projects/badgerss.png", // Linked from public folder
+            url: "https://www.badgerss.com/",
             color: "group-hover:text-orange-500",
           },
           {
             number: "02",
-            title: "Interaction",
-            description: "Our platform is designed for simplicity and ease.",
-            image: "https://i.pinimg.com/564x/3c/c2/6c/3cc26c0140c2f0dc70d8aa48416c41dc.jpg",
-            color: "group-hover:text-indigo-400",
+            title: "MurBurger",
+            description: "Simple template for a restaurant website.",
+            image: "/textures/projects/murburger.png",
+            url: "https://murburger-proto.vercel.app/",
+            color: "group-hover:text-red-400",
           },
           {
             number: "03",
-            title: "Design",
-            description: "Our design philosophy centers around the user.",
-            image: "https://i.pinimg.com/564x/fa/4f/cf/fa4fcfd2db636f98eb0f2b5aecce0c28.jpg",
+            title: "3D Billboard App",
+            description: "First portfolio I made that I incorporated React with 3D modeling.",
+            image: "/textures/projects/billboard.png",
+            url: "https://office-dun.vercel.app/",
             color: "group-hover:text-cyan-400",
           },
         ]
       : [
           {
             number: "04",
-            title: "Innovation",
-            description: "Exploring new possibilities through creative thinking.",
-            image: "https://i.pinimg.com/736x/2b/74/7b/2b747b71b782a8833f2b3ad9b0e37cd1.jpg",
+            title: "First 3D Website",
+            description: "Learned how to upload my custom 3D files and Bake the textures.",
+            image: "/textures/projects/first3d.png",
+            url: "https://portfolio-six-pi-54.vercel.app/",
             color: "group-hover:text-emerald-400",
           },
           {
             number: "05",
-            title: "Development",
-            description: "Turning ambitious ideas into thoughtful solutions.",
-            image: "https://i.pinimg.com/564x/3c/c2/6c/3cc26c0140c2f0dc70d8aa48416c41dc.jpg",
+            title: "First Full Stack App",
+            description: "Made over 4 years ago. The app used to feature a login user feature and a upload recipe feature.",
+            image: "/textures/projects/recipe.png",
+            url: "https://recipe-app-seven-beta.vercel.app/",
             color: "group-hover:text-purple-400",
           },
           {
             number: "06",
             title: "Creativity",
-            description: "Bringing bold ideas to life through design.",
-            image: "https://i.pinimg.com/564x/fa/4f/cf/fa4fcfd2db636f98eb0f2b5aecce0c28.jpg",
+            description: "Bold ideas to life through 3D web design.",
+            image: "/textures/projects/office2026.png",
+            url: "https://www.sirmur.com/",
             color: "group-hover:text-pink-400",
           },
         ]
     ).map((card) => (
+      <a
+        key={card.number}
+        href={card.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative mx-auto block min-h-[500px] w-full overflow-hidden border-4 border-black bg-cover bg-center shadow-xl animate-[cardReveal_700ms_ease-out_both] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_0_25px_rgba(0,238,255,0.12)] cursor-pointer"
+        style={{ backgroundImage: `url('${card.image}')` }}
+      >
       <article
         key={card.number}
         className="group relative mx-auto min-h-[500px] w-full overflow-hidden border-4 border-black bg-cover bg-center shadow-xl animate-[cardReveal_700ms_ease-out_both] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_0_25px_rgba(0,238,255,0.12)]"
@@ -1372,6 +1385,7 @@ const ContactSection = () => {
           </div>
         </div>
       </article>
+      </a>
     ))}
 
   </div>
@@ -1420,6 +1434,7 @@ cultures.
 Although I enjoy my life as a cook and I'd like
 to move up in the culinary world, I am
 currently looking for a entry level IT position.
+<br />
 <br />
 My IT background was cultivated from years of
 passion projects learning graphic design and 
