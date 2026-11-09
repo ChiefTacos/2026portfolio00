@@ -618,7 +618,7 @@ Click on Song Title for Music App                    </p>
               }} className='relative pointer-events-auto cursor-pointer  
              hover:bg-zinc-100 dark:hover:bg-zinc-800 
              hover:text-foreground dark:hover:text-white transition-colors rounded px-1 -mx-1'>
-                              <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[250px] pl-1 mr-12">
+                              <p className="text-sm text-muted-foreground/80 dark:text-zinc-400 truncate max-w-[250px] pl-0 mr-12">
                                 {currentTrack ? `${currentTrack.title} - ${currentTrack.artist}` : "No Track Selected"}
                               </p>
 

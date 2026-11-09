@@ -1015,7 +1015,7 @@ style={{
     setIsEnlarged(prev => !prev);
     setIsFullscreen(false); // Ensure it's not in "Minimized" mode so content shows
     setTimeout(() => snapBackIntoBounds(), 50);
-  }} onPointerDown={(e) => e.stopPropagation()} style={{ pointerEvents: "auto" }} title="Enlarge Window">
+  }} onPointerDown={(e) => e.stopPropagation()} style={{ pointerEvents: "auto" }} title="MAXIMIZE">
             <span className="bg-green-500 inline-block w-14 h-14 xl:w-10 xl:h-10 rounded-full hover:bg-green-600 transition"></span>
           </button>
           </div>
