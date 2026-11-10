@@ -29,7 +29,7 @@ export const LoadingScreen = ({ started, setStarted }) => {
 
       {/* NEW 3D RING LOADER (CENTERED) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="loader">
+        <div className="loading">
           <div className="load-inner load-one" />
           <div className="load-inner load-two" />
           <div className="load-inner load-three" />
@@ -38,7 +38,7 @@ export const LoadingScreen = ({ started, setStarted }) => {
       </div>
 
       {/* BOTTOM TEXT AREA */}
-      <div
+      {/* <div
         className="
           text-white md:text-2xl text-xl font-medium tracking-wider 
           pointer-events-auto absolute bottom-0 left-0 right-0 
@@ -53,7 +53,7 @@ export const LoadingScreen = ({ started, setStarted }) => {
           >
             Reach us @ +1 262-230-5182
           </a>
-      </div>
+      </div> */}
     </StyledWrapper>
   );
 };
@@ -61,7 +61,7 @@ export const LoadingScreen = ({ started, setStarted }) => {
 const StyledWrapper = styled.div`
   background-color: #000;
 
-  .loader {
+  .loading {
     position: relative;
     display: flex;
     align-items: center;
