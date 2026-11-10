@@ -1224,9 +1224,109 @@ style={{
   )}
 </div>
     <hr className="border-white/10 mx-16 my-4  col-span-2" />
+ {/* ========================================================= */}
+    {/* TWO NEW COLUMNS SIDE-BY-SIDE (Inbetween Clock & Timer)     */}
+    {/* ========================================================= */}
+    
+    {/* NEW SUB-PANEL A (Left) */}
+    {/* weather Weather */}
+{/* Weather Widget Container */}
+<div 
+  className="bg-black/70 mx-4 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col lg:flex-row items-center lg:items-stretch justify-between text-center w-full overflow-hidden"
+  draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}
+>
+  {/* Left Column: Map Container */}
+  <div className="map-container relative w-full lg:w-1/2 aspect-[16/9] min-h-[300px] overflow-hidden rounded-l-3xl">
+   <svg 
+    viewBox="0 0 1500 750" /* <-- Increased dimensions to zoom out */
+    className="map-background w-full h-full absolute inset-0 object-cover block"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    {/* Ocean & Lake Background (Match the new wider viewBox size) */}
+    <rect fill="#90daee" width="1560" height="630" />
+      
+      {/* --- WRAPPER GROUP WITH X-OFFSET (Pushes map right) --- */}
+<g transform="translate(230, 30)"> {/* Optional: adjust translation if you need to reposition it */}  
+        {/* Detailed Contiguous US Landmass */}
+        <path
+          fill="#f5f0e5"
+          stroke="#cbd5e1"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          d="M 120,70 
+              L 180,68 L 260,65 L 340,63 L 440,62 L 530,62 L 600,60 
+              L 640,60 L 675,65 L 705,75 L 730,78 L 770,72 L 785,55 L 810,45 
+              L 845,65 L 870,50 L 910,95 L 875,130 L 890,160 L 860,185 
+              L 845,215 L 840,255 L 820,305 L 830,365 
+              L 855,445 L 850,510 L 825,515 L 815,485 L 800,450 
+              L 785,420 L 760,405 L 735,410 L 705,425 L 685,425 L 680,445 
+              L 660,445 L 655,470 L 635,475 L 620,440 L 595,440
+              L 575,448 L 565,475 L 535,490 L 525,540 L 495,545 L 450,515 
+              L 415,445 L 380,445 L 375,400 L 320,400 L 260,395 L 235,395 
+              L 205,370 L 170,335 L 140,285 L 120,215 L 100,165 Z"
+        />
+
+        {/* --- Detailed Individual Great Lakes --- */}
+        <path fill="#90daee" stroke="#cbd5e1" strokeWidth="1" d="M 605,82 C 615,70 645,68 670,75 C 685,82 675,95 655,95 C 635,95 625,100 610,92 Z" />
+        <path fill="#90daee" stroke="#cbd5e1" strokeWidth="1" d="M 655,108 C 665,108 670,125 668,155 C 665,175 650,175 645,155 C 642,130 648,110 655,108 Z" />
+        <path fill="#90daee" stroke="#cbd5e1" strokeWidth="1" d="M 678,95 C 695,90 710,110 705,135 C 698,145 688,140 682,125 C 678,115 670,105 678,95 Z" />
+        <path fill="#90daee" stroke="#cbd5e1" strokeWidth="1" d="M 700,148 C 720,138 745,138 750,145 C 738,155 715,160 700,148 Z" />
+        <path fill="#90daee" stroke="#cbd5e1" strokeWidth="1" d="M 758,135 C 775,130 790,135 792,142 C 780,148 765,148 758,135 Z" />
+      </g>
+    </svg>
+
+    <div className="map-cities absolute inset-0 w-full h-full pointer-events-none">
+      {/* City Markers - If you want these to shift with the map, wrap them in a styled div or add pixel offset */}
+      <div style={{ '--x': '16', '--y': '16', pointerEvents: 'auto' }} className="map-city group cursor-pointer absolute transition-transform duration-300 hover:scale-200">
+        <div className="map-city__label"><span data-icon="📍" className="map-city__sign transition-transform duration-300 inline-block">Seattle</span></div>
+      </div>
+      <div style={{ '--x': '13', '--y': '54', pointerEvents: 'auto' }} className="map-city group cursor-pointer absolute transition-transform duration-300 hover:scale-200">
+        <div className="map-city__label"><span data-icon="📍" className="map-city__sign transition-transform duration-300 inline-block">Los Angeles</span></div>
+      </div>
+      <div style={{ '--x': '63', '--y': '31', pointerEvents: 'auto' }} className="map-city group cursor-pointer absolute transition-transform duration-300 hover:scale-200">
+        <div className="map-city__label"><span data-icon="📍" className="map-city__sign anim anim-grow transition-transform duration-300 inline-block">Chicago</span></div>
+      </div>
+      <div style={{ '--x': '50', '--y': '79', pointerEvents: 'auto' }} className="map-city group cursor-pointer absolute transition-transform duration-300 hover:scale-200">
+        <div className="map-city__label"><span data-icon="📍" className="map-city__sign transition-transform duration-300 inline-block">Houston</span></div>
+      </div>
+      <div style={{ '--x': '84', '--y': '26', pointerEvents: 'auto' }} className="map-city group cursor-pointer absolute transition-transform duration-300 hover:scale-200">
+        <div className="map-city__label"><span data-icon="📍" className="map-city__sign anim anim-slidein transition-transform duration-300 inline-block">New York</span></div>
+      </div>
+      <div style={{ '--x': '83', '--y': '83', pointerEvents: 'auto' }} className="map-city group cursor-pointer absolute transition-transform duration-300 hover:scale-200">
+        <div className="map-city__label"><span data-icon="📍" className="map-city__sign anim anim-slidein transition-transform duration-300 inline-block">Miami</span></div>
+      </div>
+    </div>
+  </div>
+
+  {/* Right Column: Headings / Content Section */}
+  <div className="weather-info w-full lg:w-1/2 p-6 flex flex-col justify-center items-start text-left">
+    <h2 className="text-2xl font-bold text-white mb-2">Weather Conditions</h2>
+    <h3 className="text-lg text-gray-300 mb-1">Select a city on the map</h3>
+    <p className="text-sm text-gray-400">Detailed forecast and regional metrics will appear here.</p>
+  </div>
+</div>
+    {/* NEW SUB-PANEL B (Right) */}
+    <div 
+      className="bg-black/70 mx-4 lg:mx-0 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[300px]"
+      draggable={false}
+      onPointerDownCapture={(e) => e.stopPropagation()}
+      onMouseDownCapture={(e) => e.stopPropagation()}
+      onTouchStartCapture={(e) => e.stopPropagation()}
+    >
+      <h3 className="text-white font-bold mb-2 uppercase tracking-widest text-xs opacity-50">Panel B</h3>
+      <p className="text-gray-300 text-sm">
+        Second half-width widget or content goes here.
+      </p>
+    </div>
+
+    <hr className="border-white/10 mx-16 my-4 col-span-2" />
+
 
     {/* PANEL 2: FOCUS TIMER */}
-    <div className="bg-black/70 mx-4 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[260px]">
+    <div className="bg-black/70 mx-4 lg:mx-12 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[320px]">
       <h3 className="text-white font-bold mb-2 opacity-50 text-xs uppercase tracking-widest">Focus Timer</h3>
       <div className="flex items-center justify-center gap-6 mb-4"
       draggable={false}
@@ -1350,6 +1450,26 @@ style={{
         </div>
         </div>
         
+            <hr className="border-white/10 mx-16 my-4  col-span-2" />
+    {/* ========================================================= */}
+    {/* NEW FULL-WIDTH PANEL (Inbetween Clock & Focus Timer)      */}
+    {/* ========================================================= */}
+    <div 
+      className="bg-black/70 p-8 lg:p-12 mx-2 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[350px] col-span-2"
+      draggable={false}
+      onPointerDownCapture={(e) => e.stopPropagation()}
+      onMouseDownCapture={(e) => e.stopPropagation()}
+      onTouchStartCapture={(e) => e.stopPropagation()}
+    >
+      <h3 className="text-white font-bold mb-2 uppercase tracking-widest text-xs opacity-50">Custom Full-Width Panel</h3>
+      <p className="text-gray-300 text-lg">
+        Add your new widgets, notes, or controls here! This panel spans the full window width using <code className="text-yellow-500 font-mono">col-span-2</code>.
+      </p>
+    </div>
+
+    <hr className="border-white/10 mx-16 my-4  col-span-2" />
+
+
          {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
         <div className="relative bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]"
         >

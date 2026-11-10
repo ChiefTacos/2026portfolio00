@@ -1258,6 +1258,7 @@ function CopyableText({ text }) {
           md:w-auto
           max-h-[85vh]
          bg-transparent
+         opacity-100
         "
       >
         {/* New Owner Intro Splash Page Overlay */}
@@ -1265,7 +1266,7 @@ function CopyableText({ text }) {
         {showOwnerIntro && (
           <div
             className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-black  p-8 text-center transition-opacity duration-500 ${
-              isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
+              isFadingOut ? "opacity-0 pointer-events-none" : "opacity-90"
             }`}
           >
             <div className="max-w-xl space-y-6 text-white">
@@ -1292,7 +1293,7 @@ function CopyableText({ text }) {
         )}
 
 <div 
-    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-75 -z-10"
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100 -z-10"
     style={{ backgroundImage: `url('/textures/contactBanner.jpg')` }}
   />
         <div 

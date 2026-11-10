@@ -1019,3 +1019,495 @@ overflow: hidden;
 .animate-sparkle {
   animation: sparkle 0.8s ease-out forwards;
 }
+
+
+/* weather widget for HomePAGE */
+/* From Uiverse.io by SnyDeTreves */ 
+/*************/
+/* Variables */
+/*************/
+
+.map-container {
+  --city-radius: 2rem;
+  --city-sign-color-back: #00c080;
+  --city-sign-color-font: #fff;
+  --city-pin-size-font: 1.2rem;
+}
+
+/**********/
+/* Styles */
+/**********/
+
+/* Container */
+.map-container {
+  border-radius: 0.5em;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  line-height: 1;
+  min-width: 15rem;
+  position: relative;
+  width: 50%;
+  aspect-ratio: 1;
+}
+
+/* Map - Background */
+.map-background {
+  border-radius: inherit;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/* Map - Cities */
+.map-cities {
+  width: 100%;
+}
+.map-city {
+  border-radius: var(--city-radius);
+  left: calc(var(--x) * 1% - var(--city-radius));
+  padding: var(--city-radius);
+  position: absolute;
+  top: calc(var(--y) * 1% - var(--city-radius));
+}
+.map-city::after,
+.map-city::before {
+  font-size: var(--city-pin-size-font);
+}
+.map-city::before {
+  content: "•";
+  left: calc(-50% + var(--city-radius));
+  position: absolute;
+  top: calc(-0.65em + var(--city-radius));
+  text-align: center;
+  text-shadow: 0 1px 1px #000;
+  width: 100%;
+}
+.map-city::after {
+  clip-path: inset(-0.5em 0 0 0);
+  content: "📍";
+  left: calc(-50% + var(--city-radius));
+  position: absolute;
+  top: calc(-1em + var(--city-radius));
+  text-align: center;
+  transition: all 300ms ease-out;
+  width: 100%;
+  z-index: var(--y);
+}
+
+/* Map - Sign */
+.map-city__label {
+  display: none;
+  left: calc(-5em + 50%);
+  position: absolute;
+  text-align: center;
+  width: 10em;
+  z-index: 999;
+}
+.map-city__sign {
+  align-items: center;
+  background-color: var(--city-sign-color-back);
+  border-radius: 0.2rem;
+  border: 0.15em solid var(--city-sign-color-font);
+  box-shadow: 0 0 3px #000;
+  color: var(--city-sign-color-font);
+  column-gap: 0.3em;
+  display: flex;
+  font-weight: 700;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0.4em 0.6em 0.4em 0.3em;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  width: max-content;
+}
+.map-city__sign::before {
+  content: attr(data-icon);
+}
+
+/************/
+/* Tracking */
+/************/
+
+/* Map - Cities */
+.map-city:hover::after {
+  clip-path: inset(-0.5em 0 0.5em 0);
+  transform: translateY(0.5em);
+}
+
+/* Map - Sign */
+.map-city:hover .map-city__label {
+  animation: fadein 300ms forwards ease-out;
+  display: block;
+}
+
+.map-city:hover .map-city__sign.anim::before {
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+}
+.map-city:hover .map-city__sign.anim-grow::before {
+  animation-name: grow;
+  animation-timing-function: ease-in;
+}
+.map-city:hover .map-city__sign.anim-slidein::before {
+  animation-name: slidein;
+  animation-timing-function: ease-out;
+}
+
+/**************/
+/* Animations */
+/**************/
+
+/* Fade in from top */
+@keyframes fadein {
+  0% {
+    opacity: 0;
+    top: calc(var(--city-radius));
+  }
+
+  100% {
+    opacity: 1;
+    top: calc(var(--city-radius) + var(--city-pin-size-font) / 2);
+  }
+}
+
+/* Grow from the ground */
+@keyframes grow {
+  0% {
+    transform: translate(0, 200%);
+  }
+
+  10% {
+    transform: translate(5%, 180%);
+  }
+
+  20% {
+    transform: translate(-10%, 160%);
+  }
+
+  30% {
+    transform: translate(15%, 140%);
+  }
+
+  40% {
+    transform: translate(-5%, 120%);
+  }
+
+  50% {
+    transform: translate(10%, 100%);
+  }
+
+  60% {
+    transform: translate(-15%, 80%);
+  }
+
+  70% {
+    transform: translate(5%, 60%);
+  }
+
+  80% {
+    transform: translate(0, 40%);
+  }
+
+  90% {
+    transform: translate(0, 20%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Slide in from left */
+@keyframes slidein {
+  0% {
+    transform: translateX(-200%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
+/* new mobile dock 
+*/
+/* From Uiverse.io by ParasSalunke */ 
+/* new mobile dock */
+.dock-stage {
+  display: flex;
+  align-items: flex-end; /* Anchors items to the bottom so they grow upward */
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  overflow: visible; /* Allows upward scaling and tooltips */
+  margin: 0;
+  padding-bottom: 4px;
+}
+
+.dock,
+.dock * {
+  box-sizing: border-box;
+}
+
+.dock {
+  --s: 64px;
+  --max: 1.8;
+  --gap: max(4px, calc(var(--s) * 0.08));
+  --pad: max(8px, calc(var(--s) * 0.12));
+
+  display: inline-flex;
+  align-items: flex-end; /* Keeps items aligned at the baseline */
+  overflow: visible; /* Prevents cutting off hover magnification */
+
+  padding: var(--pad) calc(var(--pad) - var(--gap) / 2);
+
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0.05)
+    ),
+    rgba(45, 45, 45, 0.75);
+
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: max(12px, calc(var(--s) * 0.4));
+
+  box-shadow:
+    0 max(4px, calc(var(--s) * 0.1)) max(16px, calc(var(--s) * 0.4))
+      rgba(0, 0, 0, 0.4),
+    0 max(2px, calc(var(--s) * 0.05)) max(8px, calc(var(--s) * 0.2))
+      rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+
+  isolation: isolate;
+}
+
+.dock::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  height: 45%;
+  border-radius: max(11px, calc(var(--s) * 0.38))
+    max(11px, calc(var(--s) * 0.38)) 45% 45%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dock__row {
+  display: flex;
+  align-items: flex-end; /* Critical for keeping bottom alignment during scale */
+  height: var(--s);
+  width: 100%;
+  overflow: visible;
+}
+
+.dock__item {
+  --k: 1;
+  --shadow-y: max(1px, calc(var(--s) * 0.03));
+  --shadow-b: max(2px, calc(var(--s) * 0.06));
+
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  width: calc(var(--s) * var(--k) + var(--gap));
+  height: calc(var(--s) * var(--k));
+  padding: 0 calc(var(--gap) / 2);
+  cursor: pointer;
+  z-index: 10;
+
+  transform-origin: bottom center; /* Ensures scaling happens upwards */
+
+  transition:
+    width 0.2s ease-out,
+    height 0.2s ease-out,
+    transform 0.2s ease-out;
+}
+
+.dock__item input {
+  display: none;
+}
+
+.dock__item svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 10%;
+  filter: drop-shadow(
+    0 var(--shadow-y) var(--shadow-b)
+      rgba(0, 0, 0, calc(0.2 + (var(--k) - 1) * 0.15))
+  );
+  transition: filter 0.2s ease-out;
+}
+
+/* Neighbor Magnification Logic */
+.dock__item:hover {
+  --k: var(--max);
+  z-index: 18;
+}
+
+.dock__item:hover + .dock__item,
+.dock__item:has(+ .dock__item:hover) {
+  --k: calc(1 + (var(--max) - 1) * 0.56);
+  z-index: 15;
+}
+
+.dock__item:hover + .dock__item + .dock__item,
+.dock__item:has(+ .dock__item + .dock__item:hover) {
+  --k: calc(1 + (var(--max) - 1) * 0.05);
+}
+
+.dock__item:hover,
+.dock__item:hover + .dock__item,
+.dock__item:has(+ .dock__item:hover) {
+  --shadow-y: max(2px, calc(var(--s) * 0.05));
+  --shadow-b: max(4px, calc(var(--s) * 0.1));
+}
+
+.dock__item:active {
+  transform: translateY(max(-8px, calc(var(--s) * -0.15)));
+  transition-duration: 0.2s;
+}
+
+.dock__dot {
+  display: none;
+  position: absolute;
+  bottom: max(-2px, calc(var(--s) * -0.05));
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(3px, calc(var(--s) * 0.06));
+  height: max(3px, calc(var(--s) * 0.06));
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, 0.55),
+    0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.dock__item input:checked ~ .dock__dot {
+  display: block;
+}
+
+.dock__item input:checked ~ svg {
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2))
+    drop-shadow(0 8px 12px rgba(0, 0, 0, 0.12));
+}
+
+.dock__tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 14px);
+  min-width: max-content;
+  transform: translateX(-50%) translateY(6px) scale(0.92);
+  transform-origin: bottom center;
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9px;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.04)
+    ),
+    rgba(20, 20, 23, 0.88);
+  color: rgba(255, 255, 255, 0.97);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.28),
+    0 2px 8px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  transition:
+    opacity 160ms ease,
+    visibility 160ms ease,
+    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 100;
+}
+
+.dock__item:hover .dock__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.dock__item:has(input:focus-visible) {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 3px;
+  border-radius: 15px;
+}
+
+@media (max-width: 1023px), (max-height: 1023px) {
+  .dock {
+    --s: 56px;
+    --max: 1.6;
+  }
+}
+
+@media (max-width: 767px), (max-height: 767px) {
+  .dock {
+    --s: 48px;
+    --max: 1.5;
+  }
+}
+
+@media (max-width: 479px), (max-height: 479px) {
+  .dock {
+    --s: 40px;
+    --max: 1.4;
+  }
+}
+
+@media (max-width: 767px), (hover: none) {
+  .dock__item:hover {
+    --k: 1;
+  }
+  .dock__item:hover + .dock__item,
+  .dock__item:has(+ .dock__item:hover) {
+    --k: 1;
+  }
+  .dock__item:hover + .dock__item + .dock__item,
+  .dock__item:has(+ .dock__item + .dock__item:hover) {
+    --k: 1;
+  }
+  .dock__tooltip {
+    display: none;
+  }
+}
+
+@media (max-width: 479px) {
+  .dock__item svg {
+    padding: 8%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock,
+  .dock__item,
+  .dock__item svg,
+  .dock__tooltip {
+    transition: none !important;
+  }
+}

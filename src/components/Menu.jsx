@@ -306,7 +306,7 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
     <>
      
  
-      
+      {/* app screen and music player */}
 
       <div
         className={`
@@ -317,20 +317,32 @@ const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
           w-[400px] opacity-100 pointer-events-none        `}
 
   
-          style={{
-              /* On mobile/tablet, if menuOpened is true (forced by our useEffect), it's 100% */
-              width: menuOpened 
-                ? "100%" 
-                : (typeof window !== 'undefined' && window.innerWidth >= 1280) 
-                  ? "400px" 
-                  : "0px",
+          // style={{
+          //     /* On mobile/tablet, if menuOpened is true (forced by our useEffect), it's 100% */
+          //     width: menuOpened 
+          //       ? "100%" 
+          //       : (typeof window !== 'undefined' && window.innerWidth >= 1280) 
+          //         ? "400px" 
+          //         : "0px",
 
-              /* Always visible on desktop OR if menuOpened is true */
-              opacity: (menuOpened || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? 1 : 0,
+          //     /* Always visible on desktop OR if menuOpened is true */
+          //     opacity: (menuOpened || (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? 1 : 0,
               
-              /* Allow clicks if menu is open or on desktop */
-              pointerEvents:  "none",
-            }}
+          //     /* Allow clicks if menu is open or on desktop */
+          //     pointerEvents:  "none",
+          //   }}
+          style={{
+      /* Width: 400px on desktop (>=1280px), 100% on mobile when open. 0px everywhere when closed. */
+      width: menuOpened 
+        ? ((typeof window !== 'undefined' && window.innerWidth >= 1280) ? "400px" : "100%")
+        : "0px",
+
+      /* Opacity follows menuOpened (1 when open, 0 when closed) */
+      opacity: menuOpened ? 1 : 0,
+      
+      /* Allow clicks only when the menu is actually open */
+      pointerEvents: menuOpened ? "auto" : "none",
+  }}
           >
        
         {/* <div 
@@ -967,10 +979,12 @@ Click on Song Title for Music App                    </p>
       */}
 
            
-            <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32 px-4 z-[2147483643] mobile-fade-in 
+            {/* <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32 px-4 z-[2147483643] mobile-fade-in 
           ${(menuOpened ||  (typeof window !== 'undefined' && window.innerWidth >= 1280)) ? 'hidden' : 'block'}
-      `}>
-                {/* ${menuOpened ? 'hidden' : 'block'} */}
+      `}> */}
+      <div className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-32 px-4 z-[2147483643] mobile-fade-in 
+          ${menuOpened ? 'hidden' : 'block'}
+      `}> 
             
                {(section === 0 && !menuOpened) && (
               <div
@@ -990,12 +1004,17 @@ Click on Song Title for Music App                    </p>
 
 
 
-            <div className="flex flex-col">
-      <MobileWrapper >
-      <div className="social-buttons ">
-        
-
-        <a href="#" className="h-[60px] " onClick={(event) => {
+            <div className="flex flex-col items-center">
+                   <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-32 px-4 z-[2147483643] mobile-fade-in block">
+      <div className="flex flex-col items-center">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 px-4 pb-4 z-[2147483643] mobile-fade-in block">
+      <div className="flex flex-col items-center">
+        <div className="dock-stage">
+          <div className="dock" role="toolbar" aria-label="Portfolio navigation">
+            <div className="dock__row">
+              
+              {/* Home Item */}
+                   <a href="#" className=" " onClick={(event) => {
 event.preventDefault();
     spawnCoin(event);
     setMenuOpened(true);
@@ -1004,80 +1023,117 @@ event.preventDefault();
   }}
 
   >
-       
-<svg xmlns="http://www.w3.org/2000/svg" width="80px"  className='' >
-  <clipPath id="top-clip" clipPathUnits="objectBoundingBox">
-  
-       <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"></path>
+              <label className="dock__item">
+                <input type="radio" name="dock-navigation" defaultChecked />
+                <svg viewBox="0 0 64 64" role="img" aria-label="Home">
+                  <defs>
+                    <linearGradient id="dock-home" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stopColor="#5ec8ff" />
+                      <stop offset="1" stopColor="#2878f0" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="64" height="64" rx="14" fill="url(#dock-home)" />
+                  <path
+                    d="M14 31.5L32 16l18 15.5v19a3.5 3.5 0 0 1-3.5 3.5h-29A3.5 3.5 0 0 1 14 50.5z"
+                    fill="#ffffff"
+                  />
+                  <path
+                    d="M10.5 31.5L30 14.8a3 3 0 0 1 4 0l19.5 16.7"
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <rect
+                    x="27"
+                    y="37"
+                    width="10"
+                    height="17"
+                    rx="2"
+                    fill="#2878f0"
+                  />
+                  <circle cx="34.5" cy="45.5" r="1.2" fill="#ffffff" />
+                </svg>
+                <span className="dock__tooltip">Home</span>
+                <span className="dock__dot"></span>
+              </label>
 
-  </clipPath>
-
-  <filter id="red-filter">
-    <feColorMatrix
-      values="0 0 0 0 1
-                0 0 0 0 0.05
-                0 0 0 0 0
-                0 2 0 0 0"
-      type="matrix"
-      in="SourceGraphic"
-    ></feColorMatrix>
-  </filter>
-  <filter id="green-filter">
-    <feColorMatrix
-      values="0 0 0 0 0
-                0 0 0 0 1
-                0 0 0 0 0
-                0 2.5 0 0 0"
-      type="matrix"
-      in="SourceGraphic"
-    ></feColorMatrix>
-  </filter>
-  <filter id="blue-filter">
-    <feColorMatrix
-      values="0 0 0 0 0
-                0 0 0 0 0.7
-                0 0 0 0 1
-                0 2 0 0 0"
-      type="matrix"
-      in="SourceGraphic"
-    ></feColorMatrix>
-  </filter>
-  <filter id="yellow-filter">
-    <feColorMatrix
-      values="0 0 0 0 1
-                0 0 0 0 1
-                0 0 0 0 0
-                0 2.5 0 0 0"
-      type="matrix"
-      in="SourceGraphic"
-    ></feColorMatrix>
-  </filter>
-</svg>
-
-<button className="start-menu-button ">
-  <div className="start-menu-inner">
-    <div className="top-white"></div>
-    <div className="win7"></div>
-    <div className="colors">
-      <div className="red"></div>
-      <div className="green"></div>
-      <div className="blue"></div>
-      <div className="yellow"></div>
-    </div>
-  </div>
-</button>
-
-
-        </a>
-        
-    
-      </div>
-    </MobileWrapper>
-         
+</a>
 
 
 
+
+              {/* Projects Item */}
+              <label className="dock__item">
+                <input type="radio" name="dock-navigation" />
+                <svg viewBox="0 0 64 64" role="img" aria-label="Projects">
+                  <defs>
+                    <linearGradient id="dock-projects" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stopColor="#ffd86b" />
+                      <stop offset="1" stopColor="#f59e0b" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="64" height="64" rx="14" fill="url(#dock-projects)" />
+                  <path d="M9 20a5 5 0 0 1 5-5h14l5 6h21a4 4 0 0 1 4 4v4H9z" fill="#ffe8a3" />
+                  <path d="M9 27h49l-4 23a5 5 0 0 1-4.9 4H14a5 5 0 0 1-4.9-4z" fill="#fff5cf" />
+                  <rect x="18" y="34" width="11" height="10" rx="2" fill="#f5ad17" />
+                  <rect x="34" y="34" width="11" height="10" rx="2" fill="#f5ad17" />
+                  <rect x="18" y="47" width="27" height="3" rx="1.5" fill="#e7b94d" />
+                </svg>
+                <span className="dock__tooltip">Projects</span>
+                <span className="dock__dot"></span>
+              </label>
+
+              {/* GitHub Item */}
+              <label className="dock__item">
+                <input type="radio" name="dock-navigation" />
+                <svg viewBox="0 0 64 64" role="img" aria-label="GitHub">
+                  <rect width="64" height="64" rx="14" fill="#18181b" />
+                  <path
+                    d="M32 11 C20.4 11 11 20.4 11 32 C11 41.35 17.05 49.27 25.43 52.06 C26.48 52.25 26.86 51.61 26.86 51.06 C26.86 50.55 26.84 49.08 26.81 47.13 C20.1 48.58 18.82 43.9 18.82 43.9 C17.87 41.49 16.49 40.86 16.49 40.86 C14.3 39.36 16.66 39.39 16.66 39.39 C19.08 39.56 20.35 41.88 20.35 41.88 C22.51 45.56 25.96 44.54 27.05 43.84 C27.27 42.31 27.89 41.24 28.57 40.63 C23.22 40.02 17.57 37.95 17.57 31.12 C17.57 29.17 18.27 27.55 19.43 26.28 C19.23 25.77 18.62 23.74 19.66 21.1 C19.66 21.1 21.59 20.48 25.95 23.42 C27.79 22.92 29.76 22.66 31.71 22.65 C33.66 22.66 35.63 22.92 37.47 23.42 C41.83 20.48 43.76 21.1 43.76 21.1 C44.8 23.74 44.19 25.77 43.99 26.28 C45.15 27.55 45.85 29.17 45.85 31.12 C45.85 37.97 40.19 40 34.83 40.61 C35.57 41.25 36.24 42.51 36.24 44.47 C36.24 47.28 36.22 49.54 36.22 50.14 C36.22 50.73 36.6 51.38 37.68 51.14 C46.04 48.34 52.99 40.39 52.99 32 C52.99 20.4 43.6 11 32 11Z"
+                    fill="#ffffff"
+                  />
+                </svg>
+                <span className="dock__tooltip">GitHub</span>
+                <span className="dock__dot"></span>
+              </label>
+
+              {/* Contact Item */}
+              <label className="dock__item">
+                <input type="radio" name="dock-navigation" />
+                <svg viewBox="0 0 64 64" role="img" aria-label="Contact">
+                  <defs>
+                    <linearGradient id="dock-contact" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stopColor="#5de0ff" />
+                      <stop offset="1" stopColor="#2774e8" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="64" height="64" rx="14" fill="url(#dock-contact)" />
+                  <rect x="9" y="17" width="46" height="32" rx="5" fill="#ffffff" />
+                  <path
+                    d="M10 21l22 17 22-17"
+                    fill="none"
+                    stroke="#b9d9f8"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path d="M11 46l14-11" fill="none" stroke="#d7e9fa" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M53 46L39 35" fill="none" stroke="#d7e9fa" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+                <span className="dock__tooltip">Contact</span>
+                <span className="dock__dot"></span>
+              </label>
+
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+</div>
                 </div>
 
     </>
