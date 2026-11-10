@@ -831,14 +831,15 @@ Click on Song Title for Music App                    </p>
     >
       <StyledWrapper01  onClick={() => {
       setMenuOpened(false);
-
-        if (section === 0 ) {
         reset3D();
-      } 
+
+      //   if (section === 0 ) {
+      //   reset3D();
+      // } 
       
-      else {
-        onSectionChange(0);
-      }
+      // else {
+      //   onSectionChange(0);
+      // }
     }}
     className='zIndex[99980]'>
         <article className="keycap">
@@ -846,16 +847,15 @@ Click on Song Title for Music App                    </p>
 
             
             <svg class="w-[51px] h-[50px] fill-[#ffffff]" viewBox="0 0 556 512" xmlns="http://www.w3.org/2000/svg">
-{section === 0 ? (
-      /* SVG for Section 0 (The Power Icon) */
+{/* {section === 0 ? (
       <path transform="translate(25, 0)" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.6c13.6-11.3 15.4-31.5 4.1-45.1s-31.5-15.4-45.1-4.1C49.7 115.4 16 181.8 16 256c0 132.5 107.5 240 240 240s240-107.5 240-240c0-74.2-33.8-140.6-86.6-184.6c-13.6-11.3-33.8-9.4-45.1 4.1s-9.4 33.8 4.1 45.1c38.9 32.3 63.5 81 63.5 135.4c0 97.2-78.8 176-176 176s-176-78.8-176-176c0-54.4 24.7-103.1 63.5-135.4z"></path>
 
 ) : (
-  /* SVG for NOT Section 0 (Home ICON) */
     <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L416 100.7V64c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V185l52.8 46.4c8 7 12 15 11 24zM248 192c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V216c0-13.3-10.7-24-24-24H248z"></path>
 
-      /* ^ Replace that second path with whatever icon you want for Home */
-    )}
+    )} */}
+          <path transform="translate(25, 0)" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.6c13.6-11.3 15.4-31.5 4.1-45.1s-31.5-15.4-45.1-4.1C49.7 115.4 16 181.8 16 256c0 132.5 107.5 240 240 240s240-107.5 240-240c0-74.2-33.8-140.6-86.6-184.6c-13.6-11.3-33.8-9.4-45.1 4.1s-9.4 33.8 4.1 45.1c38.9 32.3 63.5 81 63.5 135.4c0 97.2-78.8 176-176 176s-176-78.8-176-176c0-54.4 24.7-103.1 63.5-135.4z"></path>
+
   </svg>
             </aside>
         </article>
@@ -883,7 +883,9 @@ Click on Song Title for Music App                    </p>
 
       <div className="rounded-sm bg-black py-1 px-2 text-md">
         <p className="whitespace-nowrap text-white">
-          {section === 0 ? "Reset Page" : "Home Page"}
+          {/* {section === 0 ? "Reset Page" : "Home Page"} */}
+          {"Reset Page"} 
+          
         </p>
       </div>
     </div>
