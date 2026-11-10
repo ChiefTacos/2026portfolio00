@@ -1125,85 +1125,21 @@ event.preventDefault();
                 </svg> */}
                 {/* <img src="textures/circleGlassCHI.png" alt="" srcset="" /> */}
 <div className=""> 
-                       <div className="orbital-loader  pt-20 lg:pt-16">
-        <div className="core-system">
-          <div className="core-halo" />
-          <div className="core-outer-ring" />
-          <div className="core-secondary-ring" />
-          <div className="core-thin-ring" />
-          <div className="core-inner-glow" />
-          <div className="core-micro-center" />
-        </div>
-        <div className="pulse-system">
-          <div className="pulse-ring pulse-ring-1" />
-          <div className="pulse-ring pulse-ring-2" />
-          <div className="pulse-ring pulse-ring-3" />
-        </div>
-        <div className="orbit-system orbit-1">
-          <div className="orbit-path" />
-          <div className="orbit-object-wrapper">
-            <div className="orbit-object obj-circle" />
-            <div className="object-trail" />
-          </div>
-        </div>
-        <div className="orbit-system orbit-2">
-          <div className="orbit-path" />
-          <div className="orbit-object-wrapper">
-            <div className="orbit-object obj-ring" />
-          </div>
-        </div>
-        <div className="orbit-system orbit-3">
-          <div className="orbit-path" />
-          <div className="orbit-object-wrapper">
-            <div className="orbit-object obj-bright-point" />
-          </div>
-        </div>
-        <div className="orbit-system orbit-4">
-          <div className="orbit-path" />
-          <div className="orbit-object-wrapper">
-            <div className="orbit-object obj-diamond" />
-          </div>
-        </div>
-        <div className="orbit-system orbit-5">
-          <div className="orbit-path" />
-          <div className="orbit-object-wrapper">
-            <div className="orbit-object obj-line" />
-          </div>
-        </div>
-        <div className="orbit-system orbit-6">
-          <div className="orbit-path" />
-          <div className="orbit-object-wrapper">
-            <div className="orbit-object obj-square" />
-          </div>
-        </div>
-        <div className="orbit-system orbit-7">
-          <div className="orbit-path" />
-          <div className="orbit-object-wrapper">
-            <div className="orbit-object obj-fragment" />
-          </div>
-        </div>
-        <div className="particle-system">
-          <div className="particle p1" />
-          <div className="particle p2" />
-          <div className="particle p3" />
-          <div className="particle p4" />
-          <div className="particle p5" />
-          <div className="particle p6" />
-          <div className="particle p7" />
-          <div className="particle p8" />
-          <div className="particle p9" />
-          <div className="particle p10" />
-          <div className="particle p11" />
-          <div className="particle p12" />
-          <div className="particle p13" />
-          <div className="particle p14" />
-          <div className="particle p15" />
-        </div>
-        <div className="energy-fragments">
-          <div className="energy-fragment ef1" />
-          <div className="energy-fragment ef2" />
-          <div className="energy-fragment ef3" />
-        </div>
+                     <div className="loader">
+        <svg width={100} height={100} viewBox="0 0 100 100">
+          <defs>
+            <mask id="clipping">
+              <polygon points="0,0 100,0 100,100 0,100" fill="black" />
+              <polygon points="25,25 75,25 50,75" fill="white" />
+              <polygon points="50,25 75,75 25,75" fill="white" />
+              <polygon points="35,35 65,35 50,65" fill="white" />
+              <polygon points="35,35 65,35 50,65" fill="white" />
+              <polygon points="35,35 65,35 50,65" fill="white" />
+              <polygon points="35,35 65,35 50,65" fill="white" />
+            </mask>
+          </defs>
+        </svg>
+        <div className="box" />
       </div>
      </div>
                 {/* <span className="dock__tooltip">Home</span> */}
