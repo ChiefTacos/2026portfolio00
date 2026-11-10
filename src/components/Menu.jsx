@@ -730,10 +730,22 @@ Click on Song Title for Music App                    </p>
     >
             <StyledWrapper01  onClick={(event) => {
       spawnCoin(event);
-          setIsDay((prev) => !prev);  
-        if (section !== 3 ) {
-                          onSectionChange(4);
-                        }
+          setMenuOpened(false); // Closes navigation menu dropdown
+
+                // 1. Force state to Section 1 if not already there
+                if (section !== 1) {
+                  onSectionChange(1);
+                }
+
+                // 2. Inject "contactWindow" into active overlays array securely aka music app
+                if (typeof setActiveOverlay === 'function') {
+                  setActiveOverlay((prev) => {
+                    if (Array.isArray(prev)) {
+                      return prev.includes("freeQ") ? prev : [...prev, "freeQ"];
+                    }
+                    return ["freeQ"];
+                  });
+                }
     }}>
         <article className="keycap">
           <aside className="letter">
@@ -759,7 +771,7 @@ Click on Song Title for Music App                    </p>
       >
         <div class="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black"></div>
         <div class="rounded-sm text-md bg-black py-1 px-2">
-          <p class="whitespace-nowrap">Contact</p>
+          <p class="whitespace-nowrap">Home Page</p>
         </div>
       
       </div>
@@ -1011,10 +1023,64 @@ Click on Song Title for Music App                    </p>
       <div className="flex flex-col items-center">
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 px-4 pb-4 z-[2147483643] mobile-fade-in block">
       <div className="flex flex-col items-center">
+
+        
         <div className="dock-stage">
           <div className="dock" role="toolbar" aria-label="Portfolio navigation">
             <div className="dock__row">
               
+
+
+              {/* Projects Item */}
+
+                          <div className='px-4 pr-10'>
+                              <a href="#" className=" " onClick={(event) => {
+            event.preventDefault();
+                spawnCoin(event);
+                setMenuOpened(true);
+                
+                setMenuOpened(false); // Closes navigation menu dropdown
+
+                // 1. Force state to Section 1 if not already there
+                if (section !== 1) {
+                  onSectionChange(1);
+                }
+
+                // 2. Inject "contactWindow" into active overlays array securely aka music app
+                if (typeof setActiveOverlay === 'function') {
+                  setActiveOverlay((prev) => {
+                    if (Array.isArray(prev)) {
+                      return prev.includes("contactWindow") ? prev : [...prev, "contactWindow"];
+                    }
+                    return ["contactWindow"];
+                  });
+                }
+              
+                
+              }}
+
+              >
+              <label className="dock__item">
+                <input type="radio" name="dock-navigation" />
+                <svg viewBox="0 0 64 64" role="img" aria-label="Projects">
+                  <defs>
+                    <linearGradient id="dock-projects" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stopColor="#ffd86b" />
+                      <stop offset="1" stopColor="#f59e0b" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="64" height="64" rx="14" fill="url(#dock-projects)" />
+                  <path d="M9 20a5 5 0 0 1 5-5h14l5 6h21a4 4 0 0 1 4 4v4H9z" fill="#ffe8a3" />
+                  <path d="M9 27h49l-4 23a5 5 0 0 1-4.9 4H14a5 5 0 0 1-4.9-4z" fill="#fff5cf" />
+                  <rect x="18" y="34" width="11" height="10" rx="2" fill="#f5ad17" />
+                  <rect x="34" y="34" width="11" height="10" rx="2" fill="#f5ad17" />
+                  <rect x="18" y="47" width="27" height="3" rx="1.5" fill="#e7b94d" />
+                </svg>
+                <span className="dock__tooltip">MP3 files</span>
+                <span className="dock__dot"></span>
+              </label>
+              </a>
+              </div>
               {/* Home Item */}
                    <a href="#" className=" " onClick={(event) => {
 event.preventDefault();
@@ -1057,8 +1123,90 @@ event.preventDefault();
                   />
                   <circle cx="34.5" cy="45.5" r="1.2" fill="#ffffff" />
                 </svg> */}
-                <img src="textures/circleGlassCHI.png" alt="" srcset="" />
-                <span className="dock__tooltip">Home</span>
+                {/* <img src="textures/circleGlassCHI.png" alt="" srcset="" /> */}
+<div className=""> 
+                       <div className="orbital-loader  pt-20 lg:pt-16">
+        <div className="core-system">
+          <div className="core-halo" />
+          <div className="core-outer-ring" />
+          <div className="core-secondary-ring" />
+          <div className="core-thin-ring" />
+          <div className="core-inner-glow" />
+          <div className="core-micro-center" />
+        </div>
+        <div className="pulse-system">
+          <div className="pulse-ring pulse-ring-1" />
+          <div className="pulse-ring pulse-ring-2" />
+          <div className="pulse-ring pulse-ring-3" />
+        </div>
+        <div className="orbit-system orbit-1">
+          <div className="orbit-path" />
+          <div className="orbit-object-wrapper">
+            <div className="orbit-object obj-circle" />
+            <div className="object-trail" />
+          </div>
+        </div>
+        <div className="orbit-system orbit-2">
+          <div className="orbit-path" />
+          <div className="orbit-object-wrapper">
+            <div className="orbit-object obj-ring" />
+          </div>
+        </div>
+        <div className="orbit-system orbit-3">
+          <div className="orbit-path" />
+          <div className="orbit-object-wrapper">
+            <div className="orbit-object obj-bright-point" />
+          </div>
+        </div>
+        <div className="orbit-system orbit-4">
+          <div className="orbit-path" />
+          <div className="orbit-object-wrapper">
+            <div className="orbit-object obj-diamond" />
+          </div>
+        </div>
+        <div className="orbit-system orbit-5">
+          <div className="orbit-path" />
+          <div className="orbit-object-wrapper">
+            <div className="orbit-object obj-line" />
+          </div>
+        </div>
+        <div className="orbit-system orbit-6">
+          <div className="orbit-path" />
+          <div className="orbit-object-wrapper">
+            <div className="orbit-object obj-square" />
+          </div>
+        </div>
+        <div className="orbit-system orbit-7">
+          <div className="orbit-path" />
+          <div className="orbit-object-wrapper">
+            <div className="orbit-object obj-fragment" />
+          </div>
+        </div>
+        <div className="particle-system">
+          <div className="particle p1" />
+          <div className="particle p2" />
+          <div className="particle p3" />
+          <div className="particle p4" />
+          <div className="particle p5" />
+          <div className="particle p6" />
+          <div className="particle p7" />
+          <div className="particle p8" />
+          <div className="particle p9" />
+          <div className="particle p10" />
+          <div className="particle p11" />
+          <div className="particle p12" />
+          <div className="particle p13" />
+          <div className="particle p14" />
+          <div className="particle p15" />
+        </div>
+        <div className="energy-fragments">
+          <div className="energy-fragment ef1" />
+          <div className="energy-fragment ef2" />
+          <div className="energy-fragment ef3" />
+        </div>
+      </div>
+     </div>
+                {/* <span className="dock__tooltip">Home</span> */}
                 <span className="dock__dot"></span>
               </label>
 
@@ -1103,10 +1251,14 @@ event.preventDefault();
               </label> */}
 
               {/* Contact Item */}
-               {/* <a href="#" className=" " onClick={(event) => {
+<div className='px-3 pl-10'>
+               <a href="#" className=" " onClick={(event) => {
 event.preventDefault();
     spawnCoin(event);
-  onSectionChange(3.9);    
+     setIsDay((prev) => !prev);  
+        if (section !== 4 ) {
+                          onSectionChange(4);
+                        }; 
     
   }}
 
@@ -1136,8 +1288,8 @@ event.preventDefault();
                 <span className="dock__tooltip">Contact</span>
                 <span className="dock__dot"></span>
               </label>
-    </a> */}
-
+    </a>
+</div>
             </div>
           </div>
         </div>

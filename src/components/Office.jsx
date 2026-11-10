@@ -1071,7 +1071,7 @@ style={{
 
 
     {/* PANEL 1: SYSTEM TIME + DUAL ANALOG */}
-<div className="bg-black/70 p-20 lg:p-36 mx-2 lg:mx-24  mt-[2rem] md:mt-[1rem] lg:mt-5 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[250px] relative overflow-hidden  col-span-2"
+<div className="bg-black/70 p-20 lg:p-36 mx-2 lg:mx-24  mt-[2rem] lg:mt-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[250px] relative overflow-hidden  col-span-2"
 >
   {/* <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-[10px] opacity-40">Global System Time</h3> */}
   
@@ -3042,8 +3042,8 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
       rotation={[Math.PI / 2, -Math.PI / 2, 0]}
       position={[0, 0, 0]}
       distanceFactor={freeQ.distanceFactor}
-      title="timeisjustaconstruct"
-              description="Customize all your working clocks by DOUBLE TAPPING"
+      title="Home Page"
+              description="Customize All Clocks by DOUBLE TAPPING"
       price="150-300"
       bgColor="bg-yellow-500"
       src="/textures/sexyCleaning.jpeg"
