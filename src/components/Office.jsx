@@ -1363,9 +1363,9 @@ style={{
 
           <div className="grid grid-cols-2 gap-4 flex-grow">
             {[
-              { name: "Music", icon: "🎵", 
+              { name: "Music", icon: "🎼", 
                 targetId: "contactWindow" },
-              { name: "Notes", icon: "📋", targetId: "notes" },
+              { name: "Notes", icon: "🧾", targetId: "notes" },
             ].map((site) => (
                   <button 
               key={site.name}
@@ -1391,8 +1391,8 @@ style={{
           <div className="grid grid-cols-2 gap-4 flex-grow">
             {[
             
-              { name: "Video Streaming", icon: "📺", url: "https://youtube.com" },
-              { name: "Google AI", icon: "/textures/AI.png", url: "https://gemini.google.com/" }
+              { name: "Video Streaming", icon: "🎬", url: "https://youtube.com" },
+              { name: "Google AI", icon: "/textures/AI1.png", url: "https://gemini.google.com/" }
             ].map((site) => (
               <a 
                 key={site.name}

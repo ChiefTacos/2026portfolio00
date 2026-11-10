@@ -1103,7 +1103,15 @@ event.preventDefault();
               </label> */}
 
               {/* Contact Item */}
-              {/* <label className="dock__item">
+               {/* <a href="#" className=" " onClick={(event) => {
+event.preventDefault();
+    spawnCoin(event);
+  onSectionChange(3.9);    
+    
+  }}
+
+  >
+              <label className="dock__item">
                 <input type="radio" name="dock-navigation" />
                 <svg viewBox="0 0 64 64" role="img" aria-label="Contact">
                   <defs>
@@ -1127,7 +1135,8 @@ event.preventDefault();
                 </svg>
                 <span className="dock__tooltip">Contact</span>
                 <span className="dock__dot"></span>
-              </label> */}
+              </label>
+    </a> */}
 
             </div>
           </div>
