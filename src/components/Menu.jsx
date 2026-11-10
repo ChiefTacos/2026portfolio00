@@ -1025,7 +1025,7 @@ event.preventDefault();
   >
               <label className="dock__item">
                 <input type="radio" name="dock-navigation" defaultChecked />
-                <svg viewBox="0 0 64 64" role="img" aria-label="Home">
+                {/* <svg viewBox="0 0 64 64" role="img" aria-label="Home">
                   <defs>
                     <linearGradient id="dock-home" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0" stopColor="#5ec8ff" />
@@ -1054,7 +1054,8 @@ event.preventDefault();
                     fill="#2878f0"
                   />
                   <circle cx="34.5" cy="45.5" r="1.2" fill="#ffffff" />
-                </svg>
+                </svg> */}
+                <img src="textures/circleGlassCHI.png" alt="" srcset="" />
                 <span className="dock__tooltip">Home</span>
                 <span className="dock__dot"></span>
               </label>
@@ -1065,7 +1066,7 @@ event.preventDefault();
 
 
               {/* Projects Item */}
-              <label className="dock__item">
+              {/* <label className="dock__item">
                 <input type="radio" name="dock-navigation" />
                 <svg viewBox="0 0 64 64" role="img" aria-label="Projects">
                   <defs>
@@ -1083,10 +1084,10 @@ event.preventDefault();
                 </svg>
                 <span className="dock__tooltip">Projects</span>
                 <span className="dock__dot"></span>
-              </label>
+              </label> */}
 
               {/* GitHub Item */}
-              <label className="dock__item">
+              {/* <label className="dock__item">
                 <input type="radio" name="dock-navigation" />
                 <svg viewBox="0 0 64 64" role="img" aria-label="GitHub">
                   <rect width="64" height="64" rx="14" fill="#18181b" />
@@ -1097,10 +1098,10 @@ event.preventDefault();
                 </svg>
                 <span className="dock__tooltip">GitHub</span>
                 <span className="dock__dot"></span>
-              </label>
+              </label> */}
 
               {/* Contact Item */}
-              <label className="dock__item">
+              {/* <label className="dock__item">
                 <input type="radio" name="dock-navigation" />
                 <svg viewBox="0 0 64 64" role="img" aria-label="Contact">
                   <defs>
@@ -1124,7 +1125,7 @@ event.preventDefault();
                 </svg>
                 <span className="dock__tooltip">Contact</span>
                 <span className="dock__dot"></span>
-              </label>
+              </label> */}
 
             </div>
           </div>

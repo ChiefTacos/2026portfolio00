@@ -1325,34 +1325,7 @@ style={{
     <hr className="border-white/10 mx-16 my-4 col-span-2" />
 
 
-    {/* PANEL 2: FOCUS TIMER */}
-    <div className="bg-black/70 mx-4 lg:mx-12 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[320px]">
-      <h3 className="text-white font-bold mb-2 opacity-50 text-xs uppercase tracking-widest">Focus Timer</h3>
-      <div className="flex items-center justify-center gap-6 mb-4"
-      draggable={false}
-  onPointerDownCapture={(e) => e.stopPropagation()}
-  onMouseDownCapture={(e) => e.stopPropagation()}
-  onTouchStartCapture={(e) => e.stopPropagation()}>
-        <button onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">–</button>
-        <div className="text-9xl lg:text-[200px] font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
-          {formatTimerDisplay(timerSeconds)}
-        </div>
-        <button onClick={() => setTimerSeconds(prev => prev + 60)} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">+</button>
-      </div>
-      <div className="flex gap-3"
-      draggable={false}
-  onPointerDownCapture={(e) => e.stopPropagation()}
-  onMouseDownCapture={(e) => e.stopPropagation()}
-  onTouchStartCapture={(e) => e.stopPropagation()}>
-        <button 
-          onClick={() => setTimerIsRunning(!timerIsRunning)} 
-          className={`px-6 py-2 rounded-xl font-bold transition-all ${timerIsRunning ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' : 'bg-green-600 text-white'}`}
-        >
-          {timerIsRunning ? 'Pause' : 'Start'}
-        </button>
-        <button onClick={() => { setTimerIsRunning(false); setTimerSeconds(300); }} className="px-6 py-2 bg-white/5 text-gray-300 rounded-xl border border-white/10">Reset</button>
-      </div>
-    </div>
+   
 
 
 
@@ -1469,6 +1442,41 @@ style={{
 
     <hr className="border-white/10 mx-16 my-4  col-span-2" />
 
+    <div 
+      className="bg-black/70 p-8 lg:p-12 mx-2 lg:mx-24 rounded-3xl border border-white/10 shadow-xl flex flex-col items-center justify-center text-center min-h-[350px] col-span-2"
+      draggable={false}
+      onPointerDownCapture={(e) => e.stopPropagation()}
+      onMouseDownCapture={(e) => e.stopPropagation()}
+      onTouchStartCapture={(e) => e.stopPropagation()}
+    >
+      <h3 className="text-white font-bold mb-2 opacity-50 text-xs uppercase tracking-widest">Focus Timer</h3>
+      <div className="flex items-center justify-center gap-6 mb-4"
+      draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}>
+        <button onClick={() => setTimerSeconds(prev => Math.max(0, prev - 60))} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">–</button>
+        <div className="text-9xl lg:text-[200px] font-mono text-yellow-500 min-w-[140px] drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
+          {formatTimerDisplay(timerSeconds)}
+        </div>
+        <button onClick={() => setTimerSeconds(prev => prev + 60)} className="text-gray-500 hover:text-yellow-500 text-5xl font-bold">+</button>
+      </div>
+      <div className="flex gap-3"
+      draggable={false}
+  onPointerDownCapture={(e) => e.stopPropagation()}
+  onMouseDownCapture={(e) => e.stopPropagation()}
+  onTouchStartCapture={(e) => e.stopPropagation()}>
+        <button 
+          onClick={() => setTimerIsRunning(!timerIsRunning)} 
+          className={`px-6 py-2 rounded-xl font-bold transition-all ${timerIsRunning ? 'bg-orange-500/20 text-orange-500 border border-orange-500/50' : 'bg-green-600 text-white'}`}
+        >
+          {timerIsRunning ? 'Pause' : 'Start'}
+        </button>
+        <button onClick={() => { setTimerIsRunning(false); setTimerSeconds(300); }} className="px-6 py-2 bg-white/5 text-gray-300 rounded-xl border border-white/10">Reset</button>
+      </div>
+    </div>
+
+    <hr className="border-white/10 mx-16 my-4  col-span-2" />
 
          {/* PANEL 4: PROFILE & SIGN OUT (Original UI) */}
         <div className="relative bg-black/80 p-6 rounded-3xl border border-white/20 shadow-xl flex flex-col items-center justify-center text-center  min-h-[320px] lg:min-h-[320px]"
