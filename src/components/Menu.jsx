@@ -217,6 +217,20 @@ const [hasFadedIn, setHasFadedIn] = useState(false);
 const [activeIndex, setActiveIndex] = useState(-1);
 const [rounds, setRounds] = useState(0);
 
+const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1200);
+useEffect(() => {
+    // 2. Handler function to update state on resize
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1200);
+    };
+
+    // 3. Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // 4. Cleanup event listener on unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 useEffect(() => {
   if (section === 1 || section === 2) {
     setMenuOpened(true);
@@ -834,13 +848,11 @@ Click on Song Title for Music App                    </p>
       setMenuOpened(false);
         reset3D();
 
-      //   if (section === 0 ) {
-      //   reset3D();
-      // } 
+        if (section !== 0 ) {
+        onSectionChange(0);
+      } 
       
-      // else {
-      //   onSectionChange(0);
-      // }
+      
     }}
     className='zIndex[99980]'>
         <article className="keycap">
@@ -951,7 +963,7 @@ Click on Song Title for Music App                    </p>
 
       <div className="rounded-sm bg-black py-1 px-2 text-md">
         <p className="whitespace-nowrap text-white">
-{Number(section) === 1.3 ? "Back" : "Full Screen"}
+{Number(section) >= 1 && Number(section) <= 1.3 ? "Back" : "Full Screen"}
     </p>
       </div>
       </div>
@@ -1037,18 +1049,18 @@ Click on Song Title for Music App                    </p>
                 
                 setMenuOpened(false); // Closes navigation menu dropdown
 
-                // 1. Force state to Section 1 if not already there
-                if (section !== 1) {
-                  onSectionChange(1);
-                }
-
+                 // // 1. Force state to Section 1 if not already in the section 0 or 1 and checks if the user isDesktop if so than you can use the app on section 0
+                       const minSection = isDesktop ? 0 : 1;
+    if (section < minSection || section > 1.3) {
+      onSectionChange(1);
+    }
                 // 2. Inject "contactWindow" into active overlays array securely aka music app
                 if (typeof setActiveOverlay === 'function') {
                 setActiveOverlay((prev) => {
                   const currentPrev = Array.isArray(prev) ? prev : [];
                   const hasContact = currentPrev.includes("contactWindow");
 
-                  if (section === 1 && hasContact) {
+                  if (hasContact) {
                     // Close contact window and stay on section 1
                     return currentPrev.filter(item => item !== "contactWindow");
                   } else {
@@ -1190,19 +1202,20 @@ event.preventDefault();
                 <span className="dock__dot"></span>
               </label> */}
 
-              {/* Contact Item */}
-<div className='px-3 pl-10'>
-               <a href="#" className=" " onClick={(event) => {
-event.preventDefault();
-    spawnCoin(event);
-        
+              {/* Note App Item */}
+        <div className='px-3 pl-10'>
+                      <a href="#" className=" " onClick={(event) => {
+                event.preventDefault();
+                    spawnCoin(event);
+                        
                 setMenuOpened(false); // Closes navigation menu dropdown
 
-                // 1. Force state to Section 1 if not already there
-                if (section !== 1) {
-                  onSectionChange(1);
-                }
-
+               
+  // // 1. Force state to Section 1 if not already in the section 0 or 1 and checks if the user isDesktop if so than you can use the app on section 0
+                       const minSection = isDesktop ? 0 : 1;
+    if (section < minSection || section > 1.3) {
+      onSectionChange(1);
+    }
                 // 2. Inject "contactWindow" into active overlays array securely aka music app
                 // 2. If in section 1 and contact window is already up, close it. Otherwise, open it.
                 if (typeof setActiveOverlay === 'function') {
@@ -1210,7 +1223,8 @@ event.preventDefault();
                     const currentPrev = Array.isArray(prev) ? prev : [];
                     const hasContact = currentPrev.includes("notes");
 
-                    if (section === 1 && hasContact) {
+                    if (hasContact) {
+                  //  if  (section === 1 && hasContact) {
                       // Close contact window and stay on section 1
                       return currentPrev.filter(item => item !== "notes");
                     } else {

@@ -61,9 +61,14 @@ const lastPos = useRef({ x: 0, y: 0 });
 const velocity = useRef({ x: 0, y: 0 });
 const lastTimestamp = useRef(0);
 // const isVisible = section !== 3;
-const isVisible = id === "freeQ" 
-  ? (section === 0 || section === 1) // FreeQ stays visible through sections 0 and 1
-  : (section !== 0 && section !== 3); 
+// const isVisible = id === "freeQ" 
+//   ? (section === 0 || section === 1) // FreeQ stays visible through sections 0 and 1
+//   : (section !== 0 && section !== 3); 
+const isVisible = id === "freeQ"
+  ? (section === 0 || section === 1) // freeQ always stays visible through sections 0 and 1
+  : (id === "contactWindow" || id === "notes") && !isMobileOrTablet
+    ? (section === 0 || section === 1) // contactWindow and notes only use this on desktop
+    : (section !== 0 && section !== 3); // default rule for mobile/tablet or other IDs
 const friction = 0.92; // momentum decay
 const user = useStore((state) => state.user);
 
