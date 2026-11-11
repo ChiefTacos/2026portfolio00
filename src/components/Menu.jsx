@@ -1078,7 +1078,7 @@ Click on Song Title for Music App                    </p>
                   <rect x="34" y="34" width="11" height="10" rx="2" fill="#f5ad17" />
                   <rect x="18" y="47" width="27" height="3" rx="1.5" fill="#e7b94d" />
                 </svg> */}
-                <img src="textures/musicIcon.png" alt="" />
+                <img src="textures/musicIconBlack.png" alt="" />
 
                 <span className="dock__tooltip">MP3 files</span>
                 <span className="dock__dot"></span>
@@ -1247,7 +1247,7 @@ event.preventDefault();
                   <path d="M11 46l14-11" fill="none" stroke="#d7e9fa" strokeWidth="2" strokeLinecap="round" />
                   <path d="M53 46L39 35" fill="none" stroke="#d7e9fa" strokeWidth="2" strokeLinecap="round" />
                 </svg> */}
-                <img src="textures/noteIcon.png" alt="" />
+                <img src="textures/noteIconWhite.png" alt="" />
 
                 <span className="dock__tooltip">Notes</span>
                 <span className="dock__dot"></span>

@@ -1266,7 +1266,7 @@ function CopyableText({ text }) {
         {showOwnerIntro && (
           <div
             className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-black  p-8 text-center transition-opacity duration-500 ${
-              isFadingOut ? "opacity-0 pointer-events-none" : "opacity-90"
+              isFadingOut ? "opacity-0 pointer-events-none" : "100"
             }`}
           >
             <div className="max-w-xl space-y-6 text-white">
