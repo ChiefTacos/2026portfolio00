@@ -3095,7 +3095,7 @@ rotation={modelRotation}  scale={1} frustumCulled={false}>
                                         position={[0, 0, 0]}
                                         distanceFactor={contact.distanceFactor}
                                         title="Music App"
-                                        description="Michael Murray"
+                                        description="Login to start Uploading your MP3 files"
                                         price="ssn 3938 2938 298"
                                         bgColor="bg-yellow-500"
                                         src="/textures/sirmur2025.png"

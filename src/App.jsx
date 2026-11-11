@@ -18,7 +18,7 @@ function App() {
   const [section, setSection] = useState(0);
   const [started, setStarted] = useState(false);
   const [menuOpened, setMenuOpened] = useState(false);
-  const [isDay, setIsDay] = useState(true); // true = day, false = night
+  const [isDay, setIsDay] = useState(false); // true = day, false = night
   const [isAnimating, setIsAnimating] = useState(false); // New state
   const [canvasKey, setCanvasKey] = useState(0);
    const reset3D = () => setCanvasKey(k => k + 1);

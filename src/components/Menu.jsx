@@ -1,8 +1,4 @@
 
-import GoogleReviewsBox from './GoogleReviewsBox';
-
-
-import { DayNightToggle } from "./DayNightToggle";
 
 
 
@@ -730,22 +726,15 @@ Click on Song Title for Music App                    </p>
     >
             <StyledWrapper01  onClick={(event) => {
       spawnCoin(event);
+      setIsDay((prev) => !prev);  
+
           setMenuOpened(false); // Closes navigation menu dropdown
 
                 // 1. Force state to Section 1 if not already there
-                if (section !== 1) {
-                  onSectionChange(1);
+                if (section !== 4) {
+                  onSectionChange(4.09);
                 }
 
-                // 2. Inject "contactWindow" into active overlays array securely aka music app
-                if (typeof setActiveOverlay === 'function') {
-                  setActiveOverlay((prev) => {
-                    if (Array.isArray(prev)) {
-                      return prev.includes("freeQ") ? prev : [...prev, "freeQ"];
-                    }
-                    return ["freeQ"];
-                  });
-                }
     }}>
         <article className="keycap">
           <aside className="letter">
@@ -771,7 +760,7 @@ Click on Song Title for Music App                    </p>
       >
         <div class="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black"></div>
         <div class="rounded-sm text-md bg-black py-1 px-2">
-          <p class="whitespace-nowrap">Home Page</p>
+          <p class="whitespace-nowrap">Contact Owner</p>
         </div>
       
       </div>
@@ -828,7 +817,7 @@ Click on Song Title for Music App                    </p>
       >
         <div class="h-0 w-0 border-l-8 border-r-8 border-b-4 border-l-transparent border-r-transparent border-b-black"></div>
         <div class="rounded-sm text-md bg-black py-1 px-2">
-          <p class="whitespace-nowrap">NOTES App</p>
+          <p class="whitespace-nowrap">Write a Note</p>
         </div>
       
       </div>
@@ -902,18 +891,21 @@ Click on Song Title for Music App                    </p>
       </div>
     </div>
   </div>
+  
   </button>
-    <StyledWrapper01  onClick={() => {
-      setMenuOpened(false);
 
-        if (section === 1 ) {
-        null   
-         } 
-      
-      else {
-        onSectionChange(1.3);
-      }
+
+
+    <StyledWrapper01  onClick={(e) => {
+      e.stopPropagation();
+       if (Number(section) === 1.3) {
+      onSectionChange(0.1);
+    } else {
+      onSectionChange(1.3);
+    }
+  
     }}
+
     className='zIndex[99980]'>
         <button
     class="group relative  inline-flex items-center justify-center p-0.5 mb-0  text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-white to-gray-100 group-hover:from-black-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-800 dark:focus:ring-green-800"
@@ -925,11 +917,15 @@ Click on Song Title for Music App                    </p>
         <article className="keycap">
           <aside className="letter">
 
+          {Number(section) === 1.3 ? (
             <svg class="w-[50px] h-[50px] fill-[#ffffff] translate-x-[2px] -translate-y-[0px]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-
-  <path d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"></path>
-
-</svg>
+              <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+            </svg>
+          ) : (
+            <svg class="w-[50px] h-[50px] fill-[#ffffff] translate-x-[2px] -translate-y-[0px]" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"></path>
+            </svg>
+          )}
 
             </aside>
         </article>
@@ -955,7 +951,8 @@ Click on Song Title for Music App                    </p>
 
       <div className="rounded-sm bg-black py-1 px-2 text-md">
         <p className="whitespace-nowrap text-white">
-  Full Screen  </p>
+{Number(section) === 1.3 ? "Back" : "Full Screen"}
+    </p>
       </div>
       </div>
     </div>
@@ -1031,13 +1028,12 @@ Click on Song Title for Music App                    </p>
               
 
 
-              {/* Projects Item */}
+              {/* Music Icon Item */}
 
                           <div className='px-4 pr-10'>
                               <a href="#" className=" " onClick={(event) => {
             event.preventDefault();
                 spawnCoin(event);
-                setMenuOpened(true);
                 
                 setMenuOpened(false); // Closes navigation menu dropdown
 
@@ -1048,13 +1044,19 @@ Click on Song Title for Music App                    </p>
 
                 // 2. Inject "contactWindow" into active overlays array securely aka music app
                 if (typeof setActiveOverlay === 'function') {
-                  setActiveOverlay((prev) => {
-                    if (Array.isArray(prev)) {
-                      return prev.includes("contactWindow") ? prev : [...prev, "contactWindow"];
-                    }
-                    return ["contactWindow"];
-                  });
-                }
+                setActiveOverlay((prev) => {
+                  const currentPrev = Array.isArray(prev) ? prev : [];
+                  const hasContact = currentPrev.includes("contactWindow");
+
+                  if (section === 1 && hasContact) {
+                    // Close contact window and stay on section 1
+                    return currentPrev.filter(item => item !== "contactWindow");
+                  } else {
+                    // Open contact window
+                    return hasContact ? currentPrev : [...currentPrev, "contactWindow"];
+                  }
+                });
+              }
               
                 
               }}
@@ -1062,7 +1064,7 @@ Click on Song Title for Music App                    </p>
               >
               <label className="dock__item">
                 <input type="radio" name="dock-navigation" />
-                <svg viewBox="0 0 64 64" role="img" aria-label="Projects">
+                {/* <svg viewBox="0 0 64 64" role="img" aria-label="Projects">
                   <defs>
                     <linearGradient id="dock-projects" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0" stopColor="#ffd86b" />
@@ -1075,7 +1077,9 @@ Click on Song Title for Music App                    </p>
                   <rect x="18" y="34" width="11" height="10" rx="2" fill="#f5ad17" />
                   <rect x="34" y="34" width="11" height="10" rx="2" fill="#f5ad17" />
                   <rect x="18" y="47" width="27" height="3" rx="1.5" fill="#e7b94d" />
-                </svg>
+                </svg> */}
+                <img src="textures/musicIcon.png" alt="" />
+
                 <span className="dock__tooltip">MP3 files</span>
                 <span className="dock__dot"></span>
               </label>
@@ -1191,17 +1195,39 @@ event.preventDefault();
                <a href="#" className=" " onClick={(event) => {
 event.preventDefault();
     spawnCoin(event);
-     setIsDay((prev) => !prev);  
-        if (section !== 4 ) {
-                          onSectionChange(4);
-                        }; 
-    
+        
+                setMenuOpened(false); // Closes navigation menu dropdown
+
+                // 1. Force state to Section 1 if not already there
+                if (section !== 1) {
+                  onSectionChange(1);
+                }
+
+                // 2. Inject "contactWindow" into active overlays array securely aka music app
+                // 2. If in section 1 and contact window is already up, close it. Otherwise, open it.
+                if (typeof setActiveOverlay === 'function') {
+                  setActiveOverlay((prev) => {
+                    const currentPrev = Array.isArray(prev) ? prev : [];
+                    const hasContact = currentPrev.includes("notes");
+
+                    if (section === 1 && hasContact) {
+                      // Close contact window and stay on section 1
+                      return currentPrev.filter(item => item !== "notes");
+                    } else {
+                      // Open contact window
+                      return hasContact ? currentPrev : [...currentPrev, "notes"];
+                    }
+                  });
+                }
+              
+                
+              
   }}
 
   >
               <label className="dock__item">
                 <input type="radio" name="dock-navigation" />
-                <svg viewBox="0 0 64 64" role="img" aria-label="Contact">
+                {/* <svg viewBox="0 0 64 64" role="img" aria-label="Contact">
                   <defs>
                     <linearGradient id="dock-contact" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0" stopColor="#5de0ff" />
@@ -1220,8 +1246,10 @@ event.preventDefault();
                   />
                   <path d="M11 46l14-11" fill="none" stroke="#d7e9fa" strokeWidth="2" strokeLinecap="round" />
                   <path d="M53 46L39 35" fill="none" stroke="#d7e9fa" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-                <span className="dock__tooltip">Contact</span>
+                </svg> */}
+                <img src="textures/noteIcon.png" alt="" />
+
+                <span className="dock__tooltip">Notes</span>
                 <span className="dock__dot"></span>
               </label>
     </a>

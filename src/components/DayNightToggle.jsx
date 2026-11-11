@@ -1,5 +1,5 @@
 
-
+// Night First
 export const DayNightToggle = ({ isDay, setIsDay }) => {
   return (
     <label className="absolute inline-block w-32 h-32 cursor-pointer select-none
